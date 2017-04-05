@@ -111,10 +111,10 @@
 <p>To make Puppet &ldquo;enterprise-ready&rdquo;, we need to do a few things.</p>
 
 <ol>
-<li><p>Install the Puppet Dashboard</p></li>
-<li><p>Install the Puppet DB</p></li>
-<li><p>Install passenger + Apache modules</p></li>
-<li><p>Install MySQL</p></li>
+<li>Install the Puppet Dashboard<br></li>
+<li>Install the Puppet DB<br></li>
+<li>Install passenger + Apache modules<br></li>
+<li>Install MySQL<br></li>
 </ol>
 
 
@@ -192,26 +192,26 @@ mysql -u root -p</strong></em></p>
 
 <p>What this means is you have now logged into the MySQL database, and are ready to set it up for use.  Following I will list out all the commands you need to run in a set.  Note that these commands are each entered on a line and you press &ldquo;<ENTER>&rdquo; at the end of the line to enter the next command.  There is no output from MySQL when you enter these, so I&rsquo;ll enumerate them all together here for your convenience.</p>
 
-<p><em><strong>mysql> create database dashboard character set utf8;</strong></em>
-<em><strong>mysql> create user &lsquo;dashboard&rsquo;@&lsquo;localhost&rsquo; identified by ‘my_password';</strong></em>
-<em><strong>mysql> create user &lsquo;dashboard’@‘<FQDN>&rsquo; identified by ‘my_password';</strong></em>
-<em><strong>mysql> grant all privileges on dashboard.* to &lsquo;dashboard&rsquo;@&lsquo;localhost&rsquo;;</strong></em>
-<em><strong>mysql> grant all privileges on dashboard.* to &lsquo;dashboard’@‘<FQDN>&rsquo;;</strong></em>
-<em><strong>mysql> drop user ‘’@‘localhost’;</strong></em>
-<em><strong>mysql> drop user ‘’@‘<FQDN>’;</strong></em>
-<em><strong>mysql> drop database test;</strong></em>
-<em><strong>mysql> flush privileges;</strong></em>
-<em><strong>mysql> exit</strong></em></p>
+<p><em><strong>mysql> create database dashboard character set utf8;</strong></em><br>
+<em><strong>mysql> create user &lsquo;dashboard&rsquo;@&lsquo;localhost&rsquo; identified by ‘my_password';</strong></em><br>
+<em><strong>mysql> create user &lsquo;dashboard’@‘<FQDN>&rsquo; identified by ‘my_password';</strong></em><br>
+<em><strong>mysql> grant all privileges on dashboard.* to &lsquo;dashboard&rsquo;@&lsquo;localhost&rsquo;;</strong></em><br>
+<em><strong>mysql> grant all privileges on dashboard.* to &lsquo;dashboard’@‘<FQDN>&rsquo;;</strong></em><br>
+<em><strong>mysql> drop user ‘’@‘localhost’;</strong></em><br>
+<em><strong>mysql> drop user ‘’@‘<FQDN>’;</strong></em><br>
+<em><strong>mysql> drop database test;</strong></em><br>
+<em><strong>mysql> flush privileges;</strong></em><br>
+<em><strong>mysql> exit</strong></em><br></p>
 
 <p>As before, replace <FQDN> with the fully qualified hostname for your server and &lsquo;my_password&rsquo; with the password you wish to set for the dashboard user.  A few notes:</p>
 
 <ol>
-<li><p>First, we created the dashboard database</p></li>
-<li><p>Next, we created the dashboard user for connecting from the localhost name</p></li>
-<li><p>Next, we created the dashboard user for connecting from the server FQDN</p></li>
-<li><p>The next two, we grant the dashboard user rights to the whole database from either location</p></li>
-<li><p>The following two lines delete the user &lsquo;&rsquo; from the server (a null user w/o a password)</p></li>
-<li><p>Finally we drop the &ldquo;test&rdquo; database, flush all our privilege tables (to take effect immediately) and exit MySQL.</p></li>
+<li>First, we created the dashboard database<br></li>
+<li>Next, we created the dashboard user for connecting from the localhost name<br></li>
+<li>Next, we created the dashboard user for connecting from the server FQDN<br></li>
+<li>The next two, we grant the dashboard user rights to the whole database from either location<br></li>
+<li>The following two lines delete the user &lsquo;&rsquo; from the server (a null user w/o a password)<br></li>
+<li>Finally we drop the &ldquo;test&rdquo; database, flush all our privilege tables (to take effect immediately) and exit MySQL.<br></li>
 </ol>
 
 
@@ -246,60 +246,59 @@ At the end of the installation, Press <ENTER></strong></em></p>
 <p><em><strong>Passenger
 </strong></em>First we need a number of directories and files to exist around the system, so let&rsquo;s put those in place by using the following commands:</p>
 
-<p><em><strong>sudo mkdir -p /usr/share/puppet/rack/puppetmasterd
-</strong><strong>sudo mkdir /usr/share/puppet/rack/puppetmasterd/public
-</strong></em><strong><em>sudo mkdir /usr/share/puppet/rack/puppetmasterd/tmp
-sudo cp /usr/share/puppet/ext/rack/config.ru /usr/share/puppet/rack/puppetmasterd
-sudo chown puppet:puppet /usr/share/puppet/rack/puppetmasterd/config.ru
-sudo chown puppet-dashboard:puppet-dashboard /usr/lib/ruby/gems/1.8/gems/passenger-4.0.37/buildout/agents/PassengerWatchdog</em></strong></p>
+<p><em><strong>sudo mkdir -p /usr/share/puppet/rack/puppetmasterd<br>
+</strong><strong>sudo mkdir /usr/share/puppet/rack/puppetmasterd/public<br>
+</strong></em><strong><em>sudo mkdir /usr/share/puppet/rack/puppetmasterd/tmp<br>
+sudo cp /usr/share/puppet/ext/rack/config.ru /usr/share/puppet/rack/puppetmasterd<br>
+sudo chown puppet:puppet /usr/share/puppet/rack/puppetmasterd/config.ru<br>
+sudo chown puppet-dashboard:puppet-dashboard /usr/lib/ruby/gems/1.8/gems/passenger-4.0.37/buildout/agents/PassengerWatchdog</em></strong><br></p>
 
 <p>Next, we need to configure the Puppet Dashboard to connect to its database, and setup the tablespaces for use:</p>
 
-<p><em><strong>cd /usr/share/puppet-dashboard/config
-</strong><strong>edit database.yml
-Remove the last stanza of this file that refers to the &ldquo;test&rdquo; database we removed above.
-For the Production and Development database stanzas, change the &ldquo;database:&rdquo; line to read &ldquo;dashboard&rdquo; and the password line to contain your dashboard password so that it appears as follows:</strong></em></p>
+<p><em><strong>cd /usr/share/puppet-dashboard/config<br>
+</strong><strong>edit database.yml<br>
+Remove the last stanza of this file that refers to the &ldquo;test&rdquo; database we removed above.<br>
+For the Production and Development database stanzas, change the &ldquo;database:&rdquo; line to read &ldquo;dashboard&rdquo; and the password line to contain your dashboard password so that it appears as follows:</strong></em><br></p>
 
-<p><em><strong>database: dashboard</strong></em>
-<em><strong>username: dashboard</strong></em>
-<em><strong>password: <PASSWORD></strong></em></p>
+<p><em><strong>database: dashboard</strong></em><br>
+<em><strong>username: dashboard</strong></em><br>
+<em><strong>password: <PASSWORD></strong></em><br></p>
 
 <p>Next, prepare the database for use as follows:</p>
 
-<p><em><strong>cd /usr/share/puppet-dashboard
-</strong>__<strong>sudo rake gems:refresh_specs
-</strong><strong>rake RAILS_ENV=production db:migrate</strong></em></p>
+<p><em><strong>cd /usr/share/puppet-dashboard<br>
+</strong>__<strong>sudo rake gems:refresh_specs<br>
+</strong><strong>rake RAILS_ENV=production db:migrate</strong></em><br></p>
 
 <p><em>(Even though we&rsquo;ve reference the production and development databases in the database config above, we&rsquo;ll only be working in the production database in this tutorial)  </em></p>
 
 <p>At this point, we should be ready to test the Dashboard configuration to ensure we&rsquo;re still on the right track.  Top do so, run the following:</p>
 
-<p><em><strong>cd /usr/share/puppet-dashboard
-</strong><strong>sudo ./script/server -e production</strong></em></p>
+<p><em><strong>cd /usr/share/puppet-dashboard<br>
+</strong><strong>sudo ./script/server -e production</strong></em><br></p>
 
 <p>Now, attempt to connect to the dashboard via web browser by pulling up the server at the following address:  <a href="http://">http://</a><IP ADDRESS or FQDN>:3000.  If the dashboard displays correctly in your browser, we&rsquo;re ready to continue.</p>
 
-<p>Press CTRL-C to exit the server.</p>
-
-<p><em><strong>Configure Puppet for Dashboard</strong></em></p>
+<p>Press CTRL-C to exit the server.<br>
+<em><strong>Configure Puppet for Dashboard</strong></em><br></p>
 
 <p>While we have already configured the dashboard itself, we have not told Puppet the dashboard exists.  To do so, edit the /etc/puppet/puppet.conf file and add the following.</p>
 
 <p>In the [master] section of the puppet.conf, add the following lines:</p>
 
-<p><em><strong>****# Reporting</strong></em>
-<em><strong>reports = store,http</strong></em>
-<em><strong>reporturl = <a href="http://">http://</a><FQDN>:3000/reports/upload</strong></em></p>
+<p><em><strong>****# Reporting</strong></em><br>
+<em><strong>reports = store,http</strong></em><br>
+_**reporturl = <a href="http://&lt;FQDN>:3000/reports/upload**_">http://&lt;FQDN>:3000/reports/upload**_</a><br></p>
 
-<p><em><strong># Node Classification (Using as an ENC)</strong></em>
-<em><strong>node_terminus = exec</strong></em>
-<em><strong>external_nodes = /usr/bin/env PUPPET_DASHBOARD_URL=<a href="http://localhost:3000">http://localhost:3000</a> /usr/share/puppet-dashboard/bin/external_node</strong></em></p>
+<p><em><strong># Node Classification (Using as an ENC)</strong></em><br>
+<em><strong>node_terminus = exec</strong></em><br>
+<em><strong>external_nodes = /usr/bin/env PUPPET_DASHBOARD_URL=<a href="http://localhost:3000">http://localhost:3000</a> /usr/share/puppet-dashboard/bin/external_node</strong></em><br></p>
 
 <p>Exit the puppet.conf file, saving your changes and set permissions for following files like so:</p>
 
-<p><em><strong>****sudo chown -R puppet-dashboard:puppet-dashboard /usr/share/puppet-dashboard</strong></em>
-<em><strong>sudo /sbin/chkconfig puppet-dashboard-workers on</strong></em>
-<em><strong>sudo /sbin/service puppet-dashboard-workers start</strong></em></p>
+<p><em><strong>****sudo chown -R puppet-dashboard:puppet-dashboard /usr/share/puppet-dashboard</strong></em><br>
+<em><strong>sudo /sbin/chkconfig puppet-dashboard-workers on</strong></em><br>
+<em><strong>sudo /sbin/service puppet-dashboard-workers start</strong></em><br></p>
 
 <p><em><strong>Apache</strong></em></p>
 
@@ -321,44 +320,44 @@ For the Production and Development database stanzas, change the &ldquo;database:
 
 <p>First, make sure the puppetmaster process has been stopped:</p>
 
-<p><em><strong>/sbin/service puppetmaster stop
-</strong><strong>/sbin/chckonfig puppetmaster off</strong></em></p>
+<p><em><strong>/sbin/service puppetmaster stop<br>
+</strong><strong>/sbin/chckonfig puppetmaster off</strong></em><br></p>
 
 <p>This assumes you&rsquo;ve run the procedures in the previous tutorials, including (especially) the certificate signing and exchange between master and agent.  If you&rsquo;ve done this, Passenger now has all the certs it needs to handle requests on behalf of Puppet, and no longer needs the Puppet server running.</p>
 
 <p>Next, test the configuration, that you&rsquo;ve made no typos:</p>
 
-<p><em><strong>sudo /sbin/service httpd configtest</strong></em></p>
+<p><em><strong>sudo /sbin/service httpd configtest</strong></em><br></p>
 
 <p>If no errors are displayed, then <em>at least </em>the syntax of your Apache configs are correct.  Now, to generate SELinux entries in the audit log to build a custom Passenger SELinux module, you need to start Apache:</p>
 
-<p><em><strong>sudo /sbin/service httpd start</strong></em></p>
+<p><em><strong>sudo /sbin/service httpd start</strong></em><br></p>
 
 <p>Turn off SELinux temporarily:</p>
 
-<p><em><strong>****sudo setenforce 0</strong></em></p>
+<p><em><strong>****sudo setenforce 0</strong></em><br></p>
 
 <p>Restart Apache to generate the log entries:</p>
 
-<p><em><strong>sudo /sbin/service httpd restart</strong></em></p>
+<p><em><strong>sudo /sbin/service httpd restart</strong></em><br></p>
 
 <p>Test the Puppet dashboard in a browser by going to:</p>
 
-<p><em><strong><a href="http://">http://</a><FQDN>:3000</strong></em></p>
+<p>_**<a href="http://&lt;FQDN>:3000**_">http://&lt;FQDN>:3000**_</a><br></p>
 
 <p>What you have done is put output into the audit log that can be used as input to the <em>audit2allow </em>tool to generate a policy file for import into SELinux to allow Passenger to do it&rsquo;s job.  To create that module, run:</p>
 
-<p><em><strong>grep httpd /var/log/audit/audit.log | audit2allow -M passenger</strong></em></p>
+<p><em><strong>grep httpd /var/log/audit/audit.log | audit2allow -M passenger</strong></em><br></p>
 
 <p>This creates a new policy file for SELinux in your current working directory called &ldquo;passenger.pp&rdquo; which you can now import into SELinux.  TO do so, simply import the module:</p>
 
-<p><em><strong>sudo semodule -i passenger.pp</strong></em></p>
+<p><em><strong>sudo semodule -i passenger.pp</strong></em><br></p>
 
 <p>&hellip;from the directory where the file resides (presumably your current working directory if you have not moved).</p>
 
 <p>Finally, you re-enable SELinux, and begin to test your environment.</p>
 
-<p><em><strong>sudo setenforce 1</strong></em></p>
+<p><em><strong>sudo setenforce 1</strong></em><br></p>
 
 <p><em><strong>Conclusion</strong></em></p>
 
