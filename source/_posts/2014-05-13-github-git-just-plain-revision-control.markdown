@@ -222,18 +222,18 @@ So, now I've got multiple branches that need this setting, but I'm still stuck i
 Git provides a "checkout" command.  What you're saying with "checkout" is:  "Git, I want to be working on branch "x", and I want you to make that my current branch.  if there are any differences between that branch and the one I'm on, please make those changes on-disk for me so I can exclusively be working in branch "x"".  A little verbose, but you get the point.  So, to move to the next branch and do all the wonderful things we did in "master" above, we perform:
 
 ```
-git checkout development<br>
-edit README.md to say different text<br>
-git commit -a -m 'editing README for development branch'<br>
-git push --set-upstream origin development<br>
-git push<br>
+git checkout development
+edit README.md to say different text
+git commit -a -m 'editing README for development branch'
+git push --set-upstream origin development
+git push
 ```
 
 If all has gone well, your development README.md file is now changed and pushed into GitHub.  What about "master", though?  Well, let's take a look:
 
 ```
-git checkout master<br>
-cat README.md<br>
+git checkout master
+cat README.md
 ```
 
 If all has gone well, the contents of README.md are back to what was in your "master" branch.  By checking out "development", it'll change back to the new content there.  As a test, checkout the "production" branch, change the README.md file, commit it, set your upstream push target and then push the contents to GitHub.
