@@ -522,7 +522,91 @@ vagrant up<br></p>
 
 <p>When you install git on your unix-like platform, it will drop a few binaries.  The one we&rsquo;re most interested in is the git binary itself.  It&rsquo;s very simply designed and has a very straightforward set of options you can get from the command line by simply typing &ldquo;git&rdquo; with no options, or &ldquo;git help&rdquo;.  The output is below:</p>
 
-<p>[snippet id=&ldquo;32&rdquo;]</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>usage: git [--version] [--help] [-C &lt;path&gt;] [-c name=value]
+</span><span class='line'>           [--exec-path[=&lt;path&gt;]] [--html-path] [--man-path] [--info-path]
+</span><span class='line'>           [-p | --paginate | --no-pager] [--no-replace-objects] [--bare]
+</span><span class='line'>           [--git-dir=&lt;path&gt;] [--work-tree=&lt;path&gt;] [--namespace=&lt;name&gt;]
+</span><span class='line'>           &lt;command&gt; [&lt;args&gt;]
+</span><span class='line'>
+</span><span class='line'>These are common Git commands used in various situations:
+</span><span class='line'>
+</span><span class='line'>start a working area (see also: git help tutorial)
+</span><span class='line'>   clone      Clone a repository into a new directory
+</span><span class='line'>   init       Create an empty Git repository or reinitialize an existing one
+</span><span class='line'>
+</span><span class='line'>work on the current change (see also: git help everyday)
+</span><span class='line'>   add        Add file contents to the index
+</span><span class='line'>   mv         Move or rename a file, a directory, or a symlink
+</span><span class='line'>   reset      Reset current HEAD to the specified state
+</span><span class='line'>   rm         Remove files from the working tree and from the index
+</span><span class='line'>
+</span><span class='line'>examine the history and state (see also: git help revisions)
+</span><span class='line'>   bisect     Use binary search to find the commit that introduced a bug
+</span><span class='line'>   grep       Print lines matching a pattern
+</span><span class='line'>   log        Show commit logs
+</span><span class='line'>   show       Show various types of objects
+</span><span class='line'>   status     Show the working tree status
+</span><span class='line'>
+</span><span class='line'>grow, mark and tweak your common history
+</span><span class='line'>   branch     List, create, or delete branches
+</span><span class='line'>   checkout   Switch branches or restore working tree files
+</span><span class='line'>   commit     Record changes to the repository
+</span><span class='line'>   diff       Show changes between commits, commit and working tree, etc
+</span><span class='line'>   merge      Join two or more development histories together
+</span><span class='line'>   rebase     Reapply commits on top of another base tip
+</span><span class='line'>   tag        Create, list, delete or verify a tag object signed with GPG
+</span><span class='line'>
+</span><span class='line'>collaborate (see also: git help workflows)
+</span><span class='line'>   fetch      Download objects and refs from another repository
+</span><span class='line'>   pull       Fetch from and integrate with another repository or a local branch
+</span><span class='line'>   push       Update remote refs along with associated objects
+</span><span class='line'>
+</span><span class='line'>'git help -a' and 'git help -g' list available subcommands and some
+</span><span class='line'>concept guides. See 'git help &lt;command&gt;' or 'git help &lt;concept&gt;'
+</span><span class='line'>to read about a specific subcommand or concept.</span></code></pre></td></tr></table></div></figure>
+
 
 <p>We&rsquo;re most interested in a small subset of commands for our purposes here.  They are <strong>add, commit, pull, push, branch, checkout, and clone.</strong></p>
 
@@ -553,7 +637,7 @@ vagrant up<br></p>
 <p>Since Git is personal to you as a user, you need to let Git know a few things about you.  This gives your git server (in our case GitHub) the information it needs when you&rsquo;re pushing code (like your identity, default commit locations, etc).  First, your name and email:</p>
 
 <p>git config &ndash;global user.name &ldquo;John Doe&rdquo;
-git config &ndash;global user.email <a href="&#109;&#97;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x79;&#111;&#117;&#64;&#x79;&#111;&#x75;&#114;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;">&#121;&#x6f;&#x75;&#64;&#121;&#111;&#117;&#x72;&#109;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;</a></p>
+git config &ndash;global user.email <a href="&#x6d;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#121;&#x6f;&#117;&#64;&#x79;&#x6f;&#x75;&#x72;&#109;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;">&#x79;&#x6f;&#117;&#64;&#x79;&#x6f;&#117;&#x72;&#109;&#97;&#x69;&#x6c;&#46;&#x63;&#111;&#109;</a></p>
 
 <p>You&rsquo;ll only need to perform this once.  There are quite a few options and you can read up on those <a href="http://git-scm.com/book/en/Getting-Started-First-Time-Git-Setup">here</a> at your leisure.</p>
 
