@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-05T15:58:46-04:00</updated>
+  <updated>2017-04-05T16:03:55-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -203,7 +203,7 @@ vagrant up</p>
 <p>Since Git is personal to you as a user, you need to let Git know a few things about you.  This gives your git server (in our case GitHub) the information it needs when you&rsquo;re pushing code (like your identity, default commit locations, etc).  First, your name and email:</p>
 
 <p>git config &ndash;global user.name &ldquo;John Doe&rdquo;
-git config &ndash;global user.email <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x79;&#x6f;&#117;&#64;&#x79;&#111;&#117;&#114;&#x6d;&#x61;&#105;&#108;&#x2e;&#x63;&#111;&#x6d;">&#121;&#111;&#117;&#64;&#x79;&#111;&#x75;&#114;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#x6d;</a></p>
+git config &ndash;global user.email <a href="&#109;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#x79;&#111;&#x75;&#64;&#x79;&#x6f;&#x75;&#x72;&#109;&#x61;&#105;&#108;&#x2e;&#x63;&#x6f;&#x6d;">&#121;&#111;&#x75;&#64;&#121;&#111;&#x75;&#x72;&#109;&#97;&#105;&#108;&#x2e;&#99;&#111;&#109;</a></p>
 
 <p>You&rsquo;ll only need to perform this once.  There are quite a few options and you can read up on those <a href="http://git-scm.com/book/en/Getting-Started-First-Time-Git-Setup">here</a> at your leisure.</p>
 
