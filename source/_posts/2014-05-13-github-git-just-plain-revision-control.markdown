@@ -104,7 +104,7 @@ I am going to assume you've created a GitHub Account.  When you create your acc
 
 
 
-[![mygithub](http://questy.org/wp-content/uploads/2014/05/mygithub.png)](http://questy.org/wp-content/uploads/2014/05/mygithub.png)The interface keeps track of all projects you're working on, the frequency with which you commit or otherwise use your repository, and (most importantly), a centralized server that is storing those projects you can source from any internet connected system.
+[![mygithub](http://questy.org/images/mygithub.png)](http://questy.org/images/mygithub.png)The interface keeps track of all projects you're working on, the frequency with which you commit or otherwise use your repository, and (most importantly), a centralized server that is storing those projects you can source from any internet connected system.
 
 
 
@@ -119,7 +119,7 @@ In the upper right-hand corner of your screen, you'll notice a "+" symbol.  Let
 
 
 
-[![myrepo](http://questy.org/wp-content/uploads/2014/05/myrepo.png)](http://questy.org/wp-content/uploads/2014/05/myrepo.png)
+[![myrepo](http://questy.org/images/myrepo.png)](http://questy.org/images/myrepo.png)
 
 
 
