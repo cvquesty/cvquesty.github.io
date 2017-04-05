@@ -2,10 +2,10 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://cvquesty.github.io
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
+url: http://questy.org
+title: Questy.org
+subtitle: Tech musings and other things...
+author: Jerald Sheets
 simple_search: https://www.google.com/search
 description:
 
