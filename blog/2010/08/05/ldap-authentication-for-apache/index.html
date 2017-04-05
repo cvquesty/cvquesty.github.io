@@ -1,0 +1,423 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>LDAP Authentication IV - Apache - Questy.org</title>
+  <meta name="author" content="Jerald Sheets">
+
+  
+  <meta name="description" content="Once you&rsquo;ve got your handy LDAP server authenticating users for login throughout your environment, inevitably you find yourself getting around &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://questy.org/blog/2010/08/05/ldap-authentication-for-apache/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Questy.org" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1135877-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Questy.org</a></h1>
+  
+    <h2>Tech musings and other things...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="questy.org">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">LDAP Authentication IV - Apache</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2010-08-05T17:03:09-04:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2010</span></span> <span class='time'>5:03 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://questy.org">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Once you&rsquo;ve got your handy LDAP server authenticating users for login throughout your environment, inevitably you find yourself getting around to the question of authentication for all your backend tools/services machines.  Can you authenticate from Apache to that same auth store to reduce administration burden across the environment?</p>
+
+<p>Yes you can.</p>
+
+<p>Recall from part I of this series that we have a server that is serving auth for our mythical &ldquo;Bob.com&rdquo; environment.  Recall also the important info regarding this environment:</p>
+
+<p>Internet domain name:                   bob.com
+hostname of the server:                   ldap.bob.com
+LDAP Search base:                          dc=bob,dc=com</p>
+
+<p>File:  /etc/openldap/ldap.conf</p>
+
+<p>#</p>
+
+<h1>LDAP Defaults</h1>
+
+<p>#</p>
+
+<p>BASE dc=bob,dc=com
+URI ldap://ldap.bob.com
+TLS_CACERTDIR /etc/openldap/cacerts</p>
+
+<p>Now, we add to the mix an Apache web server that has an area it wants to secure.  Instead of using the old htpasswd method to create a disk-file containing usernames and password hashes, it would make much more sense to simply point Apache&rsquo;s authentication system at our shiny new LDAP server so we eliminate yet another user/pass system we have to administer.</p>
+
+<p><strong>Apache</strong></p>
+
+<p>As many of you are already aware, Apache offers simple authentication to allow/disallow access to specific shared directories over the web.  The Apache Project has detailed documentation to help you get started <a href="http://httpd.apache.org/docs/2.2/howto/auth.html">here</a>. I&rsquo;ll cover the basics here.</p>
+
+<p>Traditionally, in Apache&rsquo;s config file(s) you specify a directory you wish to have secured via the &ldquo;Directory&rdquo; directive like so:</p>
+
+<blockquote>
+
+> 
+> <Directory "/super/secret/directory">
+> 
+> 
+
+> 
+> AllowOverride None
+> 
+> 
+
+> 
+> Options ExecCGI Includes
+> 
+> 
+
+> 
+> Order allow,deny
+> 
+> 
+
+> 
+> Allow from all
+> 
+> 
+
+> 
+> AuthUserFile /secure/passwd/file/location
+> 
+> 
+
+> 
+> AuthType Basic
+> 
+> 
+
+> 
+> AuthName "Cool Security Name"
+> 
+> 
+
+> 
+> Require valid-user
+> 
+> 
+
+> 
+> </Directory>
+> 
+> </blockquote>
+
+
+<p>You then create your passwd file for Apache with the htpasswd utility, make sure the above path points to it, bounce Apache, and you&rsquo;re authenticating locally.  Problem with this is that every time you need to add a new user to your environment, every instance like this has to be touched individually and you have to add the user (whether by copy/paste or otherwise is irrelevant) in each.</p>
+
+<p>Enter LDAP.</p>
+
+<p>Fortunately, the configuration for such a change is quite easy; Simple textual changes to the httpd.conf to repoint from the local disk file to the LDAP store is all you need.  First, make sure that your LDAP modules are properly loaded into Apache:</p>
+
+<p>LoadModule ldap_module modules/mod_ldap.so</p>
+
+<p>LoadModule authnz_ldap_module modules/mod_authnz_ldap.so</p>
+
+<p>This tells the Apache core to load up these at startup so that the directives you supply in the Directory stanza will be understood.  Next, let&rsquo;s add the appropriate info into the Directory section:</p>
+
+<p><Directory "/super/secret/directory"></p>
+
+<p>AllowOverride None</p>
+
+<p>Options ExecCGI Includes</p>
+
+<p>Order deny,allow</p>
+
+<p>Deny from all</p>
+
+<p>AuthName &ldquo;Cool Security Name&rdquo;</p>
+
+<p>AuthType Basic</p>
+
+<p>AuthBasicProvider ldap</p>
+
+<p>AuthzLDAPAuthoritative Off</p>
+
+<p>AuthLDAPURL ldap://cool.ldap.server/dc=bob,dc=com?uid</p>
+
+<p>AuthLDAPBindDN &ldquo;cn=admin,dc=bob,dc=com&rdquo;</p>
+
+<p>AuthLDAPGroupAttribute memberUid</p>
+
+<p>AuthLDAPGroupAttributeIsDN off</p>
+
+<p>AuthLDAPBindPassword <your_bind_password></p>
+
+<p>Satisfy any</p>
+
+<p></Directory></p>
+
+<p>This simple change (after an Apache restart) should give your Apache server security over that directory, authenticating against LDAP.  Since your LDAP store is POSIX compliant for login, you have a few other things you can leverage in there as well.  Among those, are the &ldquo;Group&rdquo; field.  That&rsquo;s right, instead of going out and adding individuals and/or preventing them, you can specify an entire class of people (say LDAP_Logins for instance) that if the user belongs to that group, suddenly they have access to anything that is authenticating against LDAP.</p>
+
+<p>To add that ability, you can add groups to the stanza above like so:</p>
+
+<p>Require ldap-group cn=mygroup,ou=Group,dc=bob,dc=com</p>
+
+<p>Require ldap-attribute gidNumber=500</p>
+
+<p><em>(you place your group number in place of the &ldquo;500&rdquo; above)</em></p>
+
+<p>Now that you have the magic behind LDAP auth for Apache, you can add this to any Apache web server of the 2.x variety, and do your security centrally.</p>
+
+<p>The ease of addition for new users on your network is now as simple as adding the user to your LDAP store, placing them in the appropriate group.  Once Apache was restarted the very first time to make this work, you never have to restart it for user additions.  It will simply query LDAP, and LDAP will provide the credential response Apache needs to continue forward.</p>
+
+<p>Next time:  Sudoers in LDAP!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">questy</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2010-08-05T17:03:09-04:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2010</span></span> <span class='time'>5:03 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/geekstuff/'>geekstuff</a>, <a class='category' href='/blog/categories/ldap/'>ldap</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/systems-administration/'>systems administration</a>, <a class='category' href='/blog/categories/unix/'>unix</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://questy.org/blog/2010/08/05/ldap-authentication-for-apache/" data-via="CVQuesty" data-counturl="http://questy.org/blog/2010/08/05/ldap-authentication-for-apache/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2010/02/26/wow-squeeze-for-mac-9-95-a/" title="Previous Post: Wow, Squeeze for Mac ($9.95) ">&laquo; Wow, Squeeze for Mac ($9.95) </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2010/08/17/community-or-one-upsmanship/" title="Next Post: Community or One-Upsmanship?">Community or One-Upsmanship? &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/04/05/testing-octopress/">Testing Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/23/puppetconf-2014/">PuppetConf 2014</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/11/southeast-puppet-users-group-september/">Southeast Puppet User's Group September</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/11/toolbox-grows/">The Toolbox Grows...</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/20/dos-donts-puppet-environment/">"Do's and Dont's" for Your Puppet Environment</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/CVQuesty">@CVQuesty</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'CVQuesty',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Jerald Sheets -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'questy-org';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://questy.org/blog/2010/08/05/ldap-authentication-for-apache/';
+        var disqus_url = 'http://questy.org/blog/2010/08/05/ldap-authentication-for-apache/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

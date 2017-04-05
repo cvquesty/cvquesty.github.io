@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>LDAP Administration VI - TLS/SSL - Questy.org</title>
+  <meta name="author" content="Jerald Sheets">
+
+  
+  <meta name="description" content="_This article goes hand in hand with &ldquo;LDAP Administration - Part I&rdquo; in regards to configuring the client. _ So, let&rsquo;s see where we &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://questy.org/blog/2011/02/21/ldap-administration-v-tls/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Questy.org" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1135877-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Questy.org</a></h1>
+  
+    <h2>Tech musings and other things...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="questy.org">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">LDAP Administration VI - TLS/SSL</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-02-21T15:35:34-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2011</span></span> <span class='time'>3:35 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://questy.org">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h6>_This article goes hand in hand with &ldquo;LDAP Administration - Part I&rdquo; in regards to configuring the client. _</h6>
+
+<p>So, let&rsquo;s see where we are.  We have a master server you will be doing all administration work on.  This master server replicates to two hosts in the environment that serve LDAP queries to your clients.  These servers are replicants and are load-balanced under a VIP that is pointed to by the name you choose.  (in our case, ldap.bob.com).  You can change passwords at the client level, and have it pushed back up to master and replicated out to the environment immediately.</p>
+
+<p>Finally, we need to talk about security.  There&rsquo;s a number of ways to do security, but RedHat has done a lot of the footwork for you.  Unfortunately, it&rsquo;s very poorly documented, and they really Really REALLY want you to use RedHat Directory Server for everything, so I don&rsquo;t guess it&rsquo;s a priority.</p>
+
+<p>Essentially, we want to secure all queries floating around the network with TLS.  In a RedHat world, you simply need to make a couple changes at the server, restart LDAP, and then connect from TLS-enabled clients and all works just as it did before, except now it runs over an encrypted channel.</p>
+
+<p><strong>First Steps</strong></p>
+
+<p>RedHat has tried to ease the pain of generating certificates by placing all you need in a Makefile on-box.  navigate to <strong>/etc/pki/tls/certs </strong>and see that there is a makefile there.  Next, run:</p>
+
+<p><strong>make slapd.pem</strong></p>
+
+<p>to generate the needed files.  If it has already been done for you by the system, you will get the answer:</p>
+
+<p><strong>make: `slapd.pem' is up to date.</strong></p>
+
+<p>If you get this message, you&rsquo;re halfway there.</p>
+
+<p>Next, edit the <strong><em>/etc/openldap/slapd.</em>conf</strong> file.  You will need to refer to the appropriate files to allow for secure operation.  Insert the following lines into that file:</p>
+
+<p><strong># TLS Security
+TLSCACertificateFile /etc/pki/tls/certs/ca-bundle.crt
+TLSCertificateFile /etc/pki/tls/certs/slapd.pem
+TLSCertificateKeyFile /etc/pki/tls/certs/slapd.pem</strong></p>
+
+<p>Next, edit the file <em><strong>/etc/sysconfig/ldap</strong></em>.  Make the following lines:</p>
+
+<p><strong>SLAPD_LDAP=yes
+SLAPD_LDAPS=no
+SLAPD_LDAPI=no</strong></p>
+
+<p>look like:</p>
+
+<p><strong>SLAPD_LDAP=no
+SLAPD_LDAPS=yes
+SLAPD_LDAPI=no
+</strong></p>
+
+<p>Then, restart LDAP:  <em><strong>/sbin/service ldap restart. </strong></em>This does two things.  First, it tells the client where to look for the certificates, and then tells the system to only serve from the secure port 636.  (recall that we are on the replicants which are, in turn, servers themselves.  We have handled connecting to the master as well as setting the replicant up to receive queries)</p>
+
+<p>Finally, we connect a client.</p>
+
+<p><strong>Connecting the Client</strong></p>
+
+<p>To allow a client to connect, you need the appropriate key on the client (public server key) to be able to exchange identities with the server, and establish the secure session.  To do this, you have to distribute this key you just made out to each client you wish to connect back to the server.</p>
+
+<p>The key you will be distributing lives in <strong>/etc/pki/tls/certs</strong> and is named <strong>ca-bundle.crt</strong>.  Simply move this cert to your client (I use <strong>scp</strong> for such an operation) and place it into your openldap cacerts directory like so:</p>
+
+<p><em><strong>scp -rp ca-bundle.crt host.bob.com:/etc/openldap/cacerts</strong></em></p>
+
+<p>If you don&rsquo;t have rights to copy straight into the destination, send it to your home directory, then just move the cert there using &ldquo;sudo&rdquo;.</p>
+
+<p>Finally, you need to tell the system about the cert.  This is done in <strong>/etc/openldap/ldap.conf </strong>via three lines that tell the system how to connect, and where the cert lives:</p>
+
+<p><strong>TLS_CACERTDIR /etc/openldap/cacerts
+TLS_CACERT /etc/openldap/cacerts/ca-bundle.crt
+TLS_REQCERT allow</strong></p>
+
+<h6>Next, we run the RedHat authentication gui tool (curses) called authconfig-tui. _**(Note: last time I had you hand-edit the /etc/openldap/ldap.conf file, and this is entirely still possible.  I am endeavoring to show you that there is a tool to do this work, should you desire to use it.  If not, simply add the above lines and change the URI to the one below, making sure /etc/nsswitch.conf is configured correctly, and you should be good to go.)</h6>
+
+<p>**_</p>
+
+<p>In the left column, select &ldquo;Use LDAP&rdquo; and in the right column &ldquo;Use LDAP Authentication&rdquo;.  Tab down to the &ldquo;Next&rdquo; button and press &ldquo;Enter&rdquo;.</p>
+
+<p>As misleading as &ldquo;Use TLS&rdquo; may be, do not select it.  :)  Instead, go down to your server line, and modify it like so:</p>
+
+<p><strong>ldaps://ldap.bob.com:636</strong></p>
+
+<p>Your base DN should already be filled out (in our case: dc=bob,dc=com).  Navigate to the &ldquo;OK&rdquo; button, and press &ldquo;Enter&rdquo;.</p>
+
+<p>This should conclude your client configuration.  Now, you should be able to run a query against LDAP, and the whole path be secure:</p>
+
+<p><strong>id bob
+uid=123(bob) gid=123(users) groups=123(users),456(bob)</strong></p>
+
+<p><strong>Conclusion</strong></p>
+
+<p>I&rsquo;m sure I&rsquo;ve missed or glossed over something highly important.  I am in the process of discovery on this particular topic, and this article is serving as my documentation store until I can get the whole thing cleaned up &amp; finalized to push back into my work environment as official documentation.  I&rsquo;ll correct here as I find mistakes and omissions.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">questy</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2011-02-21T15:35:34-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2011</span></span> <span class='time'>3:35 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/geekstuff/'>geekstuff</a>, <a class='category' href='/blog/categories/ldap/'>ldap</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/systems-administration/'>systems administration</a>, <a class='category' href='/blog/categories/unix/'>unix</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://questy.org/blog/2011/02/21/ldap-administration-v-tls/" data-via="CVQuesty" data-counturl="http://questy.org/blog/2011/02/21/ldap-administration-v-tls/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/02/18/ldap-administration-iv-replication/" title="Previous Post: LDAP Administration V - Replication">&laquo; LDAP Administration V - Replication</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/02/22/a-few-notes/" title="Next Post: A few Notes...">A few Notes... &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/04/05/testing-octopress/">Testing Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/23/puppetconf-2014/">PuppetConf 2014</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/11/southeast-puppet-users-group-september/">Southeast Puppet User's Group September</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/11/toolbox-grows/">The Toolbox Grows...</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/20/dos-donts-puppet-environment/">"Do's and Dont's" for Your Puppet Environment</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/CVQuesty">@CVQuesty</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'CVQuesty',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Jerald Sheets -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'questy-org';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://questy.org/blog/2011/02/21/ldap-administration-v-tls/';
+        var disqus_url = 'http://questy.org/blog/2011/02/21/ldap-administration-v-tls/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Systems Administration | Questy.org]]></title>
+  <link href="http://questy.org/blog/categories/systems-administration/atom.xml" rel="self"/>
+  <link href="http://questy.org/"/>
+  <updated>2017-04-05T15:54:03-04:00</updated>
+  <id>http://questy.org/</id>
+  <author>
+    <name><![CDATA[Jerald Sheets]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[PuppetConf 2014]]></title>
+    <link href="http://questy.org/blog/2014/09/23/puppetconf-2014/"/>
+    <updated>2014-09-23T14:19:37-04:00</updated>
+    <id>http://questy.org/blog/2014/09/23/puppetconf-2014</id>
+    <content type="html"><![CDATA[<p>Glad to be at PuppetConf with #ShadowSoft exploring all the latest and greatest in PuppetLabs.</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/09/IMG_0050-0.jpg"><img src="http://questy.org/wp-content/uploads/2014/09/IMG_0050-0.jpg" alt="IMG_0050-0.JPG" /></a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA["Do's and Dont's" for Your Puppet Environment]]></title>
+    <link href="http://questy.org/blog/2014/05/20/dos-donts-puppet-environment/"/>
+    <updated>2014-05-20T09:15:14-04:00</updated>
+    <id>http://questy.org/blog/2014/05/20/dos-donts-puppet-environment</id>
+    <content type="html"><![CDATA[<p>IT Automation, like the features and functions offered by Puppet, is riddled with a number of pitfalls. Nothing dangerous or site-threatening in the near term, however evolving a <em>bad </em>plan can lead you down a painful path to re-trek when you ultimately need to demolish what you&rsquo;ve done and re-tool, re-work, or even re-start from scratch.  Some simple suggestions can help smooth your integration, and also provide tools and methodologies that make changes in philosophy easy to test and implement as well as make the long road back from a disaster easy(-ier?) to navigate.</p>
+
+<p>Here are some simple guidelines that can provide that foundation and framework:</p>
+
+<p><strong>DO <em>Always</em> Use Revision Control</strong></p>
+
+<p>It would seem this would be a foregone conclusion in this day and age, but you would be surprised just how many shops don&rsquo;t have revision control of any kind in place.  A series of manifests or configurations might be tarred up and sent to the backup system, but aside from dated backups, there&rsquo;s no real versioning&hellip;just monolithic archives to weed through in a time of disaster.</p>
+
+<p>Revision control puts you one command away from restoring those configurations and manifests (and even your data vis-a-vis &ldquo;Hiera&rdquo;) to their original locations in the most recent state.</p>
+
+<p><strong>DO Rethink Your Environments</strong></p>
+
+<p>If you automate a bad workflow, you still have a bad workflow.  (albeit an automated one!)</p>
+
+<p>Rethink how you do things and why.  Why do you promote code the way you do, and is there a better way to do it?  Why do you still have a manual portion to your procedure, and is it entirely necessary, or can this be remanded to Puppet to do for you as well.  What things are you doing well?  How can they improve?</p>
+
+<p>Try to think through all your procedures.  There are more than you think, and they&rsquo;re often less optimized than they can be.  If you&rsquo;re going to implement Puppet automation, it&rsquo;s time to retool.</p>
+
+<p><strong>DO Implement Slowly and Methodically</strong></p>
+
+<p>Another pitfall a lot of shops wander into is they try to do too much all at once, and do none of it well.  Either they implement too quickly and migrate a huge environment it took years to build (sometimes as much as a decade!) through a single professional services engagement or at an unrealistic pace.  Automation is complex, but if you take the time to implement correctly, piece-by-piece and hand-in-hand with your rethinking of your environment referred to above, you can revolutionize the way you work and make the environment considerably more powerful, considerably easier to work with, and ultimately release yourself to work on much more interesting problems in your environment.  Take your time to build the environment you want.</p>
+
+<p><strong>DO Engage the Community</strong></p>
+
+<p>By using Puppet, you are the beneficiary of the greatest software development paradigm in history &ndash; the Open Source movement.  People all over the world have taken part in crafting the powerful tool you have before you.  If you are able to help in like manner, by all means contribute your code to the community. (With your data in Hiera, this is easier than ever!)  Join a Puppet Users Group.  Share your clever solutions to unique problems with the community via GitHub, the Puppet Forge, your website&hellip; give back.  The more you pour in, the more you get out, and something you solve may end up baked into the final product one day in the future.</p>
+
+<p><strong>DON&rsquo;T Pit Teams Against Each Other</strong></p>
+
+<p>DON&rsquo;T make this a DEV vs OPS paradigm.  This is a marriage of the best tools of both worlds.  Depending on how your culture breaks down, this could be an OPS-aware way of doing development, or a DEV-informed way of doing operations.  You need to remember one thing in all of it.  The marriage of these worlds is a <em>teamwork</em> effort.</p>
+
+<p>I was averse to the term DEVOPS when it first started being used, as it was a tool of the development world I was engaged with to cede root level access to developers.  In a properly managed, secure environment, this is always a no-no.  Development personnel are not trained systems people and rarely are.  By the same token, never ask your systems people to delve into core development, or to troubleshoot your developers' code.  They are not tooled for that work.</p>
+
+<p>This does not say that one is better than the other, nor does it say they do not share a certain amount of core skills at the basest levels. Much like the differences between civil and mechanical engineers, each has a base level of knowledge that ties them together, but each is highly specialized.  You don&rsquo;t want your civil engineer building machine tools just as much as you don&rsquo;t want your mechanical engineer building bridges.  Each discipline is highly specialized and carries with it nuance and knowledge you only gain through experience&hellip;experience <em>on </em>the job.</p>
+
+<p>Instead, find a culture and a paradigm that joins the forces of these two disciplines to build something unique and special rather than wasting time with dissension and argument.</p>
+
+<p><strong>DON&rsquo;T Expect Automation to Solve <em>Everything</em></strong></p>
+
+<p>I know, that sounds like a sacrilege at this point, but its true.  No matter how automated your site becomes, how detailed your configuration elements are, or how much you&rsquo;ve detailed your entire workflow, you still can never replace the element of human consideration and decision-making.</p>
+
+<p>Automation, as I&rsquo;ve said before, automates away the mundane to make time for you, DEVOPS person, to work on really interesting and curious work.  You can now write that entire new whiz bang gadget you&rsquo;ve been conceptualizing for the last several years, but have never quite gotten there because you were too busy &ldquo;putting out fires&rdquo;.  Puppet automation is definitely a watershed in modern administration and development, but people are still needed.</p>
+
+<p>Another &ldquo;intangible&rdquo; you may not readily think about when considering a DEVOPS infrastructure is one of <em>culture.  </em>The best places to work are always the best cultures brought about by the right collection of people, ideas, personalities, and management styles.  When you find that right mix of people and ideas, the workplace becomes a, forgive me, <em>magical</em> place to be.  Automation can never make that happen.</p>
+
+<p><strong>DON&rsquo;T Starve Your Automation Environment</strong></p>
+
+<p>Automation solves a lot of things, but one thing it cannot do is feed itself.  This particular animal has a ton of needs over time.  From appropriate hardware to personnel, the environment needs time, attention, and consideration.  Remember that this is the &ldquo;machine tool&rdquo; of your whole company.  It is the thing that builds and maintains other things.  As such, its priority rises above that of the next web server or DNS system.</p>
+
+<p>Always allocate enough resources (read: money, personnel, and time) to your environment.  If that means engineer time to work on a specially project and to do the job <em>right</em>, that&rsquo;s what it means.  And, yes, it&rsquo;s more important than meeting an arbitrarily assigned &ldquo;live date&rdquo; to your new widget or site or application.  The environment comes first, and all else follows.  If you give the resources and time to your automation initiatives it deserves, a number of years down the road you will look back and be amazed at the sheer amount of work your team was able to accomplish just by keeping this simple precept.</p>
+
+<p><strong>DON&rsquo;T Stop Evolving</strong></p>
+
+<p>Never stop learning.  Never stop bettering yourself or your environment.  Always keep refactoring your code.  (i.e., if you wrote that Apache module 4 years ago, chances are good that what you&rsquo;ve learned in the interim can go back into making that module even better.)  Always keep your people trained and engaged on the latest developments in Puppet and all the associated tools.  Never stop striving to be better and never stop reaching.  I may sound lil your coach from high school in this, but those principles he was trying to impart hold true.  If you continue to drive forward and reinvent yourself as a regular part of your forward pursuits, the endpoint of that evolution will benefit you personally, your team both vocationally and culturally, your company&rsquo;s efficiency, and your environment&rsquo;s impact on your bottom line.</p>
+
+<p><strong>Conclusion</strong></p>
+
+<p>If we keep a stronger eye on our environment and tools that rises above the simple concept of &ldquo;that software I bought&rdquo; and &ldquo;fit it in between all the other things you have to do&rdquo; and give Puppet its proper place in our company, it can truly revolutionize your workflow.  However, when properly placed culturally and from a design, implementation, and workflow perspective, it can transform any shop on levels not readily observable when looking at the price tag or the resource requirements list.  DO let Puppet transform your environment and workflow and DON&rsquo;T be afraid to take the plunge.  It&rsquo;s exciting, challenging, and can easily take your company to the &ldquo;next level&rdquo;.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[GitHub, Git, and Just Plain Revision Control]]></title>
+    <link href="http://questy.org/blog/2014/05/13/github-git-just-plain-revision-control/"/>
+    <updated>2014-05-13T17:06:09-04:00</updated>
+    <id>http://questy.org/blog/2014/05/13/github-git-just-plain-revision-control</id>
+    <content type="html"><![CDATA[<p>One of the &ldquo;bugaboos&rdquo; in the sysadmin world for the longest time was the reluctance to use those &ldquo;stinky developer tools&rdquo; in our world for any reason.  I&rsquo;m not sure the impetus behind this, but my wager is on something akin to security or yet another open port or &ldquo;attack vector&rdquo; if you will.  But today&rsquo;s competent and conscientious systems admin (not to mention DEVOPS person) will use revision control as their go-to standard for collecting, versioning, backing up, and distributing all manner of things.</p>
+
+<p>I&rsquo;ve seen some shops use <a href="http://www.nongnu.org/cvs/">CVS</a> as their choice, old thought it is, just as a large &ldquo;bucket&rdquo; in which to throw things for safekeeping with revisions and rollbacks available in case of some uncertain as yet unencountered event.  <a href="http://subversion.apache.org">Subversion</a> was the next generation of revision control tools.  Darling of developers and bane of disk space, Subversion still had many more features and performed essentially the same task.</p>
+
+<p>Now, <a href="http://git-scm.com">Git</a> is the flavor of the month, and not only has gained widespread acceptance as a standard way to &ldquo;do&rdquo; revision control, it&rsquo;s the de-facto way to do DEVOPS in  a Puppet world.  Granted, there are those brave souls out there who have tried to stick with the older tools, but the workflow and the &ldquo;glue&rdquo; between all the various components therein.  Hence, this post.</p>
+
+<p><strong>What is Git, really?</strong></p>
+
+<p>Git was developed by <a href="https://en.wikipedia.org/wiki/Linus_Torvalds">Linus Torvalds</a> for Linux Kernel collaboration.  He needed a new revision control system akin to the previously used <a href="https://en.wikipedia.org/wiki/BitKeeper">BitKeeper</a> software that was unencumbered by copyright and able to handle the unique distributed development needs of the Linux project.  So, rather than try and use someone else&rsquo;s project, he collated what was needed and developed the project himself.</p>
+
+<p>Now, Git is used both privately and Publicly throughout the world for many projects.  Git is lightweight and works in a more efficient manner by moving changes via diffs rather than whole repositories, allows developers to maintain and manage an entire repository on their own systems either connected or disconnected from the Internet.  Then, they can &ldquo;push&rdquo; all their changes back to the central repository as needed.</p>
+
+<p><strong>Enter GitHub</strong></p>
+
+<p>For our purposes, we&rsquo;ll specifically be working in <a href="https://en.wikipedia.org/wiki/GitHub">GitHub</a>.  GitHub is a project offering web-based hosting of your code that you can source from anywhere.  GitHub offers public and private hosting and a spate of other related services to development collaboration on the Internet.  If you do not have a GitHub account, you&rsquo;ll need to surf on over to the site and sign up for one.  It&rsquo;s free and it&rsquo;s fast, and I&rsquo;ll be using and sourcing it heavily as this series continues.</p>
+
+<p><strong>Basic Git</strong></p>
+
+<p>Git itself is available on most modern platforms and can easily hook into GitHub for our purposes.  I will be mostly referring to command-line usage of git, but you will find quite a bit in the way of tools, frontends, and &ldquo;helper&rdquo; apps for Git that you may or may not wish to leverage as you learn and incorporate Git into your workflow.  In the meantime, stick with me on command-line work.</p>
+
+<p>When you install git on your unix-like platform, it will drop a few binaries.  The one we&rsquo;re most interested in is the git binary itself.  It&rsquo;s very simply designed and has a very straightforward set of options you can get from the command line by simply typing &ldquo;git&rdquo; with no options, or &ldquo;git help&rdquo;.  The output is below:</p>
+
+<p>[snippet id=&ldquo;32&rdquo;]</p>
+
+<p>We&rsquo;re most interested in a small subset of commands for our purposes here.  They are <strong>add, commit, pull, push, branch, checkout, and clone.</strong></p>
+
+<p>I will be referencing one particular way to &ldquo;do&rdquo; git which works for me, but as with anything <a href="https://en.wikipedia.org/wiki/TMTOWTDI">TMTOWTDI</a> and <a href="https://en.wiktionary.org/wiki/YMMV">YMMV</a>.</p>
+
+<p><strong>GitHub Portion</strong></p>
+
+<p>I am going to assume you&rsquo;ve created a GitHub Account.  When you create your account, you&rsquo;ll have a unique URL assigned to you based on your username.  Mine, for instance, is <a href="https://github.com/cvquesty/">https://github.com/cvquesty/</a><insert project name here>.  The basic interface to GitHub is rather straightforward and looks like the following:</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/mygithub.png"><img src="http://questy.org/wp-content/uploads/2014/05/mygithub.png" alt="mygithub" /></a>The interface keeps track of all projects you&rsquo;re working on, the frequency with which you commit or otherwise use your repository, and (most importantly), a centralized server that is storing those projects you can source from any internet connected system.</p>
+
+<p><strong>Make a Repository</strong></p>
+
+<p>In the upper right-hand corner of your screen, you&rsquo;ll notice a &ldquo;+&rdquo; symbol.  Let&rsquo;s click that and create us a new repository.  You&rsquo;ll be presented with a dialog to name and describe your new repo.  I&rsquo;ll use the name &ldquo;sample repo&rdquo; and the description &ldquo;Sample Repo for my Tutorial&rdquo; with no other options other than the defaults.  (we&rsquo;ll go manually through those processes shortly).  After creating the repository by clicking &ldquo;Create Repository&rdquo;, I&rsquo;m presented with a page that has step-by-step instructions on what to do next.  I&rsquo;ll include that here for you.</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/myrepo.png"><img src="http://questy.org/wp-content/uploads/2014/05/myrepo.png" alt="myrepo" /></a></p>
+
+<p>As you can see, you have your repo referenced at the top by <userid>/<reponame>.  You have instructions on how to use the repo from both the GitHub desktop client and the command line and some special instructions for if you have it locally on your system, and are just now uploading that content into this repository you&rsquo;ve created to hold it.  We&rsquo;re interested in the command line instructions.</p>
+
+<p><strong>A Place to Git</strong></p>
+
+<p>On my system (a Mac), I have Git installed by default and I have a directory in my home directory simply called &ldquo;Projects&rdquo;.  Under there, I have a &ldquo;Git&rdquo; directory.  ALL of my work in Git goes here.  This is not a hard/fast rule.  I just chose it as my location to place all my git work so it is centralized and all collected together.</p>
+
+<p>What we&rsquo;re going to do next is to configure Git, create a location for our repo, make a file to commit to the repo and then push that file up to GitHub to see how that workflow works.  Let&rsquo;s get started.</p>
+
+<p><strong>Configuring Git</strong></p>
+
+<p>Since Git is personal to you as a user, you need to let Git know a few things about you.  This gives your git server (in our case GitHub) the information it needs when you&rsquo;re pushing code (like your identity, default commit locations, etc).  First, your name and email:</p>
+
+<p>git config &ndash;global user.name &ldquo;John Doe&rdquo;
+git config &ndash;global user.email <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#58;&#121;&#x6f;&#117;&#64;&#121;&#111;&#x75;&#114;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#x6f;&#x6d;">&#x79;&#111;&#117;&#x40;&#121;&#111;&#x75;&#x72;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#111;&#x6d;</a></p>
+
+<p>You&rsquo;ll only need to perform this once.  There are quite a few options and you can read up on those <a href="http://git-scm.com/book/en/Getting-Started-First-Time-Git-Setup">here</a> at your leisure.</p>
+
+<p>Next, create a location for your new repo.  I chose my aforementioned directory and created the location</p>
+
+<p>/Users/jsheets/Projects/Git/samplerepo</p>
+
+<p>for demonstration purposes.  From here, though, we can take up with the instructions on the GitHub page displayed after creating your repo. I&rsquo;ll reproduce that here for reference:</p>
+
+<p>cd /Users/jsheets/Projects/Git/samplerepo
+touch README.md
+git init
+git add README.md
+git commit -m &ldquo;first commit&rdquo;
+git remote add origin <a href="https://github.com/cvquesty/samplerepo.git">https://github.com/cvquesty/samplerepo.git</a>
+git push -u origin master</p>
+
+<p>If all has gone well, you have now created an empty README.md file, committed it to your local Git repository and then subsequently pushed it up to GitHub.  You&rsquo;ll note that we added &ldquo;origin&rdquo; as the remote and then we pushed to &ldquo;origin&rdquo; in a thing called &ldquo;master&rdquo;.  What&rsquo;s that all about?</p>
+
+<p>GitHub (and git) refer to their repo location as &ldquo;origin&rdquo;.  This becomes handy when you start pushing between remote repositories and from remote to remote to GitHub, etc.  So, it makes sense to name GitHub <em>functionally </em>as well as it&rsquo;s assigned domain name.  By saying &ldquo;origin&rdquo;, we&rsquo;re making GitHub the de-facto standard center of everything we&rsquo;re doing.</p>
+
+<p>Next, we refer to &ldquo;master&rdquo;.  What is that?  Simply stated, we&rsquo;re pushing to a &ldquo;branch&rdquo; called &ldquo;master&rdquo;.</p>
+
+<p><strong>Branching</strong></p>
+
+<p>Branching is a method by which you can have multiple code &ldquo;branches&rdquo; or &ldquo;threads&rdquo; in existence simultaneously, and Git is managing them all for you.  For instance, you may wish to have one code collection only for use in production systems while maintaining a separate one for development systems.  In fact, you can create a random branch with a bug name (bug1234, for instance), commit your changes to that, test it, and push it to origin, then pull it down to all your production hosts, solving a big problem in your site or codebase.  Better yet, if it all works great and you&rsquo;re happy with it, you can &ldquo;merge&rdquo; that bug back into your main code repository, making it a permanent fixture in your code in whatever branch you like. (or even all of them!)</p>
+
+<p>When you first create your repo, GitHub makes a &ldquo;main&rdquo; branch for you automatically, and calls it &ldquo;master&rdquo;.  So, by utilizing the command above, we&rsquo;re telling Git to push our code (in this case, README.md) to our origin server (GitHub) and put it in the &ldquo;master&rdquo; branch.</p>
+
+<p>While we&rsquo;re on the topic, let&rsquo;s create two more branches so we can get the full hang of this branching thing.  (Hint:  It&rsquo;s core to how we integrate this into Puppet).</p>
+
+<p><strong>Makin' Branches</strong></p>
+
+<p>As I said before, GitHub creates a default &ldquo;master&rdquo; branch for you.  If, from your local repository location, you type &ldquo;git branch&rdquo;, Git will list a single branch for you,</p>
+
+<p>git branch
+* master</p>
+
+<p>This tells us simply, what branch you are currently in.  Now, let&rsquo;s run two commands to create new branches to be tracked by Git.</p>
+
+<p>git branch production
+git branch development</p>
+
+<p>Now.  Run &ldquo;git branch&rdquo; again:</p>
+
+<p>git branch
+development
+* master
+production</p>
+
+<p>As you can see, your other branches are now visible when running the command.  If you have color, you may notice that the &ldquo;master&rdquo; branch is a different color than the others (based on your settings).  If you do not have color, the asterisk denotes what branch is active as well.</p>
+
+<p><strong>Checkout and Commit, Branch and Merge</strong></p>
+
+<p>We have our repository and we have our branches.  We have a single README.md in the current directory, and we are ready to roll committing code and pushing it into our repository.  Let&rsquo;s perform a simple experiment to get the &ldquo;hang&rdquo; of how the branches work and how to switch between them as needed.  Since we&rsquo;re in &ldquo;master&rdquo;, let&rsquo;s edit our README.md to reflect that by placing a single word in the file &ldquo;master&rdquo;. (use vim as discussed in our last tutorial).</p>
+
+<p>Once you&rsquo;re done with your edit, you&rsquo;ll see that the text is in the file.  you can edit it and you can cat the file and see the contents, but if you view the file up at GitHub, that content is not there yet.  Some sort of way, a mechanism must be used to put that data there.  Well, there is such a process, and it is a two part process.</p>
+
+<p>Recall I mentioned that one of the features of Git is that you can have a complete repository local to your machine.  you can work on that repo and make all sorts of changes completely disconnected from your server (in our case GitHub&hellip; &ldquo;origin&rdquo; as it is named to Git).  Therefore, in reality you are dealing with not one, but two repositories.  The local one on your machine and the remote one at origin.  (remember the &ldquo;git remote add origin&rdquo; above?)</p>
+
+<p>So, to finalize your changes locally, you must &ldquo;commit&rdquo; them to your local repository as &ldquo;final&rdquo;.  THEN, you can &ldquo;push&rdquo; those changes into your main server (in our case GitHub).   We did as much above with our procedure where we did the commit with a message, and then a push up to origin.  However, now that we&rsquo;ve made changes locally, they are not yet reflected at GitHub.  Logic would dictate another commit is in order:</p>
+
+<p>git commit
+or
+git commit -m &lsquo;Some message about your commit&rsquo;</p>
+
+<p>As you can see, there are two routes you can go.  If you simply supply the &ldquo;git commit&rdquo; without any options, you will be brought into the system text editor you (or your OS) has configured in the $EDITOR environment variable.  Most platforms use &ldquo;vi&rdquo; or &ldquo;vim&rdquo; for this, but I have also seen &ldquo;pico&rdquo; used in some distributions like Ubuntu Linux.  In any event, you can edit the file by placing your comments in.  After exiting the file, saving the content, the commit will be complete.  If, however, you do not put anything, git will not commit the changes.  This is to enforce good coding practice by requiring some notes about what a committer is doing before making the changes.  It&rsquo;s a highly recommended workflow to follow.</p>
+
+<p>Once your commit is complete, phase 1 (local commit) is over.  You can commit over and over, as many times as you like.  you are a full, local repository.  In fact, I&rsquo;d encourage many commits.  Commit when you think about it.  Commit before you walk away from your system.  Commit randomly for no reason in mid-workflow.  The more commits you have, the less likely you are to lose work.</p>
+
+<p>Finally, to get the data up to GitHub, we need to &ldquo;push&rdquo; that data off your repository and into your &ldquo;origin&rdquo; repository. This is quite simple, and you&rsquo;ve done it before:</p>
+
+<p>git push -u origin master</p>
+
+<p>Sometimes you may wish to not keep specifying the location you&rsquo;re pushing to.  If so, you can set a default location for each branch.  Git will tell you just how to do that if you forget the &ldquo;-u location branch&rdquo; option.  Let&rsquo;s say I&rsquo;m in my aster branch and I simply run a &ldquo;git push&rdquo;.  Git will tell me I did something wrong, but will <em>also </em>tell me how to eliminate that problem:</p>
+
+<p>fatal: The current branch master has no upstream branch.
+To push the current branch and set the remote as upstream, use</p>
+
+<p>git push &ndash;set-upstream origin master</p>
+
+<p>&ldquo;fatal&rdquo; seems a <em>little </em>melodramatic since Git gives you the answer as to what to do right there.  All you need to do is set the default target once with that last line, and from that point forward, you only need type &ldquo;git push&rdquo; when pushing to GitHub.  Hint:  I do this in ALL my branches at create time.  It saves a lot of typing over time, and like any good Sysadmin, I&rsquo;m lazy.  :)</p>
+
+<p>So, now I&rsquo;ve got multiple branches that need this setting, but I&rsquo;m still stuck in &ldquo;master&rdquo;.  How do I get to &ldquo;development&rdquo; or &ldquo;production&rdquo; to perform the same tasks?</p>
+
+<p>Git provides a &ldquo;checkout&rdquo; command.  What you&rsquo;re saying with &ldquo;checkout&rdquo; is:  "Git, I want to be working on branch &ldquo;x&rdquo;, and I want you to make that my current branch.  if there are any differences between that branch and the one I&rsquo;m on, please make those changes on-disk for me so I can exclusively be working in branch &ldquo;x&rdquo;&ldquo;.  A little verbose, but you get the point.  So, to move to the next branch and do all the wonderful things we did in "master&rdquo; above, we perform:</p>
+
+<p>git checkout development
+edit README.md to say different text
+git commit -a -m &lsquo;editing README for development branch&rsquo;
+git push &ndash;set-upstream origin development
+git push</p>
+
+<p>If all has gone well, your development README.md file is now changed and pushed into GitHub.  What about &ldquo;master&rdquo;, though?  Well, let&rsquo;s take a look:</p>
+
+<p>git checkout master
+cat README.md</p>
+
+<p>If all has gone well, the contents of README.md are back to what was in your &ldquo;master&rdquo; branch.  By checking out &ldquo;development&rdquo;, it&rsquo;ll change back to the new content there.  As a test, checkout the &ldquo;production&rdquo; branch, change the README.md file, commit it, set your upstream push target and then push the contents to GitHub.</p>
+
+<p>Now you&rsquo;re cooking with gas.</p>
+
+<p><strong>Conclusion</strong></p>
+
+<p>This is a simple tutorial to get you started with Git &amp; GitHub.  There are MANY tutorials and books that can make you into a Git expert, but are way outside the scope of this humble little blog.  let me provide a few of those for you here:</p>
+
+<p><a href="http://git-scm.com/documentation">Git Help</a>
+<a href="http://git-scm.com/book">Git Book</a><a href="https://help.github.com">
+GitHub Help</a></p>
+
+<p>This documentation should be more than enough to get you moving and well underway with Git ins-and-outs for committing Puppet code and using r10k to interface with and distribute that code around your environment.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Why All the Vim?]]></title>
+    <link href="http://questy.org/blog/2014/05/09/vim-2/"/>
+    <updated>2014-05-09T11:07:57-04:00</updated>
+    <id>http://questy.org/blog/2014/05/09/vim-2</id>
+    <content type="html"><![CDATA[<p>As we move on through the last post on Vim, you may ask yourself why I&rsquo;m remediating all the way back to text editors.  Well, as you&rsquo;ll see over time, this is all about workflow; Building yourself a detailed workflow by which you can write code, syntax check, commit to revision control, deploy to your Puppet instances, and duplicate that workflow across all your environments.</p>
+
+<p>The text editor itself, while important, is just a tiny part of a much larger picture I hope to cobble together over time.  So, let&rsquo;s begin to push forward with our coverage of Vim.</p>
+
+<p><strong>Plugins and Syntax Highlighting</strong></p>
+
+<p>I went through the beginnings of Vim to give you a starting point and some basics in the event you have no experience in the Vim world.  One would assume that since you&rsquo;re on a Puppet/Dev-Ops-y sort of page, all this is old news, but we do have completely &ldquo;green&rdquo; readers from time to time, and I didn&rsquo;t want to leave them out.</p>
+
+<p>The main goal in getting Vim in the picture was to bring you to the point where we start looking at our code and knowing what we&rsquo;re dealing with at a glance.  As you begin to work in the field, whether coding in Perl, Python, Shell, or the Puppet DSL, there are some conventions out there all designed to help you and smooth your workflow.  Of these is syntax highlighting in code editors in general, but (for our purposes) in Vim <em>specifically.</em></p>
+
+<p>Take a look at this screen:</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/nosyn.png"><img src="http://questy.org/wp-content/uploads/2014/05/nosyn.png" alt="nosyn" /></a></p>
+
+<p>While the code is well formatted and everything seems ok, were there any issues in this document, you&rsquo;d never know it.  From syntax issues to missing elements, none of this is automatically highlighted to you in any way.  Enter syntax highlighting&hellip;  Look again:</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/syn.png"><img src="http://questy.org/wp-content/uploads/2014/05/syn.png" alt="syn" /></a></p>
+
+<p>Much nicer, no?  Were there any missing elements, you&rsquo;d see something amiss in the document.  The colors would not be organized according to element type, and odd things would be displayed in the page.  Let me &ldquo;break&rdquo; the file for you&hellip;</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/broke.png"><img src="http://questy.org/wp-content/uploads/2014/05/broke.png" alt="broke" /></a></p>
+
+<p>You&rsquo;ll notice that on line 4 something is amiss.  If you compare the two colored instances, you&rsquo;ll see that your eye is drawn to where things begin to be different.  Best part for quick and easy glancing is that the entirety of the file after that one mistake now looks &ldquo;wrong&rdquo;.  Ease of view.</p>
+
+<p><strong>How Can This Help With Puppet?</strong></p>
+
+<p>As luck would have it, Vim has a plugin engine that allows you to have pre-built templates that syntax highlight code for you in a predetermined way.  It &ldquo;recognizes&rdquo; your code type, and highlights accordingly.  The basic plugin structure for vim lives in your home directory and in the &ldquo;hidden&rdquo; .vim directory.  Under this directory you can have a number of wide and varied add ons to vim.  We&rsquo;re just going to talk about plugins.</p>
+
+<p>By default, you don&rsquo;t have anything in this directory.  You usually have a .vimrc file and a .vim directory in your home directory location, but that&rsquo;s about it.  The &ldquo;magic&rdquo; happens, though, when you add a few pieces.  Those would include a &ldquo;.vimrc&rdquo; file which will turn on syntax highlighting, and then a Puppet vim plugin that sorts all the language elements and colorizes them for you.</p>
+
+<p>In your home directory, if it doesn&rsquo;t already exist, create a .vimrc file with a single entry:</p>
+
+<p><strong>syntax on</strong></p>
+
+<p>This will instruct vim to syntax highlight, and to be aware of any highlighting plugins that may live in the .vim plugin folder.  Next, place <a href="http://questy.org/stuff/puppet/puppet.vim">this file</a> into your .vim plugin directory.  If it does not yet exist, create it.  It lives in ~/.vim/plugin.  Once you load up new puppet manifests, it will recognize the type and begin to highlight the code according to the defined convention from the puppet.vim file you just downloaded.  If you have any issues, look at the vim plugin reference <a href="http://vimdoc.sourceforge.net/htmldoc/usr_05.html">here</a>.</p>
+
+<p>Now you&rsquo;re ready to work with Puppet files like a pro!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Vim]]></title>
+    <link href="http://questy.org/blog/2014/05/02/vim/"/>
+    <updated>2014-05-02T15:56:54-04:00</updated>
+    <id>http://questy.org/blog/2014/05/02/vim</id>
+    <content type="html"><![CDATA[<p><strong>Old School</strong></p>
+
+<p>Why on earth am I starting with Vim?  (or &ldquo;vi&rdquo; for you old folks)</p>
+
+<p>Vim is the modern &ldquo;vi&rdquo; implementation.  A full-screen text editor with a myriad of options and abilities for beyond anything I could ever cover here.  But Vim has one thing going for it that no other text editor has.  One simple fact about it puts it in the category of cameras.  You know the old saying?</p>
+
+<p><em><strong>&ldquo;The best camera is the one you have with you.&rdquo;</strong></em></p>
+
+<p>Thus it is with vi/vim.  It&rsquo;s literally <strong>everywhere.</strong></p>
+
+<p>Every UNIX OS, commercial or not, streamlined or not, old or new, has vi or vim installed on it.  Emacs is a great product, but it just isn&rsquo;t installed by default everywhere.  Regardless of the editor you refer to, ${INSERT_EDITOR_HERE} just isn&rsquo;t as ubiquitous as Vi/Vim.</p>
+
+<p>Since we&rsquo;re talking about a modern pursuit and workflow (DEVOPS), we&rsquo;ll be talking mostly about Vim&rsquo;s capabilities and features.</p>
+
+<p><strong>What Vim is <em>NOT</em></strong></p>
+
+<p>Vim is not a word processor.  You won&rsquo;t be writing business letters with it.  Vim is not for writing resumes, making pretty newsletters, or for typesetting a magazine.  The die-hard Vi/Vim fan will tell you that you can do all of the above with it, but that falls into the same category as filling in the Grand Canyon with a teaspoon. You <em>can </em>do it, but why on earth would you want to?</p>
+
+<p><strong>What Vim Does Best</strong></p>
+
+<p>Vim edits text.  Plain&hellip;text.  Not pretty bold, italicized, with all sorts of alignment characters and strange paragraphs and pagination doohickeys&hellip; no, Vim just makes text files.  Text files that are SO devoid of bells and whistles, in fact, that when you open a Vim created file in your favorite WYSIWYG editor, you&rsquo;ll see what appears to be a pile of letters and such all crammed together like you had nothing else on your keyboard but letters, numbers, and punctuation.</p>
+
+<p>Vim allows you to eliminate all the cruft and get right down to the matter of creating plain, unencumbered text files.</p>
+
+<p><strong>Why Does it Matter?</strong></p>
+
+<p>When you&rsquo;re logged onto your favorite Linux through two bastion hosts across several continents and have latency to boot, WordPad will not help.  You&rsquo;ll need a lightweight text editor within which you can load, edit, and save the single most numerous type of item on a UNIX system&hellip; a text file.</p>
+
+<p><strong>Where Can I learn More About Vim?</strong></p>
+
+<p>Vim&rsquo;s main project page can be found <a href="http://www.vim.org">here</a> online.  The main page has links to documentation and various community links as well as connections to various types of plugins and add ons you can use with Vim for any number of tasks.  You can join online forums, mailing lists, and communities whose entire purpose is the extension and promotion of Vim.  But that&rsquo;s not what we&rsquo;re up to&hellip;</p>
+
+<p><strong>How We Will Use Vim</strong></p>
+
+<p>For our purposes, we will use vim as code editor.  No more, no less.  Vim&rsquo;s abilities can help us <em>see </em>our code in ways that let&rsquo;s us know when there&rsquo;s an issue and can direct us generally in the direction of our solutions.  So, let&rsquo;s dive in to a minor Vim tutorial.  (If you&rsquo;re an advanced Vim user, stick with me&hellip;)</p>
+
+<p>All Linux distributions and Mac OSX come with Vim pre-installed and ready for action.  Note that some distributions of Linux will have <em>both </em>Vim and Vi.  You will either need to get into the habit of running &ldquo;vim&rdquo; from the command line, or setup your shell aliases to load Vim every time you type &ldquo;vi&rdquo; instead.</p>
+
+<p>When you launch Vim, you see a screen much like the following.  I use Mac OSX, but the effect is the same, regardless of platform.</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/vim.png"><img src="http://questy.org/wp-content/uploads/2014/05/vim.png" alt="vim_screen" /></a></p>
+
+<p>I have several features turned on (including the line across the bottom that provides me a lot of information about the file I&rsquo;m editing), but the main things we will talk about here are <em>syntax highlighting</em> and <em>plugins </em>after a short tutorial on how Vim works.</p>
+
+<p><strong>I Can&rsquo;t DO Anything!!!</strong></p>
+
+<p>Most people&rsquo;s frustrations begin right on this page.  From here, nothing seems familiar.  I can&rsquo;t pull down a menu and I can&rsquo;t really even choose &ldquo;exit&rdquo; from a list of things to do.  The only real hint I have is on the screen above:</p>
+
+<p>type  :q<Enter>               to exit</p>
+
+<p>&hellip;which is quite a peculiar directive.  Why do I have to type a colon?  What does it mean?  And goodness help you if you already managed to type something into the screen.  The instructions you see above disappear, and without the right collection of keystrokes, you&rsquo;re not getting out of Vim.  You&rsquo;ll most likely just close the window and start looking for &ldquo;notepad&rdquo;.</p>
+
+<p>Here&rsquo;s where the tutorial starts.</p>
+
+<p>Vim is what is known as a full-screen text editor.  It started back in the Amiga days, and was first released publicly in 1991.  Before Vi/Vim, to create text files, there were line-based text editors that only allowed you to see one line of a file at a time.  So, you really couldn&rsquo;t work with huge files&hellip;it would be difficult to see file lines compared to each other or look at the whole flow of a subroutine you had written, or even to match wording or syntax from one section to another.</p>
+
+<p>Enter the full-screen editor.</p>
+
+<p>What the full-screen editor did was open a file on disk, reserving space in memory to hold the entire file, and then display to you a &ldquo;window&rdquo; into your file equal to your terminal&rsquo;s display size.  for instance, I have a terminal right now that has a several thousand line file open.  Of that file, I can only see 25 lines and 80 columns wide.  This &ldquo;window&rdquo; onto my file is something I personally configured in my terminal program (in my case, &ldquo;iTerm&rdquo;).  I can scroll up and down this file, sliding forward or backward within the file from the beginning to the end (just as you may an MS Word document) and can interact with/edit any character I can see on the screen.  (we&rsquo;ll talk about search and replace and other such things later).</p>
+
+<p>We are currently in what is known as &ldquo;command mode&rdquo;.  Many would ask why you don&rsquo;t just call this &ldquo;view&rdquo; mode, and the reasons are very simple.  From this screen, you issue MANY commands to Vim and tell it how you want it to behave for you.  For our purposes, we will use &ldquo;command&rdquo; mode and &ldquo;insert&rdquo; mode mostly.</p>
+
+<p><strong>Well, How Do I Edit Something?</strong></p>
+
+<p>To edit your file, you enter into a mode known as &ldquo;insert&rdquo; mode.  From this page there are several different modes you can enter, but &ldquo;insert&rdquo; mode is the easiest.  You simply type a single lowercase &ldquo;i&rdquo; to enter this mode.  When you do so, a cursor appears on the top line of the page you are viewing, and you are now able to type all you like.  Letters, <enter> keys, tabs&hellip; all normal typing idioms are available to you from this point.  How, you may ask, then do you save your work to disk?  I&rsquo;m in this &ldquo;insert&rdquo; mode and don&rsquo;t know how to save!</p>
+
+<p>Think about what you wish to accomplish&hellip; you wish to issue the command &ldquo;save&rdquo; to Vim.  Command&hellip;  as in&hellip; &ldquo;command mode&rdquo;, perhaps?  Well, we have to go back into command mode, then, so we can issue some commands to Vim and exit the program.</p>
+
+<p>Any time you are in Vim, your &ldquo;saving grace&rdquo; is your [esc] key.  Two taps on the escape key lways brings you back to command mode from anywhere.  Go ahead and try it.</p>
+
+<p>You&rsquo;ll now notice you have returned to &ldquo;command mode&rdquo; just as you were when you first opened Vim.  The only difference is that everything you typed is now on your screen and has not gone away.  Your &ldquo;edit buffer&rdquo; is full of a file you now can do things with.  You can save it, delete it, save it out as a specific file name&hellip; a myriad of normal file operations you may be used to from other software packages.</p>
+
+<p>In our case, we want to just save the file.  However, when we opened Vim, we didn&rsquo;t specify a file name to edit, we just opened Vim.  So, for all intents and purposes, we have an open buffer full of &ldquo;stuff&rdquo; and no file name to associate with it.  What we want to do now is to &ldquo;write&rdquo; the file to disk.  To do so, we have to issue commands to Vim in Command mode.</p>
+
+<p><strong>Command Mode</strong></p>
+
+<p>To issue commands to Vim, we have to tell it we are issuing it a command, otherwise you may hit a letter than means something else.  Recall that simply by hitting a lowercase &ldquo;i&rdquo; we placed vim into insert mode and then by hitting the [esc] key twice, we left it.  Clearly, there&rsquo;s more to this editor than we can readily see, so how do we save the file?</p>
+
+<p>When you have a buffer with text you would like to save, you have to first hit a colon &ldquo;:&rdquo;.  You&rsquo;ll notice that Vim places the colon on the bottom line of your screen to the left, awaiting a command.  While there are several commands we can perform here (as well as joining multiple commands together), we will simply write the file right now.  To do so, while at the &ldquo;colon prompt&rdquo;, we simply type:</p>
+
+<p><strong>: w foo.txt</strong></p>
+
+<p>and press the &ldquo;enter&rdquo; key.  You will receive a message on the last line that lets you know the file has been written to disk:</p>
+
+<p><strong>&ldquo;foo.txt&rdquo; [New] 1L, 16C written</strong></p>
+
+<p>But I&rsquo;m still in Vim.  What do I do now?</p>
+
+<p>Just like &ldquo;w&rdquo; is a command, exiting the program also is a command.  Guessably so, it is the letter &ldquo;q&rdquo; for &ldquo;quit&rdquo;.  So, as before, you hit the colon key, then the letter q, and then the enter key.  If all goes well, you&rsquo;ll be back at the command line.</p>
+
+<p><strong>Much More to This</strong></p>
+
+<p>Were I to do this for all the features of Vim, I&rsquo;d be writing a book.  However, fortunately for you, there are several tutorials and cheat sheets on Vi/Vim all over the Internet.  Here are a few of my favorites.</p>
+
+<p><a href="http://vim.wikia.com/wiki/Tutorial">The Main Vim Tutorial
+</a><a href="https://www.linux.com/learn/tutorials/228600-vim-101-a-beginners-guide-to-vim">Linux.com&rsquo;s Vim Tutorial</a></p>
+
+<p>As well as some cheat sheets for you to refer to for quick reference on the various commands available when using Vim:</p>
+
+<p><a href="http://www.viemu.com/vi-vim-cheat-sheet.gif">One of My Favorites
+</a><a href="http://vim.rtorr.com">Another Good Cheat Sheet</a></p>
+
+<p>Take some time learning the basics of Vim before pressing on to the next article: &ldquo;Customizing Vim&rdquo;.</p>
+]]></content>
+  </entry>
+  
+</feed>

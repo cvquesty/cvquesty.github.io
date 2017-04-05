@@ -1,0 +1,527 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>LDAP Administration – Part II - Questy.org</title>
+  <meta name="author" content="Jerald Sheets">
+
+  
+  <meta name="description" content="Ok, so in our previous installment, we got LDAP all configured up from the client perspective.  I&rsquo;ll cover some other client-based niceties &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://questy.org/blog/2009/12/28/ldap-administration-part-ii/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Questy.org" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1135877-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Questy.org</a></h1>
+  
+    <h2>Tech musings and other things...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="questy.org">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">LDAP Administration – Part II</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2009-12-28T06:53:02-05:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2009</span></span> <span class='time'>6:53 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://questy.org">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Ok, so in our previous installment, we got LDAP all configured up from the client perspective.  I&rsquo;ll cover some other client-based niceties such as extra PAM modules and security in our third installment.  For now, back to the show!</p>
+
+<p><strong>The Server</strong></p>
+
+<p>The lightweight Directory Access Protocol (LDAP) gives us tons of things to use to help make the system login/logout process easy to manage and maintain.  The LDAP server runs over the Berkeley Database (BDB) as a data backend, and has a <a href="http://en.wikipedia.org/wiki/LDAP">long history</a> as a protocol/standard.</p>
+
+<p>As we said last time, the server configuration consists of the contents of the /etc/openldap directory with the primary file of interest being the /etc/openldap/slapd.conf file.  The secondary file of interest will be the /etc/ldap.conf file, another server configuration file.</p>
+
+<p><strong>/etc/openldap/slapd.conf</strong></p>
+
+<p>First, we will cover the ldap daemon (slapd) configuration file, /etc/openldap/slapd.conf.  This file is responsible for specifying information regarding what schemas to use, loggin parametwes, database specifications and locations, security, replication, and security grants.</p>
+
+<p>Let&rsquo;s start with a very simple slapd.conf file:</p>
+
+<blockquote># OpenLDAP Server Configuration
+
+# Primary Server Schemas
+include         /etc/openldap/schema/core.schema
+include         /etc/openldap/schema/cosine.schema
+include         /etc/openldap/schema/inetorgperson.schema
+include         /etc/openldap/schema/nis.schema
+include         /etc/openldap/schema/redhat/autofs.schema
+
+# Logging
+
+loglevel 0
+pidfile      /var/run/openldap/slapd.pid
+argsfile    /var/run/openldap/slapd.args
+
+# bdb database definitions
+database             bdb
+suffix                   "dc=bob,dc=com"
+rootdn                 "cn=admin,dc=bob,dc=com"
+rootpw                secret
+schemacheck    off
+
+# location of the data files
+directory              /var/lib/ldap
+
+# Indexes to help speed up queries
+index objectClass,uid,uidNumber,gidNumber,memberUid     eq
+index cn,mail,surname,givenname                                                eq,subinitial
+
+# Grant users rights to change their own password
+access to attrs=userPassword
+by self write
+by anonymous auth
+by dn.base="cn=admin,dc=bob,dc=com" write
+by * noneaccess to *
+by self write
+by dn.base="cn=admin,dc=bob,dc=com" write
+by * read</blockquote>
+
+
+<p>This is a very basic slapd.conf file without TLS security information, without replication information, and without any frills at all.  Recall that our primary goal here is to get a basic LDAP server running and working without any frills.  We want the ting to work, and then we&rsquo;ll add features and security as time goes on.</p>
+
+<p><strong>/etc/ldap.conf</strong></p>
+
+<p>The /etc/ldap.conf file bills itself as the &ldquo;configuration file for the LDAP nameservice switch library and the LDAP PAM module&rdquo;.  While we just configured the operation of the server, we must now put the &ldquo;glue&rdquo; in place so that PAM knows how to ask questions of the LDAP system to know if a user is allowed to login or not.  Again, a very simple /etc/ldap.conf file:</p>
+
+<blockquote># ldap.conf -- simple configuration
+
+# Distinguished name of the search base
+base dc=bob,dc=com
+
+# The distinguished name to bind to the server with
+binddn cn=admin,dc=bob,dc=com
+
+# Password to bind to the directory with
+bindpw secretpassword
+
+# Search TimeLimit
+timelimit 120
+
+# bind/connection timelimit
+bind_timelimit 120
+
+# idle timelimit
+idle_timelimit 3600
+
+# PAM password format
+pam_password md5
+
+# Assume no supplemental groups for these named users
+nss_initgroups_ignoreusers root,ldap,named,avahi,haldaemon,dbus,radvd,tomcat,radiusd,news,mailman
+
+# Main LDAP configuration piece
+uri ldap://ldap.bob.com
+ssl no
+tls_cacertdir /etc/openldap/cacerts</blockquote>
+
+
+<p>A couple of notes here.  First, the nss_initgroups_ignoreusers portion can most likely be left out.  This is an artifact (as far as I am aware) of being on a RedHat system as several of these users are defaults on RedHat.  Next:  The timelimits are just sane numbers, nothing special.  Should there be any need for tweaking this, it will be in your own experience across your own environment.</p>
+
+<p>Much like the earlier client configuration file, this serves somewhat the same purpose, but for the PAM system as a client rather than a system itself as a client.</p>
+
+<p><strong>Crank it Up!</strong></p>
+
+<p>At this point, you should be able to start up your server to begin configuring it for use.  In RedHat-land, as many of you already know, this is typically a two-part process.  First, you set the service to start at boot and then you start it up.  First, run the command to set the runlevels in which you want ldap to start:</p>
+
+<blockquote>chkconfig --level 2345 ldap on</blockquote>
+
+
+<p>And then use the RedHat tools to start the service up:</p>
+
+<blockquote>/sbin/service ldap start</blockquote>
+
+
+<p>At this point, you should have a fully functional LDAP server running with no particular schema or setup, ready to take data (in our case, POSIX compliant login information) and serve it out to your infrastructure.</p>
+
+<p><strong>Populating the Database</strong></p>
+
+<p>With the RedHat packages come a myriad of important tools you need to help migrate your current authentication information into the LDAP store.  The location of these helpful perl scripts is: /usr/share/openldap/migration.  Before you use these tools, make sure you edit the <strong><em>migrate_common.ph</em></strong> file in this location to match your environment like so:</p>
+
+<blockquote>$DEFAULT_MAIL_DOMAIN = "bob.com"
+$DEFAULT_BASE = "dc=bob,dc=com"</blockquote>
+
+
+<p>This file is sourced by all the migration scripts resident in this directory, and will automagically insert these values where necessary.</p>
+
+<p>Next, let&rsquo;s do a trial-run of converting our passwd file in &ldquo;LDAP-ese&rdquo;.  Since you&rsquo;ve already edited the migrate_common.ph, you can directly migrate your /etc/passwd and /etc/group files like so:</p>
+
+<blockquote>_From the /usr/share/openldap/migration directory:_
+
+./migrate_passwd.pl /etc/passwd ./passwd.ldif
+
+_Similarly, convert your groups file as well:_
+
+./migrate_group.pl /etc/group ./group.ldif</blockquote>
+
+
+<p>What these commands will do is convert your standard /etc/passwd and /etc/group file to <a href="http://en.wikipedia.org/wiki/LDIF">ldif</a>-formatted files for import into your LDAP store.  Let&rsquo;s look at a record for an example:</p>
+
+<blockquote>
+
+> 
+> dn: uid=bin,ou=People,dc=best,dc=turner,dc=com
+> 
+> 
+
+> 
+> uid: bin
+> 
+> 
+
+> 
+> cn: bin
+> 
+> 
+
+> 
+> objectClass: account
+> 
+> 
+
+> 
+> objectClass: posixAccount
+> 
+> 
+
+> 
+> objectClass: top
+> 
+> 
+
+> 
+> objectClass: shadowAccount
+> 
+> 
+
+> 
+> userPassword: {crypt}*
+> 
+> 
+
+> 
+> shadowLastChange: 14251
+> 
+> 
+
+> 
+> shadowMax: 99999
+> 
+> 
+
+> 
+> shadowWarning: 7
+> 
+> 
+
+> 
+> loginShell: /sbin/nologin
+> 
+> 
+
+> 
+> uidNumber: 1
+> 
+> 
+
+> 
+> gidNumber: 1
+> 
+> 
+
+> 
+> homeDirectory: /bin
+> 
+> 
+
+> 
+> gecos: bin
+> 
+> 
+dn: uid=bin,ou=People,dc=best,dc=turner,dc=comuid: bincn: binobjectClass: accountobjectClass: posixAccountobjectClass: topobjectClass: shadowAccountuserPassword: {crypt}*shadowLastChange: 14251shadowMax: 99999shadowWarning: 7loginShell: /sbin/nologinuidNumber: 1gidNumber: 1homeDirectory: /bingecos: bin</blockquote>
+
+
+<p>The LDIF format has a number of self-explanatory fields that you can see correlate to your /etc/passwd file.  There are other fields here that LDAP needs, but are beyond our concern at this point.  We&rsquo;ll come back to these later.</p>
+
+<p>I picked a system-default user just to illustrate the format of the ldif.  This user generally has no password, and thus you cannot login using his credentials.  In the userPassword line above, for a regular login user, you would normally see {crypt} followed by a rather large SHA encrypted string representing the user&rsquo;s hash.</p>
+
+<p>This brings about the question of how you wish to manage your users.  Generally speaking, I allow the local /etc/passwd file manage root and all system-default users (bin, spool, lp, etc.) and all users I add post-installation get placed into LDAP.  In that way, I manage the user centrally from the outset.  I&rsquo;ll be covering how I limit what users are allowed to access what systems in a later article.</p>
+
+<p><strong>Importing the LDIF</strong></p>
+
+<p>Once you have your LDIF, you have some decisions/edits to make.  look through your dumped ldif file.  Remove each stanza relating to the users you <em>do not </em>wish to manage via LDAP.  The resulting LDIF file will be the one we import.  Generally speaking, in a RedHat system I delete everything before UID 500 (which is usually me) and import everything else.</p>
+
+<p>Once your LDIF file is how you want it to look, it&rsquo;s time to import.  Import it using the following command, modifying the search base and admin user to suit your configuration:</p>
+
+<blockquote>_ldapadd -W -x -D "cn=admin,dc=bob,dc=com" -W -f passwd.lif_</blockquote>
+
+
+<p>When you run this command, the LDAP server will churn for a moment (depending on how large your passwd file is) and then will return a clean shell with no errors.</p>
+
+<p><strong>Time to &ldquo;Get your GUI On&rdquo;</strong></p>
+
+<p>At this point, I usually point people toward the excellent Apache Directory Studio available at the <a href="http://directory.apache.org/">Apache Directory Project</a>.  This is a gui directory administration tool that can browse and edit your entire store.  The Apache Foundation describes it like so:</p>
+
+<blockquote>Apache Directory Studio is a complete directory tooling platform intended to be used with any LDAP server however it is particularly designed for use with the ApacheDS. It is an Eclipse RCP application, composed of several Eclipse (OSGi) plugins, that can be easily upgraded with additional ones. These plugins can even run within Eclipse itself.</blockquote>
+
+
+<p>Apache Directory Studio is available for Windows, Linux, and Mac OSX and is a freely-available Apache 2.0 licensed product.</p>
+
+<p>Once you download and configure the Apache Directory Studio, you should be able to view, browse, edit, and manage all aspects of your LDAP store.</p>
+
+<p>Next time, we will tie PAM into LDAP, work with security and group-based access as well as cover a few &ldquo;odds &amp; ends&rdquo; to help you use your LDAP store in a variety of different ways.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">questy</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2009-12-28T06:53:02-05:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2009</span></span> <span class='time'>6:53 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/geekstuff/'>geekstuff</a>, <a class='category' href='/blog/categories/ldap/'>ldap</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/systems-administration/'>systems administration</a>, <a class='category' href='/blog/categories/unix/'>unix</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://questy.org/blog/2009/12/28/ldap-administration-part-ii/" data-via="CVQuesty" data-counturl="http://questy.org/blog/2009/12/28/ldap-administration-part-ii/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2009/12/22/ldap-administration-part-i/" title="Previous Post: LDAP Administration – Part I">&laquo; LDAP Administration – Part I</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2009/12/29/ldap-administration-iii-odds-n-ends/" title="Next Post: LDAP Administration III – ‘Odds ‘n Ends’">LDAP Administration III – ‘Odds ‘n Ends’ &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/04/05/testing-octopress/">Testing Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/23/puppetconf-2014/">PuppetConf 2014</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/11/southeast-puppet-users-group-september/">Southeast Puppet User's Group September</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/11/toolbox-grows/">The Toolbox Grows...</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/20/dos-donts-puppet-environment/">"Do's and Dont's" for Your Puppet Environment</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/CVQuesty">@CVQuesty</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'CVQuesty',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Jerald Sheets -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'questy-org';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://questy.org/blog/2009/12/28/ldap-administration-part-ii/';
+        var disqus_url = 'http://questy.org/blog/2009/12/28/ldap-administration-part-ii/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

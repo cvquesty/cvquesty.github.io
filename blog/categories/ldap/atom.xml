@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ldap | Questy.org]]></title>
+  <link href="http://questy.org/blog/categories/ldap/atom.xml" rel="self"/>
+  <link href="http://questy.org/"/>
+  <updated>2017-04-05T15:54:03-04:00</updated>
+  <id>http://questy.org/</id>
+  <author>
+    <name><![CDATA[Jerald Sheets]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[A Few Notes...]]></title>
+    <link href="http://questy.org/blog/2011/02/22/a-few-notes/"/>
+    <updated>2011-02-22T10:26:06-05:00</updated>
+    <id>http://questy.org/blog/2011/02/22/a-few-notes</id>
+    <content type="html"><![CDATA[<p>I think it is important to make a note about all of the people and places that have helped me ferret out a lot of this configuration.  I don&rsquo;t find this stuff in a vacuum (like anything in the Open Source world), and find it quite important to give a nod where a nod is due.</p>
+
+<p>First, to <a href="http://www.turner.com">Turner Broadcasting</a> who gave me my first shot at doing this in a relatively small environment.  There was a ton of time spent on the phone, in online forums, reading documentation, and the like.  Everything sort of proceeded from there.  I tried to get such a thing into the backend over at <a href="http://www.weather.com">The Weather Channel</a>, but the climate wasn&rsquo;t right, and there was a great deal of change going on.  Trying to implement such a thing there just wouldn&rsquo;t have worked out very well.</p>
+
+<p>Next, to <a href="http://www.incomm.com">Incomm</a>.  They needed a solution, and Brock (my boss) gave me ample time to get a lot of this together, and to do it right without interruption.  Big thanks there.</p>
+
+<p>Finally, and most importantly, my best bud <a href="mailto:johnbeamon@yahoo.com">John Beamon</a>.  He encountered and worked with LDAP long before I did.  And, while we have considerably different directories in place between our two mutual organizations, his help in putting together how all this works in my head has been invaluable.  I daresay I&rsquo;ve been into his IM client twice (or more) often as he&rsquo;d like, gave him props nowhere near as much as I should (like at all), and even with all his own work on his plate, he has helped me out immeasurably.  Add to that, he&rsquo;s a long-time friend and fellow-minister, and that&rsquo;s just good times right there.  They don&rsquo;t come along like John very often, and I&rsquo;m grateful to have him as both a friend and fellow nerd.</p>
+
+<p><strong>Kudos, JB!</strong></p>
+
+<p>I&rsquo;m sure there&rsquo;s still some inaccuracies here, and I&rsquo;ll be sifting through all this as I continue to build and extend OpenLDAP in this environment.  Things will automagically correct before your eyes, most likely.  If you find anything that happens to scream &ldquo;No!&rdquo; to you, feel free to drop me a line, and I&rsquo;ll be happy to make that change.</p>
+
+<p>HappyLDAPping!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[LDAP Administration VI - TLS/SSL]]></title>
+    <link href="http://questy.org/blog/2011/02/21/ldap-administration-v-tls/"/>
+    <updated>2011-02-21T15:35:34-05:00</updated>
+    <id>http://questy.org/blog/2011/02/21/ldap-administration-v-tls</id>
+    <content type="html"><![CDATA[<h6>_This article goes hand in hand with &ldquo;LDAP Administration - Part I&rdquo; in regards to configuring the client. _</h6>
+
+<p>So, let&rsquo;s see where we are.  We have a master server you will be doing all administration work on.  This master server replicates to two hosts in the environment that serve LDAP queries to your clients.  These servers are replicants and are load-balanced under a VIP that is pointed to by the name you choose.  (in our case, ldap.bob.com).  You can change passwords at the client level, and have it pushed back up to master and replicated out to the environment immediately.</p>
+
+<p>Finally, we need to talk about security.  There&rsquo;s a number of ways to do security, but RedHat has done a lot of the footwork for you.  Unfortunately, it&rsquo;s very poorly documented, and they really Really REALLY want you to use RedHat Directory Server for everything, so I don&rsquo;t guess it&rsquo;s a priority.</p>
+
+<p>Essentially, we want to secure all queries floating around the network with TLS.  In a RedHat world, you simply need to make a couple changes at the server, restart LDAP, and then connect from TLS-enabled clients and all works just as it did before, except now it runs over an encrypted channel.</p>
+
+<p><strong>First Steps</strong></p>
+
+<p>RedHat has tried to ease the pain of generating certificates by placing all you need in a Makefile on-box.  navigate to <strong>/etc/pki/tls/certs </strong>and see that there is a makefile there.  Next, run:</p>
+
+<p><strong>make slapd.pem</strong></p>
+
+<p>to generate the needed files.  If it has already been done for you by the system, you will get the answer:</p>
+
+<p><strong>make: `slapd.pem' is up to date.</strong></p>
+
+<p>If you get this message, you&rsquo;re halfway there.</p>
+
+<p>Next, edit the <strong><em>/etc/openldap/slapd.</em>conf</strong> file.  You will need to refer to the appropriate files to allow for secure operation.  Insert the following lines into that file:</p>
+
+<p><strong># TLS Security
+TLSCACertificateFile /etc/pki/tls/certs/ca-bundle.crt
+TLSCertificateFile /etc/pki/tls/certs/slapd.pem
+TLSCertificateKeyFile /etc/pki/tls/certs/slapd.pem</strong></p>
+
+<p>Next, edit the file <em><strong>/etc/sysconfig/ldap</strong></em>.  Make the following lines:</p>
+
+<p><strong>SLAPD_LDAP=yes
+SLAPD_LDAPS=no
+SLAPD_LDAPI=no</strong></p>
+
+<p>look like:</p>
+
+<p><strong>SLAPD_LDAP=no
+SLAPD_LDAPS=yes
+SLAPD_LDAPI=no
+</strong></p>
+
+<p>Then, restart LDAP:  <em><strong>/sbin/service ldap restart. </strong></em>This does two things.  First, it tells the client where to look for the certificates, and then tells the system to only serve from the secure port 636.  (recall that we are on the replicants which are, in turn, servers themselves.  We have handled connecting to the master as well as setting the replicant up to receive queries)</p>
+
+<p>Finally, we connect a client.</p>
+
+<p><strong>Connecting the Client</strong></p>
+
+<p>To allow a client to connect, you need the appropriate key on the client (public server key) to be able to exchange identities with the server, and establish the secure session.  To do this, you have to distribute this key you just made out to each client you wish to connect back to the server.</p>
+
+<p>The key you will be distributing lives in <strong>/etc/pki/tls/certs</strong> and is named <strong>ca-bundle.crt</strong>.  Simply move this cert to your client (I use <strong>scp</strong> for such an operation) and place it into your openldap cacerts directory like so:</p>
+
+<p><em><strong>scp -rp ca-bundle.crt host.bob.com:/etc/openldap/cacerts</strong></em></p>
+
+<p>If you don&rsquo;t have rights to copy straight into the destination, send it to your home directory, then just move the cert there using &ldquo;sudo&rdquo;.</p>
+
+<p>Finally, you need to tell the system about the cert.  This is done in <strong>/etc/openldap/ldap.conf </strong>via three lines that tell the system how to connect, and where the cert lives:</p>
+
+<p><strong>TLS_CACERTDIR /etc/openldap/cacerts
+TLS_CACERT /etc/openldap/cacerts/ca-bundle.crt
+TLS_REQCERT allow</strong></p>
+
+<h6>Next, we run the RedHat authentication gui tool (curses) called authconfig-tui. _**(Note: last time I had you hand-edit the /etc/openldap/ldap.conf file, and this is entirely still possible.  I am endeavoring to show you that there is a tool to do this work, should you desire to use it.  If not, simply add the above lines and change the URI to the one below, making sure /etc/nsswitch.conf is configured correctly, and you should be good to go.)</h6>
+
+<p>**_</p>
+
+<p>In the left column, select &ldquo;Use LDAP&rdquo; and in the right column &ldquo;Use LDAP Authentication&rdquo;.  Tab down to the &ldquo;Next&rdquo; button and press &ldquo;Enter&rdquo;.</p>
+
+<p>As misleading as &ldquo;Use TLS&rdquo; may be, do not select it.  :)  Instead, go down to your server line, and modify it like so:</p>
+
+<p><strong>ldaps://ldap.bob.com:636</strong></p>
+
+<p>Your base DN should already be filled out (in our case: dc=bob,dc=com).  Navigate to the &ldquo;OK&rdquo; button, and press &ldquo;Enter&rdquo;.</p>
+
+<p>This should conclude your client configuration.  Now, you should be able to run a query against LDAP, and the whole path be secure:</p>
+
+<p><strong>id bob
+uid=123(bob) gid=123(users) groups=123(users),456(bob)</strong></p>
+
+<p><strong>Conclusion</strong></p>
+
+<p>I&rsquo;m sure I&rsquo;ve missed or glossed over something highly important.  I am in the process of discovery on this particular topic, and this article is serving as my documentation store until I can get the whole thing cleaned up &amp; finalized to push back into my work environment as official documentation.  I&rsquo;ll correct here as I find mistakes and omissions.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[LDAP Administration v - Replication]]></title>
+    <link href="http://questy.org/blog/2011/02/18/ldap-administration-iv-replication/"/>
+    <updated>2011-02-18T12:57:33-05:00</updated>
+    <id>http://questy.org/blog/2011/02/18/ldap-administration-iv-replication</id>
+    <content type="html"><![CDATA[<p>Continuing our discussion of LDAP Administration, there&rsquo;s the matter of Replication.</p>
+
+<p>So far we&rsquo;ve created an LDAP store, turned up the server, configured a client, and even connected Apache authentication to it.  However, if we&rsquo;re going to use our LDAP server for enterprise authentication, then there&rsquo;s the small matter of &ldquo;What happens when my authentication server wets the bed?&rdquo;.</p>
+
+<p>As with anything in the enterprise, you have backup systems.  Sometimes they&rsquo;re failover systems, sometimes clusters.  Sometimes they&rsquo;re tandem systems, and sometimes they&rsquo;re load-balanced.  No matter the configuration, you have redundancy, resiliency, and scalability.  I plan to talk about one of the many scenarios available to LDAP administrators today; the idea of a master server and many replicants.</p>
+
+<p><strong>Layout</strong></p>
+
+<p>In my configuration, I have a single administrative parent.  This system is where we do all administrative level work.  This includes adding users, adding groups, reporting, and the like.  It is also the &ldquo;provider&rdquo; store to all replicants in our environment.  We learned earlier how to turn up a server that is queried directly.  Now let&rsquo;s learn, instead, how to configure this system to replicate itself.</p>
+
+<p>Assume 3 systems total, ldap01.bob.com, ldap02.bob.com, and ldap03.bob.com.  ldap01.bob.com is our master server and our replicants are ldap02 &amp; ldap03.  To tell the system it will be replicating, you will need to configure it to do so.  Shut down LDAP on the primary like so:</p>
+
+<p><em><strong>/sbin/service ldap stop</strong></em></p>
+
+<p>This shuts down all daemons and associated processes.  Next, we need to edit our <strong>/etc/openldap/slapd.conf</strong> to include information regarding where our replicants will be.    You must add a few lines to the master to make this happen.  Like so:</p>
+
+<p>replogfile      /var/log/ldap/slapd.replog</p>
+
+<p>replica uri=ldap://ldap02.bob.com:389
+binddn=&ldquo;cn=admin,dc=bob,dc=com&rdquo;
+bindmethod=simple credentials=secret</p>
+
+<p>replica uri=ldap://ldap03.bob.com:389
+binddn=&ldquo;cn=admin,dc=bob,dc=com&rdquo;
+bindmethod=simple credentials=secret</p>
+
+<p>This can be added at the end of the file.</p>
+
+<p>Next, we take our fresh two servers, and turn up a similar system to what ldap01 was before adding the above lines.  In these systems, there are only two important lines to tell them they are replicants and not masters.  They are as follows:</p>
+
+<p>updatedn &ldquo;cn=admin,dc=bob,dc=com&rdquo;
+updateref ldap://ldap01.bob.com</p>
+
+<p>That is literally the entire configuration.</p>
+
+<p><strong>Populating the Replicants</strong></p>
+
+<p>To have your schema transferred over, and to be working from the same general starting point, I find it important to copy your whole database over to start with.  This is easily done utilizing standard LDAP tools.</p>
+
+<p>First, start back up your master server:</p>
+
+<p><em><strong>/sbin/service ldap start</strong></em></p>
+
+<p>Once you&rsquo;ve done this, the database is up and ready for queries.  We will essentially dump our database for import on each of the replicants.  To do this, we will use the <em>slapcat </em>utility, redirecting the output to a file we can use to move around to the replicants.  Run <em>slapcat</em> as follows:</p>
+
+<p><strong><em>slapcat >> master.ldif</em></strong></p>
+
+<p>this will output the contents of your LDAP store to a single LDIF-formatted file, suitable for import into other servers.  Simply copy this file to a generic location (such as your personal home directory) on each of the other servers, and we are set for import.</p>
+
+<p>Once your file is in the new location, you&rsquo;re ready to import.  First, start LDAP as outlined above.  Next, add the LDIF to your store:</p>
+
+<p><em><strong>slapadd -l master.ldif</strong></em></p>
+
+<p>Probably unnecessary, but I usually restart my ldap server after the import, and now I&rsquo;m ready to go.  Repeat the process on your third LDAP store, and your full environment is running.</p>
+
+<p><strong>Next Steps</strong></p>
+
+<p>So let&rsquo;s see where we are.</p>
+
+<p>Master server up and serving.. check.
+Two slaves configured as replicants, up and running.. check.</p>
+
+<p>Now that you have your stores up, you have to do some testing.  Primarily, that the master replicates to the slaves.  The way I usually do this is use the <a href="http://directory.apache.org">Apache Directory Studio</a> I covered in an earlier article.  I simply add a user on the master.  Then, I connect to each of the slaves in turn to see that the user has appeared there.  If so, then we&rsquo;re ready for the next steps:  High Availability.</p>
+
+<p>You have two query hosts that can equally provide query answers from remote clients.  There are several ways you can make these available.  Round-robin DNS, HA IP failover, and load-balancing via a hardware load balancer.  I prefer the latter.  However, to do so, you need a way to tell the load balancer that your LDAP store is up and responding.</p>
+
+<p>I prefer to use a small script on the system that can be served up via HTTP to the load balancer that does a simple operation.  First, it does an LDAP search, looks for information, and then prints out to the web page it creates a simple &ldquo;UP&rdquo; or &ldquo;DOWN&rdquo; message for the load balancer to key on.  The script looks like the following:</p>
+
+<p>[caption id=&ldquo;attachment_265&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;150&rdquo;]<a href="http://questy.org/wp-content/uploads/2011/02/healthcheck.png"><img src="http://questy.org/wp-content/uploads/2011/02/healthcheck-150x150.png" alt="" /></a> Healthcheck Sample[/caption]</p>
+
+<p>As you can see, all we do is simply do an <em>ldapsearch </em>against our bob.com domain, look for the home directory for the admin user to look like &ldquo;/home/admin&rdquo;.  If the answer returns, we say &ldquo;UP&rdquo;, if not, we say &ldquo;DOWN&rdquo;.</p>
+
+<p>Place this script into your &ldquo;cgi-bin&rdquo; directory, make it executable <em>(chmod 0755 <filename>)</em> and simply call it in your browser via the URL:  <a href="http://yoursite.com/cgi-bin/">http://yoursite.com/cgi-bin/</a><filename>.  If you have Apache properly configured (outside the scope of this document) to serve CGI Executables, you should get the status of the individual system.  Do this for both your replicants.</p>
+
+<p>Finally, ask your network team to configure these two systems in a load-balanced configuration behind a VIP (virtual IP).  Have a sensible DNS name pointed at this IP (ldap.bob.com, for instance) and you&rsquo;re in business.  Now, when you configure your clients to authenticate against LDAP (Article #1 in this series), you just point them at the ldap.bob.com name.  If either of the systems go out, the load balancer will point you to the machine that is up to serve your requests.</p>
+
+<p><strong>Conclusion</strong></p>
+
+<p>I hope this gives you a basic direction to go in getting high-availability setup for your system through a combination of replication and load balancing.  There are other methods for HA in the replicants.  Perhaps we will cover that soon.</p>
+
+<p>Next up:  Securing your LDAP installation.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[LDAP Authentication IV - Apache]]></title>
+    <link href="http://questy.org/blog/2010/08/05/ldap-authentication-for-apache/"/>
+    <updated>2010-08-05T17:03:09-04:00</updated>
+    <id>http://questy.org/blog/2010/08/05/ldap-authentication-for-apache</id>
+    <content type="html"><![CDATA[<p>Once you&rsquo;ve got your handy LDAP server authenticating users for login throughout your environment, inevitably you find yourself getting around to the question of authentication for all your backend tools/services machines.  Can you authenticate from Apache to that same auth store to reduce administration burden across the environment?</p>
+
+<p>Yes you can.</p>
+
+<p>Recall from part I of this series that we have a server that is serving auth for our mythical &ldquo;Bob.com&rdquo; environment.  Recall also the important info regarding this environment:</p>
+
+<p>Internet domain name:                   bob.com
+hostname of the server:                   ldap.bob.com
+LDAP Search base:                          dc=bob,dc=com</p>
+
+<p>File:  /etc/openldap/ldap.conf</p>
+
+<p>#</p>
+
+<h1>LDAP Defaults</h1>
+
+<p>#</p>
+
+<p>BASE dc=bob,dc=com
+URI ldap://ldap.bob.com
+TLS_CACERTDIR /etc/openldap/cacerts</p>
+
+<p>Now, we add to the mix an Apache web server that has an area it wants to secure.  Instead of using the old htpasswd method to create a disk-file containing usernames and password hashes, it would make much more sense to simply point Apache&rsquo;s authentication system at our shiny new LDAP server so we eliminate yet another user/pass system we have to administer.</p>
+
+<p><strong>Apache</strong></p>
+
+<p>As many of you are already aware, Apache offers simple authentication to allow/disallow access to specific shared directories over the web.  The Apache Project has detailed documentation to help you get started <a href="http://httpd.apache.org/docs/2.2/howto/auth.html">here</a>. I&rsquo;ll cover the basics here.</p>
+
+<p>Traditionally, in Apache&rsquo;s config file(s) you specify a directory you wish to have secured via the &ldquo;Directory&rdquo; directive like so:</p>
+
+<blockquote>
+
+> 
+> <Directory "/super/secret/directory">
+> 
+> 
+
+> 
+> AllowOverride None
+> 
+> 
+
+> 
+> Options ExecCGI Includes
+> 
+> 
+
+> 
+> Order allow,deny
+> 
+> 
+
+> 
+> Allow from all
+> 
+> 
+
+> 
+> AuthUserFile /secure/passwd/file/location
+> 
+> 
+
+> 
+> AuthType Basic
+> 
+> 
+
+> 
+> AuthName "Cool Security Name"
+> 
+> 
+
+> 
+> Require valid-user
+> 
+> 
+
+> 
+> </Directory>
+> 
+> </blockquote>
+
+
+<p>You then create your passwd file for Apache with the htpasswd utility, make sure the above path points to it, bounce Apache, and you&rsquo;re authenticating locally.  Problem with this is that every time you need to add a new user to your environment, every instance like this has to be touched individually and you have to add the user (whether by copy/paste or otherwise is irrelevant) in each.</p>
+
+<p>Enter LDAP.</p>
+
+<p>Fortunately, the configuration for such a change is quite easy; Simple textual changes to the httpd.conf to repoint from the local disk file to the LDAP store is all you need.  First, make sure that your LDAP modules are properly loaded into Apache:</p>
+
+<p>LoadModule ldap_module modules/mod_ldap.so</p>
+
+<p>LoadModule authnz_ldap_module modules/mod_authnz_ldap.so</p>
+
+<p>This tells the Apache core to load up these at startup so that the directives you supply in the Directory stanza will be understood.  Next, let&rsquo;s add the appropriate info into the Directory section:</p>
+
+<p><Directory "/super/secret/directory"></p>
+
+<p>AllowOverride None</p>
+
+<p>Options ExecCGI Includes</p>
+
+<p>Order deny,allow</p>
+
+<p>Deny from all</p>
+
+<p>AuthName &ldquo;Cool Security Name&rdquo;</p>
+
+<p>AuthType Basic</p>
+
+<p>AuthBasicProvider ldap</p>
+
+<p>AuthzLDAPAuthoritative Off</p>
+
+<p>AuthLDAPURL ldap://cool.ldap.server/dc=bob,dc=com?uid</p>
+
+<p>AuthLDAPBindDN &ldquo;cn=admin,dc=bob,dc=com&rdquo;</p>
+
+<p>AuthLDAPGroupAttribute memberUid</p>
+
+<p>AuthLDAPGroupAttributeIsDN off</p>
+
+<p>AuthLDAPBindPassword <your_bind_password></p>
+
+<p>Satisfy any</p>
+
+<p></Directory></p>
+
+<p>This simple change (after an Apache restart) should give your Apache server security over that directory, authenticating against LDAP.  Since your LDAP store is POSIX compliant for login, you have a few other things you can leverage in there as well.  Among those, are the &ldquo;Group&rdquo; field.  That&rsquo;s right, instead of going out and adding individuals and/or preventing them, you can specify an entire class of people (say LDAP_Logins for instance) that if the user belongs to that group, suddenly they have access to anything that is authenticating against LDAP.</p>
+
+<p>To add that ability, you can add groups to the stanza above like so:</p>
+
+<p>Require ldap-group cn=mygroup,ou=Group,dc=bob,dc=com</p>
+
+<p>Require ldap-attribute gidNumber=500</p>
+
+<p><em>(you place your group number in place of the &ldquo;500&rdquo; above)</em></p>
+
+<p>Now that you have the magic behind LDAP auth for Apache, you can add this to any Apache web server of the 2.x variety, and do your security centrally.</p>
+
+<p>The ease of addition for new users on your network is now as simple as adding the user to your LDAP store, placing them in the appropriate group.  Once Apache was restarted the very first time to make this work, you never have to restart it for user additions.  It will simply query LDAP, and LDAP will provide the credential response Apache needs to continue forward.</p>
+
+<p>Next time:  Sudoers in LDAP!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[LDAP Administration III – ‘Odds ‘n Ends’]]></title>
+    <link href="http://questy.org/blog/2009/12/29/ldap-administration-iii-odds-n-ends/"/>
+    <updated>2009-12-29T06:17:46-05:00</updated>
+    <id>http://questy.org/blog/2009/12/29/ldap-administration-iii-odds-n-ends</id>
+    <content type="html"><![CDATA[<p>By now you should have a functional LDAP server, a properly configured client, and the ability to authenticate against your server.  However, the last couple &ldquo;cogs in the wheel&rdquo; are left to manage.</p>
+
+<p>Generally speaking, when you add a user in UNIX-land, part of the process of the adduser command also sets their shell, creates a home directory for them and so forth.  As you may notice, there is no particular method to make this happen in Linux-LDAP.  You just have a store and a tool to manage the store.</p>
+
+<p>Have no fear, it&rsquo;s PAM to the rescue.</p>
+
+<p>As we said in our first installment, the following packages are all that is necessary to have the basic plumbing of LDAP to work:</p>
+
+<p>openldap</p>
+
+<p>openldap-servers</p>
+
+<p>openldap-clients</p>
+
+<p>openldap-devel</p>
+
+<p>While that is true, there are a couple more packages that put the finishing touches on this to make it sing.  Those are:</p>
+
+<p>nss
+nss_ldap
+nscd</p>
+
+<p>NSS is a glibc mechanism or interface allowing access to the common UNIX databases such as the password or hosts database.  It is most commonly used to provide an interface to both local /etc/passd and /etc/shadow files and usually for the purposes of interfacing with LDAP or NIS.</p>
+
+<p>NSS_LDAP is a set of C library extensions which allows X.500 and LDAP directory servers to be used as a primary source of name service information such as users, hosts, groups, and other such data historically managed via local flat files or a NIS infrastructure.</p>
+
+<p>NSCD is a name services caching daemon that provides a cache for the most common name requests.  While useful in speeding up response to queries, nscd has it&rsquo;s own set of problems.  I&rsquo;ll cover only some of it&rsquo;s usefulness, and you should circumspectly determine whether you will need caching at all based on your organization&rsquo;s size and the size of your serving infrastructure.</p>
+
+<p><strong>Home Directories</strong></p>
+
+<p>First and foremost, to make the login process as pleasurable/smooth an experience as possible, there are some things that we generally do in standard administration practices that ease the user&rsquo;s experience.  Namely, we setup a standard set of configuration and environment files to provide a consistent user experience of the shell.  These are usually their home directory files such as:</p>
+
+<p>.bashrc
+.bash_profile
+.bash_logout
+.vimrc
+.mozilla</p>
+
+<p>Usually these are handled in the usual way via the useradd command, which also copies one of everything from the /etc/skel directory to your user&rsquo;s home.</p>
+
+<p>As you can see, simply adding a user to the LDAP store would not give occasion for this to happen.  PAM to the rescue!  PAM contains a module that is their &ldquo;mkhomedir&rdquo; module.  Depending on your architecture, this lives in the /lib or the /lib64 directories under &ldquo;security&rdquo;:</p>
+
+<p>/lib/security/pam_mkhomedir.so
+/lib64/security/pam_mkhomedir.so</p>
+
+<p>What these modules do when properly invoked is on the first connection of a user that is validated as a proper user/password combination via LDAP, PAM sees that they have no home directory, and <em>creates the home directory for them just as if you, the administrator had created it with the <strong>adduser </strong>script.</em></p>
+
+<p>This, by far, is one of the handiest modules provided by PAM.</p>
+
+<p><strong>Turning on the PAM</strong></p>
+
+<p>To turn on the mkhomedir facility for your servers and clients, simply do the following:</p>
+
+<p>In /etc/pam.d there are a number of configuration files for handling login defs for varying circumstances.  What we are interested in is <em>system-auth</em>.  System-auth is also sourced by the sshd option, so this will work for both console logins and ssh/remote logins.</p>
+
+<p>The last stanza of the system-auth configuration file is the &ldquo;session&rdquo; section.  On the second-to-last line between the pam_unix and pam_ldap designations, add the following:</p>
+
+<p>session     required     pam_mkhomedir.so</p>
+
+<p>This is a keyword set that tells Linux to load up and perform the functions offered by the pam_mkhomedir module.  Now, whenever you connect to a system configured in this way, it will automatically create the user&rsquo;s skel information and change ownerships to the proper settings so the user can login.</p>
+
+<p><strong>Security</strong></p>
+
+<p>You may note that I also referred to using group-based security.  In LDAP/PAM-land, this is just as simple as the above PAM setup.  Look into the individual system&rsquo;s /etc/security directory for a file called access.conf.  This file allows you to grant/deny access to individual users, groups, and also where they can connect to this machine from.  The syntax is clearly explained in the file itself, but here&rsquo;s an example.</p>
+
+<p>Let&rsquo;s say I only want root, wheel, and the admins group to be able to access a certain system.  let&rsquo;s say they can access this system from anywhere.  Now let&rsquo;s say I also want the backup group to access the same system, but only from one host.  The setup is quite simple.  First, let&rsquo;s allow complete access to the people we wish to be able to connect from everywhere.  At the end of the /etc/security/access.conf file, add the following line:</p>
+
+<p>+: root wheel admins : ALL</p>
+
+<p>This tells the system to add access for root, wheel, and admins from ALL hosts.  Now, let&rsquo;s put in those backup admins, but only allow them to connect from the host we want them to come from:</p>
+
+<p>+: backup : 10.1.10.10</p>
+
+<p>This means the backup group can access this host, but only from the host 10.1.10.10.  There are many other methods of allowing and denying access in this file.  The documentation is contained within the file, so feel free to look through it for more information.</p>
+
+<p>The MOST important line is the last line, however.  After you&rsquo;ve setup all the people you WANT to access the system, that does no good if all access is still left on for everyone, everywhere.  The final line in the file should be to deny all access to anyone else not specified above, and would look like this:</p>
+
+<ul>
+<li>: ALL : ALL</li>
+</ul>
+
+
+<p>Simply stated, this removes (or subtracts) all access for ALL other users from ALL other hosts.  This line is evaluated last after the preceding lines are, and will take the preceding lines into account when setting up it&rsquo;s rules in memory.</p>
+
+<p>At the very worst, if you mis-order the lines here, you may not be able to login to the system and will need to boot to single-user mode and then use the article here on this site entitled &ldquo;A Neat Trick&rdquo; to make /etc read/write so you can change the configuration and then reboot back into your system&rsquo;s default runlevel, but if you&rsquo;re careful, this will be quite easy to configure and manage.</p>
+
+<p><strong>Closing Thoughts</strong></p>
+
+<p>I&rsquo;m sure there&rsquo;s a few things I left out, and I will be revising this series at some point in time to allow for any omissions I&rsquo;ve made.  I will also be adding in feature suggestions and will be following this up with a sudo article so you can overlay the &ldquo;on-box&rdquo; security set you&rsquo;d like to see happen in your environment <em>after</em> your LDAP infrastructure is in place.</p>
+
+<p>Feel free to drop me a note if you see anything amiss, and I&rsquo;ll be sure to correct it and give you props.</p>
+]]></content>
+  </entry>
+  
+</feed>

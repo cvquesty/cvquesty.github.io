@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-05T15:47:05-04:00</updated>
+  <updated>2017-04-05T15:54:03-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -19,6 +19,1248 @@
     <updated>2017-04-05T15:42:14-04:00</updated>
     <id>http://questy.org/blog/2017/04/05/testing-octopress</id>
     <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[PuppetConf 2014]]></title>
+    <link href="http://questy.org/blog/2014/09/23/puppetconf-2014/"/>
+    <updated>2014-09-23T14:19:37-04:00</updated>
+    <id>http://questy.org/blog/2014/09/23/puppetconf-2014</id>
+    <content type="html"><![CDATA[<p>Glad to be at PuppetConf with #ShadowSoft exploring all the latest and greatest in PuppetLabs.</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/09/IMG_0050-0.jpg"><img src="http://questy.org/wp-content/uploads/2014/09/IMG_0050-0.jpg" alt="IMG_0050-0.JPG" /></a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Southeast Puppet User's Group September]]></title>
+    <link href="http://questy.org/blog/2014/09/11/southeast-puppet-users-group-september/"/>
+    <updated>2014-09-11T19:33:01-04:00</updated>
+    <id>http://questy.org/blog/2014/09/11/southeast-puppet-users-group-september</id>
+    <content type="html"><![CDATA[<p><a href="http://questy.org/wp-content/uploads/2014/09/puppet_docker.jpg"><img src="http://questy.org/wp-content/uploads/2014/09/puppet_docker.jpg" alt="puppet_docker" /></a></p>
+
+<p>John Ray is bringing the Puppet + Docker goodness in his talk tonight: &ldquo;Deploying Docker Containers with Puppet&rdquo;.  Join us each month at the Shadow Soft offices for the latest in DEVOPS topics and information.  Always fun, lots of discussion and information surrounding Puppet topics and associated technologies.  There&rsquo;s always pizza and beverages of all kinds, and we&rsquo;ve finally moved into our new meeting/class rooms, so come on out.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Toolbox Grows...]]></title>
+    <link href="http://questy.org/blog/2014/06/11/toolbox-grows/"/>
+    <updated>2014-06-11T12:57:18-04:00</updated>
+    <id>http://questy.org/blog/2014/06/11/toolbox-grows</id>
+    <content type="html"><![CDATA[<p>So far we&rsquo;ve gotten our heads around some important things.  First and foremost, vim.  Our editor and companion for creating great code and ways to see our code in action and be able to determine at a glance whether our syntax is correct.  Also, we&rsquo;ve looked at revision control.  The single largest &ldquo;CYA&rdquo; ohmygodimgladivegotanoldercopytorestoreto sort of paradigm where you can roll yourself back to previously &ldquo;known good&rdquo; revisions to save that day&hellip;besides that, it&rsquo;s just darned good practice to keep your code externally saved, revision controlled, and accessible.</p>
+
+<p>I&rsquo;ve also talked about importance of workflow clarity and quality.  If you implement a poor workflow, you just have an automated <em>poor </em>workflow. Key word here is &ldquo;poor&rdquo;.</p>
+
+<p>Next up on our browse through the &ldquo;toolbox&rdquo; is &ldquo;Vagrant&rdquo;.  What is this Vagrant, you ask?</p>
+
+<p>Virtualization is paramount in today&rsquo;s world in a number of ways and for a number of reasons.  For extending your server farms to handle even more application expression, to expand your own desktop machines to test/try different operating systems, and even just rolling up an ad-hoc VM so you can try something without touching a &ldquo;real&rdquo; machine in your environment.</p>
+
+<p>Some may disagree, but I&rsquo;ve found virtualization to be one of the most powerful tools added to the toolbox in years.  Not only can you prototype systems or applications, but you can prototype entire environments.  This is where Vagrant shines, and especially in the context of Puppet (master + clients), allows you to create a fully functioning Puppet environment upon which to develop, prototype, and test without ever jeopardizing even the least important system of your infrastructure.  I count that as a &ldquo;win&rdquo;.  Let&rsquo;s see what this tool can do.</p>
+
+<p><em><strong>What <em>is</em> Vagrant?</strong></em></p>
+
+<p>According to its website:</p>
+
+<p>Vagrant provides easy to configure, reproducible, and portable work environments built on top of industry-standard technology and controlled by a single consistent workflow to help maximize the productivity and flexibility of you and your team.</p>
+
+<p>To achieve its magic, Vagrant stands on the shoulders of giants. Machines are provisioned on top of VirtualBox, VMware, AWS, or any other provider. Then, industry-standard provisioning tools such as shell scripts, Chef, or Puppet, can be used to automatically install and configure software on the machine.</p>
+
+<p>There&rsquo;s a lot there, but it&rsquo;s just a fancy way of saying exactly what I said before.  Vagrant is essentially a framework system that wraps your virtualization engine to manage <em>environments </em>of VMs.  Here is where Vagrant will hold the power for us.</p>
+
+<p><em><strong>Virtualization</strong></em></p>
+
+<p>If Vagrant is the framework, then Virtualization is the foundation.  Now, I&rsquo;ve chosen to use &ldquo;Virtualbox&rdquo; for my virtualization technology, but VMWare works every bit as well.  I am doing all my testing over Virtualbox, however, so YMMV.  Virtualbox is freely available from oracle, and you can download the appropriate version from Virtualbox at <a href="https://www.virtualbox.org.">https://www.virtualbox.org.</a>  I am running the latest version at 4.3.12 (as of this writing) and it serves the Vagrant system extremely well.</p>
+
+<p><em><strong>Vagrant</strong></em></p>
+
+<p>Next, you&rsquo;ll need to install Vagrant on your system.  You can find all the right packages at <a href="http://www.vagrantup.com.">http://www.vagrantup.com.</a>  I am currently running version 1.6.3 without errors.</p>
+
+<p>[warning]I want to make a disclaimer here since I&rsquo;ve had an issue or two with Vagrant on a platform I don&rsquo;t use-Windows.  I am a Mac &amp; Linux user, and have had no issues using the Vagrant/Virtualbox combo on either of these.  However, literally every time I&rsquo;ve used Vagrant over Windows, it&rsquo;s just been a mess.  I&rsquo;ve known one person (ONE!) who has gotten Vagrant to work over Windows, and it required his getting into the product, editing code, etc.  As such, I wouldn&rsquo;t recommend it for those new to the platform.[/warning]</p>
+
+<p>On the Mac platform, you get a .dmg file and can extract it run the installer.  Linux versions are available as RPM installs and Debian Packages.  Once you&rsquo;re installed, let&rsquo;s mess around a bit with Vagrant to see what we can do.</p>
+
+<p><em><strong>Getting Started</strong></em></p>
+
+<p>Vagrant is a unique tool in that it allows you to manage all these varied VMs, but adds a twist.  The big twist is that you don&rsquo;t have to have the <em>source </em>materials for the VMs you&rsquo;re installing.  In fact, the simplicity of turning up a new VM is astounding.  Take the following series of commands:</p>
+
+<p>cd <your favorite directory>
+mkdir precise32
+cd precise32
+vagrant init hashicorp/precise32
+vagrant up</p>
+
+<p>If your Vagrant is installed correctly, a number of things start to happen.  First, Vagrant places a file in your cwd called &ldquo;Vagrantfile&rdquo;.  Your vagrant file (indie) looks like this:</p>
+
+<p>[snippet id=&ldquo;34&rdquo;]</p>
+
+<p>Note that this is a long file with a lot of explanatory documentation.  In actuality, the most important part of your Vagrantfile can be summed up here:</p>
+
+<p>[snippet id=&ldquo;35&rdquo;]</p>
+
+<p>These are the lines that are uncommented plus the top two declaratives that tell Vagrant what to do.  It&rsquo;s a very simple file that does some very powerful things.  First, it checks your home directory in the ~/.vagrant.d location to see if you already have the &ldquo;precise32&rdquo; Vagrant source &ldquo;box&rdquo;.  (more on boxes later).  Next, if you do have this, it will simply start up a VM in your virtualization of choice with a randomized name.  For instance, mine is called &ldquo;precise32_default_1402504453444_30545&rdquo;.  Vagrant takes away the selection of an .iso image, connecting it to the virtual CD/DVD Rom, starting an installer, etc.  It simply sends you a pre-rolled image, places it in your .vagrant.d directory, and provisions the VM to respond to Vagrant commands, and starts it up within Virtualbox.  Precise32 is simply a test scenario, as Vagrant&rsquo;s site has quite a number of varied and specially configured &ldquo;box&rdquo; files that you can use to prototype on at their &ldquo;ready-made&rdquo; box discovery site: <a href="https://vagrantcloud.com/discover/featured.">https://vagrantcloud.com/discover/featured.</a>  You can install boxes with too many variations and differentiations to enumerate here, and that&rsquo;s not really the point for our purposes&hellip; you may find these of great assistance in your own workplace, but let&rsquo;s continue.</p>
+
+<p>When you run your &ldquo;vagrant init&rdquo; command listed above, it places a Vagrantfile, and when you do a &ldquo;vagrant up&rdquo;, it automatically retrieves your box file, provisions, and starts the VM.  Now, by simply running &ldquo;vagrant ssh default&rdquo;, you are now logged into this virtual machine!  You also have full sudo to become root and do any sort of damage you may wish to do.  If you logout (&ldquo;exit&rdquo; or CTRL-D), and type &ldquo;vagrant destroy&rdquo;, the VM goes away and you have nothing in Virtualbox.</p>
+
+<p>Were we to just stop here, the power inherent in being able to just have these &ldquo;Vagrantfiles&rdquo; (sort of like a &ldquo;Makefile&rdquo; for boxes) to spin up and down test scenarios at will is incredible.  But, let&rsquo;s look at this in light of the Vagrantfile, what it can do and how you can customize it.  There is an entire descriptive language surrounding Vagrant PLUS Vagrant has a plugin infrastructure whereby developers can extend Vagrant&rsquo;s capabilities.  We will capitalize on these later.</p>
+
+<p>So, imagine a scenario where you can create a directory, copy a text file into it, run a single command, and it automatically provisions a 4-node Puppet Enterprise infrastructure, fully installed with a master and three agents, MCollective fully installed, PuppetDB installed and in use&hellip;  literally a full installation just like you would use for your infrastructure&hellip;  Now we get powerful.  NOW we have the ability to do some cool things.</p>
+
+<p>Next time, that&rsquo;s exactly what we&rsquo;re going to do.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA["Do's and Dont's" for Your Puppet Environment]]></title>
+    <link href="http://questy.org/blog/2014/05/20/dos-donts-puppet-environment/"/>
+    <updated>2014-05-20T09:15:14-04:00</updated>
+    <id>http://questy.org/blog/2014/05/20/dos-donts-puppet-environment</id>
+    <content type="html"><![CDATA[<p>IT Automation, like the features and functions offered by Puppet, is riddled with a number of pitfalls. Nothing dangerous or site-threatening in the near term, however evolving a <em>bad </em>plan can lead you down a painful path to re-trek when you ultimately need to demolish what you&rsquo;ve done and re-tool, re-work, or even re-start from scratch.  Some simple suggestions can help smooth your integration, and also provide tools and methodologies that make changes in philosophy easy to test and implement as well as make the long road back from a disaster easy(-ier?) to navigate.</p>
+
+<p>Here are some simple guidelines that can provide that foundation and framework:</p>
+
+<p><strong>DO <em>Always</em> Use Revision Control</strong></p>
+
+<p>It would seem this would be a foregone conclusion in this day and age, but you would be surprised just how many shops don&rsquo;t have revision control of any kind in place.  A series of manifests or configurations might be tarred up and sent to the backup system, but aside from dated backups, there&rsquo;s no real versioning&hellip;just monolithic archives to weed through in a time of disaster.</p>
+
+<p>Revision control puts you one command away from restoring those configurations and manifests (and even your data vis-a-vis &ldquo;Hiera&rdquo;) to their original locations in the most recent state.</p>
+
+<p><strong>DO Rethink Your Environments</strong></p>
+
+<p>If you automate a bad workflow, you still have a bad workflow.  (albeit an automated one!)</p>
+
+<p>Rethink how you do things and why.  Why do you promote code the way you do, and is there a better way to do it?  Why do you still have a manual portion to your procedure, and is it entirely necessary, or can this be remanded to Puppet to do for you as well.  What things are you doing well?  How can they improve?</p>
+
+<p>Try to think through all your procedures.  There are more than you think, and they&rsquo;re often less optimized than they can be.  If you&rsquo;re going to implement Puppet automation, it&rsquo;s time to retool.</p>
+
+<p><strong>DO Implement Slowly and Methodically</strong></p>
+
+<p>Another pitfall a lot of shops wander into is they try to do too much all at once, and do none of it well.  Either they implement too quickly and migrate a huge environment it took years to build (sometimes as much as a decade!) through a single professional services engagement or at an unrealistic pace.  Automation is complex, but if you take the time to implement correctly, piece-by-piece and hand-in-hand with your rethinking of your environment referred to above, you can revolutionize the way you work and make the environment considerably more powerful, considerably easier to work with, and ultimately release yourself to work on much more interesting problems in your environment.  Take your time to build the environment you want.</p>
+
+<p><strong>DO Engage the Community</strong></p>
+
+<p>By using Puppet, you are the beneficiary of the greatest software development paradigm in history &ndash; the Open Source movement.  People all over the world have taken part in crafting the powerful tool you have before you.  If you are able to help in like manner, by all means contribute your code to the community. (With your data in Hiera, this is easier than ever!)  Join a Puppet Users Group.  Share your clever solutions to unique problems with the community via GitHub, the Puppet Forge, your website&hellip; give back.  The more you pour in, the more you get out, and something you solve may end up baked into the final product one day in the future.</p>
+
+<p><strong>DON&rsquo;T Pit Teams Against Each Other</strong></p>
+
+<p>DON&rsquo;T make this a DEV vs OPS paradigm.  This is a marriage of the best tools of both worlds.  Depending on how your culture breaks down, this could be an OPS-aware way of doing development, or a DEV-informed way of doing operations.  You need to remember one thing in all of it.  The marriage of these worlds is a <em>teamwork</em> effort.</p>
+
+<p>I was averse to the term DEVOPS when it first started being used, as it was a tool of the development world I was engaged with to cede root level access to developers.  In a properly managed, secure environment, this is always a no-no.  Development personnel are not trained systems people and rarely are.  By the same token, never ask your systems people to delve into core development, or to troubleshoot your developers' code.  They are not tooled for that work.</p>
+
+<p>This does not say that one is better than the other, nor does it say they do not share a certain amount of core skills at the basest levels. Much like the differences between civil and mechanical engineers, each has a base level of knowledge that ties them together, but each is highly specialized.  You don&rsquo;t want your civil engineer building machine tools just as much as you don&rsquo;t want your mechanical engineer building bridges.  Each discipline is highly specialized and carries with it nuance and knowledge you only gain through experience&hellip;experience <em>on </em>the job.</p>
+
+<p>Instead, find a culture and a paradigm that joins the forces of these two disciplines to build something unique and special rather than wasting time with dissension and argument.</p>
+
+<p><strong>DON&rsquo;T Expect Automation to Solve <em>Everything</em></strong></p>
+
+<p>I know, that sounds like a sacrilege at this point, but its true.  No matter how automated your site becomes, how detailed your configuration elements are, or how much you&rsquo;ve detailed your entire workflow, you still can never replace the element of human consideration and decision-making.</p>
+
+<p>Automation, as I&rsquo;ve said before, automates away the mundane to make time for you, DEVOPS person, to work on really interesting and curious work.  You can now write that entire new whiz bang gadget you&rsquo;ve been conceptualizing for the last several years, but have never quite gotten there because you were too busy &ldquo;putting out fires&rdquo;.  Puppet automation is definitely a watershed in modern administration and development, but people are still needed.</p>
+
+<p>Another &ldquo;intangible&rdquo; you may not readily think about when considering a DEVOPS infrastructure is one of <em>culture.  </em>The best places to work are always the best cultures brought about by the right collection of people, ideas, personalities, and management styles.  When you find that right mix of people and ideas, the workplace becomes a, forgive me, <em>magical</em> place to be.  Automation can never make that happen.</p>
+
+<p><strong>DON&rsquo;T Starve Your Automation Environment</strong></p>
+
+<p>Automation solves a lot of things, but one thing it cannot do is feed itself.  This particular animal has a ton of needs over time.  From appropriate hardware to personnel, the environment needs time, attention, and consideration.  Remember that this is the &ldquo;machine tool&rdquo; of your whole company.  It is the thing that builds and maintains other things.  As such, its priority rises above that of the next web server or DNS system.</p>
+
+<p>Always allocate enough resources (read: money, personnel, and time) to your environment.  If that means engineer time to work on a specially project and to do the job <em>right</em>, that&rsquo;s what it means.  And, yes, it&rsquo;s more important than meeting an arbitrarily assigned &ldquo;live date&rdquo; to your new widget or site or application.  The environment comes first, and all else follows.  If you give the resources and time to your automation initiatives it deserves, a number of years down the road you will look back and be amazed at the sheer amount of work your team was able to accomplish just by keeping this simple precept.</p>
+
+<p><strong>DON&rsquo;T Stop Evolving</strong></p>
+
+<p>Never stop learning.  Never stop bettering yourself or your environment.  Always keep refactoring your code.  (i.e., if you wrote that Apache module 4 years ago, chances are good that what you&rsquo;ve learned in the interim can go back into making that module even better.)  Always keep your people trained and engaged on the latest developments in Puppet and all the associated tools.  Never stop striving to be better and never stop reaching.  I may sound lil your coach from high school in this, but those principles he was trying to impart hold true.  If you continue to drive forward and reinvent yourself as a regular part of your forward pursuits, the endpoint of that evolution will benefit you personally, your team both vocationally and culturally, your company&rsquo;s efficiency, and your environment&rsquo;s impact on your bottom line.</p>
+
+<p><strong>Conclusion</strong></p>
+
+<p>If we keep a stronger eye on our environment and tools that rises above the simple concept of &ldquo;that software I bought&rdquo; and &ldquo;fit it in between all the other things you have to do&rdquo; and give Puppet its proper place in our company, it can truly revolutionize your workflow.  However, when properly placed culturally and from a design, implementation, and workflow perspective, it can transform any shop on levels not readily observable when looking at the price tag or the resource requirements list.  DO let Puppet transform your environment and workflow and DON&rsquo;T be afraid to take the plunge.  It&rsquo;s exciting, challenging, and can easily take your company to the &ldquo;next level&rdquo;.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[GitHub, Git, and Just Plain Revision Control]]></title>
+    <link href="http://questy.org/blog/2014/05/13/github-git-just-plain-revision-control/"/>
+    <updated>2014-05-13T17:06:09-04:00</updated>
+    <id>http://questy.org/blog/2014/05/13/github-git-just-plain-revision-control</id>
+    <content type="html"><![CDATA[<p>One of the &ldquo;bugaboos&rdquo; in the sysadmin world for the longest time was the reluctance to use those &ldquo;stinky developer tools&rdquo; in our world for any reason.  I&rsquo;m not sure the impetus behind this, but my wager is on something akin to security or yet another open port or &ldquo;attack vector&rdquo; if you will.  But today&rsquo;s competent and conscientious systems admin (not to mention DEVOPS person) will use revision control as their go-to standard for collecting, versioning, backing up, and distributing all manner of things.</p>
+
+<p>I&rsquo;ve seen some shops use <a href="http://www.nongnu.org/cvs/">CVS</a> as their choice, old thought it is, just as a large &ldquo;bucket&rdquo; in which to throw things for safekeeping with revisions and rollbacks available in case of some uncertain as yet unencountered event.  <a href="http://subversion.apache.org">Subversion</a> was the next generation of revision control tools.  Darling of developers and bane of disk space, Subversion still had many more features and performed essentially the same task.</p>
+
+<p>Now, <a href="http://git-scm.com">Git</a> is the flavor of the month, and not only has gained widespread acceptance as a standard way to &ldquo;do&rdquo; revision control, it&rsquo;s the de-facto way to do DEVOPS in  a Puppet world.  Granted, there are those brave souls out there who have tried to stick with the older tools, but the workflow and the &ldquo;glue&rdquo; between all the various components therein.  Hence, this post.</p>
+
+<p><strong>What is Git, really?</strong></p>
+
+<p>Git was developed by <a href="https://en.wikipedia.org/wiki/Linus_Torvalds">Linus Torvalds</a> for Linux Kernel collaboration.  He needed a new revision control system akin to the previously used <a href="https://en.wikipedia.org/wiki/BitKeeper">BitKeeper</a> software that was unencumbered by copyright and able to handle the unique distributed development needs of the Linux project.  So, rather than try and use someone else&rsquo;s project, he collated what was needed and developed the project himself.</p>
+
+<p>Now, Git is used both privately and Publicly throughout the world for many projects.  Git is lightweight and works in a more efficient manner by moving changes via diffs rather than whole repositories, allows developers to maintain and manage an entire repository on their own systems either connected or disconnected from the Internet.  Then, they can &ldquo;push&rdquo; all their changes back to the central repository as needed.</p>
+
+<p><strong>Enter GitHub</strong></p>
+
+<p>For our purposes, we&rsquo;ll specifically be working in <a href="https://en.wikipedia.org/wiki/GitHub">GitHub</a>.  GitHub is a project offering web-based hosting of your code that you can source from anywhere.  GitHub offers public and private hosting and a spate of other related services to development collaboration on the Internet.  If you do not have a GitHub account, you&rsquo;ll need to surf on over to the site and sign up for one.  It&rsquo;s free and it&rsquo;s fast, and I&rsquo;ll be using and sourcing it heavily as this series continues.</p>
+
+<p><strong>Basic Git</strong></p>
+
+<p>Git itself is available on most modern platforms and can easily hook into GitHub for our purposes.  I will be mostly referring to command-line usage of git, but you will find quite a bit in the way of tools, frontends, and &ldquo;helper&rdquo; apps for Git that you may or may not wish to leverage as you learn and incorporate Git into your workflow.  In the meantime, stick with me on command-line work.</p>
+
+<p>When you install git on your unix-like platform, it will drop a few binaries.  The one we&rsquo;re most interested in is the git binary itself.  It&rsquo;s very simply designed and has a very straightforward set of options you can get from the command line by simply typing &ldquo;git&rdquo; with no options, or &ldquo;git help&rdquo;.  The output is below:</p>
+
+<p>[snippet id=&ldquo;32&rdquo;]</p>
+
+<p>We&rsquo;re most interested in a small subset of commands for our purposes here.  They are <strong>add, commit, pull, push, branch, checkout, and clone.</strong></p>
+
+<p>I will be referencing one particular way to &ldquo;do&rdquo; git which works for me, but as with anything <a href="https://en.wikipedia.org/wiki/TMTOWTDI">TMTOWTDI</a> and <a href="https://en.wiktionary.org/wiki/YMMV">YMMV</a>.</p>
+
+<p><strong>GitHub Portion</strong></p>
+
+<p>I am going to assume you&rsquo;ve created a GitHub Account.  When you create your account, you&rsquo;ll have a unique URL assigned to you based on your username.  Mine, for instance, is <a href="https://github.com/cvquesty/">https://github.com/cvquesty/</a><insert project name here>.  The basic interface to GitHub is rather straightforward and looks like the following:</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/mygithub.png"><img src="http://questy.org/wp-content/uploads/2014/05/mygithub.png" alt="mygithub" /></a>The interface keeps track of all projects you&rsquo;re working on, the frequency with which you commit or otherwise use your repository, and (most importantly), a centralized server that is storing those projects you can source from any internet connected system.</p>
+
+<p><strong>Make a Repository</strong></p>
+
+<p>In the upper right-hand corner of your screen, you&rsquo;ll notice a &ldquo;+&rdquo; symbol.  Let&rsquo;s click that and create us a new repository.  You&rsquo;ll be presented with a dialog to name and describe your new repo.  I&rsquo;ll use the name &ldquo;sample repo&rdquo; and the description &ldquo;Sample Repo for my Tutorial&rdquo; with no other options other than the defaults.  (we&rsquo;ll go manually through those processes shortly).  After creating the repository by clicking &ldquo;Create Repository&rdquo;, I&rsquo;m presented with a page that has step-by-step instructions on what to do next.  I&rsquo;ll include that here for you.</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/myrepo.png"><img src="http://questy.org/wp-content/uploads/2014/05/myrepo.png" alt="myrepo" /></a></p>
+
+<p>As you can see, you have your repo referenced at the top by <userid>/<reponame>.  You have instructions on how to use the repo from both the GitHub desktop client and the command line and some special instructions for if you have it locally on your system, and are just now uploading that content into this repository you&rsquo;ve created to hold it.  We&rsquo;re interested in the command line instructions.</p>
+
+<p><strong>A Place to Git</strong></p>
+
+<p>On my system (a Mac), I have Git installed by default and I have a directory in my home directory simply called &ldquo;Projects&rdquo;.  Under there, I have a &ldquo;Git&rdquo; directory.  ALL of my work in Git goes here.  This is not a hard/fast rule.  I just chose it as my location to place all my git work so it is centralized and all collected together.</p>
+
+<p>What we&rsquo;re going to do next is to configure Git, create a location for our repo, make a file to commit to the repo and then push that file up to GitHub to see how that workflow works.  Let&rsquo;s get started.</p>
+
+<p><strong>Configuring Git</strong></p>
+
+<p>Since Git is personal to you as a user, you need to let Git know a few things about you.  This gives your git server (in our case GitHub) the information it needs when you&rsquo;re pushing code (like your identity, default commit locations, etc).  First, your name and email:</p>
+
+<p>git config &ndash;global user.name &ldquo;John Doe&rdquo;
+git config &ndash;global user.email <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#x79;&#x6f;&#x75;&#x40;&#121;&#x6f;&#117;&#x72;&#109;&#x61;&#105;&#108;&#46;&#x63;&#111;&#109;">&#121;&#111;&#x75;&#64;&#x79;&#111;&#x75;&#114;&#109;&#x61;&#x69;&#x6c;&#46;&#99;&#111;&#x6d;</a></p>
+
+<p>You&rsquo;ll only need to perform this once.  There are quite a few options and you can read up on those <a href="http://git-scm.com/book/en/Getting-Started-First-Time-Git-Setup">here</a> at your leisure.</p>
+
+<p>Next, create a location for your new repo.  I chose my aforementioned directory and created the location</p>
+
+<p>/Users/jsheets/Projects/Git/samplerepo</p>
+
+<p>for demonstration purposes.  From here, though, we can take up with the instructions on the GitHub page displayed after creating your repo. I&rsquo;ll reproduce that here for reference:</p>
+
+<p>cd /Users/jsheets/Projects/Git/samplerepo
+touch README.md
+git init
+git add README.md
+git commit -m &ldquo;first commit&rdquo;
+git remote add origin <a href="https://github.com/cvquesty/samplerepo.git">https://github.com/cvquesty/samplerepo.git</a>
+git push -u origin master</p>
+
+<p>If all has gone well, you have now created an empty README.md file, committed it to your local Git repository and then subsequently pushed it up to GitHub.  You&rsquo;ll note that we added &ldquo;origin&rdquo; as the remote and then we pushed to &ldquo;origin&rdquo; in a thing called &ldquo;master&rdquo;.  What&rsquo;s that all about?</p>
+
+<p>GitHub (and git) refer to their repo location as &ldquo;origin&rdquo;.  This becomes handy when you start pushing between remote repositories and from remote to remote to GitHub, etc.  So, it makes sense to name GitHub <em>functionally </em>as well as it&rsquo;s assigned domain name.  By saying &ldquo;origin&rdquo;, we&rsquo;re making GitHub the de-facto standard center of everything we&rsquo;re doing.</p>
+
+<p>Next, we refer to &ldquo;master&rdquo;.  What is that?  Simply stated, we&rsquo;re pushing to a &ldquo;branch&rdquo; called &ldquo;master&rdquo;.</p>
+
+<p><strong>Branching</strong></p>
+
+<p>Branching is a method by which you can have multiple code &ldquo;branches&rdquo; or &ldquo;threads&rdquo; in existence simultaneously, and Git is managing them all for you.  For instance, you may wish to have one code collection only for use in production systems while maintaining a separate one for development systems.  In fact, you can create a random branch with a bug name (bug1234, for instance), commit your changes to that, test it, and push it to origin, then pull it down to all your production hosts, solving a big problem in your site or codebase.  Better yet, if it all works great and you&rsquo;re happy with it, you can &ldquo;merge&rdquo; that bug back into your main code repository, making it a permanent fixture in your code in whatever branch you like. (or even all of them!)</p>
+
+<p>When you first create your repo, GitHub makes a &ldquo;main&rdquo; branch for you automatically, and calls it &ldquo;master&rdquo;.  So, by utilizing the command above, we&rsquo;re telling Git to push our code (in this case, README.md) to our origin server (GitHub) and put it in the &ldquo;master&rdquo; branch.</p>
+
+<p>While we&rsquo;re on the topic, let&rsquo;s create two more branches so we can get the full hang of this branching thing.  (Hint:  It&rsquo;s core to how we integrate this into Puppet).</p>
+
+<p><strong>Makin' Branches</strong></p>
+
+<p>As I said before, GitHub creates a default &ldquo;master&rdquo; branch for you.  If, from your local repository location, you type &ldquo;git branch&rdquo;, Git will list a single branch for you,</p>
+
+<p>git branch
+* master</p>
+
+<p>This tells us simply, what branch you are currently in.  Now, let&rsquo;s run two commands to create new branches to be tracked by Git.</p>
+
+<p>git branch production
+git branch development</p>
+
+<p>Now.  Run &ldquo;git branch&rdquo; again:</p>
+
+<p>git branch
+development
+* master
+production</p>
+
+<p>As you can see, your other branches are now visible when running the command.  If you have color, you may notice that the &ldquo;master&rdquo; branch is a different color than the others (based on your settings).  If you do not have color, the asterisk denotes what branch is active as well.</p>
+
+<p><strong>Checkout and Commit, Branch and Merge</strong></p>
+
+<p>We have our repository and we have our branches.  We have a single README.md in the current directory, and we are ready to roll committing code and pushing it into our repository.  Let&rsquo;s perform a simple experiment to get the &ldquo;hang&rdquo; of how the branches work and how to switch between them as needed.  Since we&rsquo;re in &ldquo;master&rdquo;, let&rsquo;s edit our README.md to reflect that by placing a single word in the file &ldquo;master&rdquo;. (use vim as discussed in our last tutorial).</p>
+
+<p>Once you&rsquo;re done with your edit, you&rsquo;ll see that the text is in the file.  you can edit it and you can cat the file and see the contents, but if you view the file up at GitHub, that content is not there yet.  Some sort of way, a mechanism must be used to put that data there.  Well, there is such a process, and it is a two part process.</p>
+
+<p>Recall I mentioned that one of the features of Git is that you can have a complete repository local to your machine.  you can work on that repo and make all sorts of changes completely disconnected from your server (in our case GitHub&hellip; &ldquo;origin&rdquo; as it is named to Git).  Therefore, in reality you are dealing with not one, but two repositories.  The local one on your machine and the remote one at origin.  (remember the &ldquo;git remote add origin&rdquo; above?)</p>
+
+<p>So, to finalize your changes locally, you must &ldquo;commit&rdquo; them to your local repository as &ldquo;final&rdquo;.  THEN, you can &ldquo;push&rdquo; those changes into your main server (in our case GitHub).   We did as much above with our procedure where we did the commit with a message, and then a push up to origin.  However, now that we&rsquo;ve made changes locally, they are not yet reflected at GitHub.  Logic would dictate another commit is in order:</p>
+
+<p>git commit
+or
+git commit -m &lsquo;Some message about your commit&rsquo;</p>
+
+<p>As you can see, there are two routes you can go.  If you simply supply the &ldquo;git commit&rdquo; without any options, you will be brought into the system text editor you (or your OS) has configured in the $EDITOR environment variable.  Most platforms use &ldquo;vi&rdquo; or &ldquo;vim&rdquo; for this, but I have also seen &ldquo;pico&rdquo; used in some distributions like Ubuntu Linux.  In any event, you can edit the file by placing your comments in.  After exiting the file, saving the content, the commit will be complete.  If, however, you do not put anything, git will not commit the changes.  This is to enforce good coding practice by requiring some notes about what a committer is doing before making the changes.  It&rsquo;s a highly recommended workflow to follow.</p>
+
+<p>Once your commit is complete, phase 1 (local commit) is over.  You can commit over and over, as many times as you like.  you are a full, local repository.  In fact, I&rsquo;d encourage many commits.  Commit when you think about it.  Commit before you walk away from your system.  Commit randomly for no reason in mid-workflow.  The more commits you have, the less likely you are to lose work.</p>
+
+<p>Finally, to get the data up to GitHub, we need to &ldquo;push&rdquo; that data off your repository and into your &ldquo;origin&rdquo; repository. This is quite simple, and you&rsquo;ve done it before:</p>
+
+<p>git push -u origin master</p>
+
+<p>Sometimes you may wish to not keep specifying the location you&rsquo;re pushing to.  If so, you can set a default location for each branch.  Git will tell you just how to do that if you forget the &ldquo;-u location branch&rdquo; option.  Let&rsquo;s say I&rsquo;m in my aster branch and I simply run a &ldquo;git push&rdquo;.  Git will tell me I did something wrong, but will <em>also </em>tell me how to eliminate that problem:</p>
+
+<p>fatal: The current branch master has no upstream branch.
+To push the current branch and set the remote as upstream, use</p>
+
+<p>git push &ndash;set-upstream origin master</p>
+
+<p>&ldquo;fatal&rdquo; seems a <em>little </em>melodramatic since Git gives you the answer as to what to do right there.  All you need to do is set the default target once with that last line, and from that point forward, you only need type &ldquo;git push&rdquo; when pushing to GitHub.  Hint:  I do this in ALL my branches at create time.  It saves a lot of typing over time, and like any good Sysadmin, I&rsquo;m lazy.  :)</p>
+
+<p>So, now I&rsquo;ve got multiple branches that need this setting, but I&rsquo;m still stuck in &ldquo;master&rdquo;.  How do I get to &ldquo;development&rdquo; or &ldquo;production&rdquo; to perform the same tasks?</p>
+
+<p>Git provides a &ldquo;checkout&rdquo; command.  What you&rsquo;re saying with &ldquo;checkout&rdquo; is:  "Git, I want to be working on branch &ldquo;x&rdquo;, and I want you to make that my current branch.  if there are any differences between that branch and the one I&rsquo;m on, please make those changes on-disk for me so I can exclusively be working in branch &ldquo;x&rdquo;&ldquo;.  A little verbose, but you get the point.  So, to move to the next branch and do all the wonderful things we did in "master&rdquo; above, we perform:</p>
+
+<p>git checkout development
+edit README.md to say different text
+git commit -a -m &lsquo;editing README for development branch&rsquo;
+git push &ndash;set-upstream origin development
+git push</p>
+
+<p>If all has gone well, your development README.md file is now changed and pushed into GitHub.  What about &ldquo;master&rdquo;, though?  Well, let&rsquo;s take a look:</p>
+
+<p>git checkout master
+cat README.md</p>
+
+<p>If all has gone well, the contents of README.md are back to what was in your &ldquo;master&rdquo; branch.  By checking out &ldquo;development&rdquo;, it&rsquo;ll change back to the new content there.  As a test, checkout the &ldquo;production&rdquo; branch, change the README.md file, commit it, set your upstream push target and then push the contents to GitHub.</p>
+
+<p>Now you&rsquo;re cooking with gas.</p>
+
+<p><strong>Conclusion</strong></p>
+
+<p>This is a simple tutorial to get you started with Git &amp; GitHub.  There are MANY tutorials and books that can make you into a Git expert, but are way outside the scope of this humble little blog.  let me provide a few of those for you here:</p>
+
+<p><a href="http://git-scm.com/documentation">Git Help</a>
+<a href="http://git-scm.com/book">Git Book</a><a href="https://help.github.com">
+GitHub Help</a></p>
+
+<p>This documentation should be more than enough to get you moving and well underway with Git ins-and-outs for committing Puppet code and using r10k to interface with and distribute that code around your environment.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Why All the Vim?]]></title>
+    <link href="http://questy.org/blog/2014/05/09/vim-2/"/>
+    <updated>2014-05-09T11:07:57-04:00</updated>
+    <id>http://questy.org/blog/2014/05/09/vim-2</id>
+    <content type="html"><![CDATA[<p>As we move on through the last post on Vim, you may ask yourself why I&rsquo;m remediating all the way back to text editors.  Well, as you&rsquo;ll see over time, this is all about workflow; Building yourself a detailed workflow by which you can write code, syntax check, commit to revision control, deploy to your Puppet instances, and duplicate that workflow across all your environments.</p>
+
+<p>The text editor itself, while important, is just a tiny part of a much larger picture I hope to cobble together over time.  So, let&rsquo;s begin to push forward with our coverage of Vim.</p>
+
+<p><strong>Plugins and Syntax Highlighting</strong></p>
+
+<p>I went through the beginnings of Vim to give you a starting point and some basics in the event you have no experience in the Vim world.  One would assume that since you&rsquo;re on a Puppet/Dev-Ops-y sort of page, all this is old news, but we do have completely &ldquo;green&rdquo; readers from time to time, and I didn&rsquo;t want to leave them out.</p>
+
+<p>The main goal in getting Vim in the picture was to bring you to the point where we start looking at our code and knowing what we&rsquo;re dealing with at a glance.  As you begin to work in the field, whether coding in Perl, Python, Shell, or the Puppet DSL, there are some conventions out there all designed to help you and smooth your workflow.  Of these is syntax highlighting in code editors in general, but (for our purposes) in Vim <em>specifically.</em></p>
+
+<p>Take a look at this screen:</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/nosyn.png"><img src="http://questy.org/wp-content/uploads/2014/05/nosyn.png" alt="nosyn" /></a></p>
+
+<p>While the code is well formatted and everything seems ok, were there any issues in this document, you&rsquo;d never know it.  From syntax issues to missing elements, none of this is automatically highlighted to you in any way.  Enter syntax highlighting&hellip;  Look again:</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/syn.png"><img src="http://questy.org/wp-content/uploads/2014/05/syn.png" alt="syn" /></a></p>
+
+<p>Much nicer, no?  Were there any missing elements, you&rsquo;d see something amiss in the document.  The colors would not be organized according to element type, and odd things would be displayed in the page.  Let me &ldquo;break&rdquo; the file for you&hellip;</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/broke.png"><img src="http://questy.org/wp-content/uploads/2014/05/broke.png" alt="broke" /></a></p>
+
+<p>You&rsquo;ll notice that on line 4 something is amiss.  If you compare the two colored instances, you&rsquo;ll see that your eye is drawn to where things begin to be different.  Best part for quick and easy glancing is that the entirety of the file after that one mistake now looks &ldquo;wrong&rdquo;.  Ease of view.</p>
+
+<p><strong>How Can This Help With Puppet?</strong></p>
+
+<p>As luck would have it, Vim has a plugin engine that allows you to have pre-built templates that syntax highlight code for you in a predetermined way.  It &ldquo;recognizes&rdquo; your code type, and highlights accordingly.  The basic plugin structure for vim lives in your home directory and in the &ldquo;hidden&rdquo; .vim directory.  Under this directory you can have a number of wide and varied add ons to vim.  We&rsquo;re just going to talk about plugins.</p>
+
+<p>By default, you don&rsquo;t have anything in this directory.  You usually have a .vimrc file and a .vim directory in your home directory location, but that&rsquo;s about it.  The &ldquo;magic&rdquo; happens, though, when you add a few pieces.  Those would include a &ldquo;.vimrc&rdquo; file which will turn on syntax highlighting, and then a Puppet vim plugin that sorts all the language elements and colorizes them for you.</p>
+
+<p>In your home directory, if it doesn&rsquo;t already exist, create a .vimrc file with a single entry:</p>
+
+<p><strong>syntax on</strong></p>
+
+<p>This will instruct vim to syntax highlight, and to be aware of any highlighting plugins that may live in the .vim plugin folder.  Next, place <a href="http://questy.org/stuff/puppet/puppet.vim">this file</a> into your .vim plugin directory.  If it does not yet exist, create it.  It lives in ~/.vim/plugin.  Once you load up new puppet manifests, it will recognize the type and begin to highlight the code according to the defined convention from the puppet.vim file you just downloaded.  If you have any issues, look at the vim plugin reference <a href="http://vimdoc.sourceforge.net/htmldoc/usr_05.html">here</a>.</p>
+
+<p>Now you&rsquo;re ready to work with Puppet files like a pro!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Puppet User's Group]]></title>
+    <link href="http://questy.org/blog/2014/05/08/puppet-users-group/"/>
+    <updated>2014-05-08T19:59:35-04:00</updated>
+    <id>http://questy.org/blog/2014/05/08/puppet-users-group</id>
+    <content type="html"><![CDATA[<p>Going on right now at Shadow Soft!</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/20140508-195822.jpg"><img src="http://questy.org/wp-content/uploads/2014/05/20140508-195822.jpg" alt="20140508-195822.jpg" /></a></p>
+
+<p>Excellent coverage of AWS automation.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Vim]]></title>
+    <link href="http://questy.org/blog/2014/05/02/vim/"/>
+    <updated>2014-05-02T15:56:54-04:00</updated>
+    <id>http://questy.org/blog/2014/05/02/vim</id>
+    <content type="html"><![CDATA[<p><strong>Old School</strong></p>
+
+<p>Why on earth am I starting with Vim?  (or &ldquo;vi&rdquo; for you old folks)</p>
+
+<p>Vim is the modern &ldquo;vi&rdquo; implementation.  A full-screen text editor with a myriad of options and abilities for beyond anything I could ever cover here.  But Vim has one thing going for it that no other text editor has.  One simple fact about it puts it in the category of cameras.  You know the old saying?</p>
+
+<p><em><strong>&ldquo;The best camera is the one you have with you.&rdquo;</strong></em></p>
+
+<p>Thus it is with vi/vim.  It&rsquo;s literally <strong>everywhere.</strong></p>
+
+<p>Every UNIX OS, commercial or not, streamlined or not, old or new, has vi or vim installed on it.  Emacs is a great product, but it just isn&rsquo;t installed by default everywhere.  Regardless of the editor you refer to, ${INSERT_EDITOR_HERE} just isn&rsquo;t as ubiquitous as Vi/Vim.</p>
+
+<p>Since we&rsquo;re talking about a modern pursuit and workflow (DEVOPS), we&rsquo;ll be talking mostly about Vim&rsquo;s capabilities and features.</p>
+
+<p><strong>What Vim is <em>NOT</em></strong></p>
+
+<p>Vim is not a word processor.  You won&rsquo;t be writing business letters with it.  Vim is not for writing resumes, making pretty newsletters, or for typesetting a magazine.  The die-hard Vi/Vim fan will tell you that you can do all of the above with it, but that falls into the same category as filling in the Grand Canyon with a teaspoon. You <em>can </em>do it, but why on earth would you want to?</p>
+
+<p><strong>What Vim Does Best</strong></p>
+
+<p>Vim edits text.  Plain&hellip;text.  Not pretty bold, italicized, with all sorts of alignment characters and strange paragraphs and pagination doohickeys&hellip; no, Vim just makes text files.  Text files that are SO devoid of bells and whistles, in fact, that when you open a Vim created file in your favorite WYSIWYG editor, you&rsquo;ll see what appears to be a pile of letters and such all crammed together like you had nothing else on your keyboard but letters, numbers, and punctuation.</p>
+
+<p>Vim allows you to eliminate all the cruft and get right down to the matter of creating plain, unencumbered text files.</p>
+
+<p><strong>Why Does it Matter?</strong></p>
+
+<p>When you&rsquo;re logged onto your favorite Linux through two bastion hosts across several continents and have latency to boot, WordPad will not help.  You&rsquo;ll need a lightweight text editor within which you can load, edit, and save the single most numerous type of item on a UNIX system&hellip; a text file.</p>
+
+<p><strong>Where Can I learn More About Vim?</strong></p>
+
+<p>Vim&rsquo;s main project page can be found <a href="http://www.vim.org">here</a> online.  The main page has links to documentation and various community links as well as connections to various types of plugins and add ons you can use with Vim for any number of tasks.  You can join online forums, mailing lists, and communities whose entire purpose is the extension and promotion of Vim.  But that&rsquo;s not what we&rsquo;re up to&hellip;</p>
+
+<p><strong>How We Will Use Vim</strong></p>
+
+<p>For our purposes, we will use vim as code editor.  No more, no less.  Vim&rsquo;s abilities can help us <em>see </em>our code in ways that let&rsquo;s us know when there&rsquo;s an issue and can direct us generally in the direction of our solutions.  So, let&rsquo;s dive in to a minor Vim tutorial.  (If you&rsquo;re an advanced Vim user, stick with me&hellip;)</p>
+
+<p>All Linux distributions and Mac OSX come with Vim pre-installed and ready for action.  Note that some distributions of Linux will have <em>both </em>Vim and Vi.  You will either need to get into the habit of running &ldquo;vim&rdquo; from the command line, or setup your shell aliases to load Vim every time you type &ldquo;vi&rdquo; instead.</p>
+
+<p>When you launch Vim, you see a screen much like the following.  I use Mac OSX, but the effect is the same, regardless of platform.</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/vim.png"><img src="http://questy.org/wp-content/uploads/2014/05/vim.png" alt="vim_screen" /></a></p>
+
+<p>I have several features turned on (including the line across the bottom that provides me a lot of information about the file I&rsquo;m editing), but the main things we will talk about here are <em>syntax highlighting</em> and <em>plugins </em>after a short tutorial on how Vim works.</p>
+
+<p><strong>I Can&rsquo;t DO Anything!!!</strong></p>
+
+<p>Most people&rsquo;s frustrations begin right on this page.  From here, nothing seems familiar.  I can&rsquo;t pull down a menu and I can&rsquo;t really even choose &ldquo;exit&rdquo; from a list of things to do.  The only real hint I have is on the screen above:</p>
+
+<p>type  :q<Enter>               to exit</p>
+
+<p>&hellip;which is quite a peculiar directive.  Why do I have to type a colon?  What does it mean?  And goodness help you if you already managed to type something into the screen.  The instructions you see above disappear, and without the right collection of keystrokes, you&rsquo;re not getting out of Vim.  You&rsquo;ll most likely just close the window and start looking for &ldquo;notepad&rdquo;.</p>
+
+<p>Here&rsquo;s where the tutorial starts.</p>
+
+<p>Vim is what is known as a full-screen text editor.  It started back in the Amiga days, and was first released publicly in 1991.  Before Vi/Vim, to create text files, there were line-based text editors that only allowed you to see one line of a file at a time.  So, you really couldn&rsquo;t work with huge files&hellip;it would be difficult to see file lines compared to each other or look at the whole flow of a subroutine you had written, or even to match wording or syntax from one section to another.</p>
+
+<p>Enter the full-screen editor.</p>
+
+<p>What the full-screen editor did was open a file on disk, reserving space in memory to hold the entire file, and then display to you a &ldquo;window&rdquo; into your file equal to your terminal&rsquo;s display size.  for instance, I have a terminal right now that has a several thousand line file open.  Of that file, I can only see 25 lines and 80 columns wide.  This &ldquo;window&rdquo; onto my file is something I personally configured in my terminal program (in my case, &ldquo;iTerm&rdquo;).  I can scroll up and down this file, sliding forward or backward within the file from the beginning to the end (just as you may an MS Word document) and can interact with/edit any character I can see on the screen.  (we&rsquo;ll talk about search and replace and other such things later).</p>
+
+<p>We are currently in what is known as &ldquo;command mode&rdquo;.  Many would ask why you don&rsquo;t just call this &ldquo;view&rdquo; mode, and the reasons are very simple.  From this screen, you issue MANY commands to Vim and tell it how you want it to behave for you.  For our purposes, we will use &ldquo;command&rdquo; mode and &ldquo;insert&rdquo; mode mostly.</p>
+
+<p><strong>Well, How Do I Edit Something?</strong></p>
+
+<p>To edit your file, you enter into a mode known as &ldquo;insert&rdquo; mode.  From this page there are several different modes you can enter, but &ldquo;insert&rdquo; mode is the easiest.  You simply type a single lowercase &ldquo;i&rdquo; to enter this mode.  When you do so, a cursor appears on the top line of the page you are viewing, and you are now able to type all you like.  Letters, <enter> keys, tabs&hellip; all normal typing idioms are available to you from this point.  How, you may ask, then do you save your work to disk?  I&rsquo;m in this &ldquo;insert&rdquo; mode and don&rsquo;t know how to save!</p>
+
+<p>Think about what you wish to accomplish&hellip; you wish to issue the command &ldquo;save&rdquo; to Vim.  Command&hellip;  as in&hellip; &ldquo;command mode&rdquo;, perhaps?  Well, we have to go back into command mode, then, so we can issue some commands to Vim and exit the program.</p>
+
+<p>Any time you are in Vim, your &ldquo;saving grace&rdquo; is your [esc] key.  Two taps on the escape key lways brings you back to command mode from anywhere.  Go ahead and try it.</p>
+
+<p>You&rsquo;ll now notice you have returned to &ldquo;command mode&rdquo; just as you were when you first opened Vim.  The only difference is that everything you typed is now on your screen and has not gone away.  Your &ldquo;edit buffer&rdquo; is full of a file you now can do things with.  You can save it, delete it, save it out as a specific file name&hellip; a myriad of normal file operations you may be used to from other software packages.</p>
+
+<p>In our case, we want to just save the file.  However, when we opened Vim, we didn&rsquo;t specify a file name to edit, we just opened Vim.  So, for all intents and purposes, we have an open buffer full of &ldquo;stuff&rdquo; and no file name to associate with it.  What we want to do now is to &ldquo;write&rdquo; the file to disk.  To do so, we have to issue commands to Vim in Command mode.</p>
+
+<p><strong>Command Mode</strong></p>
+
+<p>To issue commands to Vim, we have to tell it we are issuing it a command, otherwise you may hit a letter than means something else.  Recall that simply by hitting a lowercase &ldquo;i&rdquo; we placed vim into insert mode and then by hitting the [esc] key twice, we left it.  Clearly, there&rsquo;s more to this editor than we can readily see, so how do we save the file?</p>
+
+<p>When you have a buffer with text you would like to save, you have to first hit a colon &ldquo;:&rdquo;.  You&rsquo;ll notice that Vim places the colon on the bottom line of your screen to the left, awaiting a command.  While there are several commands we can perform here (as well as joining multiple commands together), we will simply write the file right now.  To do so, while at the &ldquo;colon prompt&rdquo;, we simply type:</p>
+
+<p><strong>: w foo.txt</strong></p>
+
+<p>and press the &ldquo;enter&rdquo; key.  You will receive a message on the last line that lets you know the file has been written to disk:</p>
+
+<p><strong>&ldquo;foo.txt&rdquo; [New] 1L, 16C written</strong></p>
+
+<p>But I&rsquo;m still in Vim.  What do I do now?</p>
+
+<p>Just like &ldquo;w&rdquo; is a command, exiting the program also is a command.  Guessably so, it is the letter &ldquo;q&rdquo; for &ldquo;quit&rdquo;.  So, as before, you hit the colon key, then the letter q, and then the enter key.  If all goes well, you&rsquo;ll be back at the command line.</p>
+
+<p><strong>Much More to This</strong></p>
+
+<p>Were I to do this for all the features of Vim, I&rsquo;d be writing a book.  However, fortunately for you, there are several tutorials and cheat sheets on Vi/Vim all over the Internet.  Here are a few of my favorites.</p>
+
+<p><a href="http://vim.wikia.com/wiki/Tutorial">The Main Vim Tutorial
+</a><a href="https://www.linux.com/learn/tutorials/228600-vim-101-a-beginners-guide-to-vim">Linux.com&rsquo;s Vim Tutorial</a></p>
+
+<p>As well as some cheat sheets for you to refer to for quick reference on the various commands available when using Vim:</p>
+
+<p><a href="http://www.viemu.com/vi-vim-cheat-sheet.gif">One of My Favorites
+</a><a href="http://vim.rtorr.com">Another Good Cheat Sheet</a></p>
+
+<p>Take some time learning the basics of Vim before pressing on to the next article: &ldquo;Customizing Vim&rdquo;.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[New Tools and Old Schools]]></title>
+    <link href="http://questy.org/blog/2014/05/02/new-tools-old-schools/"/>
+    <updated>2014-05-02T14:24:37-04:00</updated>
+    <id>http://questy.org/blog/2014/05/02/new-tools-old-schools</id>
+    <content type="html"><![CDATA[<p><strong>New Tools</strong></p>
+
+<p>Once you&rsquo;re treading water in this whole DEVOPS thing, a lot of terms get thrown around and a lot of &ldquo;newest bestest&rdquo; gets offered up as the cure for everything including the kitchen sink&hellip; oh, and cancer.  However, I think when the hubbub is the loudest, that&rsquo;s when I really take a step back and ask myself what we&rsquo;re trying to do, and what&rsquo;s the simplest, most repeatable and safest way to make it happen.</p>
+
+<p>As with any sufficiently new technology, there&rsquo;s a learning curve that accompanies such a shift, and new tools start to be speckle your horizon such that you wonder where to start, what is imperative and what is optional for you to occupy your time with.</p>
+
+<p>Thus it is with Puppet-y stuff.</p>
+
+<p>Given that the whole DEVOPS thing includes within it a heavy lean toward DEV, the regular rank-and-file sysadmin may find himself thrust into a world of development terms he may have only heard in passing in some random meeting or other.  The tools of the developer are as varied and arrayed as those for the operations guru and every bit as arcane (in some cases) as the esoteric shell command only installable from some guy in Russia&rsquo;s repo, with 30 or more command line switches to get a single piece of data upon which to work your evil schemes.</p>
+
+<p>Well&hellip; that&rsquo;s why this blog.</p>
+
+<p>I&rsquo;m about to embark upon a coverage of a set of tools.  However, this set of tools I will not observe in a vacuum, but in light of a powerful workflow engine with which to empower you to become considerably more efficient in writing Puppet code.  The tools in particular I&rsquo;d like to go over and, much in the same way I covered Puppet Open Source, instruct you step-by-step on how to install, configure, and use said tools are as follows:</p>
+
+<p>Vagrant
+r10k
+GitHub
+Vim (yes, Vim)
+puppet-lint
+Gepetto</p>
+
+<p>This is by no means and exhaustive list, but what it does is collect together the best tools to assemble a workflow that will speed your work and not leave you spending all your time working on tools, but working on <em>Puppet Code, </em>which is our main focus and goal.</p>
+
+<p><strong>Old Schools</strong></p>
+
+<p>At the end of the day, the really important things are conceptual.  Whether you use a new whizbang tool to do the heavy lifting, several tools working together to achieve this goal, or you heavy lift all on your own, the process and the rules remain the same.</p>
+
+<p>DO keep all your code in revision control.
+DO syntax highlight and check your code validity
+DO build repeatable, consistent environments in a timely fashion
+DO have a method to share your work environments with others
+DO document heavily both in and out of code segments
+DO have a solid end-to-end workflow that enables rapid iteration</p>
+
+<p>What of this is new?  Whether we&rsquo;re talking about keeping all your shell scripts in CVS, deploying your script repo with SVN, or deploying versioned code caches with ${PACKAGE_MANAGEMENT_SYSTEM}, we&rsquo;re talking about the same general good practices.  All Puppet and supporting tools does is make it something that is tightly integrated with management consoles.  To organize and institutionalize your <em>workflow </em>gives the steady underpinning to the cool DEVOPS tool to make everything repeatable, sharable, and collaborative.  This is where the power comes from.  THIS is where DEVOPS makes sense.</p>
+
+<p>When your workflow is solid, your DEVOPS tools are strong, and your culture has bought in to both, mundane work becomes an afterthought and you get to work on the really interesting things that you&rsquo;ve been letting slide while putting out fires that could&rsquo;ve been best managed via configuration management anyhow.</p>
+
+<p>My hope is to build the concept and context from the ground up to show you one tight, functional way this can be accomplished.  Let&rsquo;s start next time with Vim.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Workflows, Tools, and a Myriad of Gobbledygook...]]></title>
+    <link href="http://questy.org/blog/2014/04/23/workflows-tools-myriad-gobbledygook/"/>
+    <updated>2014-04-23T14:17:41-04:00</updated>
+    <id>http://questy.org/blog/2014/04/23/workflows-tools-myriad-gobbledygook</id>
+    <content type="html"><![CDATA[<p>Ok, so first let&rsquo;s cover the gobbledygook.</p>
+
+<p>I&rsquo;ve had a lot of feedback on various parts of the blog here, and I thought I&rsquo;d address a few of them here.</p>
+
+<p><strong>Q:  Why didn&rsquo;t you just point at the appropriate Yum repos for installing Puppet?</strong></p>
+
+<p>A:  Easy.  I can do &ldquo;yum install foo&rdquo; and never know what&rsquo;s going on behind the scenes just like anyone.  My goal here was to give a point-by-point installation guide so those who are interested could know what all the moving parts were and how they fit together.</p>
+
+<p><strong>Q:  Why are you using the dashboard and not Foreman?</strong></p>
+
+<p>A:  Also easy&hellip; at least at the time of this writing, The Foreman has been indicated to be the next front end to be the &ldquo;de facto&rdquo; standard, but as for right now, the Enterprise Console is essentially a turbocharged version of the Dashboard.  As such, when I begin to talk about extending the Enterprise Console, Dashboard would be the analogue by which you can most obtain the same experience (short of installing Puppet Enterprise itself).</p>
+
+<p><strong>Q:  Why OSS and not PE?</strong></p>
+
+<p>A:  Well, to be frank&hellip; PE is about as simple as you can get.  You can learn a bit about what portions to install and how to connect them all together across machines (something I plan to cover), and you can learn about constructing an answer file (or several for a large, complex installation),  but the vast majority of your PE installations will be a Q/A interaction with the installer.</p>
+
+<p><strong>Workflows and Tools</strong></p>
+
+<p>One of the biggest changes in how I deal with Puppet has been my adoption of and implementation of workflows as well as using some modern tools I&rsquo;ve been made aware of by the Puppet Labs folks.  Among these are Vagrant, r10k, GitHub, and many others that work together and are tightly integrated and require a lot of configuration and setup to &ldquo;make happen&rdquo;.  I intend to cover those here.</p>
+
+<p>So, what are all these things?</p>
+
+<p><strong>Vagrant</strong></p>
+
+<p>Vagrant is a tool that allows you to pre-configure a small virtualized environment on your host consisting of a Puppet Master and any number of agents for use in a dynamic, iterative fashion.  By bringing up a Vagrant environment, I have a miniature development environment from which I can actually test Puppet code I write in a full PE environment and work out kinks you don&rsquo;t normally encounter when working independently on a single workstation.  From this environment, I can puppet-lint check all my code and then push all that code out of the Vagrant environment up to GitHub, then pull it down to my production instance as needed.  Further, it allows me to simulate all environments I have in my corporate setup (DEV, PROD, TEST, etc.) and commit those differences to the appropriate branches in GitHub.</p>
+
+<p><strong>r10k</strong></p>
+
+<p>The method by which I iterate, push/pull code and deploy to various environments both in my Vagrant instance and in my Production site is via r10k.  A leap forward past &ldquo;puppet librarian&rdquo;, r10k is the glue that ties between GitHub and Vagrant as well as your GitHub instance and your Corporate site.  This can tie to public GitHub as well as Corporate (private) GitHub.</p>
+
+<p><strong>GitHub</strong></p>
+
+<p>GitHub is considerably more well known, but it&rsquo;s important to the whole process as you can read above.  GitHub is a revision control repository designed for rapid deployment, iteration, and isolated developer work with periodic pushes back to GitHub. (distributed development).  I intend to do a simple tutorial on GitHub as well.</p>
+
+<p>Look forward to piece-by-piece coverage of each of these and my thoughts as I prepare for and take the Puppet Labs Certification test.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Puppet v - Configuration and Scaling]]></title>
+    <link href="http://questy.org/blog/2014/02/28/puppet-v-configuration-scaling/"/>
+    <updated>2014-02-28T15:12:57-05:00</updated>
+    <id>http://questy.org/blog/2014/02/28/puppet-v-configuration-scaling</id>
+    <content type="html"><![CDATA[<p><em><strong>Introduction</strong></em></p>
+
+<p>The name of this portion of our tutorial was difficult to determine.  This is another set of configurations, but we will also be scaling Puppet to handle production quality traffic, be an external node classifier (ENC), have a backend database, employ an enterprise class web server, turn up a console&hellip;  there&rsquo;s a lot to do.  We are indeed configuring the backend, but also scaling Puppet to handle your environment&hellip;hence the name.</p>
+
+<p>This portion assumes you&rsquo;ve followed all previous tutorials from I-IV, have your certs signed and are complete and ready to go with Puppet &ldquo;as-is&rdquo;, you simply have not installed any of the following add-ons.  As mentioned last time, you could begin to write manifests and modules right now, using Puppet &ldquo;as-is&rdquo;, never utilizing any of the other features.  However, the &ldquo;out-of-the-box&rdquo; configuration of Puppet is not ready for enterprise use.  Perfect for a small development environment&hellip;perhaps up to 25 hosts or so, the Puppet server as installed includes a small WEBRick server (ruby-based) and is not intended to handle large site traffic profiles.</p>
+
+<p>To make Puppet &ldquo;enterprise-ready&rdquo;, we need to do a few things.</p>
+
+<ol>
+<li><p>Install the Puppet Dashboard</p></li>
+<li><p>Install the Puppet DB</p></li>
+<li><p>Install passenger + Apache modules</p></li>
+<li><p>Install MySQL</p></li>
+</ol>
+
+
+<p>The dashboard gives you a GUI configuration mechanism as well as an external node classifier.  The PuppetDB is a centralized config storage mechanism for all node facts and configurations.  Passenger+Apache is the piece that replaces Puppet&rsquo;s WEBRick server, and MySQL holds the database for the dashboard.</p>
+
+<p>This will be the longest portion of the tutorial series, and all the separate &amp; individual pieces will be interdependent, requiring us to do all the work first with configuration testing at the end.  Let&rsquo;s get started.</p>
+
+<p><em><strong>Packages</strong></em></p>
+
+<p>Early in tutorial I, I had you install a number of packages.  Had you stopped after installment IV, you&rsquo;d have had no need for a few of them, but I wanted all the packages to be on your system as prerequisites to avoid later installation headaches.  However, we do want to get the EPEL package set onto the system to add one prerequisite (and it&rsquo;s a darned fine repo to have, should you need it for other things)</p>
+
+<p>To install EPEL, run the following command:</p>
+
+<p>_**sudo rpm -ivh <a href="http://mirrors.kernel.org/fedora-epel/6/i386/epel-release-6-8.noarch.rpm**_">http://mirrors.kernel.org/fedora-epel/6/i386/epel-release-6-8.noarch.rpm**_</a></p>
+
+<p>The &ldquo;Extra packages for Enterprise Linux&rdquo; (EPEL) set is an important addition to any server set.  Especially to install the package prerequisites we need.</p>
+
+<p><em><strong>Installing Packages</strong></em></p>
+
+<p><em><strong>Passenger:</strong></em>
+First, we will be installing Passenger.  The passenger packages are in their own repository, not hosted at Puppet Labs.  First, import the GPG key:</p>
+
+<p>_**sudo rpm &ndash;import <a href="http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc**_">http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc**_</a></p>
+
+<p>And then install the passenger release repo:</p>
+
+<p>_**sudo yum -y install <a href="http://passenger.stealthymonkeys.com/rhel/6/passenger-release.noarch.rpm**_">http://passenger.stealthymonkeys.com/rhel/6/passenger-release.noarch.rpm**_</a></p>
+
+<p>Finally, install the Passenger Apache module to tie everything together:</p>
+
+<p><em><strong>sudo yum -y install mod_passenger</strong></em></p>
+
+<p>Congratulations.  The groundwork for Passenger is now installed.</p>
+
+<p><em><strong>Dashboard
+</strong></em>Since we have done so much preparatory work, the dashboard install is quite simple:</p>
+
+<p><em><strong>sudo yum -y install puppet-dashboard</strong></em></p>
+
+<p>Simple.</p>
+
+<p><strong>PuppetDB
+</strong>PuppetDB is installed a little differently, using Puppet itself to get and install the package:</p>
+
+<p><em><strong>sudo puppet resource package puppetdb ensure=latest</strong></em></p>
+
+<p>This procedure takes a bit of time, but when complete, the PuppetDB is now installed.</p>
+
+<p><strong>MySQL
+</strong>MySQL is installed via the usual yum repos, but we will also turn it on and have it ready for use as well as create our users and remove unneeded and unsecured accounts for the system.</p>
+
+<p><em><strong>sudo yum -y install mysql-server
+</strong><strong>sudo /sbin/chkconfig mysqld on</strong></em>
+<em><strong>sudo /sbin/service mysqld start</strong></em></p>
+
+<p>Let&rsquo;s set the database root user&rsquo;s password:</p>
+
+<p><em><strong>****/usr/bin/mysqladmin -u root password &lsquo;<new-password>&rsquo;</strong></em>
+<em><strong>/usr/bin/mysqladmin -u root -h <FQDN> password &lsquo;<new-password>&rsquo;
+mysql -u root -p</strong></em></p>
+
+<p>A few words here, for those of you unfamiliar with MySQL.  We are setting the root user&rsquo;s password to be able to administrate the database.  The simplest way to set up this initial security is using the &ldquo;mysqladmin&rdquo; tool provided by MySQL.  Note that when I use &lt;> in these above, this is where your site-specific information comes into play.  For <FQDN>, for my example purposes I would replace this with puppet.example.com.  The password setting &amp; changes, then, would look like so:</p>
+
+<p><em><strong>/usr/bin/mysqladmin -u root password &lsquo;puppet&rsquo;
+</strong><strong>/usr/bin/mysqladmin -u root -h puppet.example.com password &lsquo;puppet&rsquo;
+/usr/bin/mysql -u root -p</strong></em></p>
+
+<p>I just wanted to clarify this for you in the event my use of &lt;> and &lsquo; &rsquo; above caused any confusion.</p>
+
+<p><em><strong>Configuring MySQL</strong></em></p>
+
+<p>Once you run the above commands, MySQL will prompt you for the password you just set.  Enter that password, and you will find yourself at a mysql prompt that looks like so:</p>
+
+<p><em><strong>mysql></strong></em></p>
+
+<p>What this means is you have now logged into the MySQL database, and are ready to set it up for use.  Following I will list out all the commands you need to run in a set.  Note that these commands are each entered on a line and you press &ldquo;<ENTER>&rdquo; at the end of the line to enter the next command.  There is no output from MySQL when you enter these, so I&rsquo;ll enumerate them all together here for your convenience.</p>
+
+<p><em><strong>mysql> create database dashboard character set utf8;</strong></em>
+<em><strong>mysql> create user &lsquo;dashboard&rsquo;@&lsquo;localhost&rsquo; identified by ‘my_password';</strong></em>
+<em><strong>mysql> create user &lsquo;dashboard’@‘<FQDN>&rsquo; identified by ‘my_password';</strong></em>
+<em><strong>mysql> grant all privileges on dashboard.* to &lsquo;dashboard&rsquo;@&lsquo;localhost&rsquo;;</strong></em>
+<em><strong>mysql> grant all privileges on dashboard.* to &lsquo;dashboard’@‘<FQDN>&rsquo;;</strong></em>
+<em><strong>mysql> drop user ‘’@‘localhost’;</strong></em>
+<em><strong>mysql> drop user ‘’@‘<FQDN>’;</strong></em>
+<em><strong>mysql> drop database test;</strong></em>
+<em><strong>mysql> flush privileges;</strong></em>
+<em><strong>mysql> exit</strong></em></p>
+
+<p>As before, replace <FQDN> with the fully qualified hostname for your server and &lsquo;my_password&rsquo; with the password you wish to set for the dashboard user.  A few notes:</p>
+
+<ol>
+<li><p>First, we created the dashboard database</p></li>
+<li><p>Next, we created the dashboard user for connecting from the localhost name</p></li>
+<li><p>Next, we created the dashboard user for connecting from the server FQDN</p></li>
+<li><p>The next two, we grant the dashboard user rights to the whole database from either location</p></li>
+<li><p>The following two lines delete the user &lsquo;&rsquo; from the server (a null user w/o a password)</p></li>
+<li><p>Finally we drop the &ldquo;test&rdquo; database, flush all our privilege tables (to take effect immediately) and exit MySQL.</p></li>
+</ol>
+
+
+<p>The final steps in getting MySQL configured for production use is to tweak the settings in the database by editing the /etc/my.cnf file and restarting the database.  Open the /etc/my.cnf file and add a new line at the end of the file:</p>
+
+<p><em><strong>max_allowed_packet = 32M</strong></em></p>
+
+<p>Save the file and then run</p>
+
+<p><em><strong>sudo /sbin/service mysqld restart</strong></em></p>
+
+<p>for the changes to take effect.</p>
+
+<p><em><strong>Passenger
+</strong></em>The final piece is to get the appropriate passenger gems and the Apache module installed to handle Puppet Agent requests to the server.  Luckily, our previous prerequisite installs have made this easy for us.  First:</p>
+
+<p><em><strong>sudo gem install rack passenger</strong></em></p>
+
+<p>When this is done, install the Apache module, following the prompts as follows:</p>
+
+<p><em><strong>****sudo passenger-install-apache2-module
+Press <ENTER>
+Press <ENTER>
+At the end of the installation, Press <ENTER></strong></em></p>
+
+<p>If we&rsquo;ve done everything right up until this point, you should not need to supply any extra information, packages, or configuration, and only need to continue to press <ENTER> as listed above to complete the installation.</p>
+
+<p>Now comes the time to configure the various pieces&hellip;</p>
+
+<p><em><strong>Configuration</strong></em></p>
+
+<p><em><strong>Passenger
+</strong></em>First we need a number of directories and files to exist around the system, so let&rsquo;s put those in place by using the following commands:</p>
+
+<p><em><strong>sudo mkdir -p /usr/share/puppet/rack/puppetmasterd
+</strong><strong>sudo mkdir /usr/share/puppet/rack/puppetmasterd/public
+</strong></em><strong><em>sudo mkdir /usr/share/puppet/rack/puppetmasterd/tmp
+sudo cp /usr/share/puppet/ext/rack/config.ru /usr/share/puppet/rack/puppetmasterd
+sudo chown puppet:puppet /usr/share/puppet/rack/puppetmasterd/config.ru
+sudo chown puppet-dashboard:puppet-dashboard /usr/lib/ruby/gems/1.8/gems/passenger-4.0.37/buildout/agents/PassengerWatchdog</em></strong></p>
+
+<p>Next, we need to configure the Puppet Dashboard to connect to its database, and setup the tablespaces for use:</p>
+
+<p><em><strong>cd /usr/share/puppet-dashboard/config
+</strong><strong>edit database.yml
+Remove the last stanza of this file that refers to the &ldquo;test&rdquo; database we removed above.
+For the Production and Development database stanzas, change the &ldquo;database:&rdquo; line to read &ldquo;dashboard&rdquo; and the password line to contain your dashboard password so that it appears as follows:</strong></em></p>
+
+<p><em><strong>database: dashboard</strong></em>
+<em><strong>username: dashboard</strong></em>
+<em><strong>password: <PASSWORD></strong></em></p>
+
+<p>Next, prepare the database for use as follows:</p>
+
+<p><em><strong>cd /usr/share/puppet-dashboard
+</strong>__<strong>sudo rake gems:refresh_specs
+</strong><strong>rake RAILS_ENV=production db:migrate</strong></em></p>
+
+<p><em>(Even though we&rsquo;ve reference the production and development databases in the database config above, we&rsquo;ll only be working in the production database in this tutorial)  </em></p>
+
+<p>At this point, we should be ready to test the Dashboard configuration to ensure we&rsquo;re still on the right track.  Top do so, run the following:</p>
+
+<p><em><strong>cd /usr/share/puppet-dashboard
+</strong><strong>sudo ./script/server -e production</strong></em></p>
+
+<p>Now, attempt to connect to the dashboard via web browser by pulling up the server at the following address:  <a href="http://">http://</a><IP ADDRESS or FQDN>:3000.  If the dashboard displays correctly in your browser, we&rsquo;re ready to continue.</p>
+
+<p>Press CTRL-C to exit the server.</p>
+
+<p><em><strong>Configure Puppet for Dashboard</strong></em></p>
+
+<p>While we have already configured the dashboard itself, we have not told Puppet the dashboard exists.  To do so, edit the /etc/puppet/puppet.conf file and add the following.</p>
+
+<p>In the [master] section of the puppet.conf, add the following lines:</p>
+
+<p><em><strong>****# Reporting</strong></em>
+<em><strong>reports = store,http</strong></em>
+<em><strong>reporturl = <a href="http://">http://</a><FQDN>:3000/reports/upload</strong></em></p>
+
+<p><em><strong># Node Classification (Using as an ENC)</strong></em>
+<em><strong>node_terminus = exec</strong></em>
+<em><strong>external_nodes = /usr/bin/env PUPPET_DASHBOARD_URL=<a href="http://localhost:3000">http://localhost:3000</a> /usr/share/puppet-dashboard/bin/external_node</strong></em></p>
+
+<p>Exit the puppet.conf file, saving your changes and set permissions for following files like so:</p>
+
+<p><em><strong>****sudo chown -R puppet-dashboard:puppet-dashboard /usr/share/puppet-dashboard</strong></em>
+<em><strong>sudo /sbin/chkconfig puppet-dashboard-workers on</strong></em>
+<em><strong>sudo /sbin/service puppet-dashboard-workers start</strong></em></p>
+
+<p><em><strong>Apache</strong></em></p>
+
+<p>Next, we need to configure the Apache web server to process requests being made by Puppet agents in your environment and hand them off to the Puppet server.  To do so, we need to create two files in the /etc/httpd/conf.d location.  The passenger installation will have already created a passenger.conf there.  Just remove it before creating the following two files.</p>
+
+<p><em><strong>****/etc/httpd/conf.d/dashboard.conf</strong></em></p>
+
+<p>[snippet id=&ldquo;30&rdquo;]</p>
+
+<p>And like it:</p>
+
+<p><em><strong>/etc/httpd/conf.d/passenger.conf</strong></em></p>
+
+<p>[snippet id=&ldquo;31&rdquo;]</p>
+
+<p> <em><strong>Starting Everything Up for Testing &amp; Operation</strong></em></p>
+
+<p>Once these configuration files are in place, it&rsquo;s time to test Apache&rsquo;s handoff to Puppet and to make a special SELinux module to allow Passenger handoffs to the various needed places in the filesystem.</p>
+
+<p>First, make sure the puppetmaster process has been stopped:</p>
+
+<p><em><strong>/sbin/service puppetmaster stop
+</strong><strong>/sbin/chckonfig puppetmaster off</strong></em></p>
+
+<p>This assumes you&rsquo;ve run the procedures in the previous tutorials, including (especially) the certificate signing and exchange between master and agent.  If you&rsquo;ve done this, Passenger now has all the certs it needs to handle requests on behalf of Puppet, and no longer needs the Puppet server running.</p>
+
+<p>Next, test the configuration, that you&rsquo;ve made no typos:</p>
+
+<p><em><strong>sudo /sbin/service httpd configtest</strong></em></p>
+
+<p>If no errors are displayed, then <em>at least </em>the syntax of your Apache configs are correct.  Now, to generate SELinux entries in the audit log to build a custom Passenger SELinux module, you need to start Apache:</p>
+
+<p><em><strong>sudo /sbin/service httpd start</strong></em></p>
+
+<p>Turn off SELinux temporarily:</p>
+
+<p><em><strong>****sudo setenforce 0</strong></em></p>
+
+<p>Restart Apache to generate the log entries:</p>
+
+<p><em><strong>sudo /sbin/service httpd restart</strong></em></p>
+
+<p>Test the Puppet dashboard in a browser by going to:</p>
+
+<p><em><strong><a href="http://">http://</a><FQDN>:3000</strong></em></p>
+
+<p>What you have done is put output into the audit log that can be used as input to the <em>audit2allow </em>tool to generate a policy file for import into SELinux to allow Passenger to do it&rsquo;s job.  To create that module, run:</p>
+
+<p><em><strong>grep httpd /var/log/audit/audit.log | audit2allow -M passenger</strong></em></p>
+
+<p>This creates a new policy file for SELinux in your current working directory called &ldquo;passenger.pp&rdquo; which you can now import into SELinux.  TO do so, simply import the module:</p>
+
+<p><em><strong>sudo semodule -i passenger.pp</strong></em></p>
+
+<p>&hellip;from the directory where the file resides (presumably your current working directory if you have not moved).</p>
+
+<p>Finally, you re-enable SELinux, and begin to test your environment.</p>
+
+<p><em><strong>sudo setenforce 1</strong></em></p>
+
+<p><em><strong>Conclusion</strong></em></p>
+
+<p>I know that&rsquo;s a lot for a single entry, but I wanted to make sure and get all the additional pieces installed and configured before starting to cover how each of the pieces work and interact.  I thought of making each piece its own article, but in every scenario I thought about, you ended up with a not-completey-configured (i.e., &ldquo;broken&rdquo;) system.  I opted instead to do the complete configuration.</p>
+
+<p>At this point, however, you should be all set and ready to go with Dashboard/Passenger configured and being run by Apache.  You should have MySQL and PuppetDB installed and configured, handling their own individual tasks, and you should have Puppet Master and Agent installed (with one agent node) all configured to perform their duties as a Puppet Infrastructure.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Puppet IV - Signing Certificates]]></title>
+    <link href="http://questy.org/blog/2014/02/27/puppet-iv-signing-certificates/"/>
+    <updated>2014-02-27T15:32:04-05:00</updated>
+    <id>http://questy.org/blog/2014/02/27/puppet-iv-signing-certificates</id>
+    <content type="html"><![CDATA[<p><em><strong>Introduction</strong></em></p>
+
+<p>We&rsquo;ve covered a lot of ground already in our tutorials thus far.  In <a href="http://questy.org/2014/01/puppet-i-installation/">Tutorial I</a> we installed our Puppet server.  In <a href="http://questy.org/2014/01/puppet-ii-client-installation/">Tutorial II</a>, the client, and in <a href="http://questy.org/2014/02/puppet-iii-initial-configuration/">Tutorial III</a> we configured the server and client to start communicating.</p>
+
+<p>In this 4th installment, we&rsquo;ll cover the signing of SSL certificates between your Puppet Master and Client, and running a simple test to ensure your setup is working and ready to function as a master=>slave pair.</p>
+
+<p>On your server, be sure to start up the Puppet Master, so it can receive connections from outside sources, like so:</p>
+
+<p><em><strong>sudo service puppetmaster start
+sudo chkconfig puppetmaster on</strong></em></p>
+
+<p>Next, on your Puppet client, run a test run so the client will start, create an SSL certificate for the client host, and make an initial callout to the server.  It will exit immediately, but the server will now know about the client, and we can sign the certificate over there.</p>
+
+<p><em><strong>puppet agent -t</strong></em></p>
+
+<p>When you run this command, the output should look something like this:</p>
+
+<p>[caption id=&ldquo;attachment_625&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;720&rdquo;]<a href="http://questy.org/wp-content/uploads/2014/02/agent_cert.png"><img src="http://questy.org/wp-content/uploads/2014/02/agent_cert.png" alt="Certificate Signing Request Example" /></a> Certificate Signing Request Example[/caption]</p>
+
+<p>Now, SSH to your Puppet Master, and run the following command:</p>
+
+<p><em><strong>puppet cert &ndash;list</strong></em></p>
+
+<p>If everything has gone well, your server will have now seen your client and will report as much like so:</p>
+
+<p>[caption id=&ldquo;attachment_627&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;719&rdquo;]<a href="http://questy.org/wp-content/uploads/2014/02/server_cert.png"><img src="http://questy.org/wp-content/uploads/2014/02/server_cert.png" alt="Server Cert Requests in Waiting" /></a> Server Cert Requests in Waiting[/caption]</p>
+
+<p>Finally, so <em>sign </em>the certificate so there is an SSL connection between the client and server, and all future Puppet actions between the two pass over that connection, simply sign the certificate request on the master as follows:</p>
+
+<p><em><strong>puppet cert sign puppetclient.example.com</strong></em>
+<em>(or whatever your hostname is)</em></p>
+
+<p> The server will sign the certificate and make a tabular listing of it in its database finalizing the connection.  You can see this output by using the &ldquo;list all&rdquo; options as follows:</p>
+
+<p><em><strong>puppet cert list &ndash;all</strong></em></p>
+
+<p>and see the output which should resemble the following:</p>
+
+<p>[caption id=&ldquo;attachment_635&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;718&rdquo;]<a href="http://questy.org/wp-content/uploads/2014/02/signed_cert.png"><img src="http://questy.org/wp-content/uploads/2014/02/signed_cert.png" alt="Signed Certificate" /></a> Signed Certificate[/caption]</p>
+
+<p><em><strong>
+Conclusion</strong></em></p>
+
+<p>Now we&rsquo;re ready to do work with Puppet.  You can actually stop here and fully manage your site with Puppet, however there are several addons and feature-sets yet you can install to expand Puppet&rsquo;s functionality.  We will look at some of these tools in future installments.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[South East Puppet User Group]]></title>
+    <link href="http://questy.org/blog/2014/02/26/south-east-puppet-user-group/"/>
+    <updated>2014-02-26T17:10:05-05:00</updated>
+    <id>http://questy.org/blog/2014/02/26/south-east-puppet-user-group</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ll be speaking Thursday evening at 7PM at the SE Puppet User Group meeting.  The topic will be &ldquo;Intro to Puppet&rdquo; and all are welcome.  Come early (6:30) and come hungry, as we&rsquo;ll be having pizza to get started.</p>
+
+<p>Current &ldquo;Working&rdquo; Agenda:</p>
+
+<p>Agenda:</p>
+
+<p>-630p - 700p Pizza/Networking
+-700p - 800p - Introduction to Puppet w/ Jerald Sheets</p>
+
+<ol>
+<li>What is Puppet?</li>
+<li>How does it work?</li>
+<li>Puppet benefits?</li>
+<li>Major components of Puppet (Server / Client)</li>
+</ol>
+
+
+<p>-800p - 830p - Q/A</p>
+
+<p>Location:
+8302 Dunwoody Place, Suite 100
+Atlanta, GA 30350</p>
+
+<p>[wpgmza id=&ldquo;1&rdquo;]</p>
+
+<p>I hope to see you all there.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Puppet III - Initial Configuration]]></title>
+    <link href="http://questy.org/blog/2014/02/20/puppet-iii-initial-configuration/"/>
+    <updated>2014-02-20T22:23:42-05:00</updated>
+    <id>http://questy.org/blog/2014/02/20/puppet-iii-initial-configuration</id>
+    <content type="html"><![CDATA[<p>By now you should have 1 Server installation completed and 1 Client installation completed.  The only thing you&rsquo;re missing now is to link the two together.  The following client side configuration will be performed on ALL existing systems you have, to connect them to the server and to pull their configuration catalog down and apply the changes to the local host.</p>
+
+<p><strong>Certificates</strong></p>
+
+<p>By default, all communications in Puppet goes over SSL channels.  You can configure Puppet to use its own certificate signing mechanism or to use an external signing authority (outside the scope of this tutorial).  The signing process does two things.  First, it authorizes your client to communicate with the Puppet Master and receive configurations and keeps all that traffic secure from prying eyes.</p>
+
+<p><strong>Node Lists</strong></p>
+
+<p>Of course, the master needs a way to enumerate what hosts will be connecting, and how to apply what configuration where.  We&rsquo;ll look at node classification both on and off the host as well.</p>
+
+<p><strong>Server Configuration</strong></p>
+
+<p>Here we go.</p>
+
+<p>To get the server and client talking, there is a small amount of configuration that has to happen.  It essentially tells the server who will be calling, and tells the caller the server&rsquo;s &ldquo;phone number&rdquo;.  Very short and simple.  So, let&rsquo;s do that first.</p>
+
+<p><em><strong>Configs</strong></em></p>
+
+<p>Two files require editing on the server to prepare for your first Puppet run.  They are:</p>
+
+<p>/etc/puppet/manifests/site.pp
+/etc/puppet/manifests/nodes.pp</p>
+
+<p>As of this writing, the OSS installation does not place either file, so you will have to create them.  Make their content as follows:</p>
+
+<p><em><strong>site.pp</strong></em></p>
+
+<p><code>import ‘nodes.pp’
+$puppetserver = ‘--FQDN--’
+</code></p>
+
+<p>These two lines lay the foundation for the server&rsquo;s self-declaration as authority on configuration.</p>
+
+<p>The first line: &ldquo;import nodes.pp&rdquo; tells Puppet to look for the nodes.pp file you are about to create in the next step for node definitions (and thus their individual configurations) and the next line indicates this puppet servers' complete name.  This line is very important, as configurations throughout the Puppet software product and the client node software continually refer back to this variable.  This setting takes the form of the fully-qualified-domain-name of the server.  It is recommended you use &ldquo;puppet&rdquo; as the name of the server in your infrastructure.</p>
+
+<p>So if your site&rsquo;s name is &ldquo;bob.com&rdquo;, this line would be:</p>
+
+<p><code>$puppetserver = 'puppet.bob.com'</code></p>
+
+<p>While any hostname should do, I might mention one caveat you should be aware of should you decide to use something other than &lsquo;puppet.x.x&rsquo; formatting.  In the event your Puppet server cannot see or read the $puppetserver value, the internals of Puppet cause it to <em>default </em>to &ldquo;puppet&rdquo;.  To avoid any strange outage-based silliness, I would recommend sticking with the puppet name.  While this may cut cross-grain with your particular host naming system, there is no reason why the root name of the system cannot be puppet.domain.com and you CNAME your super-special host naming to that.</p>
+
+<p>Why not the other way around?  I&rsquo;ve seen in the wild situations where Puppet (especially as it concerns certificate signing) take the output of gethostbyname() for signing over a designated CNAME, even when you set this variable to the appropriate value.  Rather than deal with the mess, I recommend the former.</p>
+
+<p>Close the site.pp file.</p>
+
+<p>Next, you&rsquo;ll want to configure your nodes.pp file.  Now, keep in mind that while we are specifying our nodes manually in this file for the purposes of this tutorial, we will be doing all manner of really cool things with node designations in the future.  So, for now humor me, and I assure you we&rsquo;ll step into the wonderful world of the ENC, Dashboard and other goodies all too soon.  Right now, we&rsquo;re just trying to get Puppet up, connected, and talking.</p>
+
+<p><strong>nodes.pp</strong></p>
+
+<p> <code>
+node '--FQDN--' {
+}
+</code></p>
+
+<p>Here we are specifying our very first node, letting the master know it&rsquo;s allowed to connect, and eventually putting a number of things in-between the curly braces {} specifying the configuration for (or pointers to the configuration for) our client node.   Just as above, the &ldquo;FQDN&rdquo; piece in between the single tics should be replaced with the fully qualified domain name of the client host you wish to manage.  As above, in our fictitious domain of &ldquo;bob.com&rdquo;, we will simply call this host &ldquo;puppetclient.bob.com&rdquo;, thus making the content of the nodes.pp file:</p>
+
+<p> <code>
+node 'puppetclient.bob.com' {
+}
+</code></p>
+
+<p>For now, there&rsquo;s no need to  add configuration.  This is all we need to get started.  Exit from the nodes.pp file, saving it into the aforementioned spot of &ldquo;/etc/puppet/manifests/nodes.pp&rdquo;</p>
+
+<p>Here ends the server-side configuration for this portion of our tutorial.  On to the client configuration.</p>
+
+<p><strong>Client Configuration</strong></p>
+
+<p>For the client configuration, a base-level file has already been provided for you, and only needs some customization.</p>
+
+<p>The client configuration file is found at /etc/puppet/puppet.conf on the client (as well as the server).  The puppet.conf configuration file is an &ldquo;ini-style&rdquo; configuration file with [bracketed] headings and &ldquo;key = value&rdquo; line by line variables.</p>
+
+<p>For our initial configuration we will be adding a couple lines.  First of all, at the end of  the [main] section, add the following line:</p>
+
+<p>server = FQDN of the server</p>
+
+<p>or, as above</p>
+
+<p>server = puppet.bob.com</p>
+
+<p>Next, in the  [agent] section, the following three lines (for our fictitious &ldquo;bob.com&rdquo; domain)  should be added at the end:</p>
+
+<p>report = true
+server = puppet.bob.com
+certname = puppetclient.bob.com</p>
+
+<p>The server line appears to me to be somewhat redundant, but I&rsquo;ve always placed it in both locations, and cannot comment as to whether it is NOT needed.  The certname, FYI, is the FQDN of the client host you are configuring to connect to the server.</p>
+
+<p>The purpose of the &ldquo;certname&rdquo; variable should be explained here a bit.  This is the name you placed in the &ldquo;nodes.pp&rdquo; file, and is also the hostname that is passed to the master in the key signing process.  You want all locations in which you&rsquo;re specifying your node name to agree (puppetclient.bob.com in our example), so it&rsquo;s highly important to ensure consistency throughout.</p>
+
+<p><strong>Ready to Connect</strong></p>
+
+<p>Ok, let&rsquo;s recap&hellip;</p>
+
+<p>We&rsquo;ve set our site.pp and nodes.pp files in place on the server, specifying the server name and ensuring there is a FQDN node designation in the nodes.pp.  Next up, we&rsquo;ll make our first connection to the server and test the connection.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Puppet II - Client Installation]]></title>
+    <link href="http://questy.org/blog/2014/01/22/puppet-ii-client-installation/"/>
+    <updated>2014-01-22T12:51:45-05:00</updated>
+    <id>http://questy.org/blog/2014/01/22/puppet-ii-client-installation</id>
+    <content type="html"><![CDATA[<p>In our last installment &ldquo;<a href="http://questy.org/2014/01/puppet-i-installation/">Puppet I - Server Installation</a>&rdquo;, we covered all the basic necessities of installing Puppet Open Source server.  Of course, a server in and of itself is no good unless we have a client on another host to connect to it.  This article will similarly lead you step-by-step through the process of installing the client.</p>
+
+<p><em><strong>Puppet Client</strong></em></p>
+
+<p>Installation of our client is not so very much different than the initial server install.  Both come from the same Yum repository, and both need the same support libraries and files.</p>
+
+<p>As expected, a client will need the OS installed (again, we&rsquo;re working on the assumption of RedHat Enterprise Linux, but CentOS, SecurityLinux, etc. should do fine.</p>
+
+<p>Once your operating system is completely installed, just as before we&rsquo;ll need to follow the same steps of getting RedHat registered, the RHEL Yum repo enabled, the Puppet Labs repo configured, the correct support repos added, and finally, the client installed.</p>
+
+<p><em><strong>Enabling the RHEL Yum Repo</strong></em></p>
+
+<p>Just as we did before, we register our RedHat installation via &ldquo;subscription manager&rdquo; from RedHat.</p>
+
+<p><em><strong>sudo subscription-manager register</strong></em>
+<em><strong> sudo subscription-manager auto-attach</strong></em>
+<em><strong> sudo subscription-manager attach &ndash;auto</strong></em>
+<em><strong> sudo subscription-manager refresh</strong></em></p>
+
+<p>As I mentioned before, RedHat&rsquo;s tool isn&rsquo;t 100% effective 100% of the time, and some level of redundancy in the commands above ensures all the appropriate bits get twiddled.</p>
+
+<p><em><strong>Installing the Puppet Labs Software Repository</strong></em></p>
+
+<p>Again, as before, we simply use RPM to get the repository installed (the below command is all on one line):</p>
+
+<p>**_sudo rpm -ivh <a href="https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm_**">https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm_**</a></p>
+
+<p><em><strong>Enabling Additional Packages</strong></em></p>
+
+<p>Once again, the &ldquo;optional&rdquo; RedHat packages and the &ldquo;development&rdquo; PupeptLabs repositories have to be enabled.  You can either use the Yum Config Manager or edit the repo files directly, your choice.  Yum Configuration Manager commands are as follows:</p>
+
+<p><em><strong>sudo yum -y install yum-utils
+sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
+<em><strong> sudo yum-config-manager &ndash;enable puppetlabs-devel</strong></em></p>
+
+<p>You should note that the &ldquo;enable&rdquo; command above actually has two hyphens in front of it instead of one long one.  WordPress concatenates those.</p>
+
+<p><em><strong>Get Current!</strong></em></p>
+
+<p>Now is the time to get RHEL completely up to date through the usual means:</p>
+
+<p><em><strong>yum -y update</strong></em></p>
+
+<p><em><strong>Install the Client</strong></em></p>
+
+<p><strong><em>yum -y install puppet</em></strong></p>
+
+<p>If all goes well, this will complete the client config on your client host and you are now ready to configure the server, configure the client, and then connect them via SSL as provided by Puppet Labs.</p>
+
+<p>In our next edition, we&rsquo;ll be doing just that.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Puppet I - Server Installation]]></title>
+    <link href="http://questy.org/blog/2014/01/20/puppet-i-installation/"/>
+    <updated>2014-01-20T14:23:10-05:00</updated>
+    <id>http://questy.org/blog/2014/01/20/puppet-i-installation</id>
+    <content type="html"><![CDATA[<p>Ok, so you&rsquo;re interested in this whole Puppet thing, and you want to get a full install in your test environment, or on a set of VMs to work and play with the product.  PuppetLabs has a ton of really cool documentation, and you should certainly avail yourself of it, but I wanted to give you a quick &ldquo;cookbook&rdquo; style set of instructions to get you rolling.</p>
+
+<p><strong>Puppet Master</strong></p>
+
+<p>There is a lot of documentation surrounding the Puppet Master installation at Puppet Labs, but I find a bit of obfuscation when trying to parse through the huge pile of meat that is there, when all we&rsquo;re looking for is the best of it&hellip; you know, the bacon.  :)</p>
+
+<p><strong><em>Puppet Code Repository &amp; Package Source</em></strong></p>
+
+<p>Puppet Labs provides a myriad of repositories and methods by which to install Puppet.  I tend to stick with the main PuppetLabs repository whenever possible.  I also tend to like RedHat derivatives, so I&rsquo;ll be talking about RHEL here, but the same applies to CentOS, Scientific Linux, and other RHEL &ldquo;children&rdquo; in the ecosystem.  In short, if you&rsquo;re using something else other than RHEL, you may find yourself hunting packages and repos that contain packages you&rsquo;ll need that the repositories I list here have by default.  As with any web-based documentation, YMMV.</p>
+
+<p><em><strong>Installing the Puppet Master</strong></em></p>
+
+<p>First, you&rsquo;ll need a functioning Installation of RHEL upon which to install and configure Puppet.  I like to include only the &ldquo;Base Install&rdquo; and take the &ldquo;Defaults&rdquo; when doing a &ldquo;special purpose&rdquo; server, as it doesn&rsquo;t muddy the waters and it gives you the cleanest slate possible upon which to build your Puppet platform.</p>
+
+<p><em><strong>Enabling the RHEL Yum Repo</strong></em></p>
+
+<p>As I&rsquo;m sure you&rsquo;re aware, to use RedHat&rsquo;s repositories, you have to register and have active a subscription with RedHat.  To do a simple connection/attachment to the RedHat repositories, I&rsquo;ve found a mixture of success with the Subscription Manager.  However, by performing the following commands (some are redundant), I&rsquo;ve been able to get the configuration working with 100% reliability:</p>
+
+<p><em><strong>sudo subscription-manager register</strong></em>
+<em><strong> sudo subscription-manager auto-attach</strong></em>
+<em><strong> sudo subscription-manager attach &ndash;auto</strong></em>
+<em><strong> sudo subscription-manager refresh</strong></em></p>
+
+<p>Obviously, this is a RedHat topic, and not a Puppet one, so if you&rsquo;re having issues with this process, contact Redhat for help.  The crux of this, however, is to just register your instance.</p>
+
+<p><em><strong>Installing the Puppet Labs Software Repository</strong></em></p>
+
+<p>Since I&rsquo;m working with the current 6.10 release of Puppet, the package you need to install can be added by running:</p>
+
+<p>_**sudo rpm -ivh <a href="https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm**_">https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm**_</a></p>
+
+<p>This will install the current 6.10 release of the Puppet repo from which we can continue with the Puppet Master installation.</p>
+
+<p><em><strong>Enabling Additional Packages</strong></em></p>
+
+<p>Next, we need to have the &ldquo;optional&rdquo; set of packages from RedHat and the development packages from Puppet Labs.  There are two ways to do this.  First, you can edit each repo file in /etc/yum.repos.d (red hat.repo and puppet labs.repo respectively) and change the &ldquo;enable&rdquo; flag on each repository from &ldquo;0&rdquo; to &ldquo;1&rdquo;, or you can simply run the provided RedHat Yum configuration manager tool to do it for you as follows.</p>
+
+<p><em><strong>sudo yum -y install yum-utils
+sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
+<em><strong> sudo yum-config-manager &ndash;enable puppetlabs-devel</strong></em></p>
+
+<p><em><strong> Get Current!</strong></em></p>
+
+<p>Bring your current host completely up to date by querying the repositories and running the yum updater:</p>
+
+<p><strong><em>sudo yum -y update</em></strong></p>
+
+<p>As I&rsquo;m sure you&rsquo;re aware, depending on the updates released since the current major version of your repositories, the update time can vary from very short to quite some time.  Just be patient and get up to date before proceeding.</p>
+
+<p><em><strong>Install the Puppet Prerequisite Packages</strong></em></p>
+
+<p>This step name is a <em>bit</em> of a misnomer in that I am including a ton of packages that aren&rsquo;t necessary for a &ldquo;base&rdquo; install of Puppet Server, but they do support later installations you may wish to do (like PuppetDB, Dashboard, Passenger, etc.).  I just wanted to give a complete list so there&rsquo;s no after-installation required just to get moving with the next component.  Simply install the following via Yum:</p>
+
+<p><em><strong>sudo yum -y install gcc libcurl-devel gcc-c++ openssl openssl-devel ruby-devel httpd httpd-devel  mod_ssl policycoreutils-python apr-devel apr-utils-devel</strong></em></p>
+
+<p><em><strong>Prep Your Firewall</strong></em></p>
+
+<p>You may or may not be using the IPTables Firewall, but you&rsquo;ll want the following rule in place to support the Puppet Master port.  Simply insert the following line into your <em>/etc/sysconfig/iptables</em> file.</p>
+
+<p><em><strong>-A INPUT -m state &ndash;state NEW -m tcp -p tcp &ndash;dport 8140 -j ACCEPT</strong></em></p>
+
+<p>Note that if you intend to install the Puppet Dashboard as well, you can add that port here too.</p>
+
+<p><strong><em>-A INPUT -m state &ndash;state NEW -m tcp -p tcp &ndash;dport 3000 -j ACCEPT</em></strong></p>
+
+<p>Make sure you place your firewall rules in the appropriate place in the file.  While outside the scope of this article, IPTables has an order and a format you should follow.  You can find out more <a href="http://www.netfilter.org">here</a>.</p>
+
+<p>Lastly, restart your firewall to pick up the new rules:</p>
+
+<p><em><strong>sudo service iptables reload</strong></em></p>
+
+<p><em><strong>Install Puppet Server</strong></em></p>
+
+<p>After all the above work, if you&rsquo;ve had no repository or package errors, your system should be ready to install Puppet Server.  Simply run the following:</p>
+
+<p><em><strong>yum -y install puppet-server</strong></em></p>
+
+<p><em><strong>Conclusion</strong></em></p>
+
+<p>And that should be it.  All packages installed, base RedHat updated with all the latest Ruby &amp; RedHat goodness, and the bad Puppet Server installed and ready for action.</p>
+
+<p>Next time:  Installing the Puppet Client.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Puppet Stuffs Again!]]></title>
+    <link href="http://questy.org/blog/2013/10/03/puppet-stuffs-again/"/>
+    <updated>2013-10-03T16:21:12-04:00</updated>
+    <id>http://questy.org/blog/2013/10/03/puppet-stuffs-again</id>
+    <content type="html"><![CDATA[<p>I&rsquo;m speaking tonight at the Atlanta Perl Mongers meeting at the Central Cox building in Dunwoody at 7PM on Puppet Configuration management.  Please do feel free to drop by and say hello.  If you cannot make it, however, here&rsquo;s my slide deck all compressed down and PDF-ified for your viewing pleasure.</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2013/10/puppet_preso.png"><img src="http://questy.org/wp-content/uploads/2013/10/puppet_preso.png" alt="puppet_preso" /></a></p>
+
+<p><a href="http://questy.org/wp-content/uploads/2013/10/Perl-Mongers-Puppet-PresentationTraining.pdf">Perl Mongers Puppet Presentation:Training</a></p>
+
+<p>I hope to see you there!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Puppetry Arts...]]></title>
+    <link href="http://questy.org/blog/2013/09/06/puppetry-arts/"/>
+    <updated>2013-09-06T14:45:35-04:00</updated>
+    <id>http://questy.org/blog/2013/09/06/puppetry-arts</id>
+    <content type="html"><![CDATA[<p>I guess you Atlanta folk will get that one&hellip; :)</p>
+
+<p>Howdy all, and a hearty hello.  I&rsquo;m back from my exile to the land of single shiny glowing buttons and happiness, rainbows, and OSX, and have returned to Atlanta with SysAdmin bells on.  I&rsquo;ve done a lot over the last couple years (much I cannot talk about), but have developed quite an affinity for the Puppet configuration Management system.  So much so, in fact, that I&rsquo;ve found a need to start a whole new category right here on the ol' blog to accommodate.</p>
+
+<p>Not in a long time have I liked something &ldquo;new&rdquo; that has come along to SysAdmin work&hellip; The moniker &ldquo;Devops&rdquo; still gives me hives, but I will endeavor to navigate the puppet-y waters without uttering the vile mantra but wading into the wonderful waters of automation and  managed infrastructure.</p>
+
+<p>In short, &ldquo;Puppet&rdquo; in and of itself is quite a feat of engineering.  A series of platform tools to enforce a single &ldquo;blessed&rdquo; configuration upon your infrastructure in a consistent, premeditated way from a central location, eliminating the need for all manner of scripting and &ldquo;loop lists&rdquo; to do individual functions on each system, one at a time.  No no!</p>
+
+<p>Puppet enforces policies you write in a uniform, secure way, rather quickly and scales rather well for most environments.  For the larger environments that cannot be scaled to, Puppet will utilize other &ldquo;workhorse&rdquo; industry standard products as modular replacements of various pieces of the Puppet system, to broaden and expand its abilities.</p>
+
+<p>Puppet comes in two flavors, the commercial &ldquo;Enterprise&rdquo; system where everything is packaged together and all gets installed and configured at load time in an &ldquo;automagical&rdquo; sort of way so you don&rsquo;t have any need to post-configure, but can just begin writing configurations immediately.</p>
+
+<p>The &ldquo;Open Source&rdquo; Puppet has most of the same pieces, although named somewhat differently, and you can build a very solid, full-featured system of your own without the price tag.  All you need is time.  :)</p>
+
+<p>In the coming sections, I will take apart Puppet for those of you wishing to know more, and give a rudimentary survey of all the different things it can do.  Hope you come along!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[I Saw This Somewhere Else...]]></title>
+    <link href="http://questy.org/blog/2013/06/04/i-saw-this-somewhere-else/"/>
+    <updated>2013-06-04T15:40:06-04:00</updated>
+    <id>http://questy.org/blog/2013/06/04/i-saw-this-somewhere-else</id>
+    <content type="html"><![CDATA[<p>And just HAD to make my own.  Enjoy!</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2013/06/3upvh5.jpg"><img src="http://questy.org/wp-content/uploads/2013/06/3upvh5.jpg" alt="3upvh5" /></a></p>
 ]]></content>
   </entry>
   

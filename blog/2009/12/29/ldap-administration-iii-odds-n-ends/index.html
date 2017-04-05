@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>LDAP Administration III – ‘Odds ‘n Ends’ - Questy.org</title>
+  <meta name="author" content="Jerald Sheets">
+
+  
+  <meta name="description" content="By now you should have a functional LDAP server, a properly configured client, and the ability to authenticate against your server.  However, the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://questy.org/blog/2009/12/29/ldap-administration-iii-odds-n-ends/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Questy.org" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1135877-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Questy.org</a></h1>
+  
+    <h2>Tech musings and other things...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="questy.org">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">LDAP Administration III – ‘Odds ‘n Ends’</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2009-12-29T06:17:46-05:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2009</span></span> <span class='time'>6:17 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://questy.org">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>By now you should have a functional LDAP server, a properly configured client, and the ability to authenticate against your server.  However, the last couple &ldquo;cogs in the wheel&rdquo; are left to manage.</p>
+
+<p>Generally speaking, when you add a user in UNIX-land, part of the process of the adduser command also sets their shell, creates a home directory for them and so forth.  As you may notice, there is no particular method to make this happen in Linux-LDAP.  You just have a store and a tool to manage the store.</p>
+
+<p>Have no fear, it&rsquo;s PAM to the rescue.</p>
+
+<p>As we said in our first installment, the following packages are all that is necessary to have the basic plumbing of LDAP to work:</p>
+
+<p>openldap</p>
+
+<p>openldap-servers</p>
+
+<p>openldap-clients</p>
+
+<p>openldap-devel</p>
+
+<p>While that is true, there are a couple more packages that put the finishing touches on this to make it sing.  Those are:</p>
+
+<p>nss
+nss_ldap
+nscd</p>
+
+<p>NSS is a glibc mechanism or interface allowing access to the common UNIX databases such as the password or hosts database.  It is most commonly used to provide an interface to both local /etc/passd and /etc/shadow files and usually for the purposes of interfacing with LDAP or NIS.</p>
+
+<p>NSS_LDAP is a set of C library extensions which allows X.500 and LDAP directory servers to be used as a primary source of name service information such as users, hosts, groups, and other such data historically managed via local flat files or a NIS infrastructure.</p>
+
+<p>NSCD is a name services caching daemon that provides a cache for the most common name requests.  While useful in speeding up response to queries, nscd has it&rsquo;s own set of problems.  I&rsquo;ll cover only some of it&rsquo;s usefulness, and you should circumspectly determine whether you will need caching at all based on your organization&rsquo;s size and the size of your serving infrastructure.</p>
+
+<p><strong>Home Directories</strong></p>
+
+<p>First and foremost, to make the login process as pleasurable/smooth an experience as possible, there are some things that we generally do in standard administration practices that ease the user&rsquo;s experience.  Namely, we setup a standard set of configuration and environment files to provide a consistent user experience of the shell.  These are usually their home directory files such as:</p>
+
+<p>.bashrc
+.bash_profile
+.bash_logout
+.vimrc
+.mozilla</p>
+
+<p>Usually these are handled in the usual way via the useradd command, which also copies one of everything from the /etc/skel directory to your user&rsquo;s home.</p>
+
+<p>As you can see, simply adding a user to the LDAP store would not give occasion for this to happen.  PAM to the rescue!  PAM contains a module that is their &ldquo;mkhomedir&rdquo; module.  Depending on your architecture, this lives in the /lib or the /lib64 directories under &ldquo;security&rdquo;:</p>
+
+<p>/lib/security/pam_mkhomedir.so
+/lib64/security/pam_mkhomedir.so</p>
+
+<p>What these modules do when properly invoked is on the first connection of a user that is validated as a proper user/password combination via LDAP, PAM sees that they have no home directory, and <em>creates the home directory for them just as if you, the administrator had created it with the <strong>adduser </strong>script.</em></p>
+
+<p>This, by far, is one of the handiest modules provided by PAM.</p>
+
+<p><strong>Turning on the PAM</strong></p>
+
+<p>To turn on the mkhomedir facility for your servers and clients, simply do the following:</p>
+
+<p>In /etc/pam.d there are a number of configuration files for handling login defs for varying circumstances.  What we are interested in is <em>system-auth</em>.  System-auth is also sourced by the sshd option, so this will work for both console logins and ssh/remote logins.</p>
+
+<p>The last stanza of the system-auth configuration file is the &ldquo;session&rdquo; section.  On the second-to-last line between the pam_unix and pam_ldap designations, add the following:</p>
+
+<p>session     required     pam_mkhomedir.so</p>
+
+<p>This is a keyword set that tells Linux to load up and perform the functions offered by the pam_mkhomedir module.  Now, whenever you connect to a system configured in this way, it will automatically create the user&rsquo;s skel information and change ownerships to the proper settings so the user can login.</p>
+
+<p><strong>Security</strong></p>
+
+<p>You may note that I also referred to using group-based security.  In LDAP/PAM-land, this is just as simple as the above PAM setup.  Look into the individual system&rsquo;s /etc/security directory for a file called access.conf.  This file allows you to grant/deny access to individual users, groups, and also where they can connect to this machine from.  The syntax is clearly explained in the file itself, but here&rsquo;s an example.</p>
+
+<p>Let&rsquo;s say I only want root, wheel, and the admins group to be able to access a certain system.  let&rsquo;s say they can access this system from anywhere.  Now let&rsquo;s say I also want the backup group to access the same system, but only from one host.  The setup is quite simple.  First, let&rsquo;s allow complete access to the people we wish to be able to connect from everywhere.  At the end of the /etc/security/access.conf file, add the following line:</p>
+
+<p>+: root wheel admins : ALL</p>
+
+<p>This tells the system to add access for root, wheel, and admins from ALL hosts.  Now, let&rsquo;s put in those backup admins, but only allow them to connect from the host we want them to come from:</p>
+
+<p>+: backup : 10.1.10.10</p>
+
+<p>This means the backup group can access this host, but only from the host 10.1.10.10.  There are many other methods of allowing and denying access in this file.  The documentation is contained within the file, so feel free to look through it for more information.</p>
+
+<p>The MOST important line is the last line, however.  After you&rsquo;ve setup all the people you WANT to access the system, that does no good if all access is still left on for everyone, everywhere.  The final line in the file should be to deny all access to anyone else not specified above, and would look like this:</p>
+
+<ul>
+<li>: ALL : ALL</li>
+</ul>
+
+
+<p>Simply stated, this removes (or subtracts) all access for ALL other users from ALL other hosts.  This line is evaluated last after the preceding lines are, and will take the preceding lines into account when setting up it&rsquo;s rules in memory.</p>
+
+<p>At the very worst, if you mis-order the lines here, you may not be able to login to the system and will need to boot to single-user mode and then use the article here on this site entitled &ldquo;A Neat Trick&rdquo; to make /etc read/write so you can change the configuration and then reboot back into your system&rsquo;s default runlevel, but if you&rsquo;re careful, this will be quite easy to configure and manage.</p>
+
+<p><strong>Closing Thoughts</strong></p>
+
+<p>I&rsquo;m sure there&rsquo;s a few things I left out, and I will be revising this series at some point in time to allow for any omissions I&rsquo;ve made.  I will also be adding in feature suggestions and will be following this up with a sudo article so you can overlay the &ldquo;on-box&rdquo; security set you&rsquo;d like to see happen in your environment <em>after</em> your LDAP infrastructure is in place.</p>
+
+<p>Feel free to drop me a note if you see anything amiss, and I&rsquo;ll be sure to correct it and give you props.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">questy</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2009-12-29T06:17:46-05:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2009</span></span> <span class='time'>6:17 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/geekstuff/'>geekstuff</a>, <a class='category' href='/blog/categories/ldap/'>ldap</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/systems-administration/'>systems administration</a>, <a class='category' href='/blog/categories/unix/'>unix</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://questy.org/blog/2009/12/29/ldap-administration-iii-odds-n-ends/" data-via="CVQuesty" data-counturl="http://questy.org/blog/2009/12/29/ldap-administration-iii-odds-n-ends/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2009/12/28/ldap-administration-part-ii/" title="Previous Post: LDAP Administration – Part II">&laquo; LDAP Administration – Part II</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2009/12/29/my-review-of-roku-hd-player-3/" title="Next Post: My Review of Roku HD Player">My Review of Roku HD Player &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/04/05/testing-octopress/">Testing Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/23/puppetconf-2014/">PuppetConf 2014</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/11/southeast-puppet-users-group-september/">Southeast Puppet User's Group September</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/11/toolbox-grows/">The Toolbox Grows...</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/20/dos-donts-puppet-environment/">"Do's and Dont's" for Your Puppet Environment</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/CVQuesty">@CVQuesty</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'CVQuesty',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Jerald Sheets -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'questy-org';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://questy.org/blog/2009/12/29/ldap-administration-iii-odds-n-ends/';
+        var disqus_url = 'http://questy.org/blog/2009/12/29/ldap-administration-iii-odds-n-ends/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

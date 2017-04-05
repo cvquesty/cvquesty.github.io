@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Unix | Questy.org]]></title>
+  <link href="http://questy.org/blog/categories/unix/atom.xml" rel="self"/>
+  <link href="http://questy.org/"/>
+  <updated>2017-04-05T15:54:03-04:00</updated>
+  <id>http://questy.org/</id>
+  <author>
+    <name><![CDATA[Jerald Sheets]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA["Do's and Dont's" for Your Puppet Environment]]></title>
+    <link href="http://questy.org/blog/2014/05/20/dos-donts-puppet-environment/"/>
+    <updated>2014-05-20T09:15:14-04:00</updated>
+    <id>http://questy.org/blog/2014/05/20/dos-donts-puppet-environment</id>
+    <content type="html"><![CDATA[<p>IT Automation, like the features and functions offered by Puppet, is riddled with a number of pitfalls. Nothing dangerous or site-threatening in the near term, however evolving a <em>bad </em>plan can lead you down a painful path to re-trek when you ultimately need to demolish what you&rsquo;ve done and re-tool, re-work, or even re-start from scratch.  Some simple suggestions can help smooth your integration, and also provide tools and methodologies that make changes in philosophy easy to test and implement as well as make the long road back from a disaster easy(-ier?) to navigate.</p>
+
+<p>Here are some simple guidelines that can provide that foundation and framework:</p>
+
+<p><strong>DO <em>Always</em> Use Revision Control</strong></p>
+
+<p>It would seem this would be a foregone conclusion in this day and age, but you would be surprised just how many shops don&rsquo;t have revision control of any kind in place.  A series of manifests or configurations might be tarred up and sent to the backup system, but aside from dated backups, there&rsquo;s no real versioning&hellip;just monolithic archives to weed through in a time of disaster.</p>
+
+<p>Revision control puts you one command away from restoring those configurations and manifests (and even your data vis-a-vis &ldquo;Hiera&rdquo;) to their original locations in the most recent state.</p>
+
+<p><strong>DO Rethink Your Environments</strong></p>
+
+<p>If you automate a bad workflow, you still have a bad workflow.  (albeit an automated one!)</p>
+
+<p>Rethink how you do things and why.  Why do you promote code the way you do, and is there a better way to do it?  Why do you still have a manual portion to your procedure, and is it entirely necessary, or can this be remanded to Puppet to do for you as well.  What things are you doing well?  How can they improve?</p>
+
+<p>Try to think through all your procedures.  There are more than you think, and they&rsquo;re often less optimized than they can be.  If you&rsquo;re going to implement Puppet automation, it&rsquo;s time to retool.</p>
+
+<p><strong>DO Implement Slowly and Methodically</strong></p>
+
+<p>Another pitfall a lot of shops wander into is they try to do too much all at once, and do none of it well.  Either they implement too quickly and migrate a huge environment it took years to build (sometimes as much as a decade!) through a single professional services engagement or at an unrealistic pace.  Automation is complex, but if you take the time to implement correctly, piece-by-piece and hand-in-hand with your rethinking of your environment referred to above, you can revolutionize the way you work and make the environment considerably more powerful, considerably easier to work with, and ultimately release yourself to work on much more interesting problems in your environment.  Take your time to build the environment you want.</p>
+
+<p><strong>DO Engage the Community</strong></p>
+
+<p>By using Puppet, you are the beneficiary of the greatest software development paradigm in history &ndash; the Open Source movement.  People all over the world have taken part in crafting the powerful tool you have before you.  If you are able to help in like manner, by all means contribute your code to the community. (With your data in Hiera, this is easier than ever!)  Join a Puppet Users Group.  Share your clever solutions to unique problems with the community via GitHub, the Puppet Forge, your website&hellip; give back.  The more you pour in, the more you get out, and something you solve may end up baked into the final product one day in the future.</p>
+
+<p><strong>DON&rsquo;T Pit Teams Against Each Other</strong></p>
+
+<p>DON&rsquo;T make this a DEV vs OPS paradigm.  This is a marriage of the best tools of both worlds.  Depending on how your culture breaks down, this could be an OPS-aware way of doing development, or a DEV-informed way of doing operations.  You need to remember one thing in all of it.  The marriage of these worlds is a <em>teamwork</em> effort.</p>
+
+<p>I was averse to the term DEVOPS when it first started being used, as it was a tool of the development world I was engaged with to cede root level access to developers.  In a properly managed, secure environment, this is always a no-no.  Development personnel are not trained systems people and rarely are.  By the same token, never ask your systems people to delve into core development, or to troubleshoot your developers' code.  They are not tooled for that work.</p>
+
+<p>This does not say that one is better than the other, nor does it say they do not share a certain amount of core skills at the basest levels. Much like the differences between civil and mechanical engineers, each has a base level of knowledge that ties them together, but each is highly specialized.  You don&rsquo;t want your civil engineer building machine tools just as much as you don&rsquo;t want your mechanical engineer building bridges.  Each discipline is highly specialized and carries with it nuance and knowledge you only gain through experience&hellip;experience <em>on </em>the job.</p>
+
+<p>Instead, find a culture and a paradigm that joins the forces of these two disciplines to build something unique and special rather than wasting time with dissension and argument.</p>
+
+<p><strong>DON&rsquo;T Expect Automation to Solve <em>Everything</em></strong></p>
+
+<p>I know, that sounds like a sacrilege at this point, but its true.  No matter how automated your site becomes, how detailed your configuration elements are, or how much you&rsquo;ve detailed your entire workflow, you still can never replace the element of human consideration and decision-making.</p>
+
+<p>Automation, as I&rsquo;ve said before, automates away the mundane to make time for you, DEVOPS person, to work on really interesting and curious work.  You can now write that entire new whiz bang gadget you&rsquo;ve been conceptualizing for the last several years, but have never quite gotten there because you were too busy &ldquo;putting out fires&rdquo;.  Puppet automation is definitely a watershed in modern administration and development, but people are still needed.</p>
+
+<p>Another &ldquo;intangible&rdquo; you may not readily think about when considering a DEVOPS infrastructure is one of <em>culture.  </em>The best places to work are always the best cultures brought about by the right collection of people, ideas, personalities, and management styles.  When you find that right mix of people and ideas, the workplace becomes a, forgive me, <em>magical</em> place to be.  Automation can never make that happen.</p>
+
+<p><strong>DON&rsquo;T Starve Your Automation Environment</strong></p>
+
+<p>Automation solves a lot of things, but one thing it cannot do is feed itself.  This particular animal has a ton of needs over time.  From appropriate hardware to personnel, the environment needs time, attention, and consideration.  Remember that this is the &ldquo;machine tool&rdquo; of your whole company.  It is the thing that builds and maintains other things.  As such, its priority rises above that of the next web server or DNS system.</p>
+
+<p>Always allocate enough resources (read: money, personnel, and time) to your environment.  If that means engineer time to work on a specially project and to do the job <em>right</em>, that&rsquo;s what it means.  And, yes, it&rsquo;s more important than meeting an arbitrarily assigned &ldquo;live date&rdquo; to your new widget or site or application.  The environment comes first, and all else follows.  If you give the resources and time to your automation initiatives it deserves, a number of years down the road you will look back and be amazed at the sheer amount of work your team was able to accomplish just by keeping this simple precept.</p>
+
+<p><strong>DON&rsquo;T Stop Evolving</strong></p>
+
+<p>Never stop learning.  Never stop bettering yourself or your environment.  Always keep refactoring your code.  (i.e., if you wrote that Apache module 4 years ago, chances are good that what you&rsquo;ve learned in the interim can go back into making that module even better.)  Always keep your people trained and engaged on the latest developments in Puppet and all the associated tools.  Never stop striving to be better and never stop reaching.  I may sound lil your coach from high school in this, but those principles he was trying to impart hold true.  If you continue to drive forward and reinvent yourself as a regular part of your forward pursuits, the endpoint of that evolution will benefit you personally, your team both vocationally and culturally, your company&rsquo;s efficiency, and your environment&rsquo;s impact on your bottom line.</p>
+
+<p><strong>Conclusion</strong></p>
+
+<p>If we keep a stronger eye on our environment and tools that rises above the simple concept of &ldquo;that software I bought&rdquo; and &ldquo;fit it in between all the other things you have to do&rdquo; and give Puppet its proper place in our company, it can truly revolutionize your workflow.  However, when properly placed culturally and from a design, implementation, and workflow perspective, it can transform any shop on levels not readily observable when looking at the price tag or the resource requirements list.  DO let Puppet transform your environment and workflow and DON&rsquo;T be afraid to take the plunge.  It&rsquo;s exciting, challenging, and can easily take your company to the &ldquo;next level&rdquo;.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Why All the Vim?]]></title>
+    <link href="http://questy.org/blog/2014/05/09/vim-2/"/>
+    <updated>2014-05-09T11:07:57-04:00</updated>
+    <id>http://questy.org/blog/2014/05/09/vim-2</id>
+    <content type="html"><![CDATA[<p>As we move on through the last post on Vim, you may ask yourself why I&rsquo;m remediating all the way back to text editors.  Well, as you&rsquo;ll see over time, this is all about workflow; Building yourself a detailed workflow by which you can write code, syntax check, commit to revision control, deploy to your Puppet instances, and duplicate that workflow across all your environments.</p>
+
+<p>The text editor itself, while important, is just a tiny part of a much larger picture I hope to cobble together over time.  So, let&rsquo;s begin to push forward with our coverage of Vim.</p>
+
+<p><strong>Plugins and Syntax Highlighting</strong></p>
+
+<p>I went through the beginnings of Vim to give you a starting point and some basics in the event you have no experience in the Vim world.  One would assume that since you&rsquo;re on a Puppet/Dev-Ops-y sort of page, all this is old news, but we do have completely &ldquo;green&rdquo; readers from time to time, and I didn&rsquo;t want to leave them out.</p>
+
+<p>The main goal in getting Vim in the picture was to bring you to the point where we start looking at our code and knowing what we&rsquo;re dealing with at a glance.  As you begin to work in the field, whether coding in Perl, Python, Shell, or the Puppet DSL, there are some conventions out there all designed to help you and smooth your workflow.  Of these is syntax highlighting in code editors in general, but (for our purposes) in Vim <em>specifically.</em></p>
+
+<p>Take a look at this screen:</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/nosyn.png"><img src="http://questy.org/wp-content/uploads/2014/05/nosyn.png" alt="nosyn" /></a></p>
+
+<p>While the code is well formatted and everything seems ok, were there any issues in this document, you&rsquo;d never know it.  From syntax issues to missing elements, none of this is automatically highlighted to you in any way.  Enter syntax highlighting&hellip;  Look again:</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/syn.png"><img src="http://questy.org/wp-content/uploads/2014/05/syn.png" alt="syn" /></a></p>
+
+<p>Much nicer, no?  Were there any missing elements, you&rsquo;d see something amiss in the document.  The colors would not be organized according to element type, and odd things would be displayed in the page.  Let me &ldquo;break&rdquo; the file for you&hellip;</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/broke.png"><img src="http://questy.org/wp-content/uploads/2014/05/broke.png" alt="broke" /></a></p>
+
+<p>You&rsquo;ll notice that on line 4 something is amiss.  If you compare the two colored instances, you&rsquo;ll see that your eye is drawn to where things begin to be different.  Best part for quick and easy glancing is that the entirety of the file after that one mistake now looks &ldquo;wrong&rdquo;.  Ease of view.</p>
+
+<p><strong>How Can This Help With Puppet?</strong></p>
+
+<p>As luck would have it, Vim has a plugin engine that allows you to have pre-built templates that syntax highlight code for you in a predetermined way.  It &ldquo;recognizes&rdquo; your code type, and highlights accordingly.  The basic plugin structure for vim lives in your home directory and in the &ldquo;hidden&rdquo; .vim directory.  Under this directory you can have a number of wide and varied add ons to vim.  We&rsquo;re just going to talk about plugins.</p>
+
+<p>By default, you don&rsquo;t have anything in this directory.  You usually have a .vimrc file and a .vim directory in your home directory location, but that&rsquo;s about it.  The &ldquo;magic&rdquo; happens, though, when you add a few pieces.  Those would include a &ldquo;.vimrc&rdquo; file which will turn on syntax highlighting, and then a Puppet vim plugin that sorts all the language elements and colorizes them for you.</p>
+
+<p>In your home directory, if it doesn&rsquo;t already exist, create a .vimrc file with a single entry:</p>
+
+<p><strong>syntax on</strong></p>
+
+<p>This will instruct vim to syntax highlight, and to be aware of any highlighting plugins that may live in the .vim plugin folder.  Next, place <a href="http://questy.org/stuff/puppet/puppet.vim">this file</a> into your .vim plugin directory.  If it does not yet exist, create it.  It lives in ~/.vim/plugin.  Once you load up new puppet manifests, it will recognize the type and begin to highlight the code according to the defined convention from the puppet.vim file you just downloaded.  If you have any issues, look at the vim plugin reference <a href="http://vimdoc.sourceforge.net/htmldoc/usr_05.html">here</a>.</p>
+
+<p>Now you&rsquo;re ready to work with Puppet files like a pro!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Vim]]></title>
+    <link href="http://questy.org/blog/2014/05/02/vim/"/>
+    <updated>2014-05-02T15:56:54-04:00</updated>
+    <id>http://questy.org/blog/2014/05/02/vim</id>
+    <content type="html"><![CDATA[<p><strong>Old School</strong></p>
+
+<p>Why on earth am I starting with Vim?  (or &ldquo;vi&rdquo; for you old folks)</p>
+
+<p>Vim is the modern &ldquo;vi&rdquo; implementation.  A full-screen text editor with a myriad of options and abilities for beyond anything I could ever cover here.  But Vim has one thing going for it that no other text editor has.  One simple fact about it puts it in the category of cameras.  You know the old saying?</p>
+
+<p><em><strong>&ldquo;The best camera is the one you have with you.&rdquo;</strong></em></p>
+
+<p>Thus it is with vi/vim.  It&rsquo;s literally <strong>everywhere.</strong></p>
+
+<p>Every UNIX OS, commercial or not, streamlined or not, old or new, has vi or vim installed on it.  Emacs is a great product, but it just isn&rsquo;t installed by default everywhere.  Regardless of the editor you refer to, ${INSERT_EDITOR_HERE} just isn&rsquo;t as ubiquitous as Vi/Vim.</p>
+
+<p>Since we&rsquo;re talking about a modern pursuit and workflow (DEVOPS), we&rsquo;ll be talking mostly about Vim&rsquo;s capabilities and features.</p>
+
+<p><strong>What Vim is <em>NOT</em></strong></p>
+
+<p>Vim is not a word processor.  You won&rsquo;t be writing business letters with it.  Vim is not for writing resumes, making pretty newsletters, or for typesetting a magazine.  The die-hard Vi/Vim fan will tell you that you can do all of the above with it, but that falls into the same category as filling in the Grand Canyon with a teaspoon. You <em>can </em>do it, but why on earth would you want to?</p>
+
+<p><strong>What Vim Does Best</strong></p>
+
+<p>Vim edits text.  Plain&hellip;text.  Not pretty bold, italicized, with all sorts of alignment characters and strange paragraphs and pagination doohickeys&hellip; no, Vim just makes text files.  Text files that are SO devoid of bells and whistles, in fact, that when you open a Vim created file in your favorite WYSIWYG editor, you&rsquo;ll see what appears to be a pile of letters and such all crammed together like you had nothing else on your keyboard but letters, numbers, and punctuation.</p>
+
+<p>Vim allows you to eliminate all the cruft and get right down to the matter of creating plain, unencumbered text files.</p>
+
+<p><strong>Why Does it Matter?</strong></p>
+
+<p>When you&rsquo;re logged onto your favorite Linux through two bastion hosts across several continents and have latency to boot, WordPad will not help.  You&rsquo;ll need a lightweight text editor within which you can load, edit, and save the single most numerous type of item on a UNIX system&hellip; a text file.</p>
+
+<p><strong>Where Can I learn More About Vim?</strong></p>
+
+<p>Vim&rsquo;s main project page can be found <a href="http://www.vim.org">here</a> online.  The main page has links to documentation and various community links as well as connections to various types of plugins and add ons you can use with Vim for any number of tasks.  You can join online forums, mailing lists, and communities whose entire purpose is the extension and promotion of Vim.  But that&rsquo;s not what we&rsquo;re up to&hellip;</p>
+
+<p><strong>How We Will Use Vim</strong></p>
+
+<p>For our purposes, we will use vim as code editor.  No more, no less.  Vim&rsquo;s abilities can help us <em>see </em>our code in ways that let&rsquo;s us know when there&rsquo;s an issue and can direct us generally in the direction of our solutions.  So, let&rsquo;s dive in to a minor Vim tutorial.  (If you&rsquo;re an advanced Vim user, stick with me&hellip;)</p>
+
+<p>All Linux distributions and Mac OSX come with Vim pre-installed and ready for action.  Note that some distributions of Linux will have <em>both </em>Vim and Vi.  You will either need to get into the habit of running &ldquo;vim&rdquo; from the command line, or setup your shell aliases to load Vim every time you type &ldquo;vi&rdquo; instead.</p>
+
+<p>When you launch Vim, you see a screen much like the following.  I use Mac OSX, but the effect is the same, regardless of platform.</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/vim.png"><img src="http://questy.org/wp-content/uploads/2014/05/vim.png" alt="vim_screen" /></a></p>
+
+<p>I have several features turned on (including the line across the bottom that provides me a lot of information about the file I&rsquo;m editing), but the main things we will talk about here are <em>syntax highlighting</em> and <em>plugins </em>after a short tutorial on how Vim works.</p>
+
+<p><strong>I Can&rsquo;t DO Anything!!!</strong></p>
+
+<p>Most people&rsquo;s frustrations begin right on this page.  From here, nothing seems familiar.  I can&rsquo;t pull down a menu and I can&rsquo;t really even choose &ldquo;exit&rdquo; from a list of things to do.  The only real hint I have is on the screen above:</p>
+
+<p>type  :q<Enter>               to exit</p>
+
+<p>&hellip;which is quite a peculiar directive.  Why do I have to type a colon?  What does it mean?  And goodness help you if you already managed to type something into the screen.  The instructions you see above disappear, and without the right collection of keystrokes, you&rsquo;re not getting out of Vim.  You&rsquo;ll most likely just close the window and start looking for &ldquo;notepad&rdquo;.</p>
+
+<p>Here&rsquo;s where the tutorial starts.</p>
+
+<p>Vim is what is known as a full-screen text editor.  It started back in the Amiga days, and was first released publicly in 1991.  Before Vi/Vim, to create text files, there were line-based text editors that only allowed you to see one line of a file at a time.  So, you really couldn&rsquo;t work with huge files&hellip;it would be difficult to see file lines compared to each other or look at the whole flow of a subroutine you had written, or even to match wording or syntax from one section to another.</p>
+
+<p>Enter the full-screen editor.</p>
+
+<p>What the full-screen editor did was open a file on disk, reserving space in memory to hold the entire file, and then display to you a &ldquo;window&rdquo; into your file equal to your terminal&rsquo;s display size.  for instance, I have a terminal right now that has a several thousand line file open.  Of that file, I can only see 25 lines and 80 columns wide.  This &ldquo;window&rdquo; onto my file is something I personally configured in my terminal program (in my case, &ldquo;iTerm&rdquo;).  I can scroll up and down this file, sliding forward or backward within the file from the beginning to the end (just as you may an MS Word document) and can interact with/edit any character I can see on the screen.  (we&rsquo;ll talk about search and replace and other such things later).</p>
+
+<p>We are currently in what is known as &ldquo;command mode&rdquo;.  Many would ask why you don&rsquo;t just call this &ldquo;view&rdquo; mode, and the reasons are very simple.  From this screen, you issue MANY commands to Vim and tell it how you want it to behave for you.  For our purposes, we will use &ldquo;command&rdquo; mode and &ldquo;insert&rdquo; mode mostly.</p>
+
+<p><strong>Well, How Do I Edit Something?</strong></p>
+
+<p>To edit your file, you enter into a mode known as &ldquo;insert&rdquo; mode.  From this page there are several different modes you can enter, but &ldquo;insert&rdquo; mode is the easiest.  You simply type a single lowercase &ldquo;i&rdquo; to enter this mode.  When you do so, a cursor appears on the top line of the page you are viewing, and you are now able to type all you like.  Letters, <enter> keys, tabs&hellip; all normal typing idioms are available to you from this point.  How, you may ask, then do you save your work to disk?  I&rsquo;m in this &ldquo;insert&rdquo; mode and don&rsquo;t know how to save!</p>
+
+<p>Think about what you wish to accomplish&hellip; you wish to issue the command &ldquo;save&rdquo; to Vim.  Command&hellip;  as in&hellip; &ldquo;command mode&rdquo;, perhaps?  Well, we have to go back into command mode, then, so we can issue some commands to Vim and exit the program.</p>
+
+<p>Any time you are in Vim, your &ldquo;saving grace&rdquo; is your [esc] key.  Two taps on the escape key lways brings you back to command mode from anywhere.  Go ahead and try it.</p>
+
+<p>You&rsquo;ll now notice you have returned to &ldquo;command mode&rdquo; just as you were when you first opened Vim.  The only difference is that everything you typed is now on your screen and has not gone away.  Your &ldquo;edit buffer&rdquo; is full of a file you now can do things with.  You can save it, delete it, save it out as a specific file name&hellip; a myriad of normal file operations you may be used to from other software packages.</p>
+
+<p>In our case, we want to just save the file.  However, when we opened Vim, we didn&rsquo;t specify a file name to edit, we just opened Vim.  So, for all intents and purposes, we have an open buffer full of &ldquo;stuff&rdquo; and no file name to associate with it.  What we want to do now is to &ldquo;write&rdquo; the file to disk.  To do so, we have to issue commands to Vim in Command mode.</p>
+
+<p><strong>Command Mode</strong></p>
+
+<p>To issue commands to Vim, we have to tell it we are issuing it a command, otherwise you may hit a letter than means something else.  Recall that simply by hitting a lowercase &ldquo;i&rdquo; we placed vim into insert mode and then by hitting the [esc] key twice, we left it.  Clearly, there&rsquo;s more to this editor than we can readily see, so how do we save the file?</p>
+
+<p>When you have a buffer with text you would like to save, you have to first hit a colon &ldquo;:&rdquo;.  You&rsquo;ll notice that Vim places the colon on the bottom line of your screen to the left, awaiting a command.  While there are several commands we can perform here (as well as joining multiple commands together), we will simply write the file right now.  To do so, while at the &ldquo;colon prompt&rdquo;, we simply type:</p>
+
+<p><strong>: w foo.txt</strong></p>
+
+<p>and press the &ldquo;enter&rdquo; key.  You will receive a message on the last line that lets you know the file has been written to disk:</p>
+
+<p><strong>&ldquo;foo.txt&rdquo; [New] 1L, 16C written</strong></p>
+
+<p>But I&rsquo;m still in Vim.  What do I do now?</p>
+
+<p>Just like &ldquo;w&rdquo; is a command, exiting the program also is a command.  Guessably so, it is the letter &ldquo;q&rdquo; for &ldquo;quit&rdquo;.  So, as before, you hit the colon key, then the letter q, and then the enter key.  If all goes well, you&rsquo;ll be back at the command line.</p>
+
+<p><strong>Much More to This</strong></p>
+
+<p>Were I to do this for all the features of Vim, I&rsquo;d be writing a book.  However, fortunately for you, there are several tutorials and cheat sheets on Vi/Vim all over the Internet.  Here are a few of my favorites.</p>
+
+<p><a href="http://vim.wikia.com/wiki/Tutorial">The Main Vim Tutorial
+</a><a href="https://www.linux.com/learn/tutorials/228600-vim-101-a-beginners-guide-to-vim">Linux.com&rsquo;s Vim Tutorial</a></p>
+
+<p>As well as some cheat sheets for you to refer to for quick reference on the various commands available when using Vim:</p>
+
+<p><a href="http://www.viemu.com/vi-vim-cheat-sheet.gif">One of My Favorites
+</a><a href="http://vim.rtorr.com">Another Good Cheat Sheet</a></p>
+
+<p>Take some time learning the basics of Vim before pressing on to the next article: &ldquo;Customizing Vim&rdquo;.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Puppet IV - Signing Certificates]]></title>
+    <link href="http://questy.org/blog/2014/02/27/puppet-iv-signing-certificates/"/>
+    <updated>2014-02-27T15:32:04-05:00</updated>
+    <id>http://questy.org/blog/2014/02/27/puppet-iv-signing-certificates</id>
+    <content type="html"><![CDATA[<p><em><strong>Introduction</strong></em></p>
+
+<p>We&rsquo;ve covered a lot of ground already in our tutorials thus far.  In <a href="http://questy.org/2014/01/puppet-i-installation/">Tutorial I</a> we installed our Puppet server.  In <a href="http://questy.org/2014/01/puppet-ii-client-installation/">Tutorial II</a>, the client, and in <a href="http://questy.org/2014/02/puppet-iii-initial-configuration/">Tutorial III</a> we configured the server and client to start communicating.</p>
+
+<p>In this 4th installment, we&rsquo;ll cover the signing of SSL certificates between your Puppet Master and Client, and running a simple test to ensure your setup is working and ready to function as a master=>slave pair.</p>
+
+<p>On your server, be sure to start up the Puppet Master, so it can receive connections from outside sources, like so:</p>
+
+<p><em><strong>sudo service puppetmaster start
+sudo chkconfig puppetmaster on</strong></em></p>
+
+<p>Next, on your Puppet client, run a test run so the client will start, create an SSL certificate for the client host, and make an initial callout to the server.  It will exit immediately, but the server will now know about the client, and we can sign the certificate over there.</p>
+
+<p><em><strong>puppet agent -t</strong></em></p>
+
+<p>When you run this command, the output should look something like this:</p>
+
+<p>[caption id=&ldquo;attachment_625&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;720&rdquo;]<a href="http://questy.org/wp-content/uploads/2014/02/agent_cert.png"><img src="http://questy.org/wp-content/uploads/2014/02/agent_cert.png" alt="Certificate Signing Request Example" /></a> Certificate Signing Request Example[/caption]</p>
+
+<p>Now, SSH to your Puppet Master, and run the following command:</p>
+
+<p><em><strong>puppet cert &ndash;list</strong></em></p>
+
+<p>If everything has gone well, your server will have now seen your client and will report as much like so:</p>
+
+<p>[caption id=&ldquo;attachment_627&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;719&rdquo;]<a href="http://questy.org/wp-content/uploads/2014/02/server_cert.png"><img src="http://questy.org/wp-content/uploads/2014/02/server_cert.png" alt="Server Cert Requests in Waiting" /></a> Server Cert Requests in Waiting[/caption]</p>
+
+<p>Finally, so <em>sign </em>the certificate so there is an SSL connection between the client and server, and all future Puppet actions between the two pass over that connection, simply sign the certificate request on the master as follows:</p>
+
+<p><em><strong>puppet cert sign puppetclient.example.com</strong></em>
+<em>(or whatever your hostname is)</em></p>
+
+<p> The server will sign the certificate and make a tabular listing of it in its database finalizing the connection.  You can see this output by using the &ldquo;list all&rdquo; options as follows:</p>
+
+<p><em><strong>puppet cert list &ndash;all</strong></em></p>
+
+<p>and see the output which should resemble the following:</p>
+
+<p>[caption id=&ldquo;attachment_635&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;718&rdquo;]<a href="http://questy.org/wp-content/uploads/2014/02/signed_cert.png"><img src="http://questy.org/wp-content/uploads/2014/02/signed_cert.png" alt="Signed Certificate" /></a> Signed Certificate[/caption]</p>
+
+<p><em><strong>
+Conclusion</strong></em></p>
+
+<p>Now we&rsquo;re ready to do work with Puppet.  You can actually stop here and fully manage your site with Puppet, however there are several addons and feature-sets yet you can install to expand Puppet&rsquo;s functionality.  We will look at some of these tools in future installments.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A Few Notes...]]></title>
+    <link href="http://questy.org/blog/2011/02/22/a-few-notes/"/>
+    <updated>2011-02-22T10:26:06-05:00</updated>
+    <id>http://questy.org/blog/2011/02/22/a-few-notes</id>
+    <content type="html"><![CDATA[<p>I think it is important to make a note about all of the people and places that have helped me ferret out a lot of this configuration.  I don&rsquo;t find this stuff in a vacuum (like anything in the Open Source world), and find it quite important to give a nod where a nod is due.</p>
+
+<p>First, to <a href="http://www.turner.com">Turner Broadcasting</a> who gave me my first shot at doing this in a relatively small environment.  There was a ton of time spent on the phone, in online forums, reading documentation, and the like.  Everything sort of proceeded from there.  I tried to get such a thing into the backend over at <a href="http://www.weather.com">The Weather Channel</a>, but the climate wasn&rsquo;t right, and there was a great deal of change going on.  Trying to implement such a thing there just wouldn&rsquo;t have worked out very well.</p>
+
+<p>Next, to <a href="http://www.incomm.com">Incomm</a>.  They needed a solution, and Brock (my boss) gave me ample time to get a lot of this together, and to do it right without interruption.  Big thanks there.</p>
+
+<p>Finally, and most importantly, my best bud <a href="mailto:johnbeamon@yahoo.com">John Beamon</a>.  He encountered and worked with LDAP long before I did.  And, while we have considerably different directories in place between our two mutual organizations, his help in putting together how all this works in my head has been invaluable.  I daresay I&rsquo;ve been into his IM client twice (or more) often as he&rsquo;d like, gave him props nowhere near as much as I should (like at all), and even with all his own work on his plate, he has helped me out immeasurably.  Add to that, he&rsquo;s a long-time friend and fellow-minister, and that&rsquo;s just good times right there.  They don&rsquo;t come along like John very often, and I&rsquo;m grateful to have him as both a friend and fellow nerd.</p>
+
+<p><strong>Kudos, JB!</strong></p>
+
+<p>I&rsquo;m sure there&rsquo;s still some inaccuracies here, and I&rsquo;ll be sifting through all this as I continue to build and extend OpenLDAP in this environment.  Things will automagically correct before your eyes, most likely.  If you find anything that happens to scream &ldquo;No!&rdquo; to you, feel free to drop me a line, and I&rsquo;ll be happy to make that change.</p>
+
+<p>HappyLDAPping!</p>
+]]></content>
+  </entry>
+  
+</feed>

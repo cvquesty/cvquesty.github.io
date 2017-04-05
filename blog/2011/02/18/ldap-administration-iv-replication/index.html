@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>LDAP Administration v - Replication - Questy.org</title>
+  <meta name="author" content="Jerald Sheets">
+
+  
+  <meta name="description" content="Continuing our discussion of LDAP Administration, there&rsquo;s the matter of Replication. So far we&rsquo;ve created an LDAP store, turned up the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://questy.org/blog/2011/02/18/ldap-administration-iv-replication/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Questy.org" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1135877-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Questy.org</a></h1>
+  
+    <h2>Tech musings and other things...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="questy.org">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">LDAP Administration v - Replication</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-02-18T12:57:33-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>12:57 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://questy.org">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Continuing our discussion of LDAP Administration, there&rsquo;s the matter of Replication.</p>
+
+<p>So far we&rsquo;ve created an LDAP store, turned up the server, configured a client, and even connected Apache authentication to it.  However, if we&rsquo;re going to use our LDAP server for enterprise authentication, then there&rsquo;s the small matter of &ldquo;What happens when my authentication server wets the bed?&rdquo;.</p>
+
+<p>As with anything in the enterprise, you have backup systems.  Sometimes they&rsquo;re failover systems, sometimes clusters.  Sometimes they&rsquo;re tandem systems, and sometimes they&rsquo;re load-balanced.  No matter the configuration, you have redundancy, resiliency, and scalability.  I plan to talk about one of the many scenarios available to LDAP administrators today; the idea of a master server and many replicants.</p>
+
+<p><strong>Layout</strong></p>
+
+<p>In my configuration, I have a single administrative parent.  This system is where we do all administrative level work.  This includes adding users, adding groups, reporting, and the like.  It is also the &ldquo;provider&rdquo; store to all replicants in our environment.  We learned earlier how to turn up a server that is queried directly.  Now let&rsquo;s learn, instead, how to configure this system to replicate itself.</p>
+
+<p>Assume 3 systems total, ldap01.bob.com, ldap02.bob.com, and ldap03.bob.com.  ldap01.bob.com is our master server and our replicants are ldap02 &amp; ldap03.  To tell the system it will be replicating, you will need to configure it to do so.  Shut down LDAP on the primary like so:</p>
+
+<p><em><strong>/sbin/service ldap stop</strong></em></p>
+
+<p>This shuts down all daemons and associated processes.  Next, we need to edit our <strong>/etc/openldap/slapd.conf</strong> to include information regarding where our replicants will be.    You must add a few lines to the master to make this happen.  Like so:</p>
+
+<p>replogfile      /var/log/ldap/slapd.replog</p>
+
+<p>replica uri=ldap://ldap02.bob.com:389
+binddn=&ldquo;cn=admin,dc=bob,dc=com&rdquo;
+bindmethod=simple credentials=secret</p>
+
+<p>replica uri=ldap://ldap03.bob.com:389
+binddn=&ldquo;cn=admin,dc=bob,dc=com&rdquo;
+bindmethod=simple credentials=secret</p>
+
+<p>This can be added at the end of the file.</p>
+
+<p>Next, we take our fresh two servers, and turn up a similar system to what ldap01 was before adding the above lines.  In these systems, there are only two important lines to tell them they are replicants and not masters.  They are as follows:</p>
+
+<p>updatedn &ldquo;cn=admin,dc=bob,dc=com&rdquo;
+updateref ldap://ldap01.bob.com</p>
+
+<p>That is literally the entire configuration.</p>
+
+<p><strong>Populating the Replicants</strong></p>
+
+<p>To have your schema transferred over, and to be working from the same general starting point, I find it important to copy your whole database over to start with.  This is easily done utilizing standard LDAP tools.</p>
+
+<p>First, start back up your master server:</p>
+
+<p><em><strong>/sbin/service ldap start</strong></em></p>
+
+<p>Once you&rsquo;ve done this, the database is up and ready for queries.  We will essentially dump our database for import on each of the replicants.  To do this, we will use the <em>slapcat </em>utility, redirecting the output to a file we can use to move around to the replicants.  Run <em>slapcat</em> as follows:</p>
+
+<p><strong><em>slapcat >> master.ldif</em></strong></p>
+
+<p>this will output the contents of your LDAP store to a single LDIF-formatted file, suitable for import into other servers.  Simply copy this file to a generic location (such as your personal home directory) on each of the other servers, and we are set for import.</p>
+
+<p>Once your file is in the new location, you&rsquo;re ready to import.  First, start LDAP as outlined above.  Next, add the LDIF to your store:</p>
+
+<p><em><strong>slapadd -l master.ldif</strong></em></p>
+
+<p>Probably unnecessary, but I usually restart my ldap server after the import, and now I&rsquo;m ready to go.  Repeat the process on your third LDAP store, and your full environment is running.</p>
+
+<p><strong>Next Steps</strong></p>
+
+<p>So let&rsquo;s see where we are.</p>
+
+<p>Master server up and serving.. check.
+Two slaves configured as replicants, up and running.. check.</p>
+
+<p>Now that you have your stores up, you have to do some testing.  Primarily, that the master replicates to the slaves.  The way I usually do this is use the <a href="http://directory.apache.org">Apache Directory Studio</a> I covered in an earlier article.  I simply add a user on the master.  Then, I connect to each of the slaves in turn to see that the user has appeared there.  If so, then we&rsquo;re ready for the next steps:  High Availability.</p>
+
+<p>You have two query hosts that can equally provide query answers from remote clients.  There are several ways you can make these available.  Round-robin DNS, HA IP failover, and load-balancing via a hardware load balancer.  I prefer the latter.  However, to do so, you need a way to tell the load balancer that your LDAP store is up and responding.</p>
+
+<p>I prefer to use a small script on the system that can be served up via HTTP to the load balancer that does a simple operation.  First, it does an LDAP search, looks for information, and then prints out to the web page it creates a simple &ldquo;UP&rdquo; or &ldquo;DOWN&rdquo; message for the load balancer to key on.  The script looks like the following:</p>
+
+<p>[caption id=&ldquo;attachment_265&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;150&rdquo;]<a href="http://questy.org/wp-content/uploads/2011/02/healthcheck.png"><img src="http://questy.org/wp-content/uploads/2011/02/healthcheck-150x150.png" alt="" /></a> Healthcheck Sample[/caption]</p>
+
+<p>As you can see, all we do is simply do an <em>ldapsearch </em>against our bob.com domain, look for the home directory for the admin user to look like &ldquo;/home/admin&rdquo;.  If the answer returns, we say &ldquo;UP&rdquo;, if not, we say &ldquo;DOWN&rdquo;.</p>
+
+<p>Place this script into your &ldquo;cgi-bin&rdquo; directory, make it executable <em>(chmod 0755 <filename>)</em> and simply call it in your browser via the URL:  <a href="http://yoursite.com/cgi-bin/">http://yoursite.com/cgi-bin/</a><filename>.  If you have Apache properly configured (outside the scope of this document) to serve CGI Executables, you should get the status of the individual system.  Do this for both your replicants.</p>
+
+<p>Finally, ask your network team to configure these two systems in a load-balanced configuration behind a VIP (virtual IP).  Have a sensible DNS name pointed at this IP (ldap.bob.com, for instance) and you&rsquo;re in business.  Now, when you configure your clients to authenticate against LDAP (Article #1 in this series), you just point them at the ldap.bob.com name.  If either of the systems go out, the load balancer will point you to the machine that is up to serve your requests.</p>
+
+<p><strong>Conclusion</strong></p>
+
+<p>I hope this gives you a basic direction to go in getting high-availability setup for your system through a combination of replication and load balancing.  There are other methods for HA in the replicants.  Perhaps we will cover that soon.</p>
+
+<p>Next up:  Securing your LDAP installation.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">questy</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2011-02-18T12:57:33-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>12:57 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ldap/'>ldap</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/systems-administration/'>systems administration</a>, <a class='category' href='/blog/categories/unix/'>unix</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://questy.org/blog/2011/02/18/ldap-administration-iv-replication/" data-via="CVQuesty" data-counturl="http://questy.org/blog/2011/02/18/ldap-administration-iv-replication/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2010/12/29/linux-docs-docked/" title="Previous Post: Linux Docs Docked?">&laquo; Linux Docs Docked?</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/02/21/ldap-administration-v-tls/" title="Next Post: LDAP Administration VI - TLS/SSL">LDAP Administration VI - TLS/SSL &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/04/05/testing-octopress/">Testing Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/23/puppetconf-2014/">PuppetConf 2014</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/11/southeast-puppet-users-group-september/">Southeast Puppet User's Group September</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/11/toolbox-grows/">The Toolbox Grows...</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/20/dos-donts-puppet-environment/">"Do's and Dont's" for Your Puppet Environment</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/CVQuesty">@CVQuesty</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'CVQuesty',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Jerald Sheets -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'questy-org';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://questy.org/blog/2011/02/18/ldap-administration-iv-replication/';
+        var disqus_url = 'http://questy.org/blog/2011/02/18/ldap-administration-iv-replication/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

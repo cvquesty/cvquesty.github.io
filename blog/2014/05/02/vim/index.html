@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Vim - Questy.org</title>
+  <meta name="author" content="Jerald Sheets">
+
+  
+  <meta name="description" content="Old School Why on earth am I starting with Vim?  (or &ldquo;vi&rdquo; for you old folks) Vim is the modern &ldquo;vi&rdquo; implementation.  A full- &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://questy.org/blog/2014/05/02/vim/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Questy.org" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1135877-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Questy.org</a></h1>
+  
+    <h2>Tech musings and other things...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="questy.org">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Vim</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-02T15:56:54-04:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>3:56 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://questy.org">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><strong>Old School</strong></p>
+
+<p>Why on earth am I starting with Vim?  (or &ldquo;vi&rdquo; for you old folks)</p>
+
+<p>Vim is the modern &ldquo;vi&rdquo; implementation.  A full-screen text editor with a myriad of options and abilities for beyond anything I could ever cover here.  But Vim has one thing going for it that no other text editor has.  One simple fact about it puts it in the category of cameras.  You know the old saying?</p>
+
+<p><em><strong>&ldquo;The best camera is the one you have with you.&rdquo;</strong></em></p>
+
+<p>Thus it is with vi/vim.  It&rsquo;s literally <strong>everywhere.</strong></p>
+
+<p>Every UNIX OS, commercial or not, streamlined or not, old or new, has vi or vim installed on it.  Emacs is a great product, but it just isn&rsquo;t installed by default everywhere.  Regardless of the editor you refer to, ${INSERT_EDITOR_HERE} just isn&rsquo;t as ubiquitous as Vi/Vim.</p>
+
+<p>Since we&rsquo;re talking about a modern pursuit and workflow (DEVOPS), we&rsquo;ll be talking mostly about Vim&rsquo;s capabilities and features.</p>
+
+<p><strong>What Vim is <em>NOT</em></strong></p>
+
+<p>Vim is not a word processor.  You won&rsquo;t be writing business letters with it.  Vim is not for writing resumes, making pretty newsletters, or for typesetting a magazine.  The die-hard Vi/Vim fan will tell you that you can do all of the above with it, but that falls into the same category as filling in the Grand Canyon with a teaspoon. You <em>can </em>do it, but why on earth would you want to?</p>
+
+<p><strong>What Vim Does Best</strong></p>
+
+<p>Vim edits text.  Plain&hellip;text.  Not pretty bold, italicized, with all sorts of alignment characters and strange paragraphs and pagination doohickeys&hellip; no, Vim just makes text files.  Text files that are SO devoid of bells and whistles, in fact, that when you open a Vim created file in your favorite WYSIWYG editor, you&rsquo;ll see what appears to be a pile of letters and such all crammed together like you had nothing else on your keyboard but letters, numbers, and punctuation.</p>
+
+<p>Vim allows you to eliminate all the cruft and get right down to the matter of creating plain, unencumbered text files.</p>
+
+<p><strong>Why Does it Matter?</strong></p>
+
+<p>When you&rsquo;re logged onto your favorite Linux through two bastion hosts across several continents and have latency to boot, WordPad will not help.  You&rsquo;ll need a lightweight text editor within which you can load, edit, and save the single most numerous type of item on a UNIX system&hellip; a text file.</p>
+
+<p><strong>Where Can I learn More About Vim?</strong></p>
+
+<p>Vim&rsquo;s main project page can be found <a href="http://www.vim.org">here</a> online.  The main page has links to documentation and various community links as well as connections to various types of plugins and add ons you can use with Vim for any number of tasks.  You can join online forums, mailing lists, and communities whose entire purpose is the extension and promotion of Vim.  But that&rsquo;s not what we&rsquo;re up to&hellip;</p>
+
+<p><strong>How We Will Use Vim</strong></p>
+
+<p>For our purposes, we will use vim as code editor.  No more, no less.  Vim&rsquo;s abilities can help us <em>see </em>our code in ways that let&rsquo;s us know when there&rsquo;s an issue and can direct us generally in the direction of our solutions.  So, let&rsquo;s dive in to a minor Vim tutorial.  (If you&rsquo;re an advanced Vim user, stick with me&hellip;)</p>
+
+<p>All Linux distributions and Mac OSX come with Vim pre-installed and ready for action.  Note that some distributions of Linux will have <em>both </em>Vim and Vi.  You will either need to get into the habit of running &ldquo;vim&rdquo; from the command line, or setup your shell aliases to load Vim every time you type &ldquo;vi&rdquo; instead.</p>
+
+<p>When you launch Vim, you see a screen much like the following.  I use Mac OSX, but the effect is the same, regardless of platform.</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/vim.png"><img src="http://questy.org/wp-content/uploads/2014/05/vim.png" alt="vim_screen" /></a></p>
+
+<p>I have several features turned on (including the line across the bottom that provides me a lot of information about the file I&rsquo;m editing), but the main things we will talk about here are <em>syntax highlighting</em> and <em>plugins </em>after a short tutorial on how Vim works.</p>
+
+<p><strong>I Can&rsquo;t DO Anything!!!</strong></p>
+
+<p>Most people&rsquo;s frustrations begin right on this page.  From here, nothing seems familiar.  I can&rsquo;t pull down a menu and I can&rsquo;t really even choose &ldquo;exit&rdquo; from a list of things to do.  The only real hint I have is on the screen above:</p>
+
+<p>type  :q<Enter>               to exit</p>
+
+<p>&hellip;which is quite a peculiar directive.  Why do I have to type a colon?  What does it mean?  And goodness help you if you already managed to type something into the screen.  The instructions you see above disappear, and without the right collection of keystrokes, you&rsquo;re not getting out of Vim.  You&rsquo;ll most likely just close the window and start looking for &ldquo;notepad&rdquo;.</p>
+
+<p>Here&rsquo;s where the tutorial starts.</p>
+
+<p>Vim is what is known as a full-screen text editor.  It started back in the Amiga days, and was first released publicly in 1991.  Before Vi/Vim, to create text files, there were line-based text editors that only allowed you to see one line of a file at a time.  So, you really couldn&rsquo;t work with huge files&hellip;it would be difficult to see file lines compared to each other or look at the whole flow of a subroutine you had written, or even to match wording or syntax from one section to another.</p>
+
+<p>Enter the full-screen editor.</p>
+
+<p>What the full-screen editor did was open a file on disk, reserving space in memory to hold the entire file, and then display to you a &ldquo;window&rdquo; into your file equal to your terminal&rsquo;s display size.  for instance, I have a terminal right now that has a several thousand line file open.  Of that file, I can only see 25 lines and 80 columns wide.  This &ldquo;window&rdquo; onto my file is something I personally configured in my terminal program (in my case, &ldquo;iTerm&rdquo;).  I can scroll up and down this file, sliding forward or backward within the file from the beginning to the end (just as you may an MS Word document) and can interact with/edit any character I can see on the screen.  (we&rsquo;ll talk about search and replace and other such things later).</p>
+
+<p>We are currently in what is known as &ldquo;command mode&rdquo;.  Many would ask why you don&rsquo;t just call this &ldquo;view&rdquo; mode, and the reasons are very simple.  From this screen, you issue MANY commands to Vim and tell it how you want it to behave for you.  For our purposes, we will use &ldquo;command&rdquo; mode and &ldquo;insert&rdquo; mode mostly.</p>
+
+<p><strong>Well, How Do I Edit Something?</strong></p>
+
+<p>To edit your file, you enter into a mode known as &ldquo;insert&rdquo; mode.  From this page there are several different modes you can enter, but &ldquo;insert&rdquo; mode is the easiest.  You simply type a single lowercase &ldquo;i&rdquo; to enter this mode.  When you do so, a cursor appears on the top line of the page you are viewing, and you are now able to type all you like.  Letters, <enter> keys, tabs&hellip; all normal typing idioms are available to you from this point.  How, you may ask, then do you save your work to disk?  I&rsquo;m in this &ldquo;insert&rdquo; mode and don&rsquo;t know how to save!</p>
+
+<p>Think about what you wish to accomplish&hellip; you wish to issue the command &ldquo;save&rdquo; to Vim.  Command&hellip;  as in&hellip; &ldquo;command mode&rdquo;, perhaps?  Well, we have to go back into command mode, then, so we can issue some commands to Vim and exit the program.</p>
+
+<p>Any time you are in Vim, your &ldquo;saving grace&rdquo; is your [esc] key.  Two taps on the escape key lways brings you back to command mode from anywhere.  Go ahead and try it.</p>
+
+<p>You&rsquo;ll now notice you have returned to &ldquo;command mode&rdquo; just as you were when you first opened Vim.  The only difference is that everything you typed is now on your screen and has not gone away.  Your &ldquo;edit buffer&rdquo; is full of a file you now can do things with.  You can save it, delete it, save it out as a specific file name&hellip; a myriad of normal file operations you may be used to from other software packages.</p>
+
+<p>In our case, we want to just save the file.  However, when we opened Vim, we didn&rsquo;t specify a file name to edit, we just opened Vim.  So, for all intents and purposes, we have an open buffer full of &ldquo;stuff&rdquo; and no file name to associate with it.  What we want to do now is to &ldquo;write&rdquo; the file to disk.  To do so, we have to issue commands to Vim in Command mode.</p>
+
+<p><strong>Command Mode</strong></p>
+
+<p>To issue commands to Vim, we have to tell it we are issuing it a command, otherwise you may hit a letter than means something else.  Recall that simply by hitting a lowercase &ldquo;i&rdquo; we placed vim into insert mode and then by hitting the [esc] key twice, we left it.  Clearly, there&rsquo;s more to this editor than we can readily see, so how do we save the file?</p>
+
+<p>When you have a buffer with text you would like to save, you have to first hit a colon &ldquo;:&rdquo;.  You&rsquo;ll notice that Vim places the colon on the bottom line of your screen to the left, awaiting a command.  While there are several commands we can perform here (as well as joining multiple commands together), we will simply write the file right now.  To do so, while at the &ldquo;colon prompt&rdquo;, we simply type:</p>
+
+<p><strong>: w foo.txt</strong></p>
+
+<p>and press the &ldquo;enter&rdquo; key.  You will receive a message on the last line that lets you know the file has been written to disk:</p>
+
+<p><strong>&ldquo;foo.txt&rdquo; [New] 1L, 16C written</strong></p>
+
+<p>But I&rsquo;m still in Vim.  What do I do now?</p>
+
+<p>Just like &ldquo;w&rdquo; is a command, exiting the program also is a command.  Guessably so, it is the letter &ldquo;q&rdquo; for &ldquo;quit&rdquo;.  So, as before, you hit the colon key, then the letter q, and then the enter key.  If all goes well, you&rsquo;ll be back at the command line.</p>
+
+<p><strong>Much More to This</strong></p>
+
+<p>Were I to do this for all the features of Vim, I&rsquo;d be writing a book.  However, fortunately for you, there are several tutorials and cheat sheets on Vi/Vim all over the Internet.  Here are a few of my favorites.</p>
+
+<p><a href="http://vim.wikia.com/wiki/Tutorial">The Main Vim Tutorial
+</a><a href="https://www.linux.com/learn/tutorials/228600-vim-101-a-beginners-guide-to-vim">Linux.com&rsquo;s Vim Tutorial</a></p>
+
+<p>As well as some cheat sheets for you to refer to for quick reference on the various commands available when using Vim:</p>
+
+<p><a href="http://www.viemu.com/vi-vim-cheat-sheet.gif">One of My Favorites
+</a><a href="http://vim.rtorr.com">Another Good Cheat Sheet</a></p>
+
+<p>Take some time learning the basics of Vim before pressing on to the next article: &ldquo;Customizing Vim&rdquo;.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">admin</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-05-02T15:56:54-04:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>3:56 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/geekstuff/'>geekstuff</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/systems-administration/'>systems administration</a>, <a class='category' href='/blog/categories/unix/'>unix</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://questy.org/blog/2014/05/02/vim/" data-via="CVQuesty" data-counturl="http://questy.org/blog/2014/05/02/vim/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/05/02/new-tools-old-schools/" title="Previous Post: New Tools and Old Schools">&laquo; New Tools and Old Schools</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/05/08/puppet-users-group/" title="Next Post: Puppet User's Group">Puppet User's Group &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/04/05/testing-octopress/">Testing Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/23/puppetconf-2014/">PuppetConf 2014</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/11/southeast-puppet-users-group-september/">Southeast Puppet User's Group September</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/11/toolbox-grows/">The Toolbox Grows...</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/20/dos-donts-puppet-environment/">"Do's and Dont's" for Your Puppet Environment</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/CVQuesty">@CVQuesty</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'CVQuesty',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Jerald Sheets -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'questy-org';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://questy.org/blog/2014/05/02/vim/';
+        var disqus_url = 'http://questy.org/blog/2014/05/02/vim/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

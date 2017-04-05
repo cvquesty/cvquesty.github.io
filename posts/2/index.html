@@ -1,0 +1,1135 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Questy.org</title>
+  <meta name="author" content="Jerald Sheets">
+
+  
+  <meta name="description" content="Ok, so first let&rsquo;s cover the gobbledygook. I&rsquo;ve had a lot of feedback on various parts of the blog here, and I thought I&rsquo;d address &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://questy.org/posts/2/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Questy.org" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1135877-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Questy.org</a></h1>
+  
+    <h2>Tech musings and other things...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="questy.org">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/23/workflows-tools-myriad-gobbledygook/">Workflows, Tools, and a Myriad of Gobbledygook...</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-04-23T14:17:41-04:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>2:17 pm</span></time>
+        
+           | <a href="/blog/2014/04/23/workflows-tools-myriad-gobbledygook/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2014/04/23/workflows-tools-myriad-gobbledygook/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Ok, so first let&rsquo;s cover the gobbledygook.</p>
+
+<p>I&rsquo;ve had a lot of feedback on various parts of the blog here, and I thought I&rsquo;d address a few of them here.</p>
+
+<p><strong>Q:  Why didn&rsquo;t you just point at the appropriate Yum repos for installing Puppet?</strong></p>
+
+<p>A:  Easy.  I can do &ldquo;yum install foo&rdquo; and never know what&rsquo;s going on behind the scenes just like anyone.  My goal here was to give a point-by-point installation guide so those who are interested could know what all the moving parts were and how they fit together.</p>
+
+<p><strong>Q:  Why are you using the dashboard and not Foreman?</strong></p>
+
+<p>A:  Also easy&hellip; at least at the time of this writing, The Foreman has been indicated to be the next front end to be the &ldquo;de facto&rdquo; standard, but as for right now, the Enterprise Console is essentially a turbocharged version of the Dashboard.  As such, when I begin to talk about extending the Enterprise Console, Dashboard would be the analogue by which you can most obtain the same experience (short of installing Puppet Enterprise itself).</p>
+
+<p><strong>Q:  Why OSS and not PE?</strong></p>
+
+<p>A:  Well, to be frank&hellip; PE is about as simple as you can get.  You can learn a bit about what portions to install and how to connect them all together across machines (something I plan to cover), and you can learn about constructing an answer file (or several for a large, complex installation),  but the vast majority of your PE installations will be a Q/A interaction with the installer.</p>
+
+<p><strong>Workflows and Tools</strong></p>
+
+<p>One of the biggest changes in how I deal with Puppet has been my adoption of and implementation of workflows as well as using some modern tools I&rsquo;ve been made aware of by the Puppet Labs folks.  Among these are Vagrant, r10k, GitHub, and many others that work together and are tightly integrated and require a lot of configuration and setup to &ldquo;make happen&rdquo;.  I intend to cover those here.</p>
+
+<p>So, what are all these things?</p>
+
+<p><strong>Vagrant</strong></p>
+
+<p>Vagrant is a tool that allows you to pre-configure a small virtualized environment on your host consisting of a Puppet Master and any number of agents for use in a dynamic, iterative fashion.  By bringing up a Vagrant environment, I have a miniature development environment from which I can actually test Puppet code I write in a full PE environment and work out kinks you don&rsquo;t normally encounter when working independently on a single workstation.  From this environment, I can puppet-lint check all my code and then push all that code out of the Vagrant environment up to GitHub, then pull it down to my production instance as needed.  Further, it allows me to simulate all environments I have in my corporate setup (DEV, PROD, TEST, etc.) and commit those differences to the appropriate branches in GitHub.</p>
+
+<p><strong>r10k</strong></p>
+
+<p>The method by which I iterate, push/pull code and deploy to various environments both in my Vagrant instance and in my Production site is via r10k.  A leap forward past &ldquo;puppet librarian&rdquo;, r10k is the glue that ties between GitHub and Vagrant as well as your GitHub instance and your Corporate site.  This can tie to public GitHub as well as Corporate (private) GitHub.</p>
+
+<p><strong>GitHub</strong></p>
+
+<p>GitHub is considerably more well known, but it&rsquo;s important to the whole process as you can read above.  GitHub is a revision control repository designed for rapid deployment, iteration, and isolated developer work with periodic pushes back to GitHub. (distributed development).  I intend to do a simple tutorial on GitHub as well.</p>
+
+<p>Look forward to piece-by-piece coverage of each of these and my thoughts as I prepare for and take the Puppet Labs Certification test.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/28/puppet-v-configuration-scaling/">Puppet v - Configuration and Scaling</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-02-28T15:12:57-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>3:12 pm</span></time>
+        
+           | <a href="/blog/2014/02/28/puppet-v-configuration-scaling/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2014/02/28/puppet-v-configuration-scaling/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em><strong>Introduction</strong></em></p>
+
+<p>The name of this portion of our tutorial was difficult to determine.  This is another set of configurations, but we will also be scaling Puppet to handle production quality traffic, be an external node classifier (ENC), have a backend database, employ an enterprise class web server, turn up a console&hellip;  there&rsquo;s a lot to do.  We are indeed configuring the backend, but also scaling Puppet to handle your environment&hellip;hence the name.</p>
+
+<p>This portion assumes you&rsquo;ve followed all previous tutorials from I-IV, have your certs signed and are complete and ready to go with Puppet &ldquo;as-is&rdquo;, you simply have not installed any of the following add-ons.  As mentioned last time, you could begin to write manifests and modules right now, using Puppet &ldquo;as-is&rdquo;, never utilizing any of the other features.  However, the &ldquo;out-of-the-box&rdquo; configuration of Puppet is not ready for enterprise use.  Perfect for a small development environment&hellip;perhaps up to 25 hosts or so, the Puppet server as installed includes a small WEBRick server (ruby-based) and is not intended to handle large site traffic profiles.</p>
+
+<p>To make Puppet &ldquo;enterprise-ready&rdquo;, we need to do a few things.</p>
+
+<ol>
+<li><p>Install the Puppet Dashboard</p></li>
+<li><p>Install the Puppet DB</p></li>
+<li><p>Install passenger + Apache modules</p></li>
+<li><p>Install MySQL</p></li>
+</ol>
+
+
+<p>The dashboard gives you a GUI configuration mechanism as well as an external node classifier.  The PuppetDB is a centralized config storage mechanism for all node facts and configurations.  Passenger+Apache is the piece that replaces Puppet&rsquo;s WEBRick server, and MySQL holds the database for the dashboard.</p>
+
+<p>This will be the longest portion of the tutorial series, and all the separate &amp; individual pieces will be interdependent, requiring us to do all the work first with configuration testing at the end.  Let&rsquo;s get started.</p>
+
+<p><em><strong>Packages</strong></em></p>
+
+<p>Early in tutorial I, I had you install a number of packages.  Had you stopped after installment IV, you&rsquo;d have had no need for a few of them, but I wanted all the packages to be on your system as prerequisites to avoid later installation headaches.  However, we do want to get the EPEL package set onto the system to add one prerequisite (and it&rsquo;s a darned fine repo to have, should you need it for other things)</p>
+
+<p>To install EPEL, run the following command:</p>
+
+<p>_**sudo rpm -ivh <a href="http://mirrors.kernel.org/fedora-epel/6/i386/epel-release-6-8.noarch.rpm**_">http://mirrors.kernel.org/fedora-epel/6/i386/epel-release-6-8.noarch.rpm**_</a></p>
+
+<p>The &ldquo;Extra packages for Enterprise Linux&rdquo; (EPEL) set is an important addition to any server set.  Especially to install the package prerequisites we need.</p>
+
+<p><em><strong>Installing Packages</strong></em></p>
+
+<p><em><strong>Passenger:</strong></em>
+First, we will be installing Passenger.  The passenger packages are in their own repository, not hosted at Puppet Labs.  First, import the GPG key:</p>
+
+<p>_**sudo rpm &ndash;import <a href="http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc**_">http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc**_</a></p>
+
+<p>And then install the passenger release repo:</p>
+
+<p>_**sudo yum -y install <a href="http://passenger.stealthymonkeys.com/rhel/6/passenger-release.noarch.rpm**_">http://passenger.stealthymonkeys.com/rhel/6/passenger-release.noarch.rpm**_</a></p>
+
+<p>Finally, install the Passenger Apache module to tie everything together:</p>
+
+<p><em><strong>sudo yum -y install mod_passenger</strong></em></p>
+
+<p>Congratulations.  The groundwork for Passenger is now installed.</p>
+
+<p><em><strong>Dashboard
+</strong></em>Since we have done so much preparatory work, the dashboard install is quite simple:</p>
+
+<p><em><strong>sudo yum -y install puppet-dashboard</strong></em></p>
+
+<p>Simple.</p>
+
+<p><strong>PuppetDB
+</strong>PuppetDB is installed a little differently, using Puppet itself to get and install the package:</p>
+
+<p><em><strong>sudo puppet resource package puppetdb ensure=latest</strong></em></p>
+
+<p>This procedure takes a bit of time, but when complete, the PuppetDB is now installed.</p>
+
+<p><strong>MySQL
+</strong>MySQL is installed via the usual yum repos, but we will also turn it on and have it ready for use as well as create our users and remove unneeded and unsecured accounts for the system.</p>
+
+<p><em><strong>sudo yum -y install mysql-server
+</strong><strong>sudo /sbin/chkconfig mysqld on</strong></em>
+<em><strong>sudo /sbin/service mysqld start</strong></em></p>
+
+<p>Let&rsquo;s set the database root user&rsquo;s password:</p>
+
+<p><em><strong>****/usr/bin/mysqladmin -u root password &lsquo;<new-password>&rsquo;</strong></em>
+<em><strong>/usr/bin/mysqladmin -u root -h <FQDN> password &lsquo;<new-password>&rsquo;
+mysql -u root -p</strong></em></p>
+
+<p>A few words here, for those of you unfamiliar with MySQL.  We are setting the root user&rsquo;s password to be able to administrate the database.  The simplest way to set up this initial security is using the &ldquo;mysqladmin&rdquo; tool provided by MySQL.  Note that when I use &lt;> in these above, this is where your site-specific information comes into play.  For <FQDN>, for my example purposes I would replace this with puppet.example.com.  The password setting &amp; changes, then, would look like so:</p>
+
+<p><em><strong>/usr/bin/mysqladmin -u root password &lsquo;puppet&rsquo;
+</strong><strong>/usr/bin/mysqladmin -u root -h puppet.example.com password &lsquo;puppet&rsquo;
+/usr/bin/mysql -u root -p</strong></em></p>
+
+<p>I just wanted to clarify this for you in the event my use of &lt;> and &lsquo; &rsquo; above caused any confusion.</p>
+
+<p><em><strong>Configuring MySQL</strong></em></p>
+
+<p>Once you run the above commands, MySQL will prompt you for the password you just set.  Enter that password, and you will find yourself at a mysql prompt that looks like so:</p>
+
+<p><em><strong>mysql></strong></em></p>
+
+<p>What this means is you have now logged into the MySQL database, and are ready to set it up for use.  Following I will list out all the commands you need to run in a set.  Note that these commands are each entered on a line and you press &ldquo;<ENTER>&rdquo; at the end of the line to enter the next command.  There is no output from MySQL when you enter these, so I&rsquo;ll enumerate them all together here for your convenience.</p>
+
+<p><em><strong>mysql> create database dashboard character set utf8;</strong></em>
+<em><strong>mysql> create user &lsquo;dashboard&rsquo;@&lsquo;localhost&rsquo; identified by ‘my_password';</strong></em>
+<em><strong>mysql> create user &lsquo;dashboard’@‘<FQDN>&rsquo; identified by ‘my_password';</strong></em>
+<em><strong>mysql> grant all privileges on dashboard.* to &lsquo;dashboard&rsquo;@&lsquo;localhost&rsquo;;</strong></em>
+<em><strong>mysql> grant all privileges on dashboard.* to &lsquo;dashboard’@‘<FQDN>&rsquo;;</strong></em>
+<em><strong>mysql> drop user ‘’@‘localhost’;</strong></em>
+<em><strong>mysql> drop user ‘’@‘<FQDN>’;</strong></em>
+<em><strong>mysql> drop database test;</strong></em>
+<em><strong>mysql> flush privileges;</strong></em>
+<em><strong>mysql> exit</strong></em></p>
+
+<p>As before, replace <FQDN> with the fully qualified hostname for your server and &lsquo;my_password&rsquo; with the password you wish to set for the dashboard user.  A few notes:</p>
+
+<ol>
+<li><p>First, we created the dashboard database</p></li>
+<li><p>Next, we created the dashboard user for connecting from the localhost name</p></li>
+<li><p>Next, we created the dashboard user for connecting from the server FQDN</p></li>
+<li><p>The next two, we grant the dashboard user rights to the whole database from either location</p></li>
+<li><p>The following two lines delete the user &lsquo;&rsquo; from the server (a null user w/o a password)</p></li>
+<li><p>Finally we drop the &ldquo;test&rdquo; database, flush all our privilege tables (to take effect immediately) and exit MySQL.</p></li>
+</ol>
+
+
+<p>The final steps in getting MySQL configured for production use is to tweak the settings in the database by editing the /etc/my.cnf file and restarting the database.  Open the /etc/my.cnf file and add a new line at the end of the file:</p>
+
+<p><em><strong>max_allowed_packet = 32M</strong></em></p>
+
+<p>Save the file and then run</p>
+
+<p><em><strong>sudo /sbin/service mysqld restart</strong></em></p>
+
+<p>for the changes to take effect.</p>
+
+<p><em><strong>Passenger
+</strong></em>The final piece is to get the appropriate passenger gems and the Apache module installed to handle Puppet Agent requests to the server.  Luckily, our previous prerequisite installs have made this easy for us.  First:</p>
+
+<p><em><strong>sudo gem install rack passenger</strong></em></p>
+
+<p>When this is done, install the Apache module, following the prompts as follows:</p>
+
+<p><em><strong>****sudo passenger-install-apache2-module
+Press <ENTER>
+Press <ENTER>
+At the end of the installation, Press <ENTER></strong></em></p>
+
+<p>If we&rsquo;ve done everything right up until this point, you should not need to supply any extra information, packages, or configuration, and only need to continue to press <ENTER> as listed above to complete the installation.</p>
+
+<p>Now comes the time to configure the various pieces&hellip;</p>
+
+<p><em><strong>Configuration</strong></em></p>
+
+<p><em><strong>Passenger
+</strong></em>First we need a number of directories and files to exist around the system, so let&rsquo;s put those in place by using the following commands:</p>
+
+<p><em><strong>sudo mkdir -p /usr/share/puppet/rack/puppetmasterd
+</strong><strong>sudo mkdir /usr/share/puppet/rack/puppetmasterd/public
+</strong></em><strong><em>sudo mkdir /usr/share/puppet/rack/puppetmasterd/tmp
+sudo cp /usr/share/puppet/ext/rack/config.ru /usr/share/puppet/rack/puppetmasterd
+sudo chown puppet:puppet /usr/share/puppet/rack/puppetmasterd/config.ru
+sudo chown puppet-dashboard:puppet-dashboard /usr/lib/ruby/gems/1.8/gems/passenger-4.0.37/buildout/agents/PassengerWatchdog</em></strong></p>
+
+<p>Next, we need to configure the Puppet Dashboard to connect to its database, and setup the tablespaces for use:</p>
+
+<p><em><strong>cd /usr/share/puppet-dashboard/config
+</strong><strong>edit database.yml
+Remove the last stanza of this file that refers to the &ldquo;test&rdquo; database we removed above.
+For the Production and Development database stanzas, change the &ldquo;database:&rdquo; line to read &ldquo;dashboard&rdquo; and the password line to contain your dashboard password so that it appears as follows:</strong></em></p>
+
+<p><em><strong>database: dashboard</strong></em>
+<em><strong>username: dashboard</strong></em>
+<em><strong>password: <PASSWORD></strong></em></p>
+
+<p>Next, prepare the database for use as follows:</p>
+
+<p><em><strong>cd /usr/share/puppet-dashboard
+</strong>__<strong>sudo rake gems:refresh_specs
+</strong><strong>rake RAILS_ENV=production db:migrate</strong></em></p>
+
+<p><em>(Even though we&rsquo;ve reference the production and development databases in the database config above, we&rsquo;ll only be working in the production database in this tutorial)  </em></p>
+
+<p>At this point, we should be ready to test the Dashboard configuration to ensure we&rsquo;re still on the right track.  Top do so, run the following:</p>
+
+<p><em><strong>cd /usr/share/puppet-dashboard
+</strong><strong>sudo ./script/server -e production</strong></em></p>
+
+<p>Now, attempt to connect to the dashboard via web browser by pulling up the server at the following address:  <a href="http://">http://</a><IP ADDRESS or FQDN>:3000.  If the dashboard displays correctly in your browser, we&rsquo;re ready to continue.</p>
+
+<p>Press CTRL-C to exit the server.</p>
+
+<p><em><strong>Configure Puppet for Dashboard</strong></em></p>
+
+<p>While we have already configured the dashboard itself, we have not told Puppet the dashboard exists.  To do so, edit the /etc/puppet/puppet.conf file and add the following.</p>
+
+<p>In the [master] section of the puppet.conf, add the following lines:</p>
+
+<p><em><strong>****# Reporting</strong></em>
+<em><strong>reports = store,http</strong></em>
+<em><strong>reporturl = <a href="http://">http://</a><FQDN>:3000/reports/upload</strong></em></p>
+
+<p><em><strong># Node Classification (Using as an ENC)</strong></em>
+<em><strong>node_terminus = exec</strong></em>
+<em><strong>external_nodes = /usr/bin/env PUPPET_DASHBOARD_URL=<a href="http://localhost:3000">http://localhost:3000</a> /usr/share/puppet-dashboard/bin/external_node</strong></em></p>
+
+<p>Exit the puppet.conf file, saving your changes and set permissions for following files like so:</p>
+
+<p><em><strong>****sudo chown -R puppet-dashboard:puppet-dashboard /usr/share/puppet-dashboard</strong></em>
+<em><strong>sudo /sbin/chkconfig puppet-dashboard-workers on</strong></em>
+<em><strong>sudo /sbin/service puppet-dashboard-workers start</strong></em></p>
+
+<p><em><strong>Apache</strong></em></p>
+
+<p>Next, we need to configure the Apache web server to process requests being made by Puppet agents in your environment and hand them off to the Puppet server.  To do so, we need to create two files in the /etc/httpd/conf.d location.  The passenger installation will have already created a passenger.conf there.  Just remove it before creating the following two files.</p>
+
+<p><em><strong>****/etc/httpd/conf.d/dashboard.conf</strong></em></p>
+
+<p>[snippet id=&ldquo;30&rdquo;]</p>
+
+<p>And like it:</p>
+
+<p><em><strong>/etc/httpd/conf.d/passenger.conf</strong></em></p>
+
+<p>[snippet id=&ldquo;31&rdquo;]</p>
+
+<p> <em><strong>Starting Everything Up for Testing &amp; Operation</strong></em></p>
+
+<p>Once these configuration files are in place, it&rsquo;s time to test Apache&rsquo;s handoff to Puppet and to make a special SELinux module to allow Passenger handoffs to the various needed places in the filesystem.</p>
+
+<p>First, make sure the puppetmaster process has been stopped:</p>
+
+<p><em><strong>/sbin/service puppetmaster stop
+</strong><strong>/sbin/chckonfig puppetmaster off</strong></em></p>
+
+<p>This assumes you&rsquo;ve run the procedures in the previous tutorials, including (especially) the certificate signing and exchange between master and agent.  If you&rsquo;ve done this, Passenger now has all the certs it needs to handle requests on behalf of Puppet, and no longer needs the Puppet server running.</p>
+
+<p>Next, test the configuration, that you&rsquo;ve made no typos:</p>
+
+<p><em><strong>sudo /sbin/service httpd configtest</strong></em></p>
+
+<p>If no errors are displayed, then <em>at least </em>the syntax of your Apache configs are correct.  Now, to generate SELinux entries in the audit log to build a custom Passenger SELinux module, you need to start Apache:</p>
+
+<p><em><strong>sudo /sbin/service httpd start</strong></em></p>
+
+<p>Turn off SELinux temporarily:</p>
+
+<p><em><strong>****sudo setenforce 0</strong></em></p>
+
+<p>Restart Apache to generate the log entries:</p>
+
+<p><em><strong>sudo /sbin/service httpd restart</strong></em></p>
+
+<p>Test the Puppet dashboard in a browser by going to:</p>
+
+<p><em><strong><a href="http://">http://</a><FQDN>:3000</strong></em></p>
+
+<p>What you have done is put output into the audit log that can be used as input to the <em>audit2allow </em>tool to generate a policy file for import into SELinux to allow Passenger to do it&rsquo;s job.  To create that module, run:</p>
+
+<p><em><strong>grep httpd /var/log/audit/audit.log | audit2allow -M passenger</strong></em></p>
+
+<p>This creates a new policy file for SELinux in your current working directory called &ldquo;passenger.pp&rdquo; which you can now import into SELinux.  TO do so, simply import the module:</p>
+
+<p><em><strong>sudo semodule -i passenger.pp</strong></em></p>
+
+<p>&hellip;from the directory where the file resides (presumably your current working directory if you have not moved).</p>
+
+<p>Finally, you re-enable SELinux, and begin to test your environment.</p>
+
+<p><em><strong>sudo setenforce 1</strong></em></p>
+
+<p><em><strong>Conclusion</strong></em></p>
+
+<p>I know that&rsquo;s a lot for a single entry, but I wanted to make sure and get all the additional pieces installed and configured before starting to cover how each of the pieces work and interact.  I thought of making each piece its own article, but in every scenario I thought about, you ended up with a not-completey-configured (i.e., &ldquo;broken&rdquo;) system.  I opted instead to do the complete configuration.</p>
+
+<p>At this point, however, you should be all set and ready to go with Dashboard/Passenger configured and being run by Apache.  You should have MySQL and PuppetDB installed and configured, handling their own individual tasks, and you should have Puppet Master and Agent installed (with one agent node) all configured to perform their duties as a Puppet Infrastructure.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/27/puppet-iv-signing-certificates/">Puppet IV - Signing Certificates</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-02-27T15:32:04-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>3:32 pm</span></time>
+        
+           | <a href="/blog/2014/02/27/puppet-iv-signing-certificates/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2014/02/27/puppet-iv-signing-certificates/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em><strong>Introduction</strong></em></p>
+
+<p>We&rsquo;ve covered a lot of ground already in our tutorials thus far.  In <a href="http://questy.org/2014/01/puppet-i-installation/">Tutorial I</a> we installed our Puppet server.  In <a href="http://questy.org/2014/01/puppet-ii-client-installation/">Tutorial II</a>, the client, and in <a href="http://questy.org/2014/02/puppet-iii-initial-configuration/">Tutorial III</a> we configured the server and client to start communicating.</p>
+
+<p>In this 4th installment, we&rsquo;ll cover the signing of SSL certificates between your Puppet Master and Client, and running a simple test to ensure your setup is working and ready to function as a master=>slave pair.</p>
+
+<p>On your server, be sure to start up the Puppet Master, so it can receive connections from outside sources, like so:</p>
+
+<p><em><strong>sudo service puppetmaster start
+sudo chkconfig puppetmaster on</strong></em></p>
+
+<p>Next, on your Puppet client, run a test run so the client will start, create an SSL certificate for the client host, and make an initial callout to the server.  It will exit immediately, but the server will now know about the client, and we can sign the certificate over there.</p>
+
+<p><em><strong>puppet agent -t</strong></em></p>
+
+<p>When you run this command, the output should look something like this:</p>
+
+<p>[caption id=&ldquo;attachment_625&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;720&rdquo;]<a href="http://questy.org/wp-content/uploads/2014/02/agent_cert.png"><img src="http://questy.org/wp-content/uploads/2014/02/agent_cert.png" alt="Certificate Signing Request Example" /></a> Certificate Signing Request Example[/caption]</p>
+
+<p>Now, SSH to your Puppet Master, and run the following command:</p>
+
+<p><em><strong>puppet cert &ndash;list</strong></em></p>
+
+<p>If everything has gone well, your server will have now seen your client and will report as much like so:</p>
+
+<p>[caption id=&ldquo;attachment_627&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;719&rdquo;]<a href="http://questy.org/wp-content/uploads/2014/02/server_cert.png"><img src="http://questy.org/wp-content/uploads/2014/02/server_cert.png" alt="Server Cert Requests in Waiting" /></a> Server Cert Requests in Waiting[/caption]</p>
+
+<p>Finally, so <em>sign </em>the certificate so there is an SSL connection between the client and server, and all future Puppet actions between the two pass over that connection, simply sign the certificate request on the master as follows:</p>
+
+<p><em><strong>puppet cert sign puppetclient.example.com</strong></em>
+<em>(or whatever your hostname is)</em></p>
+
+<p> The server will sign the certificate and make a tabular listing of it in its database finalizing the connection.  You can see this output by using the &ldquo;list all&rdquo; options as follows:</p>
+
+<p><em><strong>puppet cert list &ndash;all</strong></em></p>
+
+<p>and see the output which should resemble the following:</p>
+
+<p>[caption id=&ldquo;attachment_635&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;718&rdquo;]<a href="http://questy.org/wp-content/uploads/2014/02/signed_cert.png"><img src="http://questy.org/wp-content/uploads/2014/02/signed_cert.png" alt="Signed Certificate" /></a> Signed Certificate[/caption]</p>
+
+<p><em><strong>
+Conclusion</strong></em></p>
+
+<p>Now we&rsquo;re ready to do work with Puppet.  You can actually stop here and fully manage your site with Puppet, however there are several addons and feature-sets yet you can install to expand Puppet&rsquo;s functionality.  We will look at some of these tools in future installments.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/26/south-east-puppet-user-group/">South East Puppet User Group</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-02-26T17:10:05-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>5:10 pm</span></time>
+        
+           | <a href="/blog/2014/02/26/south-east-puppet-user-group/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2014/02/26/south-east-puppet-user-group/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;ll be speaking Thursday evening at 7PM at the SE Puppet User Group meeting.  The topic will be &ldquo;Intro to Puppet&rdquo; and all are welcome.  Come early (6:30) and come hungry, as we&rsquo;ll be having pizza to get started.</p>
+
+<p>Current &ldquo;Working&rdquo; Agenda:</p>
+
+<p>Agenda:</p>
+
+<p>-630p - 700p Pizza/Networking
+-700p - 800p - Introduction to Puppet w/ Jerald Sheets</p>
+
+<ol>
+<li>What is Puppet?</li>
+<li>How does it work?</li>
+<li>Puppet benefits?</li>
+<li>Major components of Puppet (Server / Client)</li>
+</ol>
+
+
+<p>-800p - 830p - Q/A</p>
+
+<p>Location:
+8302 Dunwoody Place, Suite 100
+Atlanta, GA 30350</p>
+
+<p>[wpgmza id=&ldquo;1&rdquo;]</p>
+
+<p>I hope to see you all there.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/20/puppet-iii-initial-configuration/">Puppet III - Initial Configuration</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-02-20T22:23:42-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:23 pm</span></time>
+        
+           | <a href="/blog/2014/02/20/puppet-iii-initial-configuration/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2014/02/20/puppet-iii-initial-configuration/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>By now you should have 1 Server installation completed and 1 Client installation completed.  The only thing you&rsquo;re missing now is to link the two together.  The following client side configuration will be performed on ALL existing systems you have, to connect them to the server and to pull their configuration catalog down and apply the changes to the local host.</p>
+
+<p><strong>Certificates</strong></p>
+
+<p>By default, all communications in Puppet goes over SSL channels.  You can configure Puppet to use its own certificate signing mechanism or to use an external signing authority (outside the scope of this tutorial).  The signing process does two things.  First, it authorizes your client to communicate with the Puppet Master and receive configurations and keeps all that traffic secure from prying eyes.</p>
+
+<p><strong>Node Lists</strong></p>
+
+<p>Of course, the master needs a way to enumerate what hosts will be connecting, and how to apply what configuration where.  We&rsquo;ll look at node classification both on and off the host as well.</p>
+
+<p><strong>Server Configuration</strong></p>
+
+<p>Here we go.</p>
+
+<p>To get the server and client talking, there is a small amount of configuration that has to happen.  It essentially tells the server who will be calling, and tells the caller the server&rsquo;s &ldquo;phone number&rdquo;.  Very short and simple.  So, let&rsquo;s do that first.</p>
+
+<p><em><strong>Configs</strong></em></p>
+
+<p>Two files require editing on the server to prepare for your first Puppet run.  They are:</p>
+
+<p>/etc/puppet/manifests/site.pp
+/etc/puppet/manifests/nodes.pp</p>
+
+<p>As of this writing, the OSS installation does not place either file, so you will have to create them.  Make their content as follows:</p>
+
+<p><em><strong>site.pp</strong></em></p>
+
+<p><code>import ‘nodes.pp’
+$puppetserver = ‘--FQDN--’
+</code></p>
+
+<p>These two lines lay the foundation for the server&rsquo;s self-declaration as authority on configuration.</p>
+
+<p>The first line: &ldquo;import nodes.pp&rdquo; tells Puppet to look for the nodes.pp file you are about to create in the next step for node definitions (and thus their individual configurations) and the next line indicates this puppet servers' complete name.  This line is very important, as configurations throughout the Puppet software product and the client node software continually refer back to this variable.  This setting takes the form of the fully-qualified-domain-name of the server.  It is recommended you use &ldquo;puppet&rdquo; as the name of the server in your infrastructure.</p>
+
+<p>So if your site&rsquo;s name is &ldquo;bob.com&rdquo;, this line would be:</p>
+
+<p><code>$puppetserver = 'puppet.bob.com'</code></p>
+
+<p>While any hostname should do, I might mention one caveat you should be aware of should you decide to use something other than &lsquo;puppet.x.x&rsquo; formatting.  In the event your Puppet server cannot see or read the $puppetserver value, the internals of Puppet cause it to <em>default </em>to &ldquo;puppet&rdquo;.  To avoid any strange outage-based silliness, I would recommend sticking with the puppet name.  While this may cut cross-grain with your particular host naming system, there is no reason why the root name of the system cannot be puppet.domain.com and you CNAME your super-special host naming to that.</p>
+
+<p>Why not the other way around?  I&rsquo;ve seen in the wild situations where Puppet (especially as it concerns certificate signing) take the output of gethostbyname() for signing over a designated CNAME, even when you set this variable to the appropriate value.  Rather than deal with the mess, I recommend the former.</p>
+
+<p>Close the site.pp file.</p>
+
+<p>Next, you&rsquo;ll want to configure your nodes.pp file.  Now, keep in mind that while we are specifying our nodes manually in this file for the purposes of this tutorial, we will be doing all manner of really cool things with node designations in the future.  So, for now humor me, and I assure you we&rsquo;ll step into the wonderful world of the ENC, Dashboard and other goodies all too soon.  Right now, we&rsquo;re just trying to get Puppet up, connected, and talking.</p>
+
+<p><strong>nodes.pp</strong></p>
+
+<p> <code>
+node '--FQDN--' {
+}
+</code></p>
+
+<p>Here we are specifying our very first node, letting the master know it&rsquo;s allowed to connect, and eventually putting a number of things in-between the curly braces {} specifying the configuration for (or pointers to the configuration for) our client node.   Just as above, the &ldquo;FQDN&rdquo; piece in between the single tics should be replaced with the fully qualified domain name of the client host you wish to manage.  As above, in our fictitious domain of &ldquo;bob.com&rdquo;, we will simply call this host &ldquo;puppetclient.bob.com&rdquo;, thus making the content of the nodes.pp file:</p>
+
+<p> <code>
+node 'puppetclient.bob.com' {
+}
+</code></p>
+
+<p>For now, there&rsquo;s no need to  add configuration.  This is all we need to get started.  Exit from the nodes.pp file, saving it into the aforementioned spot of &ldquo;/etc/puppet/manifests/nodes.pp&rdquo;</p>
+
+<p>Here ends the server-side configuration for this portion of our tutorial.  On to the client configuration.</p>
+
+<p><strong>Client Configuration</strong></p>
+
+<p>For the client configuration, a base-level file has already been provided for you, and only needs some customization.</p>
+
+<p>The client configuration file is found at /etc/puppet/puppet.conf on the client (as well as the server).  The puppet.conf configuration file is an &ldquo;ini-style&rdquo; configuration file with [bracketed] headings and &ldquo;key = value&rdquo; line by line variables.</p>
+
+<p>For our initial configuration we will be adding a couple lines.  First of all, at the end of  the [main] section, add the following line:</p>
+
+<p>server = FQDN of the server</p>
+
+<p>or, as above</p>
+
+<p>server = puppet.bob.com</p>
+
+<p>Next, in the  [agent] section, the following three lines (for our fictitious &ldquo;bob.com&rdquo; domain)  should be added at the end:</p>
+
+<p>report = true
+server = puppet.bob.com
+certname = puppetclient.bob.com</p>
+
+<p>The server line appears to me to be somewhat redundant, but I&rsquo;ve always placed it in both locations, and cannot comment as to whether it is NOT needed.  The certname, FYI, is the FQDN of the client host you are configuring to connect to the server.</p>
+
+<p>The purpose of the &ldquo;certname&rdquo; variable should be explained here a bit.  This is the name you placed in the &ldquo;nodes.pp&rdquo; file, and is also the hostname that is passed to the master in the key signing process.  You want all locations in which you&rsquo;re specifying your node name to agree (puppetclient.bob.com in our example), so it&rsquo;s highly important to ensure consistency throughout.</p>
+
+<p><strong>Ready to Connect</strong></p>
+
+<p>Ok, let&rsquo;s recap&hellip;</p>
+
+<p>We&rsquo;ve set our site.pp and nodes.pp files in place on the server, specifying the server name and ensuring there is a FQDN node designation in the nodes.pp.  Next up, we&rsquo;ll make our first connection to the server and test the connection.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/22/puppet-ii-client-installation/">Puppet II - Client Installation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-01-22T12:51:45-05:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:51 pm</span></time>
+        
+           | <a href="/blog/2014/01/22/puppet-ii-client-installation/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2014/01/22/puppet-ii-client-installation/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In our last installment &ldquo;<a href="http://questy.org/2014/01/puppet-i-installation/">Puppet I - Server Installation</a>&rdquo;, we covered all the basic necessities of installing Puppet Open Source server.  Of course, a server in and of itself is no good unless we have a client on another host to connect to it.  This article will similarly lead you step-by-step through the process of installing the client.</p>
+
+<p><em><strong>Puppet Client</strong></em></p>
+
+<p>Installation of our client is not so very much different than the initial server install.  Both come from the same Yum repository, and both need the same support libraries and files.</p>
+
+<p>As expected, a client will need the OS installed (again, we&rsquo;re working on the assumption of RedHat Enterprise Linux, but CentOS, SecurityLinux, etc. should do fine.</p>
+
+<p>Once your operating system is completely installed, just as before we&rsquo;ll need to follow the same steps of getting RedHat registered, the RHEL Yum repo enabled, the Puppet Labs repo configured, the correct support repos added, and finally, the client installed.</p>
+
+<p><em><strong>Enabling the RHEL Yum Repo</strong></em></p>
+
+<p>Just as we did before, we register our RedHat installation via &ldquo;subscription manager&rdquo; from RedHat.</p>
+
+<p><em><strong>sudo subscription-manager register</strong></em>
+<em><strong> sudo subscription-manager auto-attach</strong></em>
+<em><strong> sudo subscription-manager attach &ndash;auto</strong></em>
+<em><strong> sudo subscription-manager refresh</strong></em></p>
+
+<p>As I mentioned before, RedHat&rsquo;s tool isn&rsquo;t 100% effective 100% of the time, and some level of redundancy in the commands above ensures all the appropriate bits get twiddled.</p>
+
+<p><em><strong>Installing the Puppet Labs Software Repository</strong></em></p>
+
+<p>Again, as before, we simply use RPM to get the repository installed (the below command is all on one line):</p>
+
+<p>**_sudo rpm -ivh <a href="https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm_**">https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm_**</a></p>
+
+<p><em><strong>Enabling Additional Packages</strong></em></p>
+
+<p>Once again, the &ldquo;optional&rdquo; RedHat packages and the &ldquo;development&rdquo; PupeptLabs repositories have to be enabled.  You can either use the Yum Config Manager or edit the repo files directly, your choice.  Yum Configuration Manager commands are as follows:</p>
+
+<p><em><strong>sudo yum -y install yum-utils
+sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
+<em><strong> sudo yum-config-manager &ndash;enable puppetlabs-devel</strong></em></p>
+
+<p>You should note that the &ldquo;enable&rdquo; command above actually has two hyphens in front of it instead of one long one.  WordPress concatenates those.</p>
+
+<p><em><strong>Get Current!</strong></em></p>
+
+<p>Now is the time to get RHEL completely up to date through the usual means:</p>
+
+<p><em><strong>yum -y update</strong></em></p>
+
+<p><em><strong>Install the Client</strong></em></p>
+
+<p><strong><em>yum -y install puppet</em></strong></p>
+
+<p>If all goes well, this will complete the client config on your client host and you are now ready to configure the server, configure the client, and then connect them via SSL as provided by Puppet Labs.</p>
+
+<p>In our next edition, we&rsquo;ll be doing just that.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/20/puppet-i-installation/">Puppet I - Server Installation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-01-20T14:23:10-05:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>2:23 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Ok, so you&rsquo;re interested in this whole Puppet thing, and you want to get a full install in your test environment, or on a set of VMs to work and play with the product.  PuppetLabs has a ton of really cool documentation, and you should certainly avail yourself of it, but I wanted to give you a quick &ldquo;cookbook&rdquo; style set of instructions to get you rolling.</p>
+
+<p><strong>Puppet Master</strong></p>
+
+<p>There is a lot of documentation surrounding the Puppet Master installation at Puppet Labs, but I find a bit of obfuscation when trying to parse through the huge pile of meat that is there, when all we&rsquo;re looking for is the best of it&hellip; you know, the bacon.  :)</p>
+
+<p><strong><em>Puppet Code Repository &amp; Package Source</em></strong></p>
+
+<p>Puppet Labs provides a myriad of repositories and methods by which to install Puppet.  I tend to stick with the main PuppetLabs repository whenever possible.  I also tend to like RedHat derivatives, so I&rsquo;ll be talking about RHEL here, but the same applies to CentOS, Scientific Linux, and other RHEL &ldquo;children&rdquo; in the ecosystem.  In short, if you&rsquo;re using something else other than RHEL, you may find yourself hunting packages and repos that contain packages you&rsquo;ll need that the repositories I list here have by default.  As with any web-based documentation, YMMV.</p>
+
+<p><em><strong>Installing the Puppet Master</strong></em></p>
+
+<p>First, you&rsquo;ll need a functioning Installation of RHEL upon which to install and configure Puppet.  I like to include only the &ldquo;Base Install&rdquo; and take the &ldquo;Defaults&rdquo; when doing a &ldquo;special purpose&rdquo; server, as it doesn&rsquo;t muddy the waters and it gives you the cleanest slate possible upon which to build your Puppet platform.</p>
+
+<p><em><strong>Enabling the RHEL Yum Repo</strong></em></p>
+
+<p>As I&rsquo;m sure you&rsquo;re aware, to use RedHat&rsquo;s repositories, you have to register and have active a subscription with RedHat.  To do a simple connection/attachment to the RedHat repositories, I&rsquo;ve found a mixture of success with the Subscription Manager.  However, by performing the following commands (some are redundant), I&rsquo;ve been able to get the configuration working with 100% reliability:</p>
+
+<p><em><strong>sudo subscription-manager register</strong></em>
+<em><strong> sudo subscription-manager auto-attach</strong></em>
+<em><strong> sudo subscription-manager attach &ndash;auto</strong></em>
+<em><strong> sudo subscription-manager refresh</strong></em></p>
+
+<p>Obviously, this is a RedHat topic, and not a Puppet one, so if you&rsquo;re having issues with this process, contact Redhat for help.  The crux of this, however, is to just register your instance.</p>
+
+<p><em><strong>Installing the Puppet Labs Software Repository</strong></em></p>
+
+<p>Since I&rsquo;m working with the current 6.10 release of Puppet, the package you need to install can be added by running:</p>
+
+<p>_**sudo rpm -ivh <a href="https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm**_">https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm**_</a></p>
+
+<p>This will install the current 6.10 release of the Puppet repo from which we can continue with the Puppet Master installation.</p>
+
+<p><em><strong>Enabling Additional Packages</strong></em></p>
+
+<p>Next, we need to have the &ldquo;optional&rdquo; set of packages from RedHat and the development packages from Puppet Labs.  There are two ways to do this.  First, you can edit each repo file in /etc/yum.repos.d (red hat.repo and puppet labs.repo respectively) and change the &ldquo;enable&rdquo; flag on each repository from &ldquo;0&rdquo; to &ldquo;1&rdquo;, or you can simply run the provided RedHat Yum configuration manager tool to do it for you as follows.</p>
+
+<p><em><strong>sudo yum -y install yum-utils
+sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
+<em><strong> sudo yum-config-manager &ndash;enable puppetlabs-devel</strong></em></p>
+
+<p><em><strong> Get Current!</strong></em></p>
+
+<p>Bring your current host completely up to date by querying the repositories and running the yum updater:</p>
+
+<p><strong><em>sudo yum -y update</em></strong></p>
+
+<p>As I&rsquo;m sure you&rsquo;re aware, depending on the updates released since the current major version of your repositories, the update time can vary from very short to quite some time.  Just be patient and get up to date before proceeding.</p>
+
+<p><em><strong>Install the Puppet Prerequisite Packages</strong></em></p>
+
+<p>This step name is a <em>bit</em> of a misnomer in that I am including a ton of packages that aren&rsquo;t necessary for a &ldquo;base&rdquo; install of Puppet Server, but they do support later installations you may wish to do (like PuppetDB, Dashboard, Passenger, etc.).  I just wanted to give a complete list so there&rsquo;s no after-installation required just to get moving with the next component.  Simply install the following via Yum:</p>
+
+<p><em><strong>sudo yum -y install gcc libcurl-devel gcc-c++ openssl openssl-devel ruby-devel httpd httpd-devel  mod_ssl policycoreutils-python apr-devel apr-utils-devel</strong></em></p>
+
+<p><em><strong>Prep Your Firewall</strong></em></p>
+
+<p>You may or may not be using the IPTables Firewall, but you&rsquo;ll want the following rule in place to support the Puppet Master port.  Simply insert the following line into your <em>/etc/sysconfig/iptables</em> file.</p>
+
+<p><em><strong>-A INPUT -m state &ndash;state NEW -m tcp -p tcp &ndash;dport 8140 -j ACCEPT</strong></em></p>
+
+<p>Note that if you intend to install the Puppet Dashboard as well, you can add that port here too.</p>
+
+<p><strong><em>-A INPUT -m state &ndash;state NEW -m tcp -p tcp &ndash;dport 3000 -j ACCEPT</em></strong></p>
+
+<p>Make sure you place your firewall rules in the appropriate place in the file.  While outside the scope of this article, IPTables has an order and a format you should follow.  You can find out more <a href="http://www.netfilter.org">here</a>.</p>
+
+<p>Lastly, restart your firewall to pick up the new rules:</p>
+
+<p><em><strong>sudo service iptables reload</strong></em></p>
+
+<p><em><strong>Install Puppet Server</strong></em></p>
+
+<p>After all the above work, if you&rsquo;ve had no repository or package errors, your system should be ready to install Puppet Server.  Simply run the following:</p>
+
+<p><em><strong>yum -y install puppet-server</strong></em></p>
+
+<p><em><strong>Conclusion</strong></em></p>
+
+<p>And that should be it.  All packages installed, base RedHat updated with all the latest Ruby &amp; RedHat goodness, and the bad Puppet Server installed and ready for action.</p>
+
+<p>Next time:  Installing the Puppet Client.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/10/03/puppet-stuffs-again/">Puppet Stuffs Again!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-10-03T16:21:12-04:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2013</span></span> <span class='time'>4:21 pm</span></time>
+        
+           | <a href="/blog/2013/10/03/puppet-stuffs-again/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2013/10/03/puppet-stuffs-again/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;m speaking tonight at the Atlanta Perl Mongers meeting at the Central Cox building in Dunwoody at 7PM on Puppet Configuration management.  Please do feel free to drop by and say hello.  If you cannot make it, however, here&rsquo;s my slide deck all compressed down and PDF-ified for your viewing pleasure.</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2013/10/puppet_preso.png"><img src="http://questy.org/wp-content/uploads/2013/10/puppet_preso.png" alt="puppet_preso" /></a></p>
+
+<p><a href="http://questy.org/wp-content/uploads/2013/10/Perl-Mongers-Puppet-PresentationTraining.pdf">Perl Mongers Puppet Presentation:Training</a></p>
+
+<p>I hope to see you there!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/06/puppetry-arts/">Puppetry Arts...</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-09-06T14:45:35-04:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>2:45 pm</span></time>
+        
+           | <a href="/blog/2013/09/06/puppetry-arts/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2013/09/06/puppetry-arts/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I guess you Atlanta folk will get that one&hellip; :)</p>
+
+<p>Howdy all, and a hearty hello.  I&rsquo;m back from my exile to the land of single shiny glowing buttons and happiness, rainbows, and OSX, and have returned to Atlanta with SysAdmin bells on.  I&rsquo;ve done a lot over the last couple years (much I cannot talk about), but have developed quite an affinity for the Puppet configuration Management system.  So much so, in fact, that I&rsquo;ve found a need to start a whole new category right here on the ol' blog to accommodate.</p>
+
+<p>Not in a long time have I liked something &ldquo;new&rdquo; that has come along to SysAdmin work&hellip; The moniker &ldquo;Devops&rdquo; still gives me hives, but I will endeavor to navigate the puppet-y waters without uttering the vile mantra but wading into the wonderful waters of automation and  managed infrastructure.</p>
+
+<p>In short, &ldquo;Puppet&rdquo; in and of itself is quite a feat of engineering.  A series of platform tools to enforce a single &ldquo;blessed&rdquo; configuration upon your infrastructure in a consistent, premeditated way from a central location, eliminating the need for all manner of scripting and &ldquo;loop lists&rdquo; to do individual functions on each system, one at a time.  No no!</p>
+
+<p>Puppet enforces policies you write in a uniform, secure way, rather quickly and scales rather well for most environments.  For the larger environments that cannot be scaled to, Puppet will utilize other &ldquo;workhorse&rdquo; industry standard products as modular replacements of various pieces of the Puppet system, to broaden and expand its abilities.</p>
+
+<p>Puppet comes in two flavors, the commercial &ldquo;Enterprise&rdquo; system where everything is packaged together and all gets installed and configured at load time in an &ldquo;automagical&rdquo; sort of way so you don&rsquo;t have any need to post-configure, but can just begin writing configurations immediately.</p>
+
+<p>The &ldquo;Open Source&rdquo; Puppet has most of the same pieces, although named somewhat differently, and you can build a very solid, full-featured system of your own without the price tag.  All you need is time.  :)</p>
+
+<p>In the coming sections, I will take apart Puppet for those of you wishing to know more, and give a rudimentary survey of all the different things it can do.  Hope you come along!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/04/i-saw-this-somewhere-else/">I Saw This Somewhere Else...</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-06-04T15:40:06-04:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>3:40 pm</span></time>
+        
+           | <a href="/blog/2013/06/04/i-saw-this-somewhere-else/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2013/06/04/i-saw-this-somewhere-else/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>And just HAD to make my own.  Enjoy!</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2013/06/3upvh5.jpg"><img src="http://questy.org/wp-content/uploads/2013/06/3upvh5.jpg" alt="3upvh5" /></a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/3">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/index.html">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/04/05/testing-octopress/">Testing Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/23/puppetconf-2014/">PuppetConf 2014</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/11/southeast-puppet-users-group-september/">Southeast Puppet User's Group September</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/11/toolbox-grows/">The Toolbox Grows...</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/20/dos-donts-puppet-environment/">"Do's and Dont's" for Your Puppet Environment</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/CVQuesty">@CVQuesty</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'CVQuesty',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Jerald Sheets -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'questy-org';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

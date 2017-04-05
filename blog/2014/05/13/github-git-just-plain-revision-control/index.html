@@ -1,0 +1,446 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>GitHub, Git, and Just Plain Revision Control - Questy.org</title>
+  <meta name="author" content="Jerald Sheets">
+
+  
+  <meta name="description" content="One of the &ldquo;bugaboos&rdquo; in the sysadmin world for the longest time was the reluctance to use those &ldquo;stinky developer tools&rdquo; in &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://questy.org/blog/2014/05/13/github-git-just-plain-revision-control/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Questy.org" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1135877-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Questy.org</a></h1>
+  
+    <h2>Tech musings and other things...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="questy.org">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">GitHub, Git, and Just Plain Revision Control</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-13T17:06:09-04:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>5:06 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://questy.org">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>One of the &ldquo;bugaboos&rdquo; in the sysadmin world for the longest time was the reluctance to use those &ldquo;stinky developer tools&rdquo; in our world for any reason.  I&rsquo;m not sure the impetus behind this, but my wager is on something akin to security or yet another open port or &ldquo;attack vector&rdquo; if you will.  But today&rsquo;s competent and conscientious systems admin (not to mention DEVOPS person) will use revision control as their go-to standard for collecting, versioning, backing up, and distributing all manner of things.</p>
+
+<p>I&rsquo;ve seen some shops use <a href="http://www.nongnu.org/cvs/">CVS</a> as their choice, old thought it is, just as a large &ldquo;bucket&rdquo; in which to throw things for safekeeping with revisions and rollbacks available in case of some uncertain as yet unencountered event.  <a href="http://subversion.apache.org">Subversion</a> was the next generation of revision control tools.  Darling of developers and bane of disk space, Subversion still had many more features and performed essentially the same task.</p>
+
+<p>Now, <a href="http://git-scm.com">Git</a> is the flavor of the month, and not only has gained widespread acceptance as a standard way to &ldquo;do&rdquo; revision control, it&rsquo;s the de-facto way to do DEVOPS in  a Puppet world.  Granted, there are those brave souls out there who have tried to stick with the older tools, but the workflow and the &ldquo;glue&rdquo; between all the various components therein.  Hence, this post.</p>
+
+<p><strong>What is Git, really?</strong></p>
+
+<p>Git was developed by <a href="https://en.wikipedia.org/wiki/Linus_Torvalds">Linus Torvalds</a> for Linux Kernel collaboration.  He needed a new revision control system akin to the previously used <a href="https://en.wikipedia.org/wiki/BitKeeper">BitKeeper</a> software that was unencumbered by copyright and able to handle the unique distributed development needs of the Linux project.  So, rather than try and use someone else&rsquo;s project, he collated what was needed and developed the project himself.</p>
+
+<p>Now, Git is used both privately and Publicly throughout the world for many projects.  Git is lightweight and works in a more efficient manner by moving changes via diffs rather than whole repositories, allows developers to maintain and manage an entire repository on their own systems either connected or disconnected from the Internet.  Then, they can &ldquo;push&rdquo; all their changes back to the central repository as needed.</p>
+
+<p><strong>Enter GitHub</strong></p>
+
+<p>For our purposes, we&rsquo;ll specifically be working in <a href="https://en.wikipedia.org/wiki/GitHub">GitHub</a>.  GitHub is a project offering web-based hosting of your code that you can source from anywhere.  GitHub offers public and private hosting and a spate of other related services to development collaboration on the Internet.  If you do not have a GitHub account, you&rsquo;ll need to surf on over to the site and sign up for one.  It&rsquo;s free and it&rsquo;s fast, and I&rsquo;ll be using and sourcing it heavily as this series continues.</p>
+
+<p><strong>Basic Git</strong></p>
+
+<p>Git itself is available on most modern platforms and can easily hook into GitHub for our purposes.  I will be mostly referring to command-line usage of git, but you will find quite a bit in the way of tools, frontends, and &ldquo;helper&rdquo; apps for Git that you may or may not wish to leverage as you learn and incorporate Git into your workflow.  In the meantime, stick with me on command-line work.</p>
+
+<p>When you install git on your unix-like platform, it will drop a few binaries.  The one we&rsquo;re most interested in is the git binary itself.  It&rsquo;s very simply designed and has a very straightforward set of options you can get from the command line by simply typing &ldquo;git&rdquo; with no options, or &ldquo;git help&rdquo;.  The output is below:</p>
+
+<p>[snippet id=&ldquo;32&rdquo;]</p>
+
+<p>We&rsquo;re most interested in a small subset of commands for our purposes here.  They are <strong>add, commit, pull, push, branch, checkout, and clone.</strong></p>
+
+<p>I will be referencing one particular way to &ldquo;do&rdquo; git which works for me, but as with anything <a href="https://en.wikipedia.org/wiki/TMTOWTDI">TMTOWTDI</a> and <a href="https://en.wiktionary.org/wiki/YMMV">YMMV</a>.</p>
+
+<p><strong>GitHub Portion</strong></p>
+
+<p>I am going to assume you&rsquo;ve created a GitHub Account.  When you create your account, you&rsquo;ll have a unique URL assigned to you based on your username.  Mine, for instance, is <a href="https://github.com/cvquesty/">https://github.com/cvquesty/</a><insert project name here>.  The basic interface to GitHub is rather straightforward and looks like the following:</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/mygithub.png"><img src="http://questy.org/wp-content/uploads/2014/05/mygithub.png" alt="mygithub" /></a>The interface keeps track of all projects you&rsquo;re working on, the frequency with which you commit or otherwise use your repository, and (most importantly), a centralized server that is storing those projects you can source from any internet connected system.</p>
+
+<p><strong>Make a Repository</strong></p>
+
+<p>In the upper right-hand corner of your screen, you&rsquo;ll notice a &ldquo;+&rdquo; symbol.  Let&rsquo;s click that and create us a new repository.  You&rsquo;ll be presented with a dialog to name and describe your new repo.  I&rsquo;ll use the name &ldquo;sample repo&rdquo; and the description &ldquo;Sample Repo for my Tutorial&rdquo; with no other options other than the defaults.  (we&rsquo;ll go manually through those processes shortly).  After creating the repository by clicking &ldquo;Create Repository&rdquo;, I&rsquo;m presented with a page that has step-by-step instructions on what to do next.  I&rsquo;ll include that here for you.</p>
+
+<p><a href="http://questy.org/wp-content/uploads/2014/05/myrepo.png"><img src="http://questy.org/wp-content/uploads/2014/05/myrepo.png" alt="myrepo" /></a></p>
+
+<p>As you can see, you have your repo referenced at the top by <userid>/<reponame>.  You have instructions on how to use the repo from both the GitHub desktop client and the command line and some special instructions for if you have it locally on your system, and are just now uploading that content into this repository you&rsquo;ve created to hold it.  We&rsquo;re interested in the command line instructions.</p>
+
+<p><strong>A Place to Git</strong></p>
+
+<p>On my system (a Mac), I have Git installed by default and I have a directory in my home directory simply called &ldquo;Projects&rdquo;.  Under there, I have a &ldquo;Git&rdquo; directory.  ALL of my work in Git goes here.  This is not a hard/fast rule.  I just chose it as my location to place all my git work so it is centralized and all collected together.</p>
+
+<p>What we&rsquo;re going to do next is to configure Git, create a location for our repo, make a file to commit to the repo and then push that file up to GitHub to see how that workflow works.  Let&rsquo;s get started.</p>
+
+<p><strong>Configuring Git</strong></p>
+
+<p>Since Git is personal to you as a user, you need to let Git know a few things about you.  This gives your git server (in our case GitHub) the information it needs when you&rsquo;re pushing code (like your identity, default commit locations, etc).  First, your name and email:</p>
+
+<p>git config &ndash;global user.name &ldquo;John Doe&rdquo;
+git config &ndash;global user.email <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#x79;&#x6f;&#x75;&#x40;&#121;&#x6f;&#117;&#x72;&#109;&#x61;&#105;&#108;&#46;&#x63;&#111;&#109;">&#121;&#111;&#x75;&#64;&#x79;&#111;&#x75;&#114;&#109;&#x61;&#x69;&#x6c;&#46;&#99;&#111;&#x6d;</a></p>
+
+<p>You&rsquo;ll only need to perform this once.  There are quite a few options and you can read up on those <a href="http://git-scm.com/book/en/Getting-Started-First-Time-Git-Setup">here</a> at your leisure.</p>
+
+<p>Next, create a location for your new repo.  I chose my aforementioned directory and created the location</p>
+
+<p>/Users/jsheets/Projects/Git/samplerepo</p>
+
+<p>for demonstration purposes.  From here, though, we can take up with the instructions on the GitHub page displayed after creating your repo. I&rsquo;ll reproduce that here for reference:</p>
+
+<p>cd /Users/jsheets/Projects/Git/samplerepo
+touch README.md
+git init
+git add README.md
+git commit -m &ldquo;first commit&rdquo;
+git remote add origin <a href="https://github.com/cvquesty/samplerepo.git">https://github.com/cvquesty/samplerepo.git</a>
+git push -u origin master</p>
+
+<p>If all has gone well, you have now created an empty README.md file, committed it to your local Git repository and then subsequently pushed it up to GitHub.  You&rsquo;ll note that we added &ldquo;origin&rdquo; as the remote and then we pushed to &ldquo;origin&rdquo; in a thing called &ldquo;master&rdquo;.  What&rsquo;s that all about?</p>
+
+<p>GitHub (and git) refer to their repo location as &ldquo;origin&rdquo;.  This becomes handy when you start pushing between remote repositories and from remote to remote to GitHub, etc.  So, it makes sense to name GitHub <em>functionally </em>as well as it&rsquo;s assigned domain name.  By saying &ldquo;origin&rdquo;, we&rsquo;re making GitHub the de-facto standard center of everything we&rsquo;re doing.</p>
+
+<p>Next, we refer to &ldquo;master&rdquo;.  What is that?  Simply stated, we&rsquo;re pushing to a &ldquo;branch&rdquo; called &ldquo;master&rdquo;.</p>
+
+<p><strong>Branching</strong></p>
+
+<p>Branching is a method by which you can have multiple code &ldquo;branches&rdquo; or &ldquo;threads&rdquo; in existence simultaneously, and Git is managing them all for you.  For instance, you may wish to have one code collection only for use in production systems while maintaining a separate one for development systems.  In fact, you can create a random branch with a bug name (bug1234, for instance), commit your changes to that, test it, and push it to origin, then pull it down to all your production hosts, solving a big problem in your site or codebase.  Better yet, if it all works great and you&rsquo;re happy with it, you can &ldquo;merge&rdquo; that bug back into your main code repository, making it a permanent fixture in your code in whatever branch you like. (or even all of them!)</p>
+
+<p>When you first create your repo, GitHub makes a &ldquo;main&rdquo; branch for you automatically, and calls it &ldquo;master&rdquo;.  So, by utilizing the command above, we&rsquo;re telling Git to push our code (in this case, README.md) to our origin server (GitHub) and put it in the &ldquo;master&rdquo; branch.</p>
+
+<p>While we&rsquo;re on the topic, let&rsquo;s create two more branches so we can get the full hang of this branching thing.  (Hint:  It&rsquo;s core to how we integrate this into Puppet).</p>
+
+<p><strong>Makin' Branches</strong></p>
+
+<p>As I said before, GitHub creates a default &ldquo;master&rdquo; branch for you.  If, from your local repository location, you type &ldquo;git branch&rdquo;, Git will list a single branch for you,</p>
+
+<p>git branch
+* master</p>
+
+<p>This tells us simply, what branch you are currently in.  Now, let&rsquo;s run two commands to create new branches to be tracked by Git.</p>
+
+<p>git branch production
+git branch development</p>
+
+<p>Now.  Run &ldquo;git branch&rdquo; again:</p>
+
+<p>git branch
+development
+* master
+production</p>
+
+<p>As you can see, your other branches are now visible when running the command.  If you have color, you may notice that the &ldquo;master&rdquo; branch is a different color than the others (based on your settings).  If you do not have color, the asterisk denotes what branch is active as well.</p>
+
+<p><strong>Checkout and Commit, Branch and Merge</strong></p>
+
+<p>We have our repository and we have our branches.  We have a single README.md in the current directory, and we are ready to roll committing code and pushing it into our repository.  Let&rsquo;s perform a simple experiment to get the &ldquo;hang&rdquo; of how the branches work and how to switch between them as needed.  Since we&rsquo;re in &ldquo;master&rdquo;, let&rsquo;s edit our README.md to reflect that by placing a single word in the file &ldquo;master&rdquo;. (use vim as discussed in our last tutorial).</p>
+
+<p>Once you&rsquo;re done with your edit, you&rsquo;ll see that the text is in the file.  you can edit it and you can cat the file and see the contents, but if you view the file up at GitHub, that content is not there yet.  Some sort of way, a mechanism must be used to put that data there.  Well, there is such a process, and it is a two part process.</p>
+
+<p>Recall I mentioned that one of the features of Git is that you can have a complete repository local to your machine.  you can work on that repo and make all sorts of changes completely disconnected from your server (in our case GitHub&hellip; &ldquo;origin&rdquo; as it is named to Git).  Therefore, in reality you are dealing with not one, but two repositories.  The local one on your machine and the remote one at origin.  (remember the &ldquo;git remote add origin&rdquo; above?)</p>
+
+<p>So, to finalize your changes locally, you must &ldquo;commit&rdquo; them to your local repository as &ldquo;final&rdquo;.  THEN, you can &ldquo;push&rdquo; those changes into your main server (in our case GitHub).   We did as much above with our procedure where we did the commit with a message, and then a push up to origin.  However, now that we&rsquo;ve made changes locally, they are not yet reflected at GitHub.  Logic would dictate another commit is in order:</p>
+
+<p>git commit
+or
+git commit -m &lsquo;Some message about your commit&rsquo;</p>
+
+<p>As you can see, there are two routes you can go.  If you simply supply the &ldquo;git commit&rdquo; without any options, you will be brought into the system text editor you (or your OS) has configured in the $EDITOR environment variable.  Most platforms use &ldquo;vi&rdquo; or &ldquo;vim&rdquo; for this, but I have also seen &ldquo;pico&rdquo; used in some distributions like Ubuntu Linux.  In any event, you can edit the file by placing your comments in.  After exiting the file, saving the content, the commit will be complete.  If, however, you do not put anything, git will not commit the changes.  This is to enforce good coding practice by requiring some notes about what a committer is doing before making the changes.  It&rsquo;s a highly recommended workflow to follow.</p>
+
+<p>Once your commit is complete, phase 1 (local commit) is over.  You can commit over and over, as many times as you like.  you are a full, local repository.  In fact, I&rsquo;d encourage many commits.  Commit when you think about it.  Commit before you walk away from your system.  Commit randomly for no reason in mid-workflow.  The more commits you have, the less likely you are to lose work.</p>
+
+<p>Finally, to get the data up to GitHub, we need to &ldquo;push&rdquo; that data off your repository and into your &ldquo;origin&rdquo; repository. This is quite simple, and you&rsquo;ve done it before:</p>
+
+<p>git push -u origin master</p>
+
+<p>Sometimes you may wish to not keep specifying the location you&rsquo;re pushing to.  If so, you can set a default location for each branch.  Git will tell you just how to do that if you forget the &ldquo;-u location branch&rdquo; option.  Let&rsquo;s say I&rsquo;m in my aster branch and I simply run a &ldquo;git push&rdquo;.  Git will tell me I did something wrong, but will <em>also </em>tell me how to eliminate that problem:</p>
+
+<p>fatal: The current branch master has no upstream branch.
+To push the current branch and set the remote as upstream, use</p>
+
+<p>git push &ndash;set-upstream origin master</p>
+
+<p>&ldquo;fatal&rdquo; seems a <em>little </em>melodramatic since Git gives you the answer as to what to do right there.  All you need to do is set the default target once with that last line, and from that point forward, you only need type &ldquo;git push&rdquo; when pushing to GitHub.  Hint:  I do this in ALL my branches at create time.  It saves a lot of typing over time, and like any good Sysadmin, I&rsquo;m lazy.  :)</p>
+
+<p>So, now I&rsquo;ve got multiple branches that need this setting, but I&rsquo;m still stuck in &ldquo;master&rdquo;.  How do I get to &ldquo;development&rdquo; or &ldquo;production&rdquo; to perform the same tasks?</p>
+
+<p>Git provides a &ldquo;checkout&rdquo; command.  What you&rsquo;re saying with &ldquo;checkout&rdquo; is:  "Git, I want to be working on branch &ldquo;x&rdquo;, and I want you to make that my current branch.  if there are any differences between that branch and the one I&rsquo;m on, please make those changes on-disk for me so I can exclusively be working in branch &ldquo;x&rdquo;&ldquo;.  A little verbose, but you get the point.  So, to move to the next branch and do all the wonderful things we did in "master&rdquo; above, we perform:</p>
+
+<p>git checkout development
+edit README.md to say different text
+git commit -a -m &lsquo;editing README for development branch&rsquo;
+git push &ndash;set-upstream origin development
+git push</p>
+
+<p>If all has gone well, your development README.md file is now changed and pushed into GitHub.  What about &ldquo;master&rdquo;, though?  Well, let&rsquo;s take a look:</p>
+
+<p>git checkout master
+cat README.md</p>
+
+<p>If all has gone well, the contents of README.md are back to what was in your &ldquo;master&rdquo; branch.  By checking out &ldquo;development&rdquo;, it&rsquo;ll change back to the new content there.  As a test, checkout the &ldquo;production&rdquo; branch, change the README.md file, commit it, set your upstream push target and then push the contents to GitHub.</p>
+
+<p>Now you&rsquo;re cooking with gas.</p>
+
+<p><strong>Conclusion</strong></p>
+
+<p>This is a simple tutorial to get you started with Git &amp; GitHub.  There are MANY tutorials and books that can make you into a Git expert, but are way outside the scope of this humble little blog.  let me provide a few of those for you here:</p>
+
+<p><a href="http://git-scm.com/documentation">Git Help</a>
+<a href="http://git-scm.com/book">Git Book</a><a href="https://help.github.com">
+GitHub Help</a></p>
+
+<p>This documentation should be more than enough to get you moving and well underway with Git ins-and-outs for committing Puppet code and using r10k to interface with and distribute that code around your environment.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">admin</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-05-13T17:06:09-04:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>5:06 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/puppet/'>puppet</a>, <a class='category' href='/blog/categories/systems-administration/'>systems administration</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://questy.org/blog/2014/05/13/github-git-just-plain-revision-control/" data-via="CVQuesty" data-counturl="http://questy.org/blog/2014/05/13/github-git-just-plain-revision-control/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/05/09/vim-2/" title="Previous Post: Why all the Vim?">&laquo; Why all the Vim?</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/05/20/dos-donts-puppet-environment/" title="Next Post: "Do's and Dont's" for your Puppet Environment">"Do's and Dont's" for your Puppet Environment &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/04/05/testing-octopress/">Testing Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/23/puppetconf-2014/">PuppetConf 2014</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/11/southeast-puppet-users-group-september/">Southeast Puppet User's Group September</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/11/toolbox-grows/">The Toolbox Grows...</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/20/dos-donts-puppet-environment/">"Do's and Dont's" for Your Puppet Environment</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/CVQuesty">@CVQuesty</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'CVQuesty',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Jerald Sheets -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'questy-org';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://questy.org/blog/2014/05/13/github-git-just-plain-revision-control/';
+        var disqus_url = 'http://questy.org/blog/2014/05/13/github-git-just-plain-revision-control/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
