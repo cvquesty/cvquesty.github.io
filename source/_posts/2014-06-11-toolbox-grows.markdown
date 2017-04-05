@@ -55,25 +55,98 @@ _**Getting Started**_
 Vagrant is a unique tool in that it allows you to manage all these varied VMs, but adds a twist.  The big twist is that you don't have to have the _source _materials for the VMs you're installing.  In fact, the simplicity of turning up a new VM is astounding.  Take the following series of commands:
 
 
-cd <your favorite directory>
-mkdir precise32
-cd precise32
-vagrant init hashicorp/precise32
-vagrant up
+cd <your favorite directory><br>
+mkdir precise32<br>
+cd precise32<br>
+vagrant init hashicorp/precise32<br>
+vagrant up<br>
 
 
 If your Vagrant is installed correctly, a number of things start to happen.  First, Vagrant places a file in your cwd called "Vagrantfile".  Your vagrant file (indie) looks like this:
 
+```# -*- mode: ruby -*-
+# vi: set ft=ruby :
 
-[snippet id="34"]
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
 
+  # Every Vagrant development environment requires a box. You can search for
+  # boxes at https://atlas.hashicorp.com/search.
+  config.vm.box = "hashicorp/precise32"
 
+  # Disable automatic box update checking. If you disable this, then
+  # boxes will only be checked for updates when the user runs
+  # `vagrant box outdated`. This is not recommended.
+  # config.vm.box_check_update = false
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing "localhost:8080" will access port 80 on the guest machine.
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  # config.vm.network "private_network", ip: "192.168.33.10"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network "public_network"
+
+  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+  # config.vm.provider "virtualbox" do |vb|
+  #   # Display the VirtualBox GUI when booting the machine
+  #   vb.gui = true
+  #
+  #   # Customize the amount of memory on the VM:
+  #   vb.memory = "1024"
+  # end
+  #
+  # View the documentation for the provider you are using for more
+  # information on available options.
+
+  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
+  # such as FTP and Heroku are also available. See the documentation at
+  # https://docs.vagrantup.com/v2/push/atlas.html for more information.
+  # config.push.define "atlas" do |push|
+  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
+  # end
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   apt-get update
+  #   apt-get install -y apache2
+  # SHELL
+end
+```
 
 
 Note that this is a long file with a lot of explanatory documentation.  In actuality, the most important part of your Vagrantfile can be summed up here:
 
-
-[snippet id="35"]
+```
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+  config.vm.box = "hashicorp/precise32"
+end
+```
 
 These are the lines that are uncommented plus the top two declaratives that tell Vagrant what to do.  It's a very simple file that does some very powerful things.  First, it checks your home directory in the ~/.vagrant.d location to see if you already have the "precise32" Vagrant source "box".  (more on boxes later).  Next, if you do have this, it will simply start up a VM in your virtualization of choice with a randomized name.  For instance, mine is called "precise32_default_1402504453444_30545".  Vagrant takes away the selection of an .iso image, connecting it to the virtual CD/DVD Rom, starting an installer, etc.  It simply sends you a pre-rolled image, places it in your .vagrant.d directory, and provisions the VM to respond to Vagrant commands, and starts it up within Virtualbox.  Precise32 is simply a test scenario, as Vagrant's site has quite a number of varied and specially configured "box" files that you can use to prototype on at their "ready-made" box discovery site: https://vagrantcloud.com/discover/featured.  You can install boxes with too many variations and differentiations to enumerate here, and that's not really the point for our purposes... you may find these of great assistance in your own workplace, but let's continue.
 
