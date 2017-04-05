@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Systems Administration | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/systems-administration/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-05T16:34:13-04:00</updated>
+  <updated>2017-04-05T16:37:20-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -335,15 +335,15 @@ GitHub Help](https://help.github.com)
 
 <p>Take a look at this screen:</p>
 
-<p><a href="http://questy.org/wp-content/uploads/2014/05/nosyn.png"><img src="http://questy.org/wp-content/uploads/2014/05/nosyn.png" alt="nosyn" /></a></p>
+<p><a href="http://questy.org/images/nosyn.png"><img src="http://questy.org/images/nosyn.png" alt="nosyn" /></a></p>
 
 <p>While the code is well formatted and everything seems ok, were there any issues in this document, you&rsquo;d never know it.  From syntax issues to missing elements, none of this is automatically highlighted to you in any way.  Enter syntax highlighting&hellip;  Look again:</p>
 
-<p><a href="http://questy.org/wp-content/uploads/2014/05/syn.png"><img src="http://questy.org/wp-content/uploads/2014/05/syn.png" alt="syn" /></a></p>
+<p><a href="http://questy.org/images/syn.png"><img src="http://questy.org/images/syn.png" alt="syn" /></a></p>
 
 <p>Much nicer, no?  Were there any missing elements, you&rsquo;d see something amiss in the document.  The colors would not be organized according to element type, and odd things would be displayed in the page.  Let me &ldquo;break&rdquo; the file for you&hellip;</p>
 
-<p><a href="http://questy.org/wp-content/uploads/2014/05/broke.png"><img src="http://questy.org/wp-content/uploads/2014/05/broke.png" alt="broke" /></a></p>
+<p><a href="http://questy.org/images/broke.png"><img src="http://questy.org/images/broke.png" alt="broke" /></a></p>
 
 <p>You&rsquo;ll notice that on line 4 something is amiss.  If you compare the two colored instances, you&rsquo;ll see that your eye is drawn to where things begin to be different.  Best part for quick and easy glancing is that the entirety of the file after that one mistake now looks &ldquo;wrong&rdquo;.  Ease of view.</p>
 
