@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>http://questy.org/blog/2017/04/05/testing-octopress/</loc>
-<lastmod>2017-04-05T15:42:14-04:00</lastmod>
-</url>
-<url>
 <loc>http://questy.org/blog/2014/09/23/puppetconf-2014/</loc>
 <lastmod>2014-09-23T14:19:37-04:00</lastmod>
 </url>
@@ -262,6 +258,21 @@
 </url>
 <url>
 <loc>http://questy.org/blog/categories/puppet/</loc>
+</url>
+<url>
+<loc>http://questy.org/posts/2/</loc>
+</url>
+<url>
+<loc>http://questy.org/posts/3/</loc>
+</url>
+<url>
+<loc>http://questy.org/posts/4/</loc>
+</url>
+<url>
+<loc>http://questy.org/posts/5/</loc>
+</url>
+<url>
+<loc>http://questy.org/posts/6/</loc>
 </url>
 <url>
 <loc>http://questy.org/images/Perl-Mongers-Puppet-PresentationTraining.pdf</loc>

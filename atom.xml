@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-05T15:54:03-04:00</updated>
+  <updated>2017-04-05T15:58:46-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -12,15 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Testing Octopress]]></title>
-    <link href="http://questy.org/blog/2017/04/05/testing-octopress/"/>
-    <updated>2017-04-05T15:42:14-04:00</updated>
-    <id>http://questy.org/blog/2017/04/05/testing-octopress</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[PuppetConf 2014]]></title>
@@ -234,7 +225,7 @@ vagrant up</p>
 <p>Since Git is personal to you as a user, you need to let Git know a few things about you.  This gives your git server (in our case GitHub) the information it needs when you&rsquo;re pushing code (like your identity, default commit locations, etc).  First, your name and email:</p>
 
 <p>git config &ndash;global user.name &ldquo;John Doe&rdquo;
-git config &ndash;global user.email <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#x79;&#x6f;&#x75;&#x40;&#121;&#x6f;&#117;&#x72;&#109;&#x61;&#105;&#108;&#46;&#x63;&#111;&#109;">&#121;&#111;&#x75;&#64;&#x79;&#111;&#x75;&#114;&#109;&#x61;&#x69;&#x6c;&#46;&#99;&#111;&#x6d;</a></p>
+git config &ndash;global user.email <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#58;&#121;&#111;&#117;&#64;&#121;&#111;&#117;&#x72;&#109;&#x61;&#105;&#108;&#x2e;&#x63;&#x6f;&#x6d;">&#x79;&#111;&#117;&#64;&#121;&#111;&#x75;&#x72;&#x6d;&#x61;&#105;&#108;&#46;&#99;&#111;&#109;</a></p>
 
 <p>You&rsquo;ll only need to perform this once.  There are quite a few options and you can read up on those <a href="http://git-scm.com/book/en/Getting-Started-First-Time-Git-Setup">here</a> at your leisure.</p>
 
@@ -1261,6 +1252,27 @@ sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
     <content type="html"><![CDATA[<p>And just HAD to make my own.  Enjoy!</p>
 
 <p><a href="http://questy.org/wp-content/uploads/2013/06/3upvh5.jpg"><img src="http://questy.org/wp-content/uploads/2013/06/3upvh5.jpg" alt="3upvh5" /></a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A Few Notes...]]></title>
+    <link href="http://questy.org/blog/2011/02/22/a-few-notes/"/>
+    <updated>2011-02-22T10:26:06-05:00</updated>
+    <id>http://questy.org/blog/2011/02/22/a-few-notes</id>
+    <content type="html"><![CDATA[<p>I think it is important to make a note about all of the people and places that have helped me ferret out a lot of this configuration.  I don&rsquo;t find this stuff in a vacuum (like anything in the Open Source world), and find it quite important to give a nod where a nod is due.</p>
+
+<p>First, to <a href="http://www.turner.com">Turner Broadcasting</a> who gave me my first shot at doing this in a relatively small environment.  There was a ton of time spent on the phone, in online forums, reading documentation, and the like.  Everything sort of proceeded from there.  I tried to get such a thing into the backend over at <a href="http://www.weather.com">The Weather Channel</a>, but the climate wasn&rsquo;t right, and there was a great deal of change going on.  Trying to implement such a thing there just wouldn&rsquo;t have worked out very well.</p>
+
+<p>Next, to <a href="http://www.incomm.com">Incomm</a>.  They needed a solution, and Brock (my boss) gave me ample time to get a lot of this together, and to do it right without interruption.  Big thanks there.</p>
+
+<p>Finally, and most importantly, my best bud <a href="mailto:johnbeamon@yahoo.com">John Beamon</a>.  He encountered and worked with LDAP long before I did.  And, while we have considerably different directories in place between our two mutual organizations, his help in putting together how all this works in my head has been invaluable.  I daresay I&rsquo;ve been into his IM client twice (or more) often as he&rsquo;d like, gave him props nowhere near as much as I should (like at all), and even with all his own work on his plate, he has helped me out immeasurably.  Add to that, he&rsquo;s a long-time friend and fellow-minister, and that&rsquo;s just good times right there.  They don&rsquo;t come along like John very often, and I&rsquo;m grateful to have him as both a friend and fellow nerd.</p>
+
+<p><strong>Kudos, JB!</strong></p>
+
+<p>I&rsquo;m sure there&rsquo;s still some inaccuracies here, and I&rsquo;ll be sifting through all this as I continue to build and extend OpenLDAP in this environment.  Things will automagically correct before your eyes, most likely.  If you find anything that happens to scream &ldquo;No!&rdquo; to you, feel free to drop me a line, and I&rsquo;ll be happy to make that change.</p>
+
+<p>HappyLDAPping!</p>
 ]]></content>
   </entry>
   

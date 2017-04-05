@@ -9,8 +9,7 @@
   <meta name="author" content="Jerald Sheets">
 
   
-  <meta name="description" content="
-">
+  <meta name="description" content="Glad to be at PuppetConf with #ShadowSoft exploring all the latest and greatest in PuppetLabs. ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,38 +77,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2017/04/05/testing-octopress/">Testing Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2017-04-05T15:42:14-04:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>3:42 pm</span></time>
-        
-           | <a href="/blog/2017/04/05/testing-octopress/#disqus_thread"
-             data-disqus-identifier="http://questy.org/blog/2017/04/05/testing-octopress/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -434,7 +401,7 @@ vagrant up</p>
 <p>Since Git is personal to you as a user, you need to let Git know a few things about you.  This gives your git server (in our case GitHub) the information it needs when you&rsquo;re pushing code (like your identity, default commit locations, etc).  First, your name and email:</p>
 
 <p>git config &ndash;global user.name &ldquo;John Doe&rdquo;
-git config &ndash;global user.email <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#x79;&#x6f;&#x75;&#x40;&#121;&#x6f;&#117;&#x72;&#109;&#x61;&#105;&#108;&#46;&#x63;&#111;&#109;">&#121;&#111;&#x75;&#64;&#x79;&#111;&#x75;&#114;&#109;&#x61;&#x69;&#x6c;&#46;&#99;&#111;&#x6d;</a></p>
+git config &ndash;global user.email <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#58;&#121;&#111;&#117;&#64;&#121;&#111;&#117;&#x72;&#109;&#x61;&#105;&#108;&#x2e;&#x63;&#x6f;&#x6d;">&#x79;&#111;&#117;&#64;&#121;&#111;&#x75;&#x72;&#x6d;&#x61;&#105;&#108;&#46;&#99;&#111;&#109;</a></p>
 
 <p>You&rsquo;ll only need to perform this once.  There are quite a few options and you can read up on those <a href="http://git-scm.com/book/en/Getting-Started-First-Time-Git-Setup">here</a> at your leisure.</p>
 
@@ -861,6 +828,72 @@ DO have a solid end-to-end workflow that enables rapid iteration</p>
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/23/workflows-tools-myriad-gobbledygook/">Workflows, Tools, and a Myriad of Gobbledygook...</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-04-23T14:17:41-04:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>2:17 pm</span></time>
+        
+           | <a href="/blog/2014/04/23/workflows-tools-myriad-gobbledygook/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2014/04/23/workflows-tools-myriad-gobbledygook/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Ok, so first let&rsquo;s cover the gobbledygook.</p>
+
+<p>I&rsquo;ve had a lot of feedback on various parts of the blog here, and I thought I&rsquo;d address a few of them here.</p>
+
+<p><strong>Q:  Why didn&rsquo;t you just point at the appropriate Yum repos for installing Puppet?</strong></p>
+
+<p>A:  Easy.  I can do &ldquo;yum install foo&rdquo; and never know what&rsquo;s going on behind the scenes just like anyone.  My goal here was to give a point-by-point installation guide so those who are interested could know what all the moving parts were and how they fit together.</p>
+
+<p><strong>Q:  Why are you using the dashboard and not Foreman?</strong></p>
+
+<p>A:  Also easy&hellip; at least at the time of this writing, The Foreman has been indicated to be the next front end to be the &ldquo;de facto&rdquo; standard, but as for right now, the Enterprise Console is essentially a turbocharged version of the Dashboard.  As such, when I begin to talk about extending the Enterprise Console, Dashboard would be the analogue by which you can most obtain the same experience (short of installing Puppet Enterprise itself).</p>
+
+<p><strong>Q:  Why OSS and not PE?</strong></p>
+
+<p>A:  Well, to be frank&hellip; PE is about as simple as you can get.  You can learn a bit about what portions to install and how to connect them all together across machines (something I plan to cover), and you can learn about constructing an answer file (or several for a large, complex installation),  but the vast majority of your PE installations will be a Q/A interaction with the installer.</p>
+
+<p><strong>Workflows and Tools</strong></p>
+
+<p>One of the biggest changes in how I deal with Puppet has been my adoption of and implementation of workflows as well as using some modern tools I&rsquo;ve been made aware of by the Puppet Labs folks.  Among these are Vagrant, r10k, GitHub, and many others that work together and are tightly integrated and require a lot of configuration and setup to &ldquo;make happen&rdquo;.  I intend to cover those here.</p>
+
+<p>So, what are all these things?</p>
+
+<p><strong>Vagrant</strong></p>
+
+<p>Vagrant is a tool that allows you to pre-configure a small virtualized environment on your host consisting of a Puppet Master and any number of agents for use in a dynamic, iterative fashion.  By bringing up a Vagrant environment, I have a miniature development environment from which I can actually test Puppet code I write in a full PE environment and work out kinks you don&rsquo;t normally encounter when working independently on a single workstation.  From this environment, I can puppet-lint check all my code and then push all that code out of the Vagrant environment up to GitHub, then pull it down to my production instance as needed.  Further, it allows me to simulate all environments I have in my corporate setup (DEV, PROD, TEST, etc.) and commit those differences to the appropriate branches in GitHub.</p>
+
+<p><strong>r10k</strong></p>
+
+<p>The method by which I iterate, push/pull code and deploy to various environments both in my Vagrant instance and in my Production site is via r10k.  A leap forward past &ldquo;puppet librarian&rdquo;, r10k is the glue that ties between GitHub and Vagrant as well as your GitHub instance and your Corporate site.  This can tie to public GitHub as well as Corporate (private) GitHub.</p>
+
+<p><strong>GitHub</strong></p>
+
+<p>GitHub is considerably more well known, but it&rsquo;s important to the whole process as you can read above.  GitHub is a revision control repository designed for rapid deployment, iteration, and isolated developer work with periodic pushes back to GitHub. (distributed development).  I intend to do a simple tutorial on GitHub as well.</p>
+
+<p>Look forward to piece-by-piece coverage of each of these and my thoughts as I prepare for and take the Puppet Labs Certification test.</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -876,10 +909,6 @@ DO have a solid end-to-end workflow that enables rapid iteration</p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2017/04/05/testing-octopress/">Testing Octopress</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2014/09/23/puppetconf-2014/">PuppetConf 2014</a>
       </li>
     
@@ -893,6 +922,10 @@ DO have a solid end-to-end workflow that enables rapid iteration</p>
     
       <li class="post">
         <a href="/blog/2014/05/20/dos-donts-puppet-environment/">"Do's and Dont's" for Your Puppet Environment</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/13/github-git-just-plain-revision-control/">GitHub, Git, and Just Plain Revision Control</a>
       </li>
     
   </ul>
