@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Geekstuff | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/geekstuff/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-05T16:07:27-04:00</updated>
+  <updated>2017-04-05T16:14:09-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -76,19 +76,100 @@
 
 <p>Vagrant is a unique tool in that it allows you to manage all these varied VMs, but adds a twist.  The big twist is that you don&rsquo;t have to have the <em>source </em>materials for the VMs you&rsquo;re installing.  In fact, the simplicity of turning up a new VM is astounding.  Take the following series of commands:</p>
 
-<p>cd <your favorite directory>
-mkdir precise32
-cd precise32
-vagrant init hashicorp/precise32
-vagrant up</p>
+<p>cd <your favorite directory><br>
+mkdir precise32<br>
+cd precise32<br>
+vagrant init hashicorp/precise32<br>
+vagrant up<br></p>
 
 <p>If your Vagrant is installed correctly, a number of things start to happen.  First, Vagrant places a file in your cwd called &ldquo;Vagrantfile&rdquo;.  Your vagrant file (indie) looks like this:</p>
 
-<p>[snippet id=&ldquo;34&rdquo;]</p>
+<p>```# -<em>- mode: ruby -</em>-</p>
+
+<h1>vi: set ft=ruby :</h1>
+
+<h1>All Vagrant configuration is done below. The &ldquo;2&rdquo; in Vagrant.configure</h1>
+
+<h1>configures the configuration version (we support older styles for</h1>
+
+<h1>backwards compatibility). Please don&rsquo;t change it unless you know what</h1>
+
+<h1>you&rsquo;re doing.</h1>
+
+<p>Vagrant.configure(&ldquo;2&rdquo;) do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # <a href="https://docs.vagrantup.com.">https://docs.vagrantup.com.</a></p>
+
+<p>  # Every Vagrant development environment requires a box. You can search for
+  # boxes at <a href="https://atlas.hashicorp.com/search.">https://atlas.hashicorp.com/search.</a>
+  config.vm.box = &ldquo;hashicorp/precise32&rdquo;</p>
+
+<p>  # Disable automatic box update checking. If you disable this, then
+  # boxes will only be checked for updates when the user runs
+  # <code>vagrant box outdated</code>. This is not recommended.
+  # config.vm.box_check_update = false</p>
+
+<p>  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing &ldquo;localhost:8080&rdquo; will access port 80 on the guest machine.
+  # config.vm.network &ldquo;forwarded_port&rdquo;, guest: 80, host: 8080</p>
+
+<p>  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  # config.vm.network &ldquo;private_network&rdquo;, ip: &ldquo;192.168.33.10&rdquo;</p>
+
+<p>  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network &ldquo;public_network&rdquo;</p>
+
+<p>  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # config.vm.synced_folder &ldquo;../data&rdquo;, &ldquo;/vagrant_data&rdquo;</p>
+
+<p>  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+  # config.vm.provider &ldquo;virtualbox&rdquo; do |vb|
+  #   # Display the VirtualBox GUI when booting the machine
+  #   vb.gui = true
+  #
+  #   # Customize the amount of memory on the VM:
+  #   vb.memory = &ldquo;1024&rdquo;
+  # end
+  #
+  # View the documentation for the provider you are using for more
+  # information on available options.</p>
+
+<p>  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
+  # such as FTP and Heroku are also available. See the documentation at
+  # <a href="https://docs.vagrantup.com/v2/push/atlas.html">https://docs.vagrantup.com/v2/push/atlas.html</a> for more information.
+  # config.push.define &ldquo;atlas&rdquo; do |push|
+  #   push.app = &ldquo;YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME&rdquo;
+  # end</p>
+
+<p>  # Enable provisioning with a shell script. Additional provisioners such as
+  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+  # config.vm.provision &ldquo;shell&rdquo;, inline: &lt;&lt;-SHELL
+  #   apt-get update
+  #   apt-get install -y apache2
+  # SHELL
+end
+```</p>
 
 <p>Note that this is a long file with a lot of explanatory documentation.  In actuality, the most important part of your Vagrantfile can be summed up here:</p>
 
-<p>[snippet id=&ldquo;35&rdquo;]</p>
+<pre><code># -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+  config.vm.box = "hashicorp/precise32"
+end
+</code></pre>
 
 <p>These are the lines that are uncommented plus the top two declaratives that tell Vagrant what to do.  It&rsquo;s a very simple file that does some very powerful things.  First, it checks your home directory in the ~/.vagrant.d location to see if you already have the &ldquo;precise32&rdquo; Vagrant source &ldquo;box&rdquo;.  (more on boxes later).  Next, if you do have this, it will simply start up a VM in your virtualization of choice with a randomized name.  For instance, mine is called &ldquo;precise32_default_1402504453444_30545&rdquo;.  Vagrant takes away the selection of an .iso image, connecting it to the virtual CD/DVD Rom, starting an installer, etc.  It simply sends you a pre-rolled image, places it in your .vagrant.d directory, and provisions the VM to respond to Vagrant commands, and starts it up within Virtualbox.  Precise32 is simply a test scenario, as Vagrant&rsquo;s site has quite a number of varied and specially configured &ldquo;box&rdquo; files that you can use to prototype on at their &ldquo;ready-made&rdquo; box discovery site: <a href="https://vagrantcloud.com/discover/featured.">https://vagrantcloud.com/discover/featured.</a>  You can install boxes with too many variations and differentiations to enumerate here, and that&rsquo;s not really the point for our purposes&hellip; you may find these of great assistance in your own workplace, but let&rsquo;s continue.</p>
 
