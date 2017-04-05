@@ -10,7 +10,7 @@ categories:
 - Geekstuff
 ---
 
-[![puppet_docker](http://questy.org/wp-content/uploads/2014/09/puppet_docker.jpg)](http://questy.org/wp-content/uploads/2014/09/puppet_docker.jpg)
+[![puppet_docker](http://questy.org/images/puppet_docker.jpg)](http://questy.org/images/puppet_docker.jpg)
 
 
 
