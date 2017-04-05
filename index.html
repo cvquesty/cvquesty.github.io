@@ -616,7 +616,9 @@ vagrant up<br></p>
 
 <p>I am going to assume you&rsquo;ve created a GitHub Account.  When you create your account, you&rsquo;ll have a unique URL assigned to you based on your username.  Mine, for instance, is <a href="https://github.com/cvquesty/">https://github.com/cvquesty/</a><insert project name here>.  The basic interface to GitHub is rather straightforward and looks like the following:</p>
 
-<p><a href="http://questy.org/images/mygithub.png"><img src="http://questy.org/images/mygithub.png" alt="mygithub" /></a>The interface keeps track of all projects you&rsquo;re working on, the frequency with which you commit or otherwise use your repository, and (most importantly), a centralized server that is storing those projects you can source from any internet connected system.</p>
+<p><a href="http://questy.org/images/mygithub.png"><img src="http://questy.org/images/mygithub.png" alt="mygithub" /></a></p>
+
+<p>The interface keeps track of all projects you&rsquo;re working on, the frequency with which you commit or otherwise use your repository, and (most importantly), a centralized server that is storing those projects you can source from any internet connected system.</p>
 
 <p><strong>Make a Repository</strong></p>
 
@@ -636,24 +638,37 @@ vagrant up<br></p>
 
 <p>Since Git is personal to you as a user, you need to let Git know a few things about you.  This gives your git server (in our case GitHub) the information it needs when you&rsquo;re pushing code (like your identity, default commit locations, etc).  First, your name and email:</p>
 
-<p>git config &ndash;global user.name &ldquo;John Doe&rdquo;
-git config &ndash;global user.email <a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#58;&#121;&#x6f;&#x75;&#64;&#x79;&#x6f;&#117;&#x72;&#x6d;&#x61;&#x69;&#x6c;&#46;&#99;&#111;&#109;">&#x79;&#x6f;&#x75;&#64;&#121;&#111;&#117;&#114;&#109;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a></p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git config --global user.name "John Doe"
+</span><span class='line'>git config --global user.email you@yourmail.com</span></code></pre></td></tr></table></div></figure>
+
 
 <p>You&rsquo;ll only need to perform this once.  There are quite a few options and you can read up on those <a href="http://git-scm.com/book/en/Getting-Started-First-Time-Git-Setup">here</a> at your leisure.</p>
 
-<p>Next, create a location for your new repo.  I chose my aforementioned directory and created the location</p>
+<p>Next, create a location for your new repo.  I chose my aforementioned directory and created the location:</p>
 
-<p>/Users/jsheets/Projects/Git/samplerepo</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/Users/jsheets/Projects/Git/samplerepo</span></code></pre></td></tr></table></div></figure>
+
 
 <p>for demonstration purposes.  From here, though, we can take up with the instructions on the GitHub page displayed after creating your repo. I&rsquo;ll reproduce that here for reference:</p>
 
-<p>cd /Users/jsheets/Projects/Git/samplerepo
-touch README.md
-git init
-git add README.md
-git commit -m &ldquo;first commit&rdquo;
-git remote add origin <a href="https://github.com/cvquesty/samplerepo.git">https://github.com/cvquesty/samplerepo.git</a>
-git push -u origin master</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /Users/jsheets/Projects/Git/samplerepo
+</span><span class='line'>touch README.md
+</span><span class='line'>git init
+</span><span class='line'>git add README.md
+</span><span class='line'>git commit -m "first commit"
+</span><span class='line'>git remote add origin https://github.com/cvquesty/samplerepo.git
+</span><span class='line'>git push -u origin master</span></code></pre></td></tr></table></div></figure>
+
 
 <p>If all has gone well, you have now created an empty README.md file, committed it to your local Git repository and then subsequently pushed it up to GitHub.  You&rsquo;ll note that we added &ldquo;origin&rdquo; as the remote and then we pushed to &ldquo;origin&rdquo; in a thing called &ldquo;master&rdquo;.  What&rsquo;s that all about?</p>
 
@@ -673,20 +688,31 @@ git push -u origin master</p>
 
 <p>As I said before, GitHub creates a default &ldquo;master&rdquo; branch for you.  If, from your local repository location, you type &ldquo;git branch&rdquo;, Git will list a single branch for you,</p>
 
-<p>git branch
-* master</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git branch
+</span><span class='line'>* master</span></code></pre></td></tr></table></div></figure>
+
 
 <p>This tells us simply, what branch you are currently in.  Now, let&rsquo;s run two commands to create new branches to be tracked by Git.</p>
 
-<p>git branch production
-git branch development</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git branch production
+</span><span class='line'>git branch development</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Now.  Run &ldquo;git branch&rdquo; again:</p>
 
-<p>git branch
-development
-* master
-production</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git branch
+</span><span class='line'>development
+</span><span class='line'>* master
+</span><span class='line'>production</span></code></pre></td></tr></table></div></figure>
+
 
 <p>As you can see, your other branches are now visible when running the command.  If you have color, you may notice that the &ldquo;master&rdquo; branch is a different color than the others (based on your settings).  If you do not have color, the asterisk denotes what branch is active as well.</p>
 
@@ -700,9 +726,13 @@ production</p>
 
 <p>So, to finalize your changes locally, you must &ldquo;commit&rdquo; them to your local repository as &ldquo;final&rdquo;.  THEN, you can &ldquo;push&rdquo; those changes into your main server (in our case GitHub).   We did as much above with our procedure where we did the commit with a message, and then a push up to origin.  However, now that we&rsquo;ve made changes locally, they are not yet reflected at GitHub.  Logic would dictate another commit is in order:</p>
 
-<p>git commit
-or
-git commit -m &lsquo;Some message about your commit&rsquo;</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git commit
+</span><span class='line'>or
+</span><span class='line'>git commit -m 'Some message about your commit'</span></code></pre></td></tr></table></div></figure>
+
 
 <p>As you can see, there are two routes you can go.  If you simply supply the &ldquo;git commit&rdquo; without any options, you will be brought into the system text editor you (or your OS) has configured in the $EDITOR environment variable.  Most platforms use &ldquo;vi&rdquo; or &ldquo;vim&rdquo; for this, but I have also seen &ldquo;pico&rdquo; used in some distributions like Ubuntu Linux.  In any event, you can edit the file by placing your comments in.  After exiting the file, saving the content, the commit will be complete.  If, however, you do not put anything, git will not commit the changes.  This is to enforce good coding practice by requiring some notes about what a committer is doing before making the changes.  It&rsquo;s a highly recommended workflow to follow.</p>
 
@@ -710,14 +740,21 @@ git commit -m &lsquo;Some message about your commit&rsquo;</p>
 
 <p>Finally, to get the data up to GitHub, we need to &ldquo;push&rdquo; that data off your repository and into your &ldquo;origin&rdquo; repository. This is quite simple, and you&rsquo;ve done it before:</p>
 
-<p>git push -u origin master</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git push -u origin master</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Sometimes you may wish to not keep specifying the location you&rsquo;re pushing to.  If so, you can set a default location for each branch.  Git will tell you just how to do that if you forget the &ldquo;-u location branch&rdquo; option.  Let&rsquo;s say I&rsquo;m in my aster branch and I simply run a &ldquo;git push&rdquo;.  Git will tell me I did something wrong, but will <em>also </em>tell me how to eliminate that problem:</p>
 
-<p>fatal: The current branch master has no upstream branch.
-To push the current branch and set the remote as upstream, use</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>fatal: The current branch master has no upstream branch.
+</span><span class='line'>To push the current branch and set the remote as upstream, use
+</span><span class='line'>
+</span><span class='line'>git push --set-upstream origin master</span></code></pre></td></tr></table></div></figure>
 
-<p>git push &ndash;set-upstream origin master</p>
 
 <p>&ldquo;fatal&rdquo; seems a <em>little </em>melodramatic since Git gives you the answer as to what to do right there.  All you need to do is set the default target once with that last line, and from that point forward, you only need type &ldquo;git push&rdquo; when pushing to GitHub.  Hint:  I do this in ALL my branches at create time.  It saves a lot of typing over time, and like any good Sysadmin, I&rsquo;m lazy.  :)</p>
 
@@ -725,16 +762,25 @@ To push the current branch and set the remote as upstream, use</p>
 
 <p>Git provides a &ldquo;checkout&rdquo; command.  What you&rsquo;re saying with &ldquo;checkout&rdquo; is:  "Git, I want to be working on branch &ldquo;x&rdquo;, and I want you to make that my current branch.  if there are any differences between that branch and the one I&rsquo;m on, please make those changes on-disk for me so I can exclusively be working in branch &ldquo;x&rdquo;&ldquo;.  A little verbose, but you get the point.  So, to move to the next branch and do all the wonderful things we did in "master&rdquo; above, we perform:</p>
 
-<p>git checkout development
-edit README.md to say different text
-git commit -a -m &lsquo;editing README for development branch&rsquo;
-git push &ndash;set-upstream origin development
-git push</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git checkout development&lt;br&gt;
+</span><span class='line'>edit README.md to say different text&lt;br&gt;
+</span><span class='line'>git commit -a -m 'editing README for development branch'&lt;br&gt;
+</span><span class='line'>git push --set-upstream origin development&lt;br&gt;
+</span><span class='line'>git push&lt;br&gt;</span></code></pre></td></tr></table></div></figure>
+
 
 <p>If all has gone well, your development README.md file is now changed and pushed into GitHub.  What about &ldquo;master&rdquo;, though?  Well, let&rsquo;s take a look:</p>
 
-<p>git checkout master
-cat README.md</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git checkout master&lt;br&gt;
+</span><span class='line'>cat README.md&lt;br&gt;</span></code></pre></td></tr></table></div></figure>
+
 
 <p>If all has gone well, the contents of README.md are back to what was in your &ldquo;master&rdquo; branch.  By checking out &ldquo;development&rdquo;, it&rsquo;ll change back to the new content there.  As a test, checkout the &ldquo;production&rdquo; branch, change the README.md file, commit it, set your upstream push target and then push the contents to GitHub.</p>
 
@@ -744,9 +790,13 @@ cat README.md</p>
 
 <p>This is a simple tutorial to get you started with Git &amp; GitHub.  There are MANY tutorials and books that can make you into a Git expert, but are way outside the scope of this humble little blog.  let me provide a few of those for you here:</p>
 
-<p><a href="http://git-scm.com/documentation">Git Help</a>
-<a href="http://git-scm.com/book">Git Book</a><a href="https://help.github.com">
-GitHub Help</a></p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[Git Help](http://git-scm.com/documentation)
+</span><span class='line'>[Git Book](http://git-scm.com/book)[
+</span><span class='line'>GitHub Help](https://help.github.com)</span></code></pre></td></tr></table></div></figure>
+
 
 <p>This documentation should be more than enough to get you moving and well underway with Git ins-and-outs for committing Puppet code and using r10k to interface with and distribute that code around your environment.</p>
 </div>
