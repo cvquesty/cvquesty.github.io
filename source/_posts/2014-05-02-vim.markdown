@@ -22,239 +22,102 @@ Vim is the modern "vi" implementation.  A full-screen text editor with a myriad
 
 _**"The best camera is the one you have with you."**_
 
-
-
-
 Thus it is with vi/vim.  It's literally **everywhere.**
-
-
-
 
 Every UNIX OS, commercial or not, streamlined or not, old or new, has vi or vim installed on it.  Emacs is a great product, but it just isn't installed by default everywhere.  Regardless of the editor you refer to, ${INSERT_EDITOR_HERE} just isn't as ubiquitous as Vi/Vim.
 
-
-
-
 Since we're talking about a modern pursuit and workflow (DEVOPS), we'll be talking mostly about Vim's capabilities and features.
-
-
-
 
 **What Vim is _NOT_**
 
-
-
-
 Vim is not a word processor.  You won't be writing business letters with it.  Vim is not for writing resumes, making pretty newsletters, or for typesetting a magazine.  The die-hard Vi/Vim fan will tell you that you can do all of the above with it, but that falls into the same category as filling in the Grand Canyon with a teaspoon. You _can _do it, but why on earth would you want to?
-
-
-
 
 **What Vim Does Best**
 
-
-
-
 Vim edits text.  Plain...text.  Not pretty bold, italicized, with all sorts of alignment characters and strange paragraphs and pagination doohickeys... no, Vim just makes text files.  Text files that are SO devoid of bells and whistles, in fact, that when you open a Vim created file in your favorite WYSIWYG editor, you'll see what appears to be a pile of letters and such all crammed together like you had nothing else on your keyboard but letters, numbers, and punctuation.
-
-
-
 
 Vim allows you to eliminate all the cruft and get right down to the matter of creating plain, unencumbered text files.
 
-
-
-
 **Why Does it Matter?**
-
-
-
 
 When you're logged onto your favorite Linux through two bastion hosts across several continents and have latency to boot, WordPad will not help.  You'll need a lightweight text editor within which you can load, edit, and save the single most numerous type of item on a UNIX system... a text file.
 
-
-
-
 **Where Can I learn More About Vim?**
-
-
-
 
 Vim's main project page can be found [here](http://www.vim.org) online.  The main page has links to documentation and various community links as well as connections to various types of plugins and add ons you can use with Vim for any number of tasks.  You can join online forums, mailing lists, and communities whose entire purpose is the extension and promotion of Vim.  But that's not what we're up to...
 
-
-
-
 **How We Will Use Vim**
-
-
-
 
 For our purposes, we will use vim as code editor.  No more, no less.  Vim's abilities can help us _see _our code in ways that let's us know when there's an issue and can direct us generally in the direction of our solutions.  So, let's dive in to a minor Vim tutorial.  (If you're an advanced Vim user, stick with me...)
 
-
-
-
 All Linux distributions and Mac OSX come with Vim pre-installed and ready for action.  Note that some distributions of Linux will have _both _Vim and Vi.  You will either need to get into the habit of running "vim" from the command line, or setup your shell aliases to load Vim every time you type "vi" instead.
-
-
-
 
 When you launch Vim, you see a screen much like the following.  I use Mac OSX, but the effect is the same, regardless of platform.
 
-
-
-
-[![vim_screen](http://questy.org/wp-content/uploads/2014/05/vim.png)](http://questy.org/wp-content/uploads/2014/05/vim.png)
-
-
-
+[![vim](http://questy.org/images/vim.png)](http://questy.org/images/vim.png)
 
 I have several features turned on (including the line across the bottom that provides me a lot of information about the file I'm editing), but the main things we will talk about here are _syntax highlighting_ and _plugins _after a short tutorial on how Vim works.
 
-
-
-
 **I Can't DO Anything!!!**
-
-
-
 
 Most people's frustrations begin right on this page.  From here, nothing seems familiar.  I can't pull down a menu and I can't really even choose "exit" from a list of things to do.  The only real hint I have is on the screen above:
 
-
-
-
 type  :q<Enter>               to exit
-
-
-
 
 ...which is quite a peculiar directive.  Why do I have to type a colon?  What does it mean?  And goodness help you if you already managed to type something into the screen.  The instructions you see above disappear, and without the right collection of keystrokes, you're not getting out of Vim.  You'll most likely just close the window and start looking for "notepad".
 
-
-
-
 Here's where the tutorial starts.
-
-
-
 
 Vim is what is known as a full-screen text editor.  It started back in the Amiga days, and was first released publicly in 1991.  Before Vi/Vim, to create text files, there were line-based text editors that only allowed you to see one line of a file at a time.  So, you really couldn't work with huge files...it would be difficult to see file lines compared to each other or look at the whole flow of a subroutine you had written, or even to match wording or syntax from one section to another.
 
-
-
-
 Enter the full-screen editor.
-
-
-
 
 What the full-screen editor did was open a file on disk, reserving space in memory to hold the entire file, and then display to you a "window" into your file equal to your terminal's display size.  for instance, I have a terminal right now that has a several thousand line file open.  Of that file, I can only see 25 lines and 80 columns wide.  This "window" onto my file is something I personally configured in my terminal program (in my case, "iTerm").  I can scroll up and down this file, sliding forward or backward within the file from the beginning to the end (just as you may an MS Word document) and can interact with/edit any character I can see on the screen.  (we'll talk about search and replace and other such things later).
 
-
-
-
 We are currently in what is known as "command mode".  Many would ask why you don't just call this "view" mode, and the reasons are very simple.  From this screen, you issue MANY commands to Vim and tell it how you want it to behave for you.  For our purposes, we will use "command" mode and "insert" mode mostly.
-
-
-
 
 **Well, How Do I Edit Something?**
 
-
-
-
 To edit your file, you enter into a mode known as "insert" mode.  From this page there are several different modes you can enter, but "insert" mode is the easiest.  You simply type a single lowercase "i" to enter this mode.  When you do so, a cursor appears on the top line of the page you are viewing, and you are now able to type all you like.  Letters, <enter> keys, tabs... all normal typing idioms are available to you from this point.  How, you may ask, then do you save your work to disk?  I'm in this "insert" mode and don't know how to save!
-
-
-
 
 Think about what you wish to accomplish... you wish to issue the command "save" to Vim.  Command...  as in... "command mode", perhaps?  Well, we have to go back into command mode, then, so we can issue some commands to Vim and exit the program.
 
-
-
-
 Any time you are in Vim, your "saving grace" is your [esc] key.  Two taps on the escape key lways brings you back to command mode from anywhere.  Go ahead and try it.
-
-
-
 
 You'll now notice you have returned to "command mode" just as you were when you first opened Vim.  The only difference is that everything you typed is now on your screen and has not gone away.  Your "edit buffer" is full of a file you now can do things with.  You can save it, delete it, save it out as a specific file name... a myriad of normal file operations you may be used to from other software packages.
 
-
-
-
 In our case, we want to just save the file.  However, when we opened Vim, we didn't specify a file name to edit, we just opened Vim.  So, for all intents and purposes, we have an open buffer full of "stuff" and no file name to associate with it.  What we want to do now is to "write" the file to disk.  To do so, we have to issue commands to Vim in Command mode.
-
-
-
 
 **Command Mode**
 
-
-
-
 To issue commands to Vim, we have to tell it we are issuing it a command, otherwise you may hit a letter than means something else.  Recall that simply by hitting a lowercase "i" we placed vim into insert mode and then by hitting the [esc] key twice, we left it.  Clearly, there's more to this editor than we can readily see, so how do we save the file?
-
-
-
 
 When you have a buffer with text you would like to save, you have to first hit a colon ":".  You'll notice that Vim places the colon on the bottom line of your screen to the left, awaiting a command.  While there are several commands we can perform here (as well as joining multiple commands together), we will simply write the file right now.  To do so, while at the "colon prompt", we simply type:
 
-
-
-
+```
 **: w foo.txt**
-
-
-
+```
 
 and press the "enter" key.  You will receive a message on the last line that lets you know the file has been written to disk:
 
-
-
-
+```
 **"foo.txt" [New] 1L, 16C written**
-
-
-
+```
 
 But I'm still in Vim.  What do I do now?
 
-
-
-
 Just like "w" is a command, exiting the program also is a command.  Guessably so, it is the letter "q" for "quit".  So, as before, you hit the colon key, then the letter q, and then the enter key.  If all goes well, you'll be back at the command line.
-
-
-
 
 **Much More to This**
 
-
-
-
 Were I to do this for all the features of Vim, I'd be writing a book.  However, fortunately for you, there are several tutorials and cheat sheets on Vi/Vim all over the Internet.  Here are a few of my favorites.
-
-
-
 
 [The Main Vim Tutorial
 ](http://vim.wikia.com/wiki/Tutorial)[Linux.com's Vim Tutorial](https://www.linux.com/learn/tutorials/228600-vim-101-a-beginners-guide-to-vim)
 
-
-
-
 As well as some cheat sheets for you to refer to for quick reference on the various commands available when using Vim:
-
-
-
 
 [One of My Favorites
 ](http://www.viemu.com/vi-vim-cheat-sheet.gif)[Another Good Cheat Sheet](http://vim.rtorr.com)
-
-
-
 
 Take some time learning the basics of Vim before pressing on to the next article: "Customizing Vim".

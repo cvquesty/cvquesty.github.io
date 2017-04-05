@@ -12,6 +12,6 @@ categories:
 
 Going on right now at Shadow Soft!
 
-[![20140508-195822.jpg](http://questy.org/wp-content/uploads/2014/05/20140508-195822.jpg)](http://questy.org/wp-content/uploads/2014/05/20140508-195822.jpg)
+[![pug_robert.jpg](http://questy.org/images/pug_robert.jpg)](http://questy.org/images/pug_robert.jpg)
 
 Excellent coverage of AWS automation.
