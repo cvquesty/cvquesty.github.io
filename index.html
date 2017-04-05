@@ -767,19 +767,19 @@ vagrant up<br></p>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git checkout development&lt;br&gt;
-</span><span class='line'>edit README.md to say different text&lt;br&gt;
-</span><span class='line'>git commit -a -m 'editing README for development branch'&lt;br&gt;
-</span><span class='line'>git push --set-upstream origin development&lt;br&gt;
-</span><span class='line'>git push&lt;br&gt;</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git checkout development
+</span><span class='line'>edit README.md to say different text
+</span><span class='line'>git commit -a -m 'editing README for development branch'
+</span><span class='line'>git push --set-upstream origin development
+</span><span class='line'>git push</span></code></pre></td></tr></table></div></figure>
 
 
 <p>If all has gone well, your development README.md file is now changed and pushed into GitHub.  What about &ldquo;master&rdquo;, though?  Well, let&rsquo;s take a look:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git checkout master&lt;br&gt;
-</span><span class='line'>cat README.md&lt;br&gt;</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git checkout master
+</span><span class='line'>cat README.md</span></code></pre></td></tr></table></div></figure>
 
 
 <p>If all has gone well, the contents of README.md are back to what was in your &ldquo;master&rdquo; branch.  By checking out &ldquo;development&rdquo;, it&rsquo;ll change back to the new content there.  As a test, checkout the &ldquo;production&rdquo; branch, change the README.md file, commit it, set your upstream push target and then push the contents to GitHub.</p>

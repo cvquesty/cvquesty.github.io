@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Systems Administration | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/systems-administration/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-05T16:32:51-04:00</updated>
+  <updated>2017-04-05T16:34:13-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -288,17 +288,17 @@ git push --set-upstream origin master
 
 <p>Git provides a &ldquo;checkout&rdquo; command.  What you&rsquo;re saying with &ldquo;checkout&rdquo; is:  "Git, I want to be working on branch &ldquo;x&rdquo;, and I want you to make that my current branch.  if there are any differences between that branch and the one I&rsquo;m on, please make those changes on-disk for me so I can exclusively be working in branch &ldquo;x&rdquo;&ldquo;.  A little verbose, but you get the point.  So, to move to the next branch and do all the wonderful things we did in "master&rdquo; above, we perform:</p>
 
-<pre><code>git checkout development&lt;br&gt;
-edit README.md to say different text&lt;br&gt;
-git commit -a -m 'editing README for development branch'&lt;br&gt;
-git push --set-upstream origin development&lt;br&gt;
-git push&lt;br&gt;
+<pre><code>git checkout development
+edit README.md to say different text
+git commit -a -m 'editing README for development branch'
+git push --set-upstream origin development
+git push
 </code></pre>
 
 <p>If all has gone well, your development README.md file is now changed and pushed into GitHub.  What about &ldquo;master&rdquo;, though?  Well, let&rsquo;s take a look:</p>
 
-<pre><code>git checkout master&lt;br&gt;
-cat README.md&lt;br&gt;
+<pre><code>git checkout master
+cat README.md
 </code></pre>
 
 <p>If all has gone well, the contents of README.md are back to what was in your &ldquo;master&rdquo; branch.  By checking out &ldquo;development&rdquo;, it&rsquo;ll change back to the new content there.  As a test, checkout the &ldquo;production&rdquo; branch, change the README.md file, commit it, set your upstream push target and then push the contents to GitHub.</p>
