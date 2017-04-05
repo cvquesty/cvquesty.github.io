@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Geekstuff | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/geekstuff/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-05T16:05:44-04:00</updated>
+  <updated>2017-04-05T16:07:27-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -29,7 +29,7 @@
     <link href="http://questy.org/blog/2014/09/11/southeast-puppet-users-group-september/"/>
     <updated>2014-09-11T19:33:01-04:00</updated>
     <id>http://questy.org/blog/2014/09/11/southeast-puppet-users-group-september</id>
-    <content type="html"><![CDATA[<p><a href="http://questy.org/wp-content/uploads/2014/09/puppet_docker.jpg"><img src="http://questy.org/wp-content/uploads/2014/09/puppet_docker.jpg" alt="puppet_docker" /></a></p>
+    <content type="html"><![CDATA[<p><a href="http://questy.org/images/puppet_docker.jpg"><img src="http://questy.org/images/puppet_docker.jpg" alt="puppet_docker" /></a></p>
 
 <p>John Ray is bringing the Puppet + Docker goodness in his talk tonight: &ldquo;Deploying Docker Containers with Puppet&rdquo;.  Join us each month at the Shadow Soft offices for the latest in DEVOPS topics and information.  Always fun, lots of discussion and information surrounding Puppet topics and associated technologies.  There&rsquo;s always pizza and beverages of all kinds, and we&rsquo;ve finally moved into our new meeting/class rooms, so come on out.</p>
 ]]></content>
