@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-05T18:19:31-04:00</updated>
+  <updated>2017-04-05T18:24:00-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -968,7 +968,7 @@ First, we will be installing Passenger.  The passenger packages are in their ow
 <em><strong>/usr/bin/mysqladmin -u root -h <FQDN> password &lsquo;<new-password>&rsquo;
 mysql -u root -p</strong></em></p>
 
-<p>A few words here, for those of you unfamiliar with MySQL.  We are setting the root user&rsquo;s password to be able to administrate the database.  The simplest way to set up this initial security is using the &ldquo;mysqladmin&rdquo; tool provided by MySQL.  Note that when I use &lt;> in these above, this is where your site-specific information comes into play.  For <FQDN>, for my example purposes I would replace this with puppet.example.com.  The password setting &amp; changes, then, would look like so:</p>
+<p>A few words here, for those of you unfamiliar with MySQL.  We are setting the root user&rsquo;s password to be able to administrate the database.  The simplest way to set up this initial security is using the &ldquo;mysqladmin&rdquo; tool provided by MySQL.  Note that when I use &lt;> in these above, this is where your site-specific information comes into play.  For \&lt;FQDN>, for my example purposes I would replace this with puppet.example.com.  The password setting &amp; changes, then, would look like so:</p>
 
 <p><em><strong>/usr/bin/mysqladmin -u root password &lsquo;puppet&rsquo;
 </strong><strong>/usr/bin/mysqladmin -u root -h puppet.example.com password &lsquo;puppet&rsquo;
@@ -1078,17 +1078,17 @@ For the Production and Development database stanzas, change the &ldquo;database:
 
 <p>In the [master] section of the puppet.conf, add the following lines:</p>
 
-<p><em><strong>****# Reporting</strong></em><br>
+<p><em><strong>Reporting</strong></em><br>
 <em><strong>reports = store,http</strong></em><br>
 _**reporturl = <a href="http://&lt;FQDN>:3000/reports/upload**_">http://&lt;FQDN>:3000/reports/upload**_</a><br></p>
 
-<p><em><strong># Node Classification (Using as an ENC)</strong></em><br>
+<p><em><strong>Node Classification (Using as an ENC)</strong></em><br>
 <em><strong>node_terminus = exec</strong></em><br>
 <em><strong>external_nodes = /usr/bin/env PUPPET_DASHBOARD_URL=<a href="http://localhost:3000">http://localhost:3000</a> /usr/share/puppet-dashboard/bin/external_node</strong></em><br></p>
 
 <p>Exit the puppet.conf file, saving your changes and set permissions for following files like so:</p>
 
-<p><em><strong>****sudo chown -R puppet-dashboard:puppet-dashboard /usr/share/puppet-dashboard</strong></em><br>
+<p><em><strong>sudo chown -R puppet-dashboard:puppet-dashboard /usr/share/puppet-dashboard</strong></em><br>
 <em><strong>sudo /sbin/chkconfig puppet-dashboard-workers on</strong></em><br>
 <em><strong>sudo /sbin/service puppet-dashboard-workers start</strong></em><br></p>
 
@@ -1096,7 +1096,7 @@ _**reporturl = <a href="http://&lt;FQDN>:3000/reports/upload**_">http://&lt;FQDN
 
 <p>Next, we need to configure the Apache web server to process requests being made by Puppet agents in your environment and hand them off to the Puppet server.  To do so, we need to create two files in the /etc/httpd/conf.d location.  The passenger installation will have already created a passenger.conf there.  Just remove it before creating the following two files.</p>
 
-<p><em><strong>****/etc/httpd/conf.d/dashboard.conf</strong></em></p>
+<p><em><strong>/etc/httpd/conf.d/dashboard.conf</strong></em></p>
 
 <p>[snippet id=&ldquo;30&rdquo;]</p>
 
@@ -1112,8 +1112,8 @@ _**reporturl = <a href="http://&lt;FQDN>:3000/reports/upload**_">http://&lt;FQDN
 
 <p>First, make sure the puppetmaster process has been stopped:</p>
 
-<p><em><strong>/sbin/service puppetmaster stop<br>
-</strong><strong>/sbin/chckonfig puppetmaster off</strong></em><br></p>
+<p><em>**/sbin/service puppetmaster stop<br>
+</em><strong>/sbin/chckonfig puppetmaster off</strong>_<br></p>
 
 <p>This assumes you&rsquo;ve run the procedures in the previous tutorials, including (especially) the certificate signing and exchange between master and agent.  If you&rsquo;ve done this, Passenger now has all the certs it needs to handle requests on behalf of Puppet, and no longer needs the Puppet server running.</p>
 
@@ -1127,7 +1127,7 @@ _**reporturl = <a href="http://&lt;FQDN>:3000/reports/upload**_">http://&lt;FQDN
 
 <p>Turn off SELinux temporarily:</p>
 
-<p><em><strong>****sudo setenforce 0</strong></em><br></p>
+<p><em><strong>sudo setenforce 0</strong></em><br></p>
 
 <p>Restart Apache to generate the log entries:</p>
 
