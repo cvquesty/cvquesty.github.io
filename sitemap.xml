@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://questy.org/blog/2017/04/05/testing-octopress/</loc>
+<lastmod>2017-04-05T15:42:14-04:00</lastmod>
+</url>
+<url>
 <loc>http://questy.org/blog/archives/</loc>
 </url>
 <url>
 <loc>http://questy.org/</loc>
+</url>
+<url>
+<loc>http://questy.org/images/Perl-Mongers-Puppet-PresentationTraining.pdf</loc>
+<lastmod>2017-04-05T15:45:16-04:00</lastmod>
+</url>
+<url>
+<loc>http://questy.org/images/PuppetCampATL-Jerald_Sheets.pdf</loc>
+<lastmod>2017-04-05T15:45:16-04:00</lastmod>
 </url>
 </urlset>
