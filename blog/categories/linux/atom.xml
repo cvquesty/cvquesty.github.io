@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-05T16:37:20-04:00</updated>
+  <updated>2017-04-05T18:03:55-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -540,7 +540,7 @@ GitHub Help](https://help.github.com)
 
 <p>When you launch Vim, you see a screen much like the following.  I use Mac OSX, but the effect is the same, regardless of platform.</p>
 
-<p><a href="http://questy.org/wp-content/uploads/2014/05/vim.png"><img src="http://questy.org/wp-content/uploads/2014/05/vim.png" alt="vim_screen" /></a></p>
+<p><a href="http://questy.org/images/vim.png"><img src="http://questy.org/images/vim.png" alt="vim" /></a></p>
 
 <p>I have several features turned on (including the line across the bottom that provides me a lot of information about the file I&rsquo;m editing), but the main things we will talk about here are <em>syntax highlighting</em> and <em>plugins </em>after a short tutorial on how Vim works.</p>
 
@@ -580,11 +580,13 @@ GitHub Help](https://help.github.com)
 
 <p>When you have a buffer with text you would like to save, you have to first hit a colon &ldquo;:&rdquo;.  You&rsquo;ll notice that Vim places the colon on the bottom line of your screen to the left, awaiting a command.  While there are several commands we can perform here (as well as joining multiple commands together), we will simply write the file right now.  To do so, while at the &ldquo;colon prompt&rdquo;, we simply type:</p>
 
-<p><strong>: w foo.txt</strong></p>
+<pre><code>**: w foo.txt**
+</code></pre>
 
 <p>and press the &ldquo;enter&rdquo; key.  You will receive a message on the last line that lets you know the file has been written to disk:</p>
 
-<p><strong>&ldquo;foo.txt&rdquo; [New] 1L, 16C written</strong></p>
+<pre><code>**"foo.txt" [New] 1L, 16C written**
+</code></pre>
 
 <p>But I&rsquo;m still in Vim.  What do I do now?</p>
 
