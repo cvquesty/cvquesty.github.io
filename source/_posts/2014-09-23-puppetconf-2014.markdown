@@ -19,4 +19,4 @@ tags:
 
 Glad to be at PuppetConf with #ShadowSoft exploring all the latest and greatest in PuppetLabs.
 
-[![IMG_0050-0.JPG](http://questy.org/wp-content/uploads/2014/09/IMG_0050-0.jpg)](http://questy.org/wp-content/uploads/2014/09/IMG_0050-0.jpg)
+[![puppetconf.jpg](http://questy.org/images/puppet.conf.jpg)](http://questy.org/images/puppetconf.jpg)
