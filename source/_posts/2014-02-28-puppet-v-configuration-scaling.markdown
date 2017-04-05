@@ -104,7 +104,7 @@ _**/usr/bin/mysqladmin -u root -h <FQDN> password '<new-password>'
 mysql -u root -p**_
 
 
-A few words here, for those of you unfamiliar with MySQL.  We are setting the root user's password to be able to administrate the database.  The simplest way to set up this initial security is using the "mysqladmin" tool provided by MySQL.  Note that when I use <> in these above, this is where your site-specific information comes into play.  For <FQDN>, for my example purposes I would replace this with puppet.example.com.  The password setting & changes, then, would look like so:
+A few words here, for those of you unfamiliar with MySQL.  We are setting the root user's password to be able to administrate the database.  The simplest way to set up this initial security is using the "mysqladmin" tool provided by MySQL.  Note that when I use <> in these above, this is where your site-specific information comes into play.  For \<FQDN\>, for my example purposes I would replace this with puppet.example.com.  The password setting & changes, then, would look like so:
 
 
 _**/usr/bin/mysqladmin -u root password 'puppet'
@@ -238,14 +238,14 @@ While we have already configured the dashboard itself, we have not told Puppet t
 In the [master] section of the puppet.conf, add the following lines:
 
 
-_******# Reporting**_<br>
+_**Reporting**_<br>
 _**reports = store,http**_<br>
 _**reporturl = http://\<FQDN\>:3000/reports/upload**_<br>
 
 
 
 
-_**# Node Classification (Using as an ENC)**_<br>
+_**Node Classification (Using as an ENC)**_<br>
 _**node_terminus = exec**_<br>
 _**external_nodes = /usr/bin/env PUPPET_DASHBOARD_URL=http://localhost:3000 /usr/share/puppet-dashboard/bin/external_node**_<br>
 
@@ -253,7 +253,7 @@ _**external_nodes = /usr/bin/env PUPPET_DASHBOARD_URL=http://localhost:3000 /usr
 Exit the puppet.conf file, saving your changes and set permissions for following files like so:
 
 
-_******sudo chown -R puppet-dashboard:puppet-dashboard /usr/share/puppet-dashboard**_<br>
+_**sudo chown -R puppet-dashboard:puppet-dashboard /usr/share/puppet-dashboard**_<br>
 _**sudo /sbin/chkconfig puppet-dashboard-workers on**_<br>
 _**sudo /sbin/service puppet-dashboard-workers start**_<br>
 
@@ -263,10 +263,7 @@ _**Apache**_
 Next, we need to configure the Apache web server to process requests being made by Puppet agents in your environment and hand them off to the Puppet server.  To do so, we need to create two files in the /etc/httpd/conf.d location.  The passenger installation will have already created a passenger.conf there.  Just remove it before creating the following two files.
 
 
-_******/etc/httpd/conf.d/dashboard.conf**_
-
-
-
+_**/etc/httpd/conf.d/dashboard.conf**_
 
 [snippet id="30"]
 
@@ -290,7 +287,7 @@ First, make sure the puppetmaster process has been stopped:
 
 
 _**/sbin/service puppetmaster stop<br>
-****/sbin/chckonfig puppetmaster off**_<br>
+_**/sbin/chckonfig puppetmaster off**_<br>
 
 
 This assumes you've run the procedures in the previous tutorials, including (especially) the certificate signing and exchange between master and agent.  If you've done this, Passenger now has all the certs it needs to handle requests on behalf of Puppet, and no longer needs the Puppet server running.
@@ -310,7 +307,7 @@ _**sudo /sbin/service httpd start**_<br>
 Turn off SELinux temporarily:
 
 
-_******sudo setenforce 0**_<br>
+_**sudo setenforce 0**_<br>
 
 
 Restart Apache to generate the log entries:
