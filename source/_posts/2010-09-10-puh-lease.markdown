@@ -1,0 +1,30 @@
+---
+author: admin
+comments: true
+date: 2010-09-10 18:19:01+00:00
+layout: post
+slug: puh-lease
+title: Puh-lease
+wordpress_id: 244
+categories:
+- Geekstuff
+- Systems Administration
+tags:
+- Geekstuff
+---
+
+I saw a p1mp of a new book on [Gruber](http://daringfireball.net) called "Being Geek".  It bills itself as "[The Software Developer's Career Handbook](http://www.amazon.com/gp/product/0596155409?ie=UTF8&tag=beigee-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=0596155409)".  That sort of set me off, honestly.
+
+You mean the people we geeks won't give access to because, if left to themselves, developers will patently destroy anything they come in contact with in the systems world?  You mean the people who think root is an account that should be used as a tool to cure ALL their ills and knock down all the "obstacles" they encounter?  The people who won't use "sudo" because it's too many characters to type and "breaks their flow" when coding?
+
+Oh, I get it, the people who haven't the slightest clue what it really means to be geek.  To give honor and deference to the system.  It's security, design, integrity.  They don't care that there are other people on the box, they just want to meet their date.  And they'll twist every systems admin in every possible contortion to break all the best practices in the world just to meet their date.  "Being Geek"  Phah!
+
+These guys like to be called geeks because it is an easy to earn, undeserved moniker for them bestowed by people who have no clue what it means.  All the while, they're breaking every rule and every guideline just to meet a date.  Further, when Systems people point out security concerns or elements of systems design these supposed geeks are transgressing, they run to upper management and complain that the systems teams are "blocking their date", or "They're blockers", or "we can't get anything done."  Geeks.
+
+A real geek would NEVER do that.
+
+A real geek would write beautiful code that followed all the best practices rules for the honor of having written it.  A real geek would NEVER even begin to consider using the root account unless it was absolutely necessary.  A real geek would take the recommendations of a systems team (the real geeks, by the way) who spend all their time making sure the platform upon which these geek posers perform their witchcraft is ALWAYS up, ALWAYS stable, ALWAYS up to date, and ALWAYS secure.
+
+I've been in this business for about 20 years now, and in that time I have met two developers who were tried and true, died-in-the-wool geeks.  TWO.
+
+Gimme a break... "Geeks".

@@ -1,0 +1,17 @@
+---
+author: questy
+comments: true
+date: 2004-12-08 20:20:37+00:00
+layout: post
+slug: welcome
+title: Welcome…
+wordpress_id: 5
+categories:
+- General
+---
+
+Welcome to my little corner of the web.
+
+I have random thoughts that acually mean something from time to time, so I thought I'd put them here for absolutely everyone to see.
+
+I'm sure various objects like my schedule at my new job, my involvement in Drum Corps, and church will fill these pages before long, so hang on... THe ride could get bumpy eventually.

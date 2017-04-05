@@ -1,0 +1,69 @@
+---
+author: admin
+comments: true
+date: 2014-05-09 15:07:57+00:00
+layout: post
+slug: vim-2
+title: Why all the Vim?
+wordpress_id: 684
+categories:
+- Linux
+- Puppet
+- Systems Administration
+- UNIX
+tags:
+- Linux
+- Puppet
+- Systems Administration
+- UNIX
+---
+
+As we move on through the last post on Vim, you may ask yourself why I'm remediating all the way back to text editors.  Well, as you'll see over time, this is all about workflow; Building yourself a detailed workflow by which you can write code, syntax check, commit to revision control, deploy to your Puppet instances, and duplicate that workflow across all your environments.
+
+The text editor itself, while important, is just a tiny part of a much larger picture I hope to cobble together over time.  So, let's begin to push forward with our coverage of Vim.
+
+**Plugins and Syntax Highlighting**
+
+I went through the beginnings of Vim to give you a starting point and some basics in the event you have no experience in the Vim world.  One would assume that since you're on a Puppet/Dev-Ops-y sort of page, all this is old news, but we do have completely "green" readers from time to time, and I didn't want to leave them out.
+
+The main goal in getting Vim in the picture was to bring you to the point where we start looking at our code and knowing what we're dealing with at a glance.  As you begin to work in the field, whether coding in Perl, Python, Shell, or the Puppet DSL, there are some conventions out there all designed to help you and smooth your workflow.  Of these is syntax highlighting in code editors in general, but (for our purposes) in Vim _specifically._
+
+Take a look at this screen:
+
+[![nosyn](http://questy.org/wp-content/uploads/2014/05/nosyn.png)](http://questy.org/wp-content/uploads/2014/05/nosyn.png)
+
+
+
+While the code is well formatted and everything seems ok, were there any issues in this document, you'd never know it.  From syntax issues to missing elements, none of this is automatically highlighted to you in any way.  Enter syntax highlighting...  Look again:
+
+[![syn](http://questy.org/wp-content/uploads/2014/05/syn.png)](http://questy.org/wp-content/uploads/2014/05/syn.png)
+
+
+
+Much nicer, no?  Were there any missing elements, you'd see something amiss in the document.  The colors would not be organized according to element type, and odd things would be displayed in the page.  Let me "break" the file for you...
+
+[![broke](http://questy.org/wp-content/uploads/2014/05/broke.png)](http://questy.org/wp-content/uploads/2014/05/broke.png)
+
+
+
+
+
+You'll notice that on line 4 something is amiss.  If you compare the two colored instances, you'll see that your eye is drawn to where things begin to be different.  Best part for quick and easy glancing is that the entirety of the file after that one mistake now looks "wrong".  Ease of view.
+
+**How Can This Help With Puppet?**
+
+As luck would have it, Vim has a plugin engine that allows you to have pre-built templates that syntax highlight code for you in a predetermined way.  It "recognizes" your code type, and highlights accordingly.  The basic plugin structure for vim lives in your home directory and in the "hidden" .vim directory.  Under this directory you can have a number of wide and varied add ons to vim.  We're just going to talk about plugins.
+
+By default, you don't have anything in this directory.  You usually have a .vimrc file and a .vim directory in your home directory location, but that's about it.  The "magic" happens, though, when you add a few pieces.  Those would include a ".vimrc" file which will turn on syntax highlighting, and then a Puppet vim plugin that sorts all the language elements and colorizes them for you.
+
+In your home directory, if it doesn't already exist, create a .vimrc file with a single entry:
+
+
+**syntax on**
+
+
+This will instruct vim to syntax highlight, and to be aware of any highlighting plugins that may live in the .vim plugin folder.  Next, place [this file](http://questy.org/stuff/puppet/puppet.vim) into your .vim plugin directory.  If it does not yet exist, create it.  It lives in ~/.vim/plugin.  Once you load up new puppet manifests, it will recognize the type and begin to highlight the code according to the defined convention from the puppet.vim file you just downloaded.  If you have any issues, look at the vim plugin reference [here](http://vimdoc.sourceforge.net/htmldoc/usr_05.html).
+
+Now you're ready to work with Puppet files like a pro!
+
+

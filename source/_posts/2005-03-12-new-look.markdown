@@ -1,0 +1,17 @@
+---
+author: questy
+comments: true
+date: 2005-03-12 15:38:51+00:00
+layout: post
+slug: new-look
+title: New Look…
+wordpress_id: 21
+categories:
+- General
+---
+
+I decided to have a look at some new themes and play around with the look and feel of the site... I hope you like it.
+
+I've been *VERY* busy of late, as I work 3rd shift, and the season is starting to heat up wiith the CorpsVets.
+
+More to come, I promise!

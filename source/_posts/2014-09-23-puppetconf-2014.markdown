@@ -1,0 +1,22 @@
+---
+author: admin
+comments: true
+date: 2014-09-23 18:19:37+00:00
+layout: post
+slug: puppetconf-2014
+title: PuppetConf 2014
+wordpress_id: 743
+categories:
+- Geekstuff
+- Puppet
+- Systems Administration
+post_format:
+- Image
+tags:
+- Puppet
+- PuppetConf2014
+---
+
+Glad to be at PuppetConf with #ShadowSoft exploring all the latest and greatest in PuppetLabs.
+
+[![IMG_0050-0.JPG](http://questy.org/wp-content/uploads/2014/09/IMG_0050-0.jpg)](http://questy.org/wp-content/uploads/2014/09/IMG_0050-0.jpg)
