@@ -206,19 +206,171 @@
 
 <p>Vagrant is a unique tool in that it allows you to manage all these varied VMs, but adds a twist.  The big twist is that you don&rsquo;t have to have the <em>source </em>materials for the VMs you&rsquo;re installing.  In fact, the simplicity of turning up a new VM is astounding.  Take the following series of commands:</p>
 
-<p>cd <your favorite directory>
-mkdir precise32
-cd precise32
-vagrant init hashicorp/precise32
-vagrant up</p>
+<p>cd <your favorite directory><br>
+mkdir precise32<br>
+cd precise32<br>
+vagrant init hashicorp/precise32<br>
+vagrant up<br></p>
 
 <p>If your Vagrant is installed correctly, a number of things start to happen.  First, Vagrant places a file in your cwd called &ldquo;Vagrantfile&rdquo;.  Your vagrant file (indie) looks like this:</p>
 
-<p>[snippet id=&ldquo;34&rdquo;]</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># -*- mode: ruby -*-
+</span><span class='line'># vi: set ft=ruby :
+</span><span class='line'>
+</span><span class='line'># All Vagrant configuration is done below. The "2" in Vagrant.configure
+</span><span class='line'># configures the configuration version (we support older styles for
+</span><span class='line'># backwards compatibility). Please don't change it unless you know what
+</span><span class='line'># you're doing.
+</span><span class='line'>Vagrant.configure("2") do |config|
+</span><span class='line'>  # The most common configuration options are documented and commented below.
+</span><span class='line'>  # For a complete reference, please see the online documentation at
+</span><span class='line'>  # https://docs.vagrantup.com.
+</span><span class='line'>
+</span><span class='line'>  # Every Vagrant development environment requires a box. You can search for
+</span><span class='line'>  # boxes at https://atlas.hashicorp.com/search.
+</span><span class='line'>  config.vm.box = "hashicorp/precise32"
+</span><span class='line'>
+</span><span class='line'>  # Disable automatic box update checking. If you disable this, then
+</span><span class='line'>  # boxes will only be checked for updates when the user runs
+</span><span class='line'>  # `vagrant box outdated`. This is not recommended.
+</span><span class='line'>  # config.vm.box_check_update = false
+</span><span class='line'>
+</span><span class='line'>  # Create a forwarded port mapping which allows access to a specific port
+</span><span class='line'>  # within the machine from a port on the host machine. In the example below,
+</span><span class='line'>  # accessing "localhost:8080" will access port 80 on the guest machine.
+</span><span class='line'>  # config.vm.network "forwarded_port", guest: 80, host: 8080
+</span><span class='line'>
+</span><span class='line'>  # Create a private network, which allows host-only access to the machine
+</span><span class='line'>  # using a specific IP.
+</span><span class='line'>  # config.vm.network "private_network", ip: "192.168.33.10"
+</span><span class='line'>
+</span><span class='line'>  # Create a public network, which generally matched to bridged network.
+</span><span class='line'>  # Bridged networks make the machine appear as another physical device on
+</span><span class='line'>  # your network.
+</span><span class='line'>  # config.vm.network "public_network"
+</span><span class='line'>
+</span><span class='line'>  # Share an additional folder to the guest VM. The first argument is
+</span><span class='line'>  # the path on the host to the actual folder. The second argument is
+</span><span class='line'>  # the path on the guest to mount the folder. And the optional third
+</span><span class='line'>  # argument is a set of non-required options.
+</span><span class='line'>  # config.vm.synced_folder "../data", "/vagrant_data"
+</span><span class='line'>
+</span><span class='line'>  # Provider-specific configuration so you can fine-tune various
+</span><span class='line'>  # backing providers for Vagrant. These expose provider-specific options.
+</span><span class='line'>  # Example for VirtualBox:
+</span><span class='line'>  #
+</span><span class='line'>  # config.vm.provider "virtualbox" do |vb|
+</span><span class='line'>  #   # Display the VirtualBox GUI when booting the machine
+</span><span class='line'>  #   vb.gui = true
+</span><span class='line'>  #
+</span><span class='line'>  #   # Customize the amount of memory on the VM:
+</span><span class='line'>  #   vb.memory = "1024"
+</span><span class='line'>  # end
+</span><span class='line'>  #
+</span><span class='line'>  # View the documentation for the provider you are using for more
+</span><span class='line'>  # information on available options.
+</span><span class='line'>
+</span><span class='line'>  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
+</span><span class='line'>  # such as FTP and Heroku are also available. See the documentation at
+</span><span class='line'>  # https://docs.vagrantup.com/v2/push/atlas.html for more information.
+</span><span class='line'>  # config.push.define "atlas" do |push|
+</span><span class='line'>  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
+</span><span class='line'>  # end
+</span><span class='line'>
+</span><span class='line'>  # Enable provisioning with a shell script. Additional provisioners such as
+</span><span class='line'>  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
+</span><span class='line'>  # documentation for more information about their specific syntax and use.
+</span><span class='line'>  # config.vm.provision "shell", inline: &lt;&lt;-SHELL
+</span><span class='line'>  #   apt-get update
+</span><span class='line'>  #   apt-get install -y apache2
+</span><span class='line'>  # SHELL
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Note that this is a long file with a lot of explanatory documentation.  In actuality, the most important part of your Vagrantfile can be summed up here:</p>
 
-<p>[snippet id=&ldquo;35&rdquo;]</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># -*- mode: ruby -*-
+</span><span class='line'># vi: set ft=ruby :
+</span><span class='line'>Vagrant.configure("2") do |config|
+</span><span class='line'>  config.vm.box = "hashicorp/precise32"
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
 
 <p>These are the lines that are uncommented plus the top two declaratives that tell Vagrant what to do.  It&rsquo;s a very simple file that does some very powerful things.  First, it checks your home directory in the ~/.vagrant.d location to see if you already have the &ldquo;precise32&rdquo; Vagrant source &ldquo;box&rdquo;.  (more on boxes later).  Next, if you do have this, it will simply start up a VM in your virtualization of choice with a randomized name.  For instance, mine is called &ldquo;precise32_default_1402504453444_30545&rdquo;.  Vagrant takes away the selection of an .iso image, connecting it to the virtual CD/DVD Rom, starting an installer, etc.  It simply sends you a pre-rolled image, places it in your .vagrant.d directory, and provisions the VM to respond to Vagrant commands, and starts it up within Virtualbox.  Precise32 is simply a test scenario, as Vagrant&rsquo;s site has quite a number of varied and specially configured &ldquo;box&rdquo; files that you can use to prototype on at their &ldquo;ready-made&rdquo; box discovery site: <a href="https://vagrantcloud.com/discover/featured.">https://vagrantcloud.com/discover/featured.</a>  You can install boxes with too many variations and differentiations to enumerate here, and that&rsquo;s not really the point for our purposes&hellip; you may find these of great assistance in your own workplace, but let&rsquo;s continue.</p>
 
@@ -401,7 +553,7 @@ vagrant up</p>
 <p>Since Git is personal to you as a user, you need to let Git know a few things about you.  This gives your git server (in our case GitHub) the information it needs when you&rsquo;re pushing code (like your identity, default commit locations, etc).  First, your name and email:</p>
 
 <p>git config &ndash;global user.name &ldquo;John Doe&rdquo;
-git config &ndash;global user.email <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#x6f;&#58;&#121;&#111;&#x75;&#x40;&#x79;&#111;&#x75;&#114;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;">&#121;&#111;&#117;&#x40;&#x79;&#x6f;&#x75;&#x72;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#111;&#x6d;</a></p>
+git config &ndash;global user.email <a href="&#109;&#97;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x79;&#111;&#117;&#64;&#x79;&#111;&#x75;&#114;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;">&#121;&#x6f;&#x75;&#64;&#121;&#111;&#117;&#x72;&#109;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;</a></p>
 
 <p>You&rsquo;ll only need to perform this once.  There are quite a few options and you can read up on those <a href="http://git-scm.com/book/en/Getting-Started-First-Time-Git-Setup">here</a> at your leisure.</p>
 

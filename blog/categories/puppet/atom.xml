@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Puppet | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/puppet/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-05T16:14:09-04:00</updated>
+  <updated>2017-04-05T16:15:58-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -73,83 +73,78 @@ vagrant up<br></p>
 
 <p>If your Vagrant is installed correctly, a number of things start to happen.  First, Vagrant places a file in your cwd called &ldquo;Vagrantfile&rdquo;.  Your vagrant file (indie) looks like this:</p>
 
-<p>```# -<em>- mode: ruby -</em>-</p>
+<pre><code># -*- mode: ruby -*-
+# vi: set ft=ruby :
 
-<h1>vi: set ft=ruby :</h1>
-
-<h1>All Vagrant configuration is done below. The &ldquo;2&rdquo; in Vagrant.configure</h1>
-
-<h1>configures the configuration version (we support older styles for</h1>
-
-<h1>backwards compatibility). Please don&rsquo;t change it unless you know what</h1>
-
-<h1>you&rsquo;re doing.</h1>
-
-<p>Vagrant.configure(&ldquo;2&rdquo;) do |config|
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
-  # <a href="https://docs.vagrantup.com.">https://docs.vagrantup.com.</a></p>
+  # https://docs.vagrantup.com.
 
-<p>  # Every Vagrant development environment requires a box. You can search for
-  # boxes at <a href="https://atlas.hashicorp.com/search.">https://atlas.hashicorp.com/search.</a>
-  config.vm.box = &ldquo;hashicorp/precise32&rdquo;</p>
+  # Every Vagrant development environment requires a box. You can search for
+  # boxes at https://atlas.hashicorp.com/search.
+  config.vm.box = "hashicorp/precise32"
 
-<p>  # Disable automatic box update checking. If you disable this, then
+  # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
-  # <code>vagrant box outdated</code>. This is not recommended.
-  # config.vm.box_check_update = false</p>
+  # `vagrant box outdated`. This is not recommended.
+  # config.vm.box_check_update = false
 
-<p>  # Create a forwarded port mapping which allows access to a specific port
+  # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
-  # accessing &ldquo;localhost:8080&rdquo; will access port 80 on the guest machine.
-  # config.vm.network &ldquo;forwarded_port&rdquo;, guest: 80, host: 8080</p>
+  # accessing "localhost:8080" will access port 80 on the guest machine.
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
 
-<p>  # Create a private network, which allows host-only access to the machine
+  # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # config.vm.network &ldquo;private_network&rdquo;, ip: &ldquo;192.168.33.10&rdquo;</p>
+  # config.vm.network "private_network", ip: "192.168.33.10"
 
-<p>  # Create a public network, which generally matched to bridged network.
+  # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
-  # config.vm.network &ldquo;public_network&rdquo;</p>
+  # config.vm.network "public_network"
 
-<p>  # Share an additional folder to the guest VM. The first argument is
+  # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  # config.vm.synced_folder &ldquo;../data&rdquo;, &ldquo;/vagrant_data&rdquo;</p>
+  # config.vm.synced_folder "../data", "/vagrant_data"
 
-<p>  # Provider-specific configuration so you can fine-tune various
+  # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  # config.vm.provider &ldquo;virtualbox&rdquo; do |vb|
+  # config.vm.provider "virtualbox" do |vb|
   #   # Display the VirtualBox GUI when booting the machine
   #   vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
-  #   vb.memory = &ldquo;1024&rdquo;
+  #   vb.memory = "1024"
   # end
   #
   # View the documentation for the provider you are using for more
-  # information on available options.</p>
+  # information on available options.
 
-<p>  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
+  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
   # such as FTP and Heroku are also available. See the documentation at
-  # <a href="https://docs.vagrantup.com/v2/push/atlas.html">https://docs.vagrantup.com/v2/push/atlas.html</a> for more information.
-  # config.push.define &ldquo;atlas&rdquo; do |push|
-  #   push.app = &ldquo;YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME&rdquo;
-  # end</p>
+  # https://docs.vagrantup.com/v2/push/atlas.html for more information.
+  # config.push.define "atlas" do |push|
+  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
+  # end
 
-<p>  # Enable provisioning with a shell script. Additional provisioners such as
+  # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  # config.vm.provision &ldquo;shell&rdquo;, inline: &lt;&lt;-SHELL
+  # config.vm.provision "shell", inline: &lt;&lt;-SHELL
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
 end
-```</p>
+</code></pre>
 
 <p>Note that this is a long file with a lot of explanatory documentation.  In actuality, the most important part of your Vagrantfile can be summed up here:</p>
 
@@ -295,7 +290,7 @@ end
 <p>Since Git is personal to you as a user, you need to let Git know a few things about you.  This gives your git server (in our case GitHub) the information it needs when you&rsquo;re pushing code (like your identity, default commit locations, etc).  First, your name and email:</p>
 
 <p>git config &ndash;global user.name &ldquo;John Doe&rdquo;
-git config &ndash;global user.email <a href="&#x6d;&#97;&#105;&#108;&#116;&#x6f;&#58;&#121;&#x6f;&#x75;&#x40;&#121;&#x6f;&#117;&#x72;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#111;&#x6d;">&#121;&#111;&#117;&#64;&#121;&#111;&#x75;&#x72;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#x6d;</a></p>
+git config &ndash;global user.email <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x79;&#x6f;&#x75;&#x40;&#x79;&#x6f;&#x75;&#x72;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#x6d;">&#121;&#x6f;&#117;&#64;&#x79;&#x6f;&#117;&#114;&#109;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a></p>
 
 <p>You&rsquo;ll only need to perform this once.  There are quite a few options and you can read up on those <a href="http://git-scm.com/book/en/Getting-Started-First-Time-Git-Setup">here</a> at your leisure.</p>
 
