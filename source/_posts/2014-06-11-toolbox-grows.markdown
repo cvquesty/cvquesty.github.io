@@ -64,7 +64,8 @@ vagrant up<br>
 
 If your Vagrant is installed correctly, a number of things start to happen.  First, Vagrant places a file in your cwd called "Vagrantfile".  Your vagrant file (indie) looks like this:
 
-```# -*- mode: ruby -*-
+```
+# -*- mode: ruby -*-
 # vi: set ft=ruby :
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
@@ -136,7 +137,6 @@ Vagrant.configure("2") do |config|
   # SHELL
 end
 ```
-
 
 Note that this is a long file with a lot of explanatory documentation.  In actuality, the most important part of your Vagrantfile can be summed up here:
 
