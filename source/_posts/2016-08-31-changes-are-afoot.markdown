@@ -10,4 +10,6 @@ After much thought and consideration, I've terminated my employ with ShadowSoft.
 
 As luck would have it, a totally awesome telecommute FT/Perm option came up with PayPal, and I accepted rather excitedly, and began that role today.  After some getting acquainted with my new duties, you should be seeing/hearing more from me soon.
 
-<center>![PayPal](http://cvquesty.github.io/images/paypal.png)</center>
+<center>
+![PayPal](http://cvquesty.github.io/images/paypal.png)
+</center>
