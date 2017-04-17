@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Management May Be Missing an Important Component of DEVOPS - Questy.org</title>
+  <meta name="author" content="Jerald Sheets">
+
+  
+  <meta name="description" content="As I travel around the country installing and training people in Puppet Enterprise, I’m noticing some characteristics of management perspective on &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://questy.org/blog/2015/03/23/management-may-be-missing-an-important-component-of-devops/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Questy.org" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1135877-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Questy.org</a></h1>
+  
+    <h2>Tech musings and other things...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="questy.org">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Management May Be Missing an Important Component of DEVOPS</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-03-23T10:01:01-04:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>10:01 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://questy.org">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>As I travel around the country installing and training people in Puppet Enterprise, I’m noticing some characteristics of management perspective on the DEVOPS movement that has a disjoint with implementation and reality. In short: Managers are now hiring personnel in the field of DEVOPS for positions they may be highly qualified for, but have no institutional ability to execute on the tasks that will be assigned them in a modern infrastructure especially one that has to meet governance criteria such as ITIL, PCI, SOX, HIPAA, and various STIG requirements we see in governmental circles.</p>
+
+<p>First a story, then an observation…</p>
+
+<p>Early Rumblings of DEVOPS</p>
+
+<p>A number of years ago I was a senior engineer in a large TV/Web property. The team was probably one of the best I’d ever worked with from an operational perspective. What I mean by that, is they not only knew how to do what they knew, but when confronted with requirements on something that did not exist, or had not been built yet, they just built it themselves. (handy to have in the days before ubiquitous workflow engines, automation tools, and deployment mechanisms!)</p>
+
+<p>At the same time, the devlopment team was mostly tiered… Entry level personnel were basic coders, seniors were considerably more integrated into the nuts &amp; bolts of the site and the leads &amp; managers could actually commit. Quite a well organized protectionist strategy to keep the codebase clean and mostly devoid of errors. It was a great setup for a 2000-2002 era development shop. Problem was, it was 2005.</p>
+
+<p>As business goes, eventually newer and more well rounded developers with experience in a new subset of tools and techniques began to be hired, and from their background they might have had elevated privileges in their past environments, the ability to commit at will (or continuously integrate?) and felt as though this somewhat “experienced” development model was archaic and slow. And it was.</p>
+
+<p>Inevitably, one of these nice folks would make their way over to the operations side of the house, usually in despair, looking for ways to make their lives easier, which usually ended up in some sort of altercation over “root” level access to systems throughout the environment they had to touch. One could assume how that conversation would go, ultimately operations could not find a business justification for such a level of access, and the request was denied. This would engender a certain amount of tension between teams, and life would roll on in much the same way.</p>
+
+<p>Finally, one day, one of the best developers I personally have ever had the privilege of working with came on as a contractor. (he would ultimately come on board full time and then become the Sr. Architect for the team) Everything he did would turn to gold. his development models and abilities were changing the way developers would think about what they could do, and methods and procedures were changing, deployment techologies were being tried, workflow engines were making the development side of the house quite modern by all measures.</p>
+
+<p>However, the existing operational model continued along at the early-century norms, and would not/could not budge. Now, this wasn’t due to the fact that there were jerks in the department, no quite the contrary. In scearios where a team is so competent in what they do, they look for ways to script and automate away mundanity. The better the team, the stronger this backbone. The stronger the backbone, the more tendrils get attached the the core until automation and development reaches each and every part of the infrastructure. When the team builds to that level, each part hands off to the other. Centralized data stores provide the API for the site, and to touch any particular part of the infrastructure at the design level affects the entire system. So goes Infrastructure architecture.</p>
+
+<p>Before there was a “DEVOPS”</p>
+
+<p>As you can see, in very real terms, this was a “pre-incarnate” DEVOPS infrastructure. A little more OPS than DEV, but nonetheless automated as was possible.</p>
+
+<p>But these new upstart tools were going to ruin this! Yes, they had promise and could certainly replace large portions of the existing workflow, but it could take months or years to “undo” what had already been done to supplant existing mechanisms with newer, better tools.</p>
+
+<p>And therein lies the road to DEVOPS.</p>
+
+<p>The Climate Today</p>
+
+<p>I tell the above story to illustrate the tensions existent before the rise of DEVOPS and the subsequent automation revolution we’re currently experiencing.</p>
+
+<p>Many times one would love to implement their new tools, but the operational infrastructure would prevent it. Or, lesser-informed development teams would accept no less than the highes level of access into the environment, but modern compliance standards prevent that from happening as well.</p>
+
+<p>The manager that has to navigate this particular problem when hiring or resourcing a need in her infrastructure has quite the task ahead of them. Why? DEVOPS has integrated the two fields at a vector point to a degree whereby it is incredibly difficult to determine where the DEV ends and the OPS begins. Sure, there are considerably more well-defined responsibilities on the extremeties of the respective disciplines, but that joining point threatens to cause dischord in the world of the IT infrastructure and many sleepless nights for the IT manager in trying to nail down his talent needs.</p>
+
+<p>Take the requirements for the “DEVOPS Application Operations Engineer” found on one of the major online employment sites posted just a few days ago for a major metro in the U.S.:</p>
+
+<p>Minimum 4 years' experience in scripting and or any development languages like C#,.NET, Python, Java, Shell, Ruby or any other open source languages.</p>
+
+<p>Experience with HTML/XML and Java Script</p>
+
+<p>Familiarity with Microsoft SCOM, SolarWinds Orion, Keynote, Nagios, Puppet, Chef or other monitoring, SaaS management solutions is desired</p>
+
+<p>Proven experience debugging and troubleshooting software-related issues in a software development or advanced application support position</p>
+
+<p>As you can see, this is a development-heavy position (that, IMO, is all over the map from a requirements perspective), but so goes job descriptions today. Read between the lines, though…</p>
+
+<p>Someone needs a competent developer that isn’t completely freaked out when someone says “Puppet Environment”, “Monitoring”, or “SaaS”, that knows their way around deployment and automation and can get things done. That’s fine. Problem is, this assumes full lifecycle respnsibility when the actuality is that the future employee has a hard-line stopping point beyond which he or she will never be “allowed” to tread due to compliance alone, and that is the breakpoint between DEV and OPS in the DEVOPS world. Consider this:</p>
+
+<p><img src="http://cvquesty.github.io/images/devops.png" alt="DEVOPS" /></p>
+
+<p>There are three clearly defined worlds here, all converging on a singluar point known as DEVOPS. From the development skill and expertise of the developer to the testing and assurance retrospect of the QA Engineer, to the Security and Compliance purview of the Operational Architect, DEVOPS is not a “one trick pony” with a singularity view. It is a methodology that brings together the three worlds in a clear developmental workflow to speed safe and secure deployment with minimal errors into serving infrastructure. As often as people try and push DEVOPS into a development position or into an Operations or QA postion when hiring, success will be limited, and frustration will be the result.</p>
+
+<p>What, Then, Is the Manager Missing?</p>
+
+<p>As has been heavily implied thus far, the manager may be missing the fact that DEVOPS is not a position but a way of doing things. DEVOPS is a methodology, not a granting of rights or abilities. And, if we’re talking about lines of demarcation within groups, DEVOPS is a superstructure of tools built, implemented and designed by the Operational Architectural team to move, implement, and regression test code and associated objects provided by the Development Architectural team with tests, regressions, and automated mechanisms specified by the Quality Assurance Architectural team in a specific fashion and after a specific methodology that has commonly become referred to as DEVOPS.</p>
+
+<p>The manager has to realize that this is not a subset of bullet points on a resume, but a wholistic approach to all of their environmental considerations that requires all teams to cooperate through to the end result: QUality Software Products delivered in as short a cycle as possible in an automated fashion with as few errors and bugs as reasonably can be remediated before going “live”.</p>
+
+<p>The manager who is looking for this methodology in a single position has already lost the battle before ever posting the position.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jerald Sheets</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-03-23T10:01:01-04:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>10:01 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/devops-geekstuff-linux-puppet/'>devops,geekstuff,linux,puppet</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://questy.org/blog/2015/03/23/management-may-be-missing-an-important-component-of-devops/" data-via="CVQuesty" data-counturl="http://questy.org/blog/2015/03/23/management-may-be-missing-an-important-component-of-devops/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/15/vagrant-and-docker-love/" title="Previous Post: Vagrant and Docker Love">&laquo; Vagrant and Docker Love</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/03/23/management-may-be-missing-an-important-component-of-devops/">Management May Be Missing an Important Component of DEVOPS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/15/vagrant-and-docker-love/">Vagrant and Docker Love</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/08/moving-my-tech-content-to-github/">Moving My Tech Content to GitHub</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/23/puppetconf-2014/">PuppetConf 2014</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/11/southeast-puppet-users-group-september/">Southeast Puppet User's Group September</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/CVQuesty">@CVQuesty</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'CVQuesty',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Jerald Sheets -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'questy-org';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://questy.org/blog/2015/03/23/management-may-be-missing-an-important-component-of-devops/';
+        var disqus_url = 'http://questy.org/blog/2015/03/23/management-may-be-missing-an-important-component-of-devops/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://questy.org/blog/2015/03/23/management-may-be-missing-an-important-component-of-devops/</loc>
+<lastmod>2015-03-23T10:01:01-04:00</lastmod>
+</url>
+<url>
 <loc>http://questy.org/blog/2015/01/15/vagrant-and-docker-love/</loc>
 <lastmod>2015-01-15T20:31:15-05:00</lastmod>
 </url>
@@ -269,6 +273,9 @@
 </url>
 <url>
 <loc>http://questy.org/blog/categories/geekstuff-linux-puppet/</loc>
+</url>
+<url>
+<loc>http://questy.org/blog/categories/devops-geekstuff-linux-puppet/</loc>
 </url>
 <url>
 <loc>http://questy.org/images/Perl-Mongers-Puppet-PresentationTraining.pdf</loc>
