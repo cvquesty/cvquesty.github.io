@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Organizing Your Hierarchy Equals Pain - Questy.org</title>
+  <meta name="author" content="Jerald Sheets">
+
+  
+  <meta name="description" content="The Pain Point One would think after reading Gary Larizza’s blog that I wouldve come away with the idea that Hiera presents a few issues as it solves &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://questy.org/blog/2015/05/15/organizing-your-hierarchy-equals-pain/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Questy.org" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1135877-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Questy.org</a></h1>
+  
+    <h2>Tech musings and other things...</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="questy.org">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Organizing Your Hierarchy Equals Pain</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-15T17:48:59-04:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>5:48 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://questy.org">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><strong>The Pain Point</strong></p>
+
+<p>One would think after reading Gary Larizza’s blog that I wouldve come away with the idea that Hiera presents a few issues as it solves a ton… but no. I had to go and think it was easy, fly off half-cocked and try and tackle a big issue or two, unprepared mind you, and here I am… re-discovering what humility should be like.</p>
+
+<p><strong>The Problem</strong></p>
+
+<p>Hiera looks simple. Disarmingly simple. However, the pain doesn’t come in just looking at a nice, default hiera.yaml:</p>
+
+<hr />
+
+<p>:backends:
+- yaml
+:hierarchy:
+- “%{clientcert}”
+- “%{environment}”
+- common
+:yaml:
+:datadir: “/etc/puppetlabs/puppet/environments/%{environment}/hieradata”</p>
+
+<p>We can simply look at this and see the wonderful simplicity of how the yaml file is laid out, the ease of adding more hierarchies from which to gain data, and even expand the model to include subdirectories and all sorts of interesting methods of organizing and abstracting our code into usable, organized chunks.</p>
+
+<p>Not so fast.</p>
+
+<p>The real issues begin when you’re dealing with a customer. All too often I find that even they aren’t entirely sure what’s going on in their very own environment, and pushed hard, will actually argue among themselves as to just how everything works. Scary.</p>
+
+<p>The main thing we find ourselves doing is figuring out that last mile… What precisely is the role of machine X in this environment? Ask two people separate from each other, and they’ll likely give different (sometimes remarkably so) answers. Get them together and they may quibble a bit, but generally get to consensus.</p>
+
+<p>This is REALLY, REALLY important. If the folks you’re trying to help aren’t 100% sure exactly:</p>
+
+<p>What a machine does
+How a machine is built
+What it’s role in the organization is
+You’ve got some real issues.</p>
+
+<p><strong>This Doesn’t Suck</strong></p>
+
+<p>Often, engineers look at the Hiera configuration file in a vacuum (so much for the suck joke). Not permanently but definitely independently at first. Then, as the engagement pushes on to defining Roles and Profiles for the site, you have this “oh crap” moment, and throw back to the hierarchy and then start modifying lookup layers, but then jump forward to the profiles where the lookups are (or should be, anyhow) and realize they assumed a different hierarchy. Then, jump back to the hiera.yaml, make changes, then back to the profiles and repeat the process and then finally to the component modules, and remediate any assumptions you made on everythin gyou just changed. Uh oh. Wasted time.</p>
+
+<p>I’ve started working through “all the things” and have come up with a mechanism that works well for me. Hopefully you can gain some mileage from it as well.</p>
+
+<p><strong>First Thing’s First</strong></p>
+
+<p>Some would argue you should do the Hierarchy first while others would argue you do the Profiles first. However, I’ve found that parsing out all the business logic with the team gains a remarkable amount of runway for you to start. Why?</p>
+
+<p>Systems engineers are techno-nerd types. The nuts &amp; bolts, configs and the like are their prime concern and more often than not, they view the site atomically. They can tell you with great detail precisely what each and every machine has installed on it (often…not always), but generally know what the IT ROLE of a node or collection of nodes is for. Further, they can tell you who requested it, what kind of storage may be connected, what business group out there it satisfies the needs of, but with a startling amount of frequency, cannot tell you the BUSINES ROLE of the node.</p>
+
+<p>Q: What is it?
+A: A web server.
+Q: What’s it’s purpose?
+A: To serve web documents, duh!
+Q: No, no… what’s it’s business purpose?
+A: To make money?
+Q: No, no… If you were to give it one overarching purpose, one reason for existing, what would it be?
+A: Oh… ummm… I never thought of that before.</p>
+
+<p>You’d be surprised just how often you arrive there with pretty much everyone.</p>
+
+<p>As a result, if you wait until mid-engagement to reach this point, (or at least the middle of the writing phase), you’ve got a fair amount of backtracking, and even refactoring to do before you regain some sense of normalcy and can push forward.</p>
+
+<p><strong>Most Specific to Least</strong></p>
+
+<p>As has been said many times and in many ways, your MOST specific designation should always come first. For instance, what is the MOST atomic level of abstraction? Well, the node itself, of course, so the %{clientcert} designator suffices for that.</p>
+
+<p>Well, what’s next? That depends on you. You might have a location to think of (is this data center on the east or west coast, US or Asia). That’s highly broad… maybe not. It might be environment (such as DEV, TEST, PROD). Again, this is custom to you, and that might still be overly broad and you need to find a happy place between clientcert and environment. Only you can tell me that when I’m standing in front of you, so I generally refrain until I can get the layout of your site.</p>
+
+<p>For instance, one customer had clientcert, then location, then environment. That way, items unique to the data center the nodes were in would get handled first, and then things that were environment unique (regardless of location – more broad) could get handled next. See? Custom to them and the way they do business or are arranged technologically.</p>
+
+<p>I “borrowed” the name for this post from Bill Engvall to illustrate a point, that if you just run off to development with no prior knowledge of the things Hiera works with, you will encounter the pain of refactoring at what is most likely the component module level and then the profile level as well. If you’ve ever had to do it, and then do it on a time crunch, truly you have felt the pain.</p>
+
+<p>Avoid it. Think before you act.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jerald Sheets</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-05-15T17:48:59-04:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>5:48 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/geekstuff-hiera-puppet/'>geekstuff,hiera,puppet</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://questy.org/blog/2015/05/15/organizing-your-hierarchy-equals-pain/" data-via="CVQuesty" data-counturl="http://questy.org/blog/2015/05/15/organizing-your-hierarchy-equals-pain/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/04/30/puppets-dot-puppets-everywhere/" title="Previous Post: Puppets.. Puppets Everywhere">&laquo; Puppets.. Puppets Everywhere</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/05/15/organizing-your-hierarchy-equals-pain/">Organizing Your Hierarchy Equals Pain</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/04/30/puppets-dot-puppets-everywhere/">Puppets.. Puppets Everywhere</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/">Some Coding Work of Late...</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/26/building-your-toolbox/">Building Your Toolbox</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/23/management-may-be-missing-an-important-component-of-devops/">Management May Be Missing an Important Component of DEVOPS</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/CVQuesty">@CVQuesty</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'CVQuesty',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Jerald Sheets -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'questy-org';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://questy.org/blog/2015/05/15/organizing-your-hierarchy-equals-pain/';
+        var disqus_url = 'http://questy.org/blog/2015/05/15/organizing-your-hierarchy-equals-pain/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

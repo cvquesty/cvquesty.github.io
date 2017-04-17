@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-17T09:39:55-04:00</updated>
+  <updated>2017-04-17T09:44:44-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -12,6 +12,84 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Organizing Your Hierarchy Equals Pain]]></title>
+    <link href="http://questy.org/blog/2015/05/15/organizing-your-hierarchy-equals-pain/"/>
+    <updated>2015-05-15T17:48:59-04:00</updated>
+    <id>http://questy.org/blog/2015/05/15/organizing-your-hierarchy-equals-pain</id>
+    <content type="html"><![CDATA[<p><strong>The Pain Point</strong></p>
+
+<p>One would think after reading Gary Larizza’s blog that I wouldve come away with the idea that Hiera presents a few issues as it solves a ton… but no. I had to go and think it was easy, fly off half-cocked and try and tackle a big issue or two, unprepared mind you, and here I am… re-discovering what humility should be like.</p>
+
+<p><strong>The Problem</strong></p>
+
+<p>Hiera looks simple. Disarmingly simple. However, the pain doesn’t come in just looking at a nice, default hiera.yaml:</p>
+
+<hr />
+
+<p>:backends:
+- yaml
+:hierarchy:
+- “%{clientcert}”
+- “%{environment}”
+- common
+:yaml:
+:datadir: “/etc/puppetlabs/puppet/environments/%{environment}/hieradata”</p>
+
+<p>We can simply look at this and see the wonderful simplicity of how the yaml file is laid out, the ease of adding more hierarchies from which to gain data, and even expand the model to include subdirectories and all sorts of interesting methods of organizing and abstracting our code into usable, organized chunks.</p>
+
+<p>Not so fast.</p>
+
+<p>The real issues begin when you’re dealing with a customer. All too often I find that even they aren’t entirely sure what’s going on in their very own environment, and pushed hard, will actually argue among themselves as to just how everything works. Scary.</p>
+
+<p>The main thing we find ourselves doing is figuring out that last mile… What precisely is the role of machine X in this environment? Ask two people separate from each other, and they’ll likely give different (sometimes remarkably so) answers. Get them together and they may quibble a bit, but generally get to consensus.</p>
+
+<p>This is REALLY, REALLY important. If the folks you’re trying to help aren’t 100% sure exactly:</p>
+
+<p>What a machine does
+How a machine is built
+What it’s role in the organization is
+You’ve got some real issues.</p>
+
+<p><strong>This Doesn’t Suck</strong></p>
+
+<p>Often, engineers look at the Hiera configuration file in a vacuum (so much for the suck joke). Not permanently but definitely independently at first. Then, as the engagement pushes on to defining Roles and Profiles for the site, you have this “oh crap” moment, and throw back to the hierarchy and then start modifying lookup layers, but then jump forward to the profiles where the lookups are (or should be, anyhow) and realize they assumed a different hierarchy. Then, jump back to the hiera.yaml, make changes, then back to the profiles and repeat the process and then finally to the component modules, and remediate any assumptions you made on everythin gyou just changed. Uh oh. Wasted time.</p>
+
+<p>I’ve started working through “all the things” and have come up with a mechanism that works well for me. Hopefully you can gain some mileage from it as well.</p>
+
+<p><strong>First Thing’s First</strong></p>
+
+<p>Some would argue you should do the Hierarchy first while others would argue you do the Profiles first. However, I’ve found that parsing out all the business logic with the team gains a remarkable amount of runway for you to start. Why?</p>
+
+<p>Systems engineers are techno-nerd types. The nuts &amp; bolts, configs and the like are their prime concern and more often than not, they view the site atomically. They can tell you with great detail precisely what each and every machine has installed on it (often…not always), but generally know what the IT ROLE of a node or collection of nodes is for. Further, they can tell you who requested it, what kind of storage may be connected, what business group out there it satisfies the needs of, but with a startling amount of frequency, cannot tell you the BUSINES ROLE of the node.</p>
+
+<p>Q: What is it?
+A: A web server.
+Q: What’s it’s purpose?
+A: To serve web documents, duh!
+Q: No, no… what’s it’s business purpose?
+A: To make money?
+Q: No, no… If you were to give it one overarching purpose, one reason for existing, what would it be?
+A: Oh… ummm… I never thought of that before.</p>
+
+<p>You’d be surprised just how often you arrive there with pretty much everyone.</p>
+
+<p>As a result, if you wait until mid-engagement to reach this point, (or at least the middle of the writing phase), you’ve got a fair amount of backtracking, and even refactoring to do before you regain some sense of normalcy and can push forward.</p>
+
+<p><strong>Most Specific to Least</strong></p>
+
+<p>As has been said many times and in many ways, your MOST specific designation should always come first. For instance, what is the MOST atomic level of abstraction? Well, the node itself, of course, so the %{clientcert} designator suffices for that.</p>
+
+<p>Well, what’s next? That depends on you. You might have a location to think of (is this data center on the east or west coast, US or Asia). That’s highly broad… maybe not. It might be environment (such as DEV, TEST, PROD). Again, this is custom to you, and that might still be overly broad and you need to find a happy place between clientcert and environment. Only you can tell me that when I’m standing in front of you, so I generally refrain until I can get the layout of your site.</p>
+
+<p>For instance, one customer had clientcert, then location, then environment. That way, items unique to the data center the nodes were in would get handled first, and then things that were environment unique (regardless of location – more broad) could get handled next. See? Custom to them and the way they do business or are arranged technologically.</p>
+
+<p>I “borrowed” the name for this post from Bill Engvall to illustrate a point, that if you just run off to development with no prior knowledge of the things Hiera works with, you will encounter the pain of refactoring at what is most likely the component module level and then the profile level as well. If you’ve ever had to do it, and then do it on a time crunch, truly you have felt the pain.</p>
+
+<p>Avoid it. Think before you act.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Puppets.. Puppets Everywhere]]></title>
@@ -1561,108 +1639,6 @@ Atlanta, GA 30350</p>
 <p>[wpgmza id=&ldquo;1&rdquo;]</p>
 
 <p>I hope to see you all there.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Puppet III - Initial Configuration]]></title>
-    <link href="http://questy.org/blog/2014/02/20/puppet-iii-initial-configuration/"/>
-    <updated>2014-02-20T22:23:42-05:00</updated>
-    <id>http://questy.org/blog/2014/02/20/puppet-iii-initial-configuration</id>
-    <content type="html"><![CDATA[<p>By now you should have 1 Server installation completed and 1 Client installation completed.  The only thing you&rsquo;re missing now is to link the two together.  The following client side configuration will be performed on ALL existing systems you have, to connect them to the server and to pull their configuration catalog down and apply the changes to the local host.</p>
-
-<p><strong>Certificates</strong></p>
-
-<p>By default, all communications in Puppet goes over SSL channels.  You can configure Puppet to use its own certificate signing mechanism or to use an external signing authority (outside the scope of this tutorial).  The signing process does two things.  First, it authorizes your client to communicate with the Puppet Master and receive configurations and keeps all that traffic secure from prying eyes.</p>
-
-<p><strong>Node Lists</strong></p>
-
-<p>Of course, the master needs a way to enumerate what hosts will be connecting, and how to apply what configuration where.  We&rsquo;ll look at node classification both on and off the host as well.</p>
-
-<p><strong>Server Configuration</strong></p>
-
-<p>Here we go.</p>
-
-<p>To get the server and client talking, there is a small amount of configuration that has to happen.  It essentially tells the server who will be calling, and tells the caller the server&rsquo;s &ldquo;phone number&rdquo;.  Very short and simple.  So, let&rsquo;s do that first.</p>
-
-<p><em><strong>Configs</strong></em></p>
-
-<p>Two files require editing on the server to prepare for your first Puppet run.  They are:</p>
-
-<p>/etc/puppet/manifests/site.pp
-/etc/puppet/manifests/nodes.pp</p>
-
-<p>As of this writing, the OSS installation does not place either file, so you will have to create them.  Make their content as follows:</p>
-
-<p><em><strong>site.pp</strong></em></p>
-
-<p><code>import ‘nodes.pp’
-$puppetserver = ‘--FQDN--’
-</code></p>
-
-<p>These two lines lay the foundation for the server&rsquo;s self-declaration as authority on configuration.</p>
-
-<p>The first line: &ldquo;import nodes.pp&rdquo; tells Puppet to look for the nodes.pp file you are about to create in the next step for node definitions (and thus their individual configurations) and the next line indicates this puppet servers' complete name.  This line is very important, as configurations throughout the Puppet software product and the client node software continually refer back to this variable.  This setting takes the form of the fully-qualified-domain-name of the server.  It is recommended you use &ldquo;puppet&rdquo; as the name of the server in your infrastructure.</p>
-
-<p>So if your site&rsquo;s name is &ldquo;bob.com&rdquo;, this line would be:</p>
-
-<p><code>$puppetserver = 'puppet.bob.com'</code></p>
-
-<p>While any hostname should do, I might mention one caveat you should be aware of should you decide to use something other than &lsquo;puppet.x.x&rsquo; formatting.  In the event your Puppet server cannot see or read the $puppetserver value, the internals of Puppet cause it to <em>default </em>to &ldquo;puppet&rdquo;.  To avoid any strange outage-based silliness, I would recommend sticking with the puppet name.  While this may cut cross-grain with your particular host naming system, there is no reason why the root name of the system cannot be puppet.domain.com and you CNAME your super-special host naming to that.</p>
-
-<p>Why not the other way around?  I&rsquo;ve seen in the wild situations where Puppet (especially as it concerns certificate signing) take the output of gethostbyname() for signing over a designated CNAME, even when you set this variable to the appropriate value.  Rather than deal with the mess, I recommend the former.</p>
-
-<p>Close the site.pp file.</p>
-
-<p>Next, you&rsquo;ll want to configure your nodes.pp file.  Now, keep in mind that while we are specifying our nodes manually in this file for the purposes of this tutorial, we will be doing all manner of really cool things with node designations in the future.  So, for now humor me, and I assure you we&rsquo;ll step into the wonderful world of the ENC, Dashboard and other goodies all too soon.  Right now, we&rsquo;re just trying to get Puppet up, connected, and talking.</p>
-
-<p><strong>nodes.pp</strong></p>
-
-<p> <code>
-node '--FQDN--' {
-}
-</code></p>
-
-<p>Here we are specifying our very first node, letting the master know it&rsquo;s allowed to connect, and eventually putting a number of things in-between the curly braces {} specifying the configuration for (or pointers to the configuration for) our client node.   Just as above, the &ldquo;FQDN&rdquo; piece in between the single tics should be replaced with the fully qualified domain name of the client host you wish to manage.  As above, in our fictitious domain of &ldquo;bob.com&rdquo;, we will simply call this host &ldquo;puppetclient.bob.com&rdquo;, thus making the content of the nodes.pp file:</p>
-
-<p> <code>
-node 'puppetclient.bob.com' {
-}
-</code></p>
-
-<p>For now, there&rsquo;s no need to  add configuration.  This is all we need to get started.  Exit from the nodes.pp file, saving it into the aforementioned spot of &ldquo;/etc/puppet/manifests/nodes.pp&rdquo;</p>
-
-<p>Here ends the server-side configuration for this portion of our tutorial.  On to the client configuration.</p>
-
-<p><strong>Client Configuration</strong></p>
-
-<p>For the client configuration, a base-level file has already been provided for you, and only needs some customization.</p>
-
-<p>The client configuration file is found at /etc/puppet/puppet.conf on the client (as well as the server).  The puppet.conf configuration file is an &ldquo;ini-style&rdquo; configuration file with [bracketed] headings and &ldquo;key = value&rdquo; line by line variables.</p>
-
-<p>For our initial configuration we will be adding a couple lines.  First of all, at the end of  the [main] section, add the following line:</p>
-
-<p>server = FQDN of the server</p>
-
-<p>or, as above</p>
-
-<p>server = puppet.bob.com</p>
-
-<p>Next, in the  [agent] section, the following three lines (for our fictitious &ldquo;bob.com&rdquo; domain)  should be added at the end:</p>
-
-<p>report = true
-server = puppet.bob.com
-certname = puppetclient.bob.com</p>
-
-<p>The server line appears to me to be somewhat redundant, but I&rsquo;ve always placed it in both locations, and cannot comment as to whether it is NOT needed.  The certname, FYI, is the FQDN of the client host you are configuring to connect to the server.</p>
-
-<p>The purpose of the &ldquo;certname&rdquo; variable should be explained here a bit.  This is the name you placed in the &ldquo;nodes.pp&rdquo; file, and is also the hostname that is passed to the master in the key signing process.  You want all locations in which you&rsquo;re specifying your node name to agree (puppetclient.bob.com in our example), so it&rsquo;s highly important to ensure consistency throughout.</p>
-
-<p><strong>Ready to Connect</strong></p>
-
-<p>Ok, let&rsquo;s recap&hellip;</p>
-
-<p>We&rsquo;ve set our site.pp and nodes.pp files in place on the server, specifying the server name and ensuring there is a FQDN node designation in the nodes.pp.  Next up, we&rsquo;ll make our first connection to the server and test the connection.</p>
 ]]></content>
   </entry>
   

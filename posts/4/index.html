@@ -9,7 +9,7 @@
   <meta name="author" content="Jerald Sheets">
 
   
-  <meta name="description" content="I saw a p1mp of a new book on Gruber called &ldquo;Being Geek&rdquo;.  It bills itself as &ldquo;The Software Developer&rsquo;s Career Handbook&rdquo &hellip;">
+  <meta name="description" content="System Administration is a funny thing. Many people think that it&rsquo;s just adding users, performing requests, and working with project groups to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,82 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/09/30/its-all-about-the-framework/">It's All About the Framework</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2010-09-30T11:09:26-04:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2010</span></span> <span class='time'>11:09 am</span></time>
+        
+           | <a href="/blog/2010/09/30/its-all-about-the-framework/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2010/09/30/its-all-about-the-framework/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>System Administration is a funny thing.</p>
+
+<p>Many people think that it&rsquo;s just adding users, performing requests, and working with project groups to get their &ldquo;next big thing&rdquo; out the door.</p>
+
+<p>Certainly, much of your work involves those very things, but what younger admins never quite realize until they&rsquo;ve built a beast that cannot be fed is that everything is about frameworks that tie everything together.  From a system load framework to an authentication framework to an asset management framework, if built correctly a framework can save each and every admin countless hours of administration time.  How?</p>
+
+<p><strong>Automation</strong></p>
+
+<p>Take distribution.  You can push files around considerably more easily when you&rsquo;ve built a framework to do so rather than every admin having an individual way to do it.  In fact, when properly implemented, distribution of a file to &ldquo;gobs&rdquo; of similar hosts (that&rsquo;s a technical term there :)) can be as simple as:</p>
+
+<p><strong><em>distrib <object> <class of host> <drop-point></em></strong></p>
+
+<p>Now, many will say that rsync or scp will do much of this for you, and that is correct.  However, in the context of your individual site, having symbolic abstractions such as &ldquo;class of host&rdquo; goes a long way.  Perhaps a certain file needs to be distributed to only your web servers.  Or maybe, only web servers running RedHat 5.3.  If you correctly build a framework for file shove and management, suddenly heavy lifting becomes a light chore.  After all, the more pulleys in the works, the lighter the load becomes.</p>
+
+<p><strong>Authentication</strong></p>
+
+<p>As has been covered on this site in the past, LDAP is a wonderful authentication framework that can be tied to positively everything in your environment as well.  From Apache authentication against the store to UNIX authentication, to various types of applications understanding LDAP as a target for authentication sources, much pain of user administration can be solved by having a centralized authentication mechanism.</p>
+
+<p><strong>Frameworks as Philosophy</strong></p>
+
+<p>Rather than continue with examples on a case-by-case basis, consider the entire concept of frameworks and unifying ties across systems and networks.  Many places I&rsquo;ve worked, organic growth brought about massive numbers of machines that were &ldquo;siloed&rdquo; one from another either by project boundaries, function boundaries, or other superimposed logical delineations we as users imposed on them.</p>
+
+<p>Instead of &ldquo;the DEV servers&rdquo; or &ldquo;The PROD servers&rdquo;, we have logically separated them into &ldquo;the ECommerce DEV servers&rdquo; versus &ldquo;the Web DEV servers&rdquo; and so forth.  Rather than having a framework of systems and their functions in the workplace providing services and features at a certain level to the customer and/or end-user, we cobble together pieces to serve a single purpose rather than modules to expand the greater infrastructure.</p>
+
+<p><strong>Logical Differentiation and Service-Orientation</strong></p>
+
+<p>The clear winner over the &ldquo;as needed&rdquo; or &ldquo;for a purpose&rdquo; way of doing things is the &ldquo;tiered&rdquo; or &ldquo;services-oriented&rdquo; model of work.  Rather than many groups of things that form a farm of servers, you have the farm of servers that service many different things.  This, I know, sounds something like technological double-speak, but let me explain what I mean.</p>
+
+<p>In a normal environment, we would have a somewhat typical scenario with front-end servers, back-end infrastructure, management, and organization.  The problem we have with this is that if &ldquo;New Whiz-Bang project #7&rdquo; comes along, new hardware will need to be procured for each piece of the puzzle.  New app servers, new web servers, new database components, maybe management and authentication considerations&hellip; Each project, every time, capital outlay, budgetary justifications, etc.</p>
+
+<p>If, instead, you think in terms of frameworks, your job becomes one of determining total resources needed across an environment rather than resources needed for an individual project, and thus individual project growth concerns, individual project funding concerns, personnel, etc.  "Siloed" growth and expansion may not bite you today or tomorrow, but as I said early on, will become a beast that cannot be fed.</p>
+
+<p>Consider instead, the following example:</p>
+
+<p>Instead of &ldquo;theses web servers versus those web servers&rdquo;, you instead have &ldquo;the web layer&rdquo;.  Any and all requests to your company come through &ldquo;the web layer&rdquo;.  It is scaled as an entity and not as individual projects.  When scaling happens, all environments benefit.</p>
+
+<p>Instead of &ldquo;these application servers&rdquo; versus &ldquo;those application servers&rdquo;, you have &ldquo;The App Layer&rdquo;.   A single applications framework that serves all application server requests back out the front-end web layer by leveraging container and web server features to do the &ldquo;effing magic &trade;&rdquo; on the backend to provide a unified front-facing experience to the user.</p>
+
+<p>Extrapolate these ideas&hellip; Instead of the app layer, let&rsquo;s say the app cluster.  Now the power behind this idea becomes clear.  Unlimited scalability with unlimited potential.  How about &ldquo;the database cluster&rdquo;?  Regardless of the solution you use, if there is a single database resource (cluster, replication ladder, whatever) that serves back queries you throw at it, how much better is that than &ldquo;databases for this&rdquo; and &ldquo;databases for that&rdquo;?</p>
+
+<p>Take it a step further.. make an XML services layer that serves out &ldquo;your data&rdquo; in a clearly defined API sort of way, and all you do is make XML requests to a services infrastructure rather than directly at your databases.  Or, your cluster is comprised of &ldquo;write databases&rdquo; versus &ldquo;read databases&rdquo; and you&rsquo;re segmenting the <em>type</em> of traffic you&rsquo;re serving to reading versus writing, making the read operations light-years faster.</p>
+
+<p>Authentication layers, web layers, XML layers, app layers, database layers&hellip; All frameworks that grow as an organism rather than series of unrelated growths.</p>
+
+<p>When going through your next design adjustment or your next expansion or data center rollout, consider thinking differently about growth and planning.  I believe that if you think in terms of large organisms with several related parts rather than several growths unrelated except in their location, you&rsquo;ll build into your infrastructure a power and a scalability that will serve you well for many years (and growths!) to come.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -547,38 +623,6 @@ TLS_CACERTDIR /etc/openldap/cacerts</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/01/09/win-a-new-canon-5dmkii-or-270/">Win a New Canon 5DMKII or $270...</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2010-01-09T09:30:10-05:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2010</span></span> <span class='time'>9:30 am</span></time>
-        
-           | <a href="/blog/2010/01/09/win-a-new-canon-5dmkii-or-270/#disqus_thread"
-             data-disqus-identifier="http://questy.org/blog/2010/01/09/win-a-new-canon-5dmkii-or-270/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Win a new Canon 5DMKII or $2700 of photo printing/product from @<a href="http://twitter.com/WHCCPro">WHCCPro</a> &amp; Scott Bourne. Pls RT. Info: <a href="http://bit.ly/6Mtx9I">http://bit.ly/6Mtx9I</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/5">&larr; Older</a>
@@ -596,6 +640,10 @@ TLS_CACERTDIR /etc/openldap/cacerts</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/05/15/organizing-your-hierarchy-equals-pain/">Organizing Your Hierarchy Equals Pain</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/30/puppets-dot-puppets-everywhere/">Puppets.. Puppets Everywhere</a>
       </li>
     
@@ -609,10 +657,6 @@ TLS_CACERTDIR /etc/openldap/cacerts</p>
     
       <li class="post">
         <a href="/blog/2015/03/23/management-may-be-missing-an-important-component-of-devops/">Management May Be Missing an Important Component of DEVOPS</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/15/vagrant-and-docker-love/">Vagrant and Docker Love</a>
       </li>
     
   </ul>
