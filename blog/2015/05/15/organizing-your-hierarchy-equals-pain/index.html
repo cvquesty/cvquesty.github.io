@@ -107,16 +107,25 @@
 
 <p>Hiera looks simple. Disarmingly simple. However, the pain doesn’t come in just looking at a nice, default hiera.yaml:</p>
 
-<hr />
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>---
+</span><span class='line'>:backends:
+</span><span class='line'>- yaml
+</span><span class='line'>:hierarchy:
+</span><span class='line'>- “%{clientcert}”
+</span><span class='line'>- “%{environment}”
+</span><span class='line'>- common
+</span><span class='line'>:yaml:
+</span><span class='line'>:datadir: “/etc/puppetlabs/puppet/environments/%{environment}/hieradata”</span></code></pre></td></tr></table></div></figure>
 
-<p>:backends:
-- yaml
-:hierarchy:
-- “%{clientcert}”
-- “%{environment}”
-- common
-:yaml:
-:datadir: “/etc/puppetlabs/puppet/environments/%{environment}/hieradata”</p>
 
 <p>We can simply look at this and see the wonderful simplicity of how the yaml file is laid out, the ease of adding more hierarchies from which to gain data, and even expand the model to include subdirectories and all sorts of interesting methods of organizing and abstracting our code into usable, organized chunks.</p>
 

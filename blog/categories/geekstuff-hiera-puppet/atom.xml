@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Geekstuff,hiera,puppet | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/geekstuff-hiera-puppet/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-17T09:44:44-04:00</updated>
+  <updated>2017-04-17T09:46:23-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -26,16 +26,16 @@
 
 <p>Hiera looks simple. Disarmingly simple. However, the pain doesn’t come in just looking at a nice, default hiera.yaml:</p>
 
-<hr />
-
-<p>:backends:
+<pre><code>---
+:backends:
 - yaml
 :hierarchy:
 - “%{clientcert}”
 - “%{environment}”
 - common
 :yaml:
-:datadir: “/etc/puppetlabs/puppet/environments/%{environment}/hieradata”</p>
+:datadir: “/etc/puppetlabs/puppet/environments/%{environment}/hieradata”
+</code></pre>
 
 <p>We can simply look at this and see the wonderful simplicity of how the yaml file is laid out, the ease of adding more hierarchies from which to gain data, and even expand the model to include subdirectories and all sorts of interesting methods of organizing and abstracting our code into usable, organized chunks.</p>
 
