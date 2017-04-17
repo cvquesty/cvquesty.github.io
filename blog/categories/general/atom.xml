@@ -4,7 +4,7 @@
   <title><![CDATA[Category: General | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/general/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-17T10:04:50-04:00</updated>
+  <updated>2017-04-17T10:12:11-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -12,6 +12,27 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Travel Hiatus]]></title>
+    <link href="http://questy.org/blog/2016/06/13/travel-hiatus/"/>
+    <updated>2016-06-13T10:06:29-04:00</updated>
+    <id>http://questy.org/blog/2016/06/13/travel-hiatus</id>
+    <content type="html"><![CDATA[<p><strong>Out</strong></p>
+
+<p>Just a quick update for you all. $work decided at some point that one of the things I was specifically hired for (blogging in the community) some sort of way &ldquo;gives away the farm&rdquo; in regards to Puppet, Puppet Consultation, and related items. As such, I&rsquo;ve been asked not to blog publicly regarding items we deliver as services.</p>
+
+<p>:-(</p>
+
+<p>It likely doesn&rsquo;t matter that much, as I&rsquo;m travelling more than I have in years, and am on-target to exceed 145k miles by Summer&rsquo;s end.  As a result, I will be laying off until I can regroup and find more time.</p>
+
+<p>Sorry, but as they say &ldquo;them&rsquo;s the breaks&rdquo;.</p>
+
+<p>If you need me, you can always find me on the Puppet community Slack Channel #puppet, and my nick there is @cvquesty.</p>
+
+<p>Look for interesting news from me soon.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Workflows, Tools, and a Myriad of Gobbledygook...]]></title>
@@ -128,47 +149,6 @@
 <p>This will remount the root filesystem as read-wwrite during maintenance so you can edit whatever you like in the /etc directory (or anything else residing on the root filesystem.</p>
 
 <p>I&rsquo;ve had to use this a number of times for varying reasons, and thought it might help you a bit.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[In Case You Haven’t Noticed…]]></title>
-    <link href="http://questy.org/blog/2007/04/17/in-case-you-havent-noticed/"/>
-    <updated>2007-04-17T15:47:57-04:00</updated>
-    <id>http://questy.org/blog/2007/04/17/in-case-you-havent-noticed</id>
-    <content type="html"><![CDATA[<p>We&rsquo;re at a new server out on the &lsquo;net. I&rsquo;ve moved all the websites I host out onto a data-center based server, and am removing all the extra hardware out of my home.</p>
-
-<p>Why, you might ask?</p>
-
-<p>Well, we&rsquo;re selling our home and moving into town. As such, I might be able to find the home I want. If not, I will wind up in an apartment for a time. Usually, an apartment doesn&rsquo;t have the room for the scale of server I have here at the house.</p>
-
-<p>So, I&rsquo;ve got a few things for sale.</p>
-
-<p>My house is a 3 Bedroom ranch home in suburban Atlanta, GA. You can see the pictures of my home from before I bought it in 4/04 here: <a href="http://picasaweb.google.com/questy/OurHouse">Our House</a> We&rsquo;re asking $159k. If you have any questions, contact me at <a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#58;&#106;&#x65;&#114;&#97;&#108;&#100;&#46;&#115;&#x68;&#101;&#x65;&#x74;&#x73;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;&#46;">&#x6a;&#101;&#x72;&#97;&#x6c;&#x64;&#46;&#115;&#104;&#101;&#101;&#116;&#115;&#64;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#x63;&#111;&#x6d;&#46;</a></p>
-
-<p>Also, I&rsquo;ve got some servers hanging around. Since I&rsquo;ve really gotten into the whole Dave Ramsey thing, I', selling them to apply toward my debt. My hope is to pay off nearly half of my remaining debt balance with the sale of my home and these servers.</p>
-
-<p>I have :</p>
-
-<p>VA Linux Full On Dual Pentium3 800MHz, 80G HDD, 1GB Ram
-VA Linux Full On Dual Pentium3 500MHz, 80G HDD, 1GB Ram
-VA Linux Full On Single Pentium3 500MHz, 40G HDD, 1GB Ram
-VA Linux Full On Chassis to use for parts. Has extra fans, power supplies, mobo.
-Linksys WAP54G Wireless Access Point
-SMC 24 Port 10/100 EZ Hub 5616DS
-(See pictures at end of article)</p>
-
-<p>In addition, I have about 6 white boxes from varying generations, including P2, P3, and some earlier stuff. There&rsquo;s a few 3D Graphics cards in there, and a ton of disk space among them all. Mix &amp; Match whatever you like.</p>
-
-<p>I&rsquo;ve got one crappy old monitor, and a bunch of cables, computer supplies, some CAT-5 and just ods and ends I&rsquo;ve collected over a 15-year IT career.</p>
-
-<p>I hope to sell it all together for $2000.00US. Buyer pays shipping. If I can&rsquo;t sell it all together for 2K, I&rsquo;ll have to ask more for each individual part.</p>
-
-<p>Well, if anyone can help I&rsquo;d appreciate it. If you need a server class machine, let me know!</p>
-
-<p>(image grabbed from Ebay)</p>
-
-<p><img src="http://www.jeraldsheets.com/pics/server.jpg" alt="" /></p>
 ]]></content>
   </entry>
   

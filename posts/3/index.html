@@ -9,7 +9,7 @@
   <meta name="author" content="Jerald Sheets">
 
   
-  <meta name="description" content="Introduction We&rsquo;ve covered a lot of ground already in our tutorials thus far.  In Tutorial I we installed our Puppet server.  In Tutorial II, &hellip;">
+  <meta name="description" content="Introduction The name of this portion of our tutorial was difficult to determine.  This is another set of configurations, but we will also be scaling &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,299 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/28/puppet-v-configuration-scaling/">Puppet v - Configuration and Scaling</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-02-28T15:12:57-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>3:12 pm</span></time>
+        
+           | <a href="/blog/2014/02/28/puppet-v-configuration-scaling/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2014/02/28/puppet-v-configuration-scaling/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><em><strong>Introduction</strong></em></p>
+
+<p>The name of this portion of our tutorial was difficult to determine.  This is another set of configurations, but we will also be scaling Puppet to handle production quality traffic, be an external node classifier (ENC), have a backend database, employ an enterprise class web server, turn up a console&hellip;  there&rsquo;s a lot to do.  We are indeed configuring the backend, but also scaling Puppet to handle your environment&hellip;hence the name.</p>
+
+<p>This portion assumes you&rsquo;ve followed all previous tutorials from I-IV, have your certs signed and are complete and ready to go with Puppet &ldquo;as-is&rdquo;, you simply have not installed any of the following add-ons.  As mentioned last time, you could begin to write manifests and modules right now, using Puppet &ldquo;as-is&rdquo;, never utilizing any of the other features.  However, the &ldquo;out-of-the-box&rdquo; configuration of Puppet is not ready for enterprise use.  Perfect for a small development environment&hellip;perhaps up to 25 hosts or so, the Puppet server as installed includes a small WEBRick server (ruby-based) and is not intended to handle large site traffic profiles.</p>
+
+<p>To make Puppet &ldquo;enterprise-ready&rdquo;, we need to do a few things.</p>
+
+<ol>
+<li>Install the Puppet Dashboard<br></li>
+<li>Install the Puppet DB<br></li>
+<li>Install passenger + Apache modules<br></li>
+<li>Install MySQL<br></li>
+</ol>
+
+
+<p>The dashboard gives you a GUI configuration mechanism as well as an external node classifier.  The PuppetDB is a centralized config storage mechanism for all node facts and configurations.  Passenger+Apache is the piece that replaces Puppet&rsquo;s WEBRick server, and MySQL holds the database for the dashboard.</p>
+
+<p>This will be the longest portion of the tutorial series, and all the separate &amp; individual pieces will be interdependent, requiring us to do all the work first with configuration testing at the end.  Let&rsquo;s get started.</p>
+
+<p><em><strong>Packages</strong></em></p>
+
+<p>Early in tutorial I, I had you install a number of packages.  Had you stopped after installment IV, you&rsquo;d have had no need for a few of them, but I wanted all the packages to be on your system as prerequisites to avoid later installation headaches.  However, we do want to get the EPEL package set onto the system to add one prerequisite (and it&rsquo;s a darned fine repo to have, should you need it for other things)</p>
+
+<p>To install EPEL, run the following command:</p>
+
+<p>_**sudo rpm -ivh <a href="http://mirrors.kernel.org/fedora-epel/6/i386/epel-release-6-8.noarch.rpm**_">http://mirrors.kernel.org/fedora-epel/6/i386/epel-release-6-8.noarch.rpm**_</a></p>
+
+<p>The &ldquo;Extra packages for Enterprise Linux&rdquo; (EPEL) set is an important addition to any server set.  Especially to install the package prerequisites we need.</p>
+
+<p><em><strong>Installing Packages</strong></em></p>
+
+<p><em><strong>Passenger:</strong></em>
+First, we will be installing Passenger.  The passenger packages are in their own repository, not hosted at Puppet Labs.  First, import the GPG key:</p>
+
+<p>_**sudo rpm &ndash;import <a href="http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc**_">http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc**_</a></p>
+
+<p>And then install the passenger release repo:</p>
+
+<p>_**sudo yum -y install <a href="http://passenger.stealthymonkeys.com/rhel/6/passenger-release.noarch.rpm**_">http://passenger.stealthymonkeys.com/rhel/6/passenger-release.noarch.rpm**_</a></p>
+
+<p>Finally, install the Passenger Apache module to tie everything together:</p>
+
+<p><em><strong>sudo yum -y install mod_passenger</strong></em></p>
+
+<p>Congratulations.  The groundwork for Passenger is now installed.</p>
+
+<p><em><strong>Dashboard
+</strong></em>Since we have done so much preparatory work, the dashboard install is quite simple:</p>
+
+<p><em><strong>sudo yum -y install puppet-dashboard</strong></em></p>
+
+<p>Simple.</p>
+
+<p><strong>PuppetDB
+</strong>PuppetDB is installed a little differently, using Puppet itself to get and install the package:</p>
+
+<p><em><strong>sudo puppet resource package puppetdb ensure=latest</strong></em></p>
+
+<p>This procedure takes a bit of time, but when complete, the PuppetDB is now installed.</p>
+
+<p><strong>MySQL
+</strong>MySQL is installed via the usual yum repos, but we will also turn it on and have it ready for use as well as create our users and remove unneeded and unsecured accounts for the system.</p>
+
+<p><em><strong>sudo yum -y install mysql-server
+</strong><strong>sudo /sbin/chkconfig mysqld on</strong></em>
+<em><strong>sudo /sbin/service mysqld start</strong></em></p>
+
+<p>Let&rsquo;s set the database root user&rsquo;s password:</p>
+
+<p><em><strong>****/usr/bin/mysqladmin -u root password &lsquo;<new-password>&rsquo;</strong></em>
+<em><strong>/usr/bin/mysqladmin -u root -h <FQDN> password &lsquo;<new-password>&rsquo;
+mysql -u root -p</strong></em></p>
+
+<p>A few words here, for those of you unfamiliar with MySQL.  We are setting the root user&rsquo;s password to be able to administrate the database.  The simplest way to set up this initial security is using the &ldquo;mysqladmin&rdquo; tool provided by MySQL.  Note that when I use &lt;> in these above, this is where your site-specific information comes into play.  For \&lt;FQDN>, for my example purposes I would replace this with puppet.example.com.  The password setting &amp; changes, then, would look like so:</p>
+
+<p><em><strong>/usr/bin/mysqladmin -u root password &lsquo;puppet&rsquo;
+</strong><strong>/usr/bin/mysqladmin -u root -h puppet.example.com password &lsquo;puppet&rsquo;
+/usr/bin/mysql -u root -p</strong></em></p>
+
+<p>I just wanted to clarify this for you in the event my use of &lt;> and &lsquo; &rsquo; above caused any confusion.</p>
+
+<p><em><strong>Configuring MySQL</strong></em></p>
+
+<p>Once you run the above commands, MySQL will prompt you for the password you just set.  Enter that password, and you will find yourself at a mysql prompt that looks like so:</p>
+
+<p><em><strong>mysql></strong></em></p>
+
+<p>What this means is you have now logged into the MySQL database, and are ready to set it up for use.  Following I will list out all the commands you need to run in a set.  Note that these commands are each entered on a line and you press &ldquo;<ENTER>&rdquo; at the end of the line to enter the next command.  There is no output from MySQL when you enter these, so I&rsquo;ll enumerate them all together here for your convenience.</p>
+
+<p><em><strong>mysql> create database dashboard character set utf8;</strong></em><br>
+<em><strong>mysql> create user &lsquo;dashboard&rsquo;@&lsquo;localhost&rsquo; identified by ‘my_password';</strong></em><br>
+<em><strong>mysql> create user &lsquo;dashboard’@‘<FQDN>&rsquo; identified by ‘my_password';</strong></em><br>
+<em><strong>mysql> grant all privileges on dashboard.* to &lsquo;dashboard&rsquo;@&lsquo;localhost&rsquo;;</strong></em><br>
+<em><strong>mysql> grant all privileges on dashboard.* to &lsquo;dashboard’@‘<FQDN>&rsquo;;</strong></em><br>
+<em><strong>mysql> drop user ‘’@‘localhost’;</strong></em><br>
+<em><strong>mysql> drop user ‘’@‘<FQDN>’;</strong></em><br>
+<em><strong>mysql> drop database test;</strong></em><br>
+<em><strong>mysql> flush privileges;</strong></em><br>
+<em><strong>mysql> exit</strong></em><br></p>
+
+<p>As before, replace <FQDN> with the fully qualified hostname for your server and &lsquo;my_password&rsquo; with the password you wish to set for the dashboard user.  A few notes:</p>
+
+<ol>
+<li>First, we created the dashboard database<br></li>
+<li>Next, we created the dashboard user for connecting from the localhost name<br></li>
+<li>Next, we created the dashboard user for connecting from the server FQDN<br></li>
+<li>The next two, we grant the dashboard user rights to the whole database from either location<br></li>
+<li>The following two lines delete the user &lsquo;&rsquo; from the server (a null user w/o a password)<br></li>
+<li>Finally we drop the &ldquo;test&rdquo; database, flush all our privilege tables (to take effect immediately) and exit MySQL.<br></li>
+</ol>
+
+
+<p>The final steps in getting MySQL configured for production use is to tweak the settings in the database by editing the /etc/my.cnf file and restarting the database.  Open the /etc/my.cnf file and add a new line at the end of the file:</p>
+
+<p><em><strong>max_allowed_packet = 32M</strong></em></p>
+
+<p>Save the file and then run</p>
+
+<p><em><strong>sudo /sbin/service mysqld restart</strong></em></p>
+
+<p>for the changes to take effect.</p>
+
+<p><em><strong>Passenger
+</strong></em>The final piece is to get the appropriate passenger gems and the Apache module installed to handle Puppet Agent requests to the server.  Luckily, our previous prerequisite installs have made this easy for us.  First:</p>
+
+<p><em><strong>sudo gem install rack passenger</strong></em></p>
+
+<p>When this is done, install the Apache module, following the prompts as follows:</p>
+
+<p><em><strong>****sudo passenger-install-apache2-module
+Press <ENTER>
+Press <ENTER>
+At the end of the installation, Press <ENTER></strong></em></p>
+
+<p>If we&rsquo;ve done everything right up until this point, you should not need to supply any extra information, packages, or configuration, and only need to continue to press <ENTER> as listed above to complete the installation.</p>
+
+<p>Now comes the time to configure the various pieces&hellip;</p>
+
+<p><em><strong>Configuration</strong></em></p>
+
+<p><em><strong>Passenger
+</strong></em>First we need a number of directories and files to exist around the system, so let&rsquo;s put those in place by using the following commands:</p>
+
+<p><em><strong>sudo mkdir -p /usr/share/puppet/rack/puppetmasterd<br>
+</strong><strong>sudo mkdir /usr/share/puppet/rack/puppetmasterd/public<br>
+</strong></em><strong><em>sudo mkdir /usr/share/puppet/rack/puppetmasterd/tmp<br>
+sudo cp /usr/share/puppet/ext/rack/config.ru /usr/share/puppet/rack/puppetmasterd<br>
+sudo chown puppet:puppet /usr/share/puppet/rack/puppetmasterd/config.ru<br>
+sudo chown puppet-dashboard:puppet-dashboard /usr/lib/ruby/gems/1.8/gems/passenger-4.0.37/buildout/agents/PassengerWatchdog</em></strong><br></p>
+
+<p>Next, we need to configure the Puppet Dashboard to connect to its database, and setup the tablespaces for use:</p>
+
+<p><em><strong>cd /usr/share/puppet-dashboard/config<br>
+</strong><strong>edit database.yml<br>
+Remove the last stanza of this file that refers to the &ldquo;test&rdquo; database we removed above.<br>
+For the Production and Development database stanzas, change the &ldquo;database:&rdquo; line to read &ldquo;dashboard&rdquo; and the password line to contain your dashboard password so that it appears as follows:</strong></em><br></p>
+
+<p><em><strong>database: dashboard</strong></em><br>
+<em><strong>username: dashboard</strong></em><br>
+<em><strong>password: <PASSWORD></strong></em><br></p>
+
+<p>Next, prepare the database for use as follows:</p>
+
+<p><em><strong>cd /usr/share/puppet-dashboard<br>
+</strong>__<strong>sudo rake gems:refresh_specs<br>
+</strong><strong>rake RAILS_ENV=production db:migrate</strong></em><br></p>
+
+<p><em>(Even though we&rsquo;ve reference the production and development databases in the database config above, we&rsquo;ll only be working in the production database in this tutorial)  </em></p>
+
+<p>At this point, we should be ready to test the Dashboard configuration to ensure we&rsquo;re still on the right track.  Top do so, run the following:</p>
+
+<p><em><strong>cd /usr/share/puppet-dashboard<br>
+</strong><strong>sudo ./script/server -e production</strong></em><br></p>
+
+<p>Now, attempt to connect to the dashboard via web browser by pulling up the server at the following address:  <a href="http://">http://</a><IP ADDRESS or FQDN>:3000.  If the dashboard displays correctly in your browser, we&rsquo;re ready to continue.</p>
+
+<p>Press CTRL-C to exit the server.<br>
+<em><strong>Configure Puppet for Dashboard</strong></em><br></p>
+
+<p>While we have already configured the dashboard itself, we have not told Puppet the dashboard exists.  To do so, edit the /etc/puppet/puppet.conf file and add the following.</p>
+
+<p>In the [master] section of the puppet.conf, add the following lines:</p>
+
+<p><em><strong>Reporting</strong></em><br>
+<em><strong>reports = store,http</strong></em><br>
+_**reporturl = <a href="http://&lt;FQDN>:3000/reports/upload**_">http://&lt;FQDN>:3000/reports/upload**_</a><br></p>
+
+<p><em><strong>Node Classification (Using as an ENC)</strong></em><br>
+<em><strong>node_terminus = exec</strong></em><br>
+<em><strong>external_nodes = /usr/bin/env PUPPET_DASHBOARD_URL=<a href="http://localhost:3000">http://localhost:3000</a> /usr/share/puppet-dashboard/bin/external_node</strong></em><br></p>
+
+<p>Exit the puppet.conf file, saving your changes and set permissions for following files like so:</p>
+
+<p><em><strong>sudo chown -R puppet-dashboard:puppet-dashboard /usr/share/puppet-dashboard</strong></em><br>
+<em><strong>sudo /sbin/chkconfig puppet-dashboard-workers on</strong></em><br>
+<em><strong>sudo /sbin/service puppet-dashboard-workers start</strong></em><br></p>
+
+<p><em><strong>Apache</strong></em></p>
+
+<p>Next, we need to configure the Apache web server to process requests being made by Puppet agents in your environment and hand them off to the Puppet server.  To do so, we need to create two files in the /etc/httpd/conf.d location.  The passenger installation will have already created a passenger.conf there.  Just remove it before creating the following two files.</p>
+
+<p><em><strong>/etc/httpd/conf.d/dashboard.conf</strong></em></p>
+
+<p>[snippet id=&ldquo;30&rdquo;]</p>
+
+<p>And like it:</p>
+
+<p><em><strong>/etc/httpd/conf.d/passenger.conf</strong></em></p>
+
+<p>[snippet id=&ldquo;31&rdquo;]</p>
+
+<p> <em><strong>Starting Everything Up for Testing &amp; Operation</strong></em></p>
+
+<p>Once these configuration files are in place, it&rsquo;s time to test Apache&rsquo;s handoff to Puppet and to make a special SELinux module to allow Passenger handoffs to the various needed places in the filesystem.</p>
+
+<p>First, make sure the puppetmaster process has been stopped:</p>
+
+<p><em>**/sbin/service puppetmaster stop<br>
+</em><strong>/sbin/chckonfig puppetmaster off</strong>_<br></p>
+
+<p>This assumes you&rsquo;ve run the procedures in the previous tutorials, including (especially) the certificate signing and exchange between master and agent.  If you&rsquo;ve done this, Passenger now has all the certs it needs to handle requests on behalf of Puppet, and no longer needs the Puppet server running.</p>
+
+<p>Next, test the configuration, that you&rsquo;ve made no typos:</p>
+
+<p><em><strong>sudo /sbin/service httpd configtest</strong></em><br></p>
+
+<p>If no errors are displayed, then <em>at least </em>the syntax of your Apache configs are correct.  Now, to generate SELinux entries in the audit log to build a custom Passenger SELinux module, you need to start Apache:</p>
+
+<p><em><strong>sudo /sbin/service httpd start</strong></em><br></p>
+
+<p>Turn off SELinux temporarily:</p>
+
+<p><em><strong>sudo setenforce 0</strong></em><br></p>
+
+<p>Restart Apache to generate the log entries:</p>
+
+<p><em><strong>sudo /sbin/service httpd restart</strong></em><br></p>
+
+<p>Test the Puppet dashboard in a browser by going to:</p>
+
+<p>_**<a href="http://&lt;FQDN>:3000**_">http://&lt;FQDN>:3000**_</a><br></p>
+
+<p>What you have done is put output into the audit log that can be used as input to the <em>audit2allow </em>tool to generate a policy file for import into SELinux to allow Passenger to do it&rsquo;s job.  To create that module, run:</p>
+
+<p><em><strong>grep httpd /var/log/audit/audit.log | audit2allow -M passenger</strong></em><br></p>
+
+<p>This creates a new policy file for SELinux in your current working directory called &ldquo;passenger.pp&rdquo; which you can now import into SELinux.  TO do so, simply import the module:</p>
+
+<p><em><strong>sudo semodule -i passenger.pp</strong></em><br></p>
+
+<p>&hellip;from the directory where the file resides (presumably your current working directory if you have not moved).</p>
+
+<p>Finally, you re-enable SELinux, and begin to test your environment.</p>
+
+<p><em><strong>sudo setenforce 1</strong></em><br></p>
+
+<p><em><strong>Conclusion</strong></em></p>
+
+<p>I know that&rsquo;s a lot for a single entry, but I wanted to make sure and get all the additional pieces installed and configured before starting to cover how each of the pieces work and interact.  I thought of making each piece its own article, but in every scenario I thought about, you ended up with a not-completey-configured (i.e., &ldquo;broken&rdquo;) system.  I opted instead to do the complete configuration.</p>
+
+<p>At this point, however, you should be all set and ready to go with Dashboard/Passenger configured and being run by Apache.  You should have MySQL and PuppetDB installed and configured, handling their own individual tasks, and you should have Puppet Master and Agent installed (with one agent node) all configured to perform their duties as a Puppet Infrastructure.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -688,117 +981,6 @@ sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/02/21/ldap-administration-v-tls/">LDAP Administration VI - TLS/SSL</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2011-02-21T15:35:34-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2011</span></span> <span class='time'>3:35 pm</span></time>
-        
-           | <a href="/blog/2011/02/21/ldap-administration-v-tls/#disqus_thread"
-             data-disqus-identifier="http://questy.org/blog/2011/02/21/ldap-administration-v-tls/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h6>_This article goes hand in hand with &ldquo;LDAP Administration - Part I&rdquo; in regards to configuring the client. _</h6>
-
-<p>So, let&rsquo;s see where we are.  We have a master server you will be doing all administration work on.  This master server replicates to two hosts in the environment that serve LDAP queries to your clients.  These servers are replicants and are load-balanced under a VIP that is pointed to by the name you choose.  (in our case, ldap.bob.com).  You can change passwords at the client level, and have it pushed back up to master and replicated out to the environment immediately.</p>
-
-<p>Finally, we need to talk about security.  There&rsquo;s a number of ways to do security, but RedHat has done a lot of the footwork for you.  Unfortunately, it&rsquo;s very poorly documented, and they really Really REALLY want you to use RedHat Directory Server for everything, so I don&rsquo;t guess it&rsquo;s a priority.</p>
-
-<p>Essentially, we want to secure all queries floating around the network with TLS.  In a RedHat world, you simply need to make a couple changes at the server, restart LDAP, and then connect from TLS-enabled clients and all works just as it did before, except now it runs over an encrypted channel.</p>
-
-<p><strong>First Steps</strong></p>
-
-<p>RedHat has tried to ease the pain of generating certificates by placing all you need in a Makefile on-box.  navigate to <strong>/etc/pki/tls/certs </strong>and see that there is a makefile there.  Next, run:</p>
-
-<p><strong>make slapd.pem</strong></p>
-
-<p>to generate the needed files.  If it has already been done for you by the system, you will get the answer:</p>
-
-<p><strong>make: `slapd.pem' is up to date.</strong></p>
-
-<p>If you get this message, you&rsquo;re halfway there.</p>
-
-<p>Next, edit the <strong><em>/etc/openldap/slapd.</em>conf</strong> file.  You will need to refer to the appropriate files to allow for secure operation.  Insert the following lines into that file:</p>
-
-<p><strong># TLS Security
-TLSCACertificateFile /etc/pki/tls/certs/ca-bundle.crt
-TLSCertificateFile /etc/pki/tls/certs/slapd.pem
-TLSCertificateKeyFile /etc/pki/tls/certs/slapd.pem</strong></p>
-
-<p>Next, edit the file <em><strong>/etc/sysconfig/ldap</strong></em>.  Make the following lines:</p>
-
-<p><strong>SLAPD_LDAP=yes
-SLAPD_LDAPS=no
-SLAPD_LDAPI=no</strong></p>
-
-<p>look like:</p>
-
-<p><strong>SLAPD_LDAP=no
-SLAPD_LDAPS=yes
-SLAPD_LDAPI=no
-</strong></p>
-
-<p>Then, restart LDAP:  <em><strong>/sbin/service ldap restart. </strong></em>This does two things.  First, it tells the client where to look for the certificates, and then tells the system to only serve from the secure port 636.  (recall that we are on the replicants which are, in turn, servers themselves.  We have handled connecting to the master as well as setting the replicant up to receive queries)</p>
-
-<p>Finally, we connect a client.</p>
-
-<p><strong>Connecting the Client</strong></p>
-
-<p>To allow a client to connect, you need the appropriate key on the client (public server key) to be able to exchange identities with the server, and establish the secure session.  To do this, you have to distribute this key you just made out to each client you wish to connect back to the server.</p>
-
-<p>The key you will be distributing lives in <strong>/etc/pki/tls/certs</strong> and is named <strong>ca-bundle.crt</strong>.  Simply move this cert to your client (I use <strong>scp</strong> for such an operation) and place it into your openldap cacerts directory like so:</p>
-
-<p><em><strong>scp -rp ca-bundle.crt host.bob.com:/etc/openldap/cacerts</strong></em></p>
-
-<p>If you don&rsquo;t have rights to copy straight into the destination, send it to your home directory, then just move the cert there using &ldquo;sudo&rdquo;.</p>
-
-<p>Finally, you need to tell the system about the cert.  This is done in <strong>/etc/openldap/ldap.conf </strong>via three lines that tell the system how to connect, and where the cert lives:</p>
-
-<p><strong>TLS_CACERTDIR /etc/openldap/cacerts
-TLS_CACERT /etc/openldap/cacerts/ca-bundle.crt
-TLS_REQCERT allow</strong></p>
-
-<h6>Next, we run the RedHat authentication gui tool (curses) called authconfig-tui. _**(Note: last time I had you hand-edit the /etc/openldap/ldap.conf file, and this is entirely still possible.  I am endeavoring to show you that there is a tool to do this work, should you desire to use it.  If not, simply add the above lines and change the URI to the one below, making sure /etc/nsswitch.conf is configured correctly, and you should be good to go.)</h6>
-
-<p>**_</p>
-
-<p>In the left column, select &ldquo;Use LDAP&rdquo; and in the right column &ldquo;Use LDAP Authentication&rdquo;.  Tab down to the &ldquo;Next&rdquo; button and press &ldquo;Enter&rdquo;.</p>
-
-<p>As misleading as &ldquo;Use TLS&rdquo; may be, do not select it.  :)  Instead, go down to your server line, and modify it like so:</p>
-
-<p><strong>ldaps://ldap.bob.com:636</strong></p>
-
-<p>Your base DN should already be filled out (in our case: dc=bob,dc=com).  Navigate to the &ldquo;OK&rdquo; button, and press &ldquo;Enter&rdquo;.</p>
-
-<p>This should conclude your client configuration.  Now, you should be able to run a query against LDAP, and the whole path be secure:</p>
-
-<p><strong>id bob
-uid=123(bob) gid=123(users) groups=123(users),456(bob)</strong></p>
-
-<p><strong>Conclusion</strong></p>
-
-<p>I&rsquo;m sure I&rsquo;ve missed or glossed over something highly important.  I am in the process of discovery on this particular topic, and this article is serving as my documentation store until I can get the whole thing cleaned up &amp; finalized to push back into my work environment as official documentation.  I&rsquo;ll correct here as I find mistakes and omissions.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/4">&larr; Older</a>
@@ -816,6 +998,10 @@ uid=123(bob) gid=123(users) groups=123(users),456(bob)</strong></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/06/13/travel-hiatus/">Travel Hiatus</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/10/27/puppetconf-2015/">PuppetConf 2015</a>
       </li>
     
@@ -829,10 +1015,6 @@ uid=123(bob) gid=123(users) groups=123(users),456(bob)</strong></p>
     
       <li class="post">
         <a href="/blog/2015/04/30/puppets-dot-puppets-everywhere/">Puppets.. Puppets Everywhere</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/">Some Coding Work of Late...</a>
       </li>
     
   </ul>

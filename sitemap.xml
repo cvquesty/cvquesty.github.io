@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://questy.org/blog/2016/06/13/travel-hiatus/</loc>
+<lastmod>2016-06-13T10:06:29-04:00</lastmod>
+</url>
+<url>
 <loc>http://questy.org/blog/2015/10/27/puppetconf-2015/</loc>
 <lastmod>2015-10-27T22:11:28-04:00</lastmod>
 </url>
@@ -309,24 +313,6 @@
 </url>
 <url>
 <loc>http://questy.org/blog/categories/geekstuff-puppet/</loc>
-</url>
-<url>
-<loc>http://questy.org/posts/2/</loc>
-</url>
-<url>
-<loc>http://questy.org/posts/3/</loc>
-</url>
-<url>
-<loc>http://questy.org/posts/4/</loc>
-</url>
-<url>
-<loc>http://questy.org/posts/5/</loc>
-</url>
-<url>
-<loc>http://questy.org/posts/6/</loc>
-</url>
-<url>
-<loc>http://questy.org/posts/7/</loc>
 </url>
 <url>
 <loc>http://questy.org/images/Perl-Mongers-Puppet-PresentationTraining.pdf</loc>
