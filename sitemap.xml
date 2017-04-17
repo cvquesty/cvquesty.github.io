@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://questy.org/blog/2017/04/17/scaling-puppet-enterprise/</loc>
+<lastmod>2017-04-17T16:06:11-04:00</lastmod>
+</url>
+<url>
 <loc>http://questy.org/blog/2016/08/31/changes-are-afoot/</loc>
 <lastmod>2016-08-31T10:33:00-04:00</lastmod>
 </url>
@@ -317,6 +321,30 @@
 </url>
 <url>
 <loc>http://questy.org/blog/categories/geekstuff-puppet/</loc>
+</url>
+<url>
+<loc>http://questy.org/blog/categories/puppet/</loc>
+</url>
+<url>
+<loc>http://questy.org/blog/categories/geekstuff/</loc>
+</url>
+<url>
+<loc>http://questy.org/posts/2/</loc>
+</url>
+<url>
+<loc>http://questy.org/posts/3/</loc>
+</url>
+<url>
+<loc>http://questy.org/posts/4/</loc>
+</url>
+<url>
+<loc>http://questy.org/posts/5/</loc>
+</url>
+<url>
+<loc>http://questy.org/posts/6/</loc>
+</url>
+<url>
+<loc>http://questy.org/posts/7/</loc>
 </url>
 <url>
 <loc>http://questy.org/images/Perl-Mongers-Puppet-PresentationTraining.pdf</loc>
