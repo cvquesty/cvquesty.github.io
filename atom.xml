@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-17T09:21:34-04:00</updated>
+  <updated>2017-04-17T09:27:01-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Some Coding Work of Late...]]></title>
+    <link href="http://questy.org/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/"/>
+    <updated>2015-03-26T11:26:16-04:00</updated>
+    <id>http://questy.org/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p><strong><em>I AM NOT A CODER</em></strong></p>
+
+<p>I know that sounds a little silly with all the Coderwall links over there in the sidebar, but I’m not.</p>
+
+<p>I got into this business as a lowly PC building guy, and worked my way into systems administration through light consulting. A necessary evil of the day was tweaking an autoexec.bat &amp; config.sys to release as much memory to the user as was possible for applications. (This was long before Win95, FYI)</p>
+
+<p>As progress and learning would have it, I landed myself a systems administration job and began to grow. Here, 22 years later, back to consulting (but on a much larger scale), I look back on my professional career and see and realize that there’s a LOT of code behind me. Perl, BASH, ksh, HTML, PHP, light Ruby, old DOS debug scripts, Puppet DSL, Expect scripting… tons of it. All encountered and fleshed out in the context of systems engineering and/or management over the years as situations and needs arose.</p>
+
+<p>Fast forward to today. The juxtapostion of Development, QA, and Operations into one big hairy hard-to-define (but getting clearer) term known as “DEVOPS” is the landscape a new admin comes into, and he or she learns from the very beginning the principles of placing infrastructure definition into code, and working as a developer to enhance and automate the hard infrastructure of the operations world.</p>
+
+<p>I say all that to say this… I’ve got some new releases on my GitHub I’d like to share with you to help you out while navigating in this world of DEVOPS. If you have to call me a coder because of it, I may frown, but it is what it is.</p>
+
+<p><strong><em>Vagrant/Virtualbox Fun</em></strong></p>
+
+<p>As I’ve been slowly revealing through my series in past months, there’s a lot of tools out there for working with Puppet and there’s a ton of the same to prototype for your company’s environment. One of these is Vagrant, and it has the ability, in a huge way, to help you automate the setup and teardown of sample infrastructures to work with your Puppet code in. I’ve just updated and released a few of these, and I want to tell you about them.</p>
+
+<p><strong>Vagrant with CentOS 6.5 and PE 3.7.1</strong></p>
+
+<p>If you look here, you’ll find my current project I use with customers. This is a Vagrant instance that turns up a 4-VM environment including a PE Master, a DEV, TEST, and PROD VM running the PE agent, Enterpise Console, Directory Environments pre-configured, r10k configured, and a simple set of Puppet Modules to get you started.</p>
+
+<p>Most commonly, I share those with customers, coworkers, and community folks to get them started coding right away, and to have a platform with which to teach them how to deploy, merge, and promote code through an environment in a smaller version of wat they might already have in their company. This is the enviroment I spoke about at the Atlanta Puppet User’s Group last year in its current iteration.</p>
+
+<p><strong>Vagrant with CentOS7 and PE 3.7.2</strong></p>
+
+<p>Similarly, you can find a CentOS7 + PE 3.7.2 project here. Much like the above, you get the latest of PE with CentOS7 to help your prototyping over a more current OS.</p>
+
+<p><strong>Vagrant with CentOS7 and Puppet OSS 4</strong></p>
+
+<p>If you look up the word “experiemental” in the dictionary, this project right here is linked as an example.</p>
+
+<p>I’ve gotten a very rudimentary working setup of a Master and one agent to install completely and autosign, and haven’t even scratched the surface of all the new goodies in Puppet 4. As Puppet 4 is still in Beta, this is not recommended in any way for any reason at any time for you to use for any purpose. :)</p>
+
+<p>My hope here is to prepare myself for the PE4 features long before they’re released. I hope to work on getting directory environments and r10k working for this only to have a base from which to rapidly develop for PE4 when it’s released. <strong>EXPECT THIS ONE TO GO AWAY IN FAVOR OF THE NEW PROJECT.</strong></p>
+
+<p><strong>YOU HAVE BEEN WARNED</strong></p>
+
+<p>I hope these projects assist you in rapidly creating a platform and developing for Puppet. If you have any questions, don’t hesitate to contact me via jsheets@shadow-soft.com, quest@questy.org, or one of the many other social media nexii you have available to you.</p>
+
+<p>As always, these are in active, deep development. If you’ve got some Vagrant chops and/or want to contribute in any way, feel free to do pull requests, and I’ll integrate changes as soon as I’m able between customer engagements and/or other duties I may have here at Shadow-Soft.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Building Your Toolbox]]></title>
@@ -1602,96 +1649,6 @@ sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
 <p>If all goes well, this will complete the client config on your client host and you are now ready to configure the server, configure the client, and then connect them via SSL as provided by Puppet Labs.</p>
 
 <p>In our next edition, we&rsquo;ll be doing just that.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Puppet I - Server Installation]]></title>
-    <link href="http://questy.org/blog/2014/01/20/puppet-i-installation/"/>
-    <updated>2014-01-20T14:23:10-05:00</updated>
-    <id>http://questy.org/blog/2014/01/20/puppet-i-installation</id>
-    <content type="html"><![CDATA[<p>Ok, so you&rsquo;re interested in this whole Puppet thing, and you want to get a full install in your test environment, or on a set of VMs to work and play with the product.  PuppetLabs has a ton of really cool documentation, and you should certainly avail yourself of it, but I wanted to give you a quick &ldquo;cookbook&rdquo; style set of instructions to get you rolling.</p>
-
-<p><strong>Puppet Master</strong></p>
-
-<p>There is a lot of documentation surrounding the Puppet Master installation at Puppet Labs, but I find a bit of obfuscation when trying to parse through the huge pile of meat that is there, when all we&rsquo;re looking for is the best of it&hellip; you know, the bacon.  :)</p>
-
-<p><strong><em>Puppet Code Repository &amp; Package Source</em></strong></p>
-
-<p>Puppet Labs provides a myriad of repositories and methods by which to install Puppet.  I tend to stick with the main PuppetLabs repository whenever possible.  I also tend to like RedHat derivatives, so I&rsquo;ll be talking about RHEL here, but the same applies to CentOS, Scientific Linux, and other RHEL &ldquo;children&rdquo; in the ecosystem.  In short, if you&rsquo;re using something else other than RHEL, you may find yourself hunting packages and repos that contain packages you&rsquo;ll need that the repositories I list here have by default.  As with any web-based documentation, YMMV.</p>
-
-<p><em><strong>Installing the Puppet Master</strong></em></p>
-
-<p>First, you&rsquo;ll need a functioning Installation of RHEL upon which to install and configure Puppet.  I like to include only the &ldquo;Base Install&rdquo; and take the &ldquo;Defaults&rdquo; when doing a &ldquo;special purpose&rdquo; server, as it doesn&rsquo;t muddy the waters and it gives you the cleanest slate possible upon which to build your Puppet platform.</p>
-
-<p><em><strong>Enabling the RHEL Yum Repo</strong></em></p>
-
-<p>As I&rsquo;m sure you&rsquo;re aware, to use RedHat&rsquo;s repositories, you have to register and have active a subscription with RedHat.  To do a simple connection/attachment to the RedHat repositories, I&rsquo;ve found a mixture of success with the Subscription Manager.  However, by performing the following commands (some are redundant), I&rsquo;ve been able to get the configuration working with 100% reliability:</p>
-
-<p><em><strong>sudo subscription-manager register</strong></em>
-<em><strong> sudo subscription-manager auto-attach</strong></em>
-<em><strong> sudo subscription-manager attach &ndash;auto</strong></em>
-<em><strong> sudo subscription-manager refresh</strong></em></p>
-
-<p>Obviously, this is a RedHat topic, and not a Puppet one, so if you&rsquo;re having issues with this process, contact Redhat for help.  The crux of this, however, is to just register your instance.</p>
-
-<p><em><strong>Installing the Puppet Labs Software Repository</strong></em></p>
-
-<p>Since I&rsquo;m working with the current 6.10 release of Puppet, the package you need to install can be added by running:</p>
-
-<p>_**sudo rpm -ivh <a href="https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm**_">https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm**_</a></p>
-
-<p>This will install the current 6.10 release of the Puppet repo from which we can continue with the Puppet Master installation.</p>
-
-<p><em><strong>Enabling Additional Packages</strong></em></p>
-
-<p>Next, we need to have the &ldquo;optional&rdquo; set of packages from RedHat and the development packages from Puppet Labs.  There are two ways to do this.  First, you can edit each repo file in /etc/yum.repos.d (red hat.repo and puppet labs.repo respectively) and change the &ldquo;enable&rdquo; flag on each repository from &ldquo;0&rdquo; to &ldquo;1&rdquo;, or you can simply run the provided RedHat Yum configuration manager tool to do it for you as follows.</p>
-
-<p><em><strong>sudo yum -y install yum-utils
-sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
-<em><strong> sudo yum-config-manager &ndash;enable puppetlabs-devel</strong></em></p>
-
-<p><em><strong> Get Current!</strong></em></p>
-
-<p>Bring your current host completely up to date by querying the repositories and running the yum updater:</p>
-
-<p><strong><em>sudo yum -y update</em></strong></p>
-
-<p>As I&rsquo;m sure you&rsquo;re aware, depending on the updates released since the current major version of your repositories, the update time can vary from very short to quite some time.  Just be patient and get up to date before proceeding.</p>
-
-<p><em><strong>Install the Puppet Prerequisite Packages</strong></em></p>
-
-<p>This step name is a <em>bit</em> of a misnomer in that I am including a ton of packages that aren&rsquo;t necessary for a &ldquo;base&rdquo; install of Puppet Server, but they do support later installations you may wish to do (like PuppetDB, Dashboard, Passenger, etc.).  I just wanted to give a complete list so there&rsquo;s no after-installation required just to get moving with the next component.  Simply install the following via Yum:</p>
-
-<p><em><strong>sudo yum -y install gcc libcurl-devel gcc-c++ openssl openssl-devel ruby-devel httpd httpd-devel  mod_ssl policycoreutils-python apr-devel apr-utils-devel</strong></em></p>
-
-<p><em><strong>Prep Your Firewall</strong></em></p>
-
-<p>You may or may not be using the IPTables Firewall, but you&rsquo;ll want the following rule in place to support the Puppet Master port.  Simply insert the following line into your <em>/etc/sysconfig/iptables</em> file.</p>
-
-<p><em><strong>-A INPUT -m state &ndash;state NEW -m tcp -p tcp &ndash;dport 8140 -j ACCEPT</strong></em></p>
-
-<p>Note that if you intend to install the Puppet Dashboard as well, you can add that port here too.</p>
-
-<p><strong><em>-A INPUT -m state &ndash;state NEW -m tcp -p tcp &ndash;dport 3000 -j ACCEPT</em></strong></p>
-
-<p>Make sure you place your firewall rules in the appropriate place in the file.  While outside the scope of this article, IPTables has an order and a format you should follow.  You can find out more <a href="http://www.netfilter.org">here</a>.</p>
-
-<p>Lastly, restart your firewall to pick up the new rules:</p>
-
-<p><em><strong>sudo service iptables reload</strong></em></p>
-
-<p><em><strong>Install Puppet Server</strong></em></p>
-
-<p>After all the above work, if you&rsquo;ve had no repository or package errors, your system should be ready to install Puppet Server.  Simply run the following:</p>
-
-<p><em><strong>yum -y install puppet-server</strong></em></p>
-
-<p><em><strong>Conclusion</strong></em></p>
-
-<p>And that should be it.  All packages installed, base RedHat updated with all the latest Ruby &amp; RedHat goodness, and the bad Puppet Server installed and ready for action.</p>
-
-<p>Next time:  Installing the Puppet Client.</p>
 ]]></content>
   </entry>
   

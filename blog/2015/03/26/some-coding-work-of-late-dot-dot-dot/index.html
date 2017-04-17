@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Puppetry Arts... - Questy.org</title>
+  <title>Some Coding Work of Late... - Questy.org</title>
   <meta name="author" content="Jerald Sheets">
 
   
-  <meta name="description" content="I guess you Atlanta folk will get that one&hellip; :) Howdy all, and a hearty hello.  I&rsquo;m back from my exile to the land of single shiny &hellip;">
+  <meta name="description" content="I AM NOT A CODER I know that sounds a little silly with all the Coderwall links over there in the sidebar, but I’m not. I got into this business as a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://questy.org/blog/2013/09/06/puppetry-arts/">
+  <link rel="canonical" href="http://questy.org/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Questy.org" type="application/atom+xml">
@@ -80,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">Puppetry Arts...</h1>
+      <h1 class="entry-title">Some Coding Work of Late...</h1>
     
     
       <p class="meta">
@@ -89,7 +89,7 @@
 
 
 
-<time class='entry-date' datetime='2013-09-06T14:45:35-04:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>2:45 pm</span></time>
+<time class='entry-date' datetime='2015-03-26T11:26:16-04:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:26 am</span></time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://questy.org">Comments</a>
@@ -99,21 +99,45 @@
   </header>
 
 
-<div class="entry-content"><p>I guess you Atlanta folk will get that one&hellip; :)</p>
+<div class="entry-content"><p><strong><em>I AM NOT A CODER</em></strong></p>
 
-<p>Howdy all, and a hearty hello.  I&rsquo;m back from my exile to the land of single shiny glowing buttons and happiness, rainbows, and OSX, and have returned to Atlanta with SysAdmin bells on.  I&rsquo;ve done a lot over the last couple years (much I cannot talk about), but have developed quite an affinity for the Puppet configuration Management system.  So much so, in fact, that I&rsquo;ve found a need to start a whole new category right here on the ol' blog to accommodate.</p>
+<p>I know that sounds a little silly with all the Coderwall links over there in the sidebar, but I’m not.</p>
 
-<p>Not in a long time have I liked something &ldquo;new&rdquo; that has come along to SysAdmin work&hellip; The moniker &ldquo;Devops&rdquo; still gives me hives, but I will endeavor to navigate the puppet-y waters without uttering the vile mantra but wading into the wonderful waters of automation and  managed infrastructure.</p>
+<p>I got into this business as a lowly PC building guy, and worked my way into systems administration through light consulting. A necessary evil of the day was tweaking an autoexec.bat &amp; config.sys to release as much memory to the user as was possible for applications. (This was long before Win95, FYI)</p>
 
-<p>In short, &ldquo;Puppet&rdquo; in and of itself is quite a feat of engineering.  A series of platform tools to enforce a single &ldquo;blessed&rdquo; configuration upon your infrastructure in a consistent, premeditated way from a central location, eliminating the need for all manner of scripting and &ldquo;loop lists&rdquo; to do individual functions on each system, one at a time.  No no!</p>
+<p>As progress and learning would have it, I landed myself a systems administration job and began to grow. Here, 22 years later, back to consulting (but on a much larger scale), I look back on my professional career and see and realize that there’s a LOT of code behind me. Perl, BASH, ksh, HTML, PHP, light Ruby, old DOS debug scripts, Puppet DSL, Expect scripting… tons of it. All encountered and fleshed out in the context of systems engineering and/or management over the years as situations and needs arose.</p>
 
-<p>Puppet enforces policies you write in a uniform, secure way, rather quickly and scales rather well for most environments.  For the larger environments that cannot be scaled to, Puppet will utilize other &ldquo;workhorse&rdquo; industry standard products as modular replacements of various pieces of the Puppet system, to broaden and expand its abilities.</p>
+<p>Fast forward to today. The juxtapostion of Development, QA, and Operations into one big hairy hard-to-define (but getting clearer) term known as “DEVOPS” is the landscape a new admin comes into, and he or she learns from the very beginning the principles of placing infrastructure definition into code, and working as a developer to enhance and automate the hard infrastructure of the operations world.</p>
 
-<p>Puppet comes in two flavors, the commercial &ldquo;Enterprise&rdquo; system where everything is packaged together and all gets installed and configured at load time in an &ldquo;automagical&rdquo; sort of way so you don&rsquo;t have any need to post-configure, but can just begin writing configurations immediately.</p>
+<p>I say all that to say this… I’ve got some new releases on my GitHub I’d like to share with you to help you out while navigating in this world of DEVOPS. If you have to call me a coder because of it, I may frown, but it is what it is.</p>
 
-<p>The &ldquo;Open Source&rdquo; Puppet has most of the same pieces, although named somewhat differently, and you can build a very solid, full-featured system of your own without the price tag.  All you need is time.  :)</p>
+<p><strong><em>Vagrant/Virtualbox Fun</em></strong></p>
 
-<p>In the coming sections, I will take apart Puppet for those of you wishing to know more, and give a rudimentary survey of all the different things it can do.  Hope you come along!</p>
+<p>As I’ve been slowly revealing through my series in past months, there’s a lot of tools out there for working with Puppet and there’s a ton of the same to prototype for your company’s environment. One of these is Vagrant, and it has the ability, in a huge way, to help you automate the setup and teardown of sample infrastructures to work with your Puppet code in. I’ve just updated and released a few of these, and I want to tell you about them.</p>
+
+<p><strong>Vagrant with CentOS 6.5 and PE 3.7.1</strong></p>
+
+<p>If you look here, you’ll find my current project I use with customers. This is a Vagrant instance that turns up a 4-VM environment including a PE Master, a DEV, TEST, and PROD VM running the PE agent, Enterpise Console, Directory Environments pre-configured, r10k configured, and a simple set of Puppet Modules to get you started.</p>
+
+<p>Most commonly, I share those with customers, coworkers, and community folks to get them started coding right away, and to have a platform with which to teach them how to deploy, merge, and promote code through an environment in a smaller version of wat they might already have in their company. This is the enviroment I spoke about at the Atlanta Puppet User’s Group last year in its current iteration.</p>
+
+<p><strong>Vagrant with CentOS7 and PE 3.7.2</strong></p>
+
+<p>Similarly, you can find a CentOS7 + PE 3.7.2 project here. Much like the above, you get the latest of PE with CentOS7 to help your prototyping over a more current OS.</p>
+
+<p><strong>Vagrant with CentOS7 and Puppet OSS 4</strong></p>
+
+<p>If you look up the word “experiemental” in the dictionary, this project right here is linked as an example.</p>
+
+<p>I’ve gotten a very rudimentary working setup of a Master and one agent to install completely and autosign, and haven’t even scratched the surface of all the new goodies in Puppet 4. As Puppet 4 is still in Beta, this is not recommended in any way for any reason at any time for you to use for any purpose. :)</p>
+
+<p>My hope here is to prepare myself for the PE4 features long before they’re released. I hope to work on getting directory environments and r10k working for this only to have a base from which to rapidly develop for PE4 when it’s released. <strong>EXPECT THIS ONE TO GO AWAY IN FAVOR OF THE NEW PROJECT.</strong></p>
+
+<p><strong>YOU HAVE BEEN WARNED</strong></p>
+
+<p>I hope these projects assist you in rapidly creating a platform and developing for Puppet. If you have any questions, don’t hesitate to contact me via jsheets@shadow-soft.com, quest@questy.org, or one of the many other social media nexii you have available to you.</p>
+
+<p>As always, these are in active, deep development. If you’ve got some Vagrant chops and/or want to contribute in any way, feel free to do pull requests, and I’ll integrate changes as soon as I’m able between customer engagements and/or other duties I may have here at Shadow-Soft.</p>
 </div>
 
 
@@ -122,19 +146,19 @@
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">admin</span></span>
+<span class="byline author vcard">Posted by <span class="fn">Jerald Sheets</span></span>
 
       
 
 
 
 
-<time class='entry-date' datetime='2013-09-06T14:45:35-04:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>2:45 pm</span></time>
+<time class='entry-date' datetime='2015-03-26T11:26:16-04:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:26 am</span></time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/puppet/'>puppet</a>
+    <a class='category' href='/blog/categories/puppet-geekstuff/'>puppet,geekstuff</a>
   
 </span>
 
@@ -143,7 +167,7 @@
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://questy.org/blog/2013/09/06/puppetry-arts/" data-via="CVQuesty" data-counturl="http://questy.org/blog/2013/09/06/puppetry-arts/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://questy.org/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/" data-via="CVQuesty" data-counturl="http://questy.org/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/" >Tweet</a>
   
   
   
@@ -154,10 +178,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/06/04/i-saw-this-somewhere-else/" title="Previous Post: I saw this somewhere else...">&laquo; I saw this somewhere else...</a>
+        <a class="basic-alignment left" href="/blog/2015/03/26/building-your-toolbox/" title="Previous Post: Building Your Toolbox">&laquo; Building Your Toolbox</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/10/03/puppet-stuffs-again/" title="Next Post: Puppet Stuffs Again!">Puppet Stuffs Again! &raquo;</a>
       
     </p>
   </footer>
@@ -252,8 +274,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://questy.org/blog/2013/09/06/puppetry-arts/';
-        var disqus_url = 'http://questy.org/blog/2013/09/06/puppetry-arts/';
+        var disqus_identifier = 'http://questy.org/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/';
+        var disqus_url = 'http://questy.org/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/';
         var disqus_script = 'embed.js';
       
     (function () {

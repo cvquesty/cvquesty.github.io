@@ -9,8 +9,7 @@
   <meta name="author" content="Jerald Sheets">
 
   
-  <meta name="description" content="Going on right now at Shadow Soft! Excellent coverage of AWS automation.
-">
+  <meta name="description" content="As we move on through the last post on Vim, you may ask yourself why I&rsquo;m remediating all the way back to text editors.  Well, as you&rsquo;ll &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +77,74 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/09/vim-2/">Why All the Vim?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-09T11:07:57-04:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>11:07 am</span></time>
+        
+           | <a href="/blog/2014/05/09/vim-2/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2014/05/09/vim-2/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As we move on through the last post on Vim, you may ask yourself why I&rsquo;m remediating all the way back to text editors.  Well, as you&rsquo;ll see over time, this is all about workflow; Building yourself a detailed workflow by which you can write code, syntax check, commit to revision control, deploy to your Puppet instances, and duplicate that workflow across all your environments.</p>
+
+<p>The text editor itself, while important, is just a tiny part of a much larger picture I hope to cobble together over time.  So, let&rsquo;s begin to push forward with our coverage of Vim.</p>
+
+<p><strong>Plugins and Syntax Highlighting</strong></p>
+
+<p>I went through the beginnings of Vim to give you a starting point and some basics in the event you have no experience in the Vim world.  One would assume that since you&rsquo;re on a Puppet/Dev-Ops-y sort of page, all this is old news, but we do have completely &ldquo;green&rdquo; readers from time to time, and I didn&rsquo;t want to leave them out.</p>
+
+<p>The main goal in getting Vim in the picture was to bring you to the point where we start looking at our code and knowing what we&rsquo;re dealing with at a glance.  As you begin to work in the field, whether coding in Perl, Python, Shell, or the Puppet DSL, there are some conventions out there all designed to help you and smooth your workflow.  Of these is syntax highlighting in code editors in general, but (for our purposes) in Vim <em>specifically.</em></p>
+
+<p>Take a look at this screen:</p>
+
+<p><a href="http://questy.org/images/nosyn.png"><img src="http://questy.org/images/nosyn.png" alt="nosyn" /></a></p>
+
+<p>While the code is well formatted and everything seems ok, were there any issues in this document, you&rsquo;d never know it.  From syntax issues to missing elements, none of this is automatically highlighted to you in any way.  Enter syntax highlighting&hellip;  Look again:</p>
+
+<p><a href="http://questy.org/images/syn.png"><img src="http://questy.org/images/syn.png" alt="syn" /></a></p>
+
+<p>Much nicer, no?  Were there any missing elements, you&rsquo;d see something amiss in the document.  The colors would not be organized according to element type, and odd things would be displayed in the page.  Let me &ldquo;break&rdquo; the file for you&hellip;</p>
+
+<p><a href="http://questy.org/images/broke.png"><img src="http://questy.org/images/broke.png" alt="broke" /></a></p>
+
+<p>You&rsquo;ll notice that on line 4 something is amiss.  If you compare the two colored instances, you&rsquo;ll see that your eye is drawn to where things begin to be different.  Best part for quick and easy glancing is that the entirety of the file after that one mistake now looks &ldquo;wrong&rdquo;.  Ease of view.</p>
+
+<p><strong>How Can This Help With Puppet?</strong></p>
+
+<p>As luck would have it, Vim has a plugin engine that allows you to have pre-built templates that syntax highlight code for you in a predetermined way.  It &ldquo;recognizes&rdquo; your code type, and highlights accordingly.  The basic plugin structure for vim lives in your home directory and in the &ldquo;hidden&rdquo; .vim directory.  Under this directory you can have a number of wide and varied add ons to vim.  We&rsquo;re just going to talk about plugins.</p>
+
+<p>By default, you don&rsquo;t have anything in this directory.  You usually have a .vimrc file and a .vim directory in your home directory location, but that&rsquo;s about it.  The &ldquo;magic&rdquo; happens, though, when you add a few pieces.  Those would include a &ldquo;.vimrc&rdquo; file which will turn on syntax highlighting, and then a Puppet vim plugin that sorts all the language elements and colorizes them for you.</p>
+
+<p>In your home directory, if it doesn&rsquo;t already exist, create a .vimrc file with a single entry:</p>
+
+<p><strong>syntax on</strong></p>
+
+<p>This will instruct vim to syntax highlight, and to be aware of any highlighting plugins that may live in the .vim plugin folder.  Next, place <a href="http://questy.org/stuff/puppet/puppet.vim">this file</a> into your .vim plugin directory.  If it does not yet exist, create it.  It lives in ~/.vim/plugin.  Once you load up new puppet manifests, it will recognize the type and begin to highlight the code according to the defined convention from the puppet.vim file you just downloaded.  If you have any issues, look at the vim plugin reference <a href="http://vimdoc.sourceforge.net/htmldoc/usr_05.html">here</a>.</p>
+
+<p>Now you&rsquo;re ready to work with Puppet files like a pro!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1020,116 +1087,6 @@ sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/01/20/puppet-i-installation/">Puppet I - Server Installation</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-01-20T14:23:10-05:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>2:23 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Ok, so you&rsquo;re interested in this whole Puppet thing, and you want to get a full install in your test environment, or on a set of VMs to work and play with the product.  PuppetLabs has a ton of really cool documentation, and you should certainly avail yourself of it, but I wanted to give you a quick &ldquo;cookbook&rdquo; style set of instructions to get you rolling.</p>
-
-<p><strong>Puppet Master</strong></p>
-
-<p>There is a lot of documentation surrounding the Puppet Master installation at Puppet Labs, but I find a bit of obfuscation when trying to parse through the huge pile of meat that is there, when all we&rsquo;re looking for is the best of it&hellip; you know, the bacon.  :)</p>
-
-<p><strong><em>Puppet Code Repository &amp; Package Source</em></strong></p>
-
-<p>Puppet Labs provides a myriad of repositories and methods by which to install Puppet.  I tend to stick with the main PuppetLabs repository whenever possible.  I also tend to like RedHat derivatives, so I&rsquo;ll be talking about RHEL here, but the same applies to CentOS, Scientific Linux, and other RHEL &ldquo;children&rdquo; in the ecosystem.  In short, if you&rsquo;re using something else other than RHEL, you may find yourself hunting packages and repos that contain packages you&rsquo;ll need that the repositories I list here have by default.  As with any web-based documentation, YMMV.</p>
-
-<p><em><strong>Installing the Puppet Master</strong></em></p>
-
-<p>First, you&rsquo;ll need a functioning Installation of RHEL upon which to install and configure Puppet.  I like to include only the &ldquo;Base Install&rdquo; and take the &ldquo;Defaults&rdquo; when doing a &ldquo;special purpose&rdquo; server, as it doesn&rsquo;t muddy the waters and it gives you the cleanest slate possible upon which to build your Puppet platform.</p>
-
-<p><em><strong>Enabling the RHEL Yum Repo</strong></em></p>
-
-<p>As I&rsquo;m sure you&rsquo;re aware, to use RedHat&rsquo;s repositories, you have to register and have active a subscription with RedHat.  To do a simple connection/attachment to the RedHat repositories, I&rsquo;ve found a mixture of success with the Subscription Manager.  However, by performing the following commands (some are redundant), I&rsquo;ve been able to get the configuration working with 100% reliability:</p>
-
-<p><em><strong>sudo subscription-manager register</strong></em>
-<em><strong> sudo subscription-manager auto-attach</strong></em>
-<em><strong> sudo subscription-manager attach &ndash;auto</strong></em>
-<em><strong> sudo subscription-manager refresh</strong></em></p>
-
-<p>Obviously, this is a RedHat topic, and not a Puppet one, so if you&rsquo;re having issues with this process, contact Redhat for help.  The crux of this, however, is to just register your instance.</p>
-
-<p><em><strong>Installing the Puppet Labs Software Repository</strong></em></p>
-
-<p>Since I&rsquo;m working with the current 6.10 release of Puppet, the package you need to install can be added by running:</p>
-
-<p>_**sudo rpm -ivh <a href="https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm**_">https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm**_</a></p>
-
-<p>This will install the current 6.10 release of the Puppet repo from which we can continue with the Puppet Master installation.</p>
-
-<p><em><strong>Enabling Additional Packages</strong></em></p>
-
-<p>Next, we need to have the &ldquo;optional&rdquo; set of packages from RedHat and the development packages from Puppet Labs.  There are two ways to do this.  First, you can edit each repo file in /etc/yum.repos.d (red hat.repo and puppet labs.repo respectively) and change the &ldquo;enable&rdquo; flag on each repository from &ldquo;0&rdquo; to &ldquo;1&rdquo;, or you can simply run the provided RedHat Yum configuration manager tool to do it for you as follows.</p>
-
-<p><em><strong>sudo yum -y install yum-utils
-sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
-<em><strong> sudo yum-config-manager &ndash;enable puppetlabs-devel</strong></em></p>
-
-<p><em><strong> Get Current!</strong></em></p>
-
-<p>Bring your current host completely up to date by querying the repositories and running the yum updater:</p>
-
-<p><strong><em>sudo yum -y update</em></strong></p>
-
-<p>As I&rsquo;m sure you&rsquo;re aware, depending on the updates released since the current major version of your repositories, the update time can vary from very short to quite some time.  Just be patient and get up to date before proceeding.</p>
-
-<p><em><strong>Install the Puppet Prerequisite Packages</strong></em></p>
-
-<p>This step name is a <em>bit</em> of a misnomer in that I am including a ton of packages that aren&rsquo;t necessary for a &ldquo;base&rdquo; install of Puppet Server, but they do support later installations you may wish to do (like PuppetDB, Dashboard, Passenger, etc.).  I just wanted to give a complete list so there&rsquo;s no after-installation required just to get moving with the next component.  Simply install the following via Yum:</p>
-
-<p><em><strong>sudo yum -y install gcc libcurl-devel gcc-c++ openssl openssl-devel ruby-devel httpd httpd-devel  mod_ssl policycoreutils-python apr-devel apr-utils-devel</strong></em></p>
-
-<p><em><strong>Prep Your Firewall</strong></em></p>
-
-<p>You may or may not be using the IPTables Firewall, but you&rsquo;ll want the following rule in place to support the Puppet Master port.  Simply insert the following line into your <em>/etc/sysconfig/iptables</em> file.</p>
-
-<p><em><strong>-A INPUT -m state &ndash;state NEW -m tcp -p tcp &ndash;dport 8140 -j ACCEPT</strong></em></p>
-
-<p>Note that if you intend to install the Puppet Dashboard as well, you can add that port here too.</p>
-
-<p><strong><em>-A INPUT -m state &ndash;state NEW -m tcp -p tcp &ndash;dport 3000 -j ACCEPT</em></strong></p>
-
-<p>Make sure you place your firewall rules in the appropriate place in the file.  While outside the scope of this article, IPTables has an order and a format you should follow.  You can find out more <a href="http://www.netfilter.org">here</a>.</p>
-
-<p>Lastly, restart your firewall to pick up the new rules:</p>
-
-<p><em><strong>sudo service iptables reload</strong></em></p>
-
-<p><em><strong>Install Puppet Server</strong></em></p>
-
-<p>After all the above work, if you&rsquo;ve had no repository or package errors, your system should be ready to install Puppet Server.  Simply run the following:</p>
-
-<p><em><strong>yum -y install puppet-server</strong></em></p>
-
-<p><em><strong>Conclusion</strong></em></p>
-
-<p>And that should be it.  All packages installed, base RedHat updated with all the latest Ruby &amp; RedHat goodness, and the bad Puppet Server installed and ready for action.</p>
-
-<p>Next time:  Installing the Puppet Client.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/3">&larr; Older</a>
@@ -1147,6 +1104,10 @@ sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/">Some Coding Work of Late...</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/26/building-your-toolbox/">Building Your Toolbox</a>
       </li>
     
@@ -1160,10 +1121,6 @@ sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
     
       <li class="post">
         <a href="/blog/2015/01/08/moving-my-tech-content-to-github/">Moving My Tech Content to GitHub</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/09/23/puppetconf-2014/">PuppetConf 2014</a>
       </li>
     
   </ul>
