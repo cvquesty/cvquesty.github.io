@@ -474,7 +474,7 @@ I feel sorry for these sometimes. They don’t really have any serious joy in th
 
 <p>So, I&rsquo;ve got a few things for sale.</p>
 
-<p>My house is a 3 Bedroom ranch home in suburban Atlanta, GA. You can see the pictures of my home from before I bought it in 4/04 here: <a href="http://picasaweb.google.com/questy/OurHouse">Our House</a> We&rsquo;re asking $159k. If you have any questions, contact me at <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#x6a;&#x65;&#114;&#x61;&#x6c;&#100;&#x2e;&#115;&#x68;&#x65;&#101;&#116;&#x73;&#64;&#103;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#x6d;&#46;">&#106;&#x65;&#x72;&#97;&#x6c;&#x64;&#x2e;&#115;&#104;&#x65;&#x65;&#116;&#x73;&#64;&#103;&#x6d;&#97;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;&#46;</a></p>
+<p>My house is a 3 Bedroom ranch home in suburban Atlanta, GA. You can see the pictures of my home from before I bought it in 4/04 here: <a href="http://picasaweb.google.com/questy/OurHouse">Our House</a> We&rsquo;re asking $159k. If you have any questions, contact me at <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#x65;&#x72;&#97;&#108;&#x64;&#46;&#115;&#x68;&#101;&#101;&#x74;&#x73;&#x40;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#x63;&#111;&#109;&#x2e;">&#106;&#101;&#x72;&#97;&#108;&#x64;&#46;&#115;&#104;&#x65;&#101;&#116;&#115;&#x40;&#103;&#x6d;&#x61;&#105;&#108;&#46;&#99;&#111;&#109;&#46;</a></p>
 
 <p>Also, I&rsquo;ve got some servers hanging around. Since I&rsquo;ve really gotten into the whole Dave Ramsey thing, I', selling them to apply toward my debt. My hope is to pay off nearly half of my remaining debt balance with the sale of my home and these servers.</p>
 
@@ -749,63 +749,15 @@ Come along for this ride with me&hellip;Add your two cents.  Let&rsquo;s all wo
 
 
 
-
-
-<section>
-  <h1>Coderwall</h1>
-  <ul id="cw_badges">
-    <li class="loading">Status updating...</li>
-  </ul>
-
-  <script type="text/javascript">
-    var coderwall = (function(){
-      function render(options, badges){
-        var fragment = '',
-            t = $(options.target),
-            height = 65,
-            width = 65,
-            index;
-
-        for (index in badges) {
-          fragment += '<a class="cw_badge"title="' + badges[index].description + '" href="http://coderwall.com/' + options.user + '">';
-          fragment +=   '<img alt="' + badges[index].description + '" height="' + width + '" width="' + height + '" src="' + badges[index].badge + '"/>';
-          fragment += '</a>';
-        }
-
-        t.html(fragment);
-      }
-      return {
-        showBadges: function(options){
-          $.ajax({
-              url: 'http://coderwall.com/' + options.user + '.json?callback=?'
-            , dataType: 'jsonp'
-            , error: function (err) { $(options.target + ' li.loading').addClass('error').text("Error loading feed"); }
-            , success: function(res) {
-                render(options, res.data.badges);
-            }
-          });
-        }
-      };
-    })();
-
-    $(document).ready(function(){
-      coderwall.showBadges({
-        user: 'cvquesty',
-        target: '#cw_badges'
-      });
-    });
-  </script>
-  <style type="text/css">
-    .cw_badge img {
-      padding: 5px;
-      border: 0 none !important;
-      -moz-box-shadow: none !important;
-      -webkit-box-shadow: none !important;
-      -o-box-shadow: none !important;
-      box-shadow: none !important;
-    }
-  </style>
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/questy?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
 </section>
+
 
 
   
