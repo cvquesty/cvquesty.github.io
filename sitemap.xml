@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://questy.org/blog/2015/04/30/puppets-dot-puppets-everywhere/</loc>
+<lastmod>2015-04-30T12:52:27-04:00</lastmod>
+</url>
+<url>
 <loc>http://questy.org/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/</loc>
 <lastmod>2015-03-26T11:26:16-04:00</lastmod>
 </url>
@@ -287,24 +291,6 @@
 </url>
 <url>
 <loc>http://questy.org/blog/categories/puppet-geekstuff/</loc>
-</url>
-<url>
-<loc>http://questy.org/posts/2/</loc>
-</url>
-<url>
-<loc>http://questy.org/posts/3/</loc>
-</url>
-<url>
-<loc>http://questy.org/posts/4/</loc>
-</url>
-<url>
-<loc>http://questy.org/posts/5/</loc>
-</url>
-<url>
-<loc>http://questy.org/posts/6/</loc>
-</url>
-<url>
-<loc>http://questy.org/posts/7/</loc>
 </url>
 <url>
 <loc>http://questy.org/images/Perl-Mongers-Puppet-PresentationTraining.pdf</loc>

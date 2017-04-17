@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-17T09:27:01-04:00</updated>
+  <updated>2017-04-17T09:36:11-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -12,6 +12,78 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Puppets.. Puppets Everywhererm 2017-04-17-puppets-dot-puppets-everywhere.markdown]]></title>
+    <link href="http://questy.org/blog/2015/04/30/puppets-dot-puppets-everywhere/"/>
+    <updated>2015-04-30T12:52:27-04:00</updated>
+    <id>http://questy.org/blog/2015/04/30/puppets-dot-puppets-everywhere</id>
+    <content type="html"><![CDATA[<p><strong>3.8 is Here!!!</strong></p>
+
+<p>That’s right, kids. PE 3.8 has dropped, and it is quite tasty. Some highlights:</p>
+
+<p><strong>AWS Module Now a Supported Module</strong></p>
+
+<p>As simple as that sounds, it’s huge. Being able to stand up multiple, tens, even hundreds and thousands of servers into AWS at once with Puppet is a great thing, but to have the module supported by Puppet Labs Support is even better.</p>
+
+<p><em>Docker Containers??</em></p>
+
+<p>Indeed. The Node manager now “gets” Docker containers and you can provision from bare metal as needed. Once the provisioning is done, it hands directly off to Puppet to execute the configuration portion of your run. Seet, sweet sauce right there.</p>
+
+<p><em>Bare Metal</em></p>
+
+<p>You’ve always been able to foray into the world of bare metal provisioning, but now it too is supported for you. You can stand up OSes, hypervisors, and then hand those off into the config run using Razor. Razor is now core to PE and also supported by the Puppet Labs Support Team.</p>
+
+<p><em>Code Management</em></p>
+
+<p>A long time coming, you can also manage code deployment to your Puppet Master using r10k, installed by default. Newly dubbed the “Puppet Code Manager”, r10k remains a command line tool, but I hear rumblings there may be some GUI juice on the horizon for this.</p>
+
+<p><strong>Deprecations</strong></p>
+
+<p>As with any release, some Puppet Enterprise features are going the way of the Dodo Bird. Some expected, some surprising, Puppet Enterprise’s landscape is certainly changing.</p>
+
+<p><em>Cloud Provisioner</em></p>
+
+<p>Long decried as a weak part of the PE infrastructure, the newly announced AWS Supported Module renders it redundant, and as such is removed from the shipping product’s default installation. Of course, if you have a large infrastructure that leverages the Cloud Provisioner, you can continue to use it by installing it into PE separately.</p>
+
+<p><em>Live Management</em></p>
+
+<p>Live management, a long-standing feature of the Enterprise Console, is now also deprecated. Of course, with the new code management features “baked-in” to Puppet Enterprise through r10k, Live Management is somewhat redundant. However, Puppet Labs notes that they will be releasing improved resource management functionality in future releases. If you need Live Management, then just as you can with the Cloud Provisioner, you can turn it on as well in the 3.8.0 product.</p>
+
+<p><strong>Compatability</strong></p>
+
+<p>Finally, some older versions of supported OSes are no longer so, and the list is as follows:</p>
+
+<p>centos-5-i386
+centos-5-x86_64
+centos-6-i386
+debian-6-i386
+debian-6-x86_64
+debian-7-i386
+debian-7-x86_64
+oracle-5-i386
+oracle-5-x86_64
+oracle-6-i386
+redhat-5-i386
+redhat-5-x86_64
+redhat-6-i386
+scientific-5-i386
+scientific-6-i386
+sles-11-i386
+ubuntu-1004-i386
+ubuntu-1004-x86_64
+ubuntu-1204-i386
+ubuntu-1404-i386</p>
+
+<p>I’m sure you may have some of these in your infrastructure, but they’re usually the result of a vendor application’s supported platforms. If so, you may wish to communicate back upstream to your various vendors, because when you upgrade PE, these go away for you.</p>
+
+<p><strong>Try It Out</strong></p>
+
+<p>As usual, I’ve already created a Vagrant instance to allow you to test and work with the new PE, testing out your existing code on the new platform. Check it out on my GitHub here.</p>
+
+<p>Let me know if you find any issues, and happy Puppeting!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Some Coding Work of Late...]]></title>
@@ -1591,64 +1663,6 @@ certname = puppetclient.bob.com</p>
 <p>Ok, let&rsquo;s recap&hellip;</p>
 
 <p>We&rsquo;ve set our site.pp and nodes.pp files in place on the server, specifying the server name and ensuring there is a FQDN node designation in the nodes.pp.  Next up, we&rsquo;ll make our first connection to the server and test the connection.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Puppet II - Client Installation]]></title>
-    <link href="http://questy.org/blog/2014/01/22/puppet-ii-client-installation/"/>
-    <updated>2014-01-22T12:51:45-05:00</updated>
-    <id>http://questy.org/blog/2014/01/22/puppet-ii-client-installation</id>
-    <content type="html"><![CDATA[<p>In our last installment &ldquo;<a href="http://questy.org/2014/01/puppet-i-installation/">Puppet I - Server Installation</a>&rdquo;, we covered all the basic necessities of installing Puppet Open Source server.  Of course, a server in and of itself is no good unless we have a client on another host to connect to it.  This article will similarly lead you step-by-step through the process of installing the client.</p>
-
-<p><em><strong>Puppet Client</strong></em></p>
-
-<p>Installation of our client is not so very much different than the initial server install.  Both come from the same Yum repository, and both need the same support libraries and files.</p>
-
-<p>As expected, a client will need the OS installed (again, we&rsquo;re working on the assumption of RedHat Enterprise Linux, but CentOS, SecurityLinux, etc. should do fine.</p>
-
-<p>Once your operating system is completely installed, just as before we&rsquo;ll need to follow the same steps of getting RedHat registered, the RHEL Yum repo enabled, the Puppet Labs repo configured, the correct support repos added, and finally, the client installed.</p>
-
-<p><em><strong>Enabling the RHEL Yum Repo</strong></em></p>
-
-<p>Just as we did before, we register our RedHat installation via &ldquo;subscription manager&rdquo; from RedHat.</p>
-
-<p><em><strong>sudo subscription-manager register</strong></em>
-<em><strong> sudo subscription-manager auto-attach</strong></em>
-<em><strong> sudo subscription-manager attach &ndash;auto</strong></em>
-<em><strong> sudo subscription-manager refresh</strong></em></p>
-
-<p>As I mentioned before, RedHat&rsquo;s tool isn&rsquo;t 100% effective 100% of the time, and some level of redundancy in the commands above ensures all the appropriate bits get twiddled.</p>
-
-<p><em><strong>Installing the Puppet Labs Software Repository</strong></em></p>
-
-<p>Again, as before, we simply use RPM to get the repository installed (the below command is all on one line):</p>
-
-<p>**_sudo rpm -ivh <a href="https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm_**">https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm_**</a></p>
-
-<p><em><strong>Enabling Additional Packages</strong></em></p>
-
-<p>Once again, the &ldquo;optional&rdquo; RedHat packages and the &ldquo;development&rdquo; PupeptLabs repositories have to be enabled.  You can either use the Yum Config Manager or edit the repo files directly, your choice.  Yum Configuration Manager commands are as follows:</p>
-
-<p><em><strong>sudo yum -y install yum-utils
-sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
-<em><strong> sudo yum-config-manager &ndash;enable puppetlabs-devel</strong></em></p>
-
-<p>You should note that the &ldquo;enable&rdquo; command above actually has two hyphens in front of it instead of one long one.  WordPress concatenates those.</p>
-
-<p><em><strong>Get Current!</strong></em></p>
-
-<p>Now is the time to get RHEL completely up to date through the usual means:</p>
-
-<p><em><strong>yum -y update</strong></em></p>
-
-<p><em><strong>Install the Client</strong></em></p>
-
-<p><strong><em>yum -y install puppet</em></strong></p>
-
-<p>If all goes well, this will complete the client config on your client host and you are now ready to configure the server, configure the client, and then connect them via SSL as provided by Puppet Labs.</p>
-
-<p>In our next edition, we&rsquo;ll be doing just that.</p>
 ]]></content>
   </entry>
   

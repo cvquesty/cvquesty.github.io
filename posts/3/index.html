@@ -9,7 +9,7 @@
   <meta name="author" content="Jerald Sheets">
 
   
-  <meta name="description" content="Ok, so you&rsquo;re interested in this whole Puppet thing, and you want to get a full install in your test environment, or on a set of VMs to work &hellip;">
+  <meta name="description" content="In our last installment &ldquo;Puppet I - Server Installation&rdquo;, we covered all the basic necessities of installing Puppet Open Source server.   &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,87 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/22/puppet-ii-client-installation/">Puppet II - Client Installation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-01-22T12:51:45-05:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:51 pm</span></time>
+        
+           | <a href="/blog/2014/01/22/puppet-ii-client-installation/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2014/01/22/puppet-ii-client-installation/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In our last installment &ldquo;<a href="http://questy.org/2014/01/puppet-i-installation/">Puppet I - Server Installation</a>&rdquo;, we covered all the basic necessities of installing Puppet Open Source server.  Of course, a server in and of itself is no good unless we have a client on another host to connect to it.  This article will similarly lead you step-by-step through the process of installing the client.</p>
+
+<p><em><strong>Puppet Client</strong></em></p>
+
+<p>Installation of our client is not so very much different than the initial server install.  Both come from the same Yum repository, and both need the same support libraries and files.</p>
+
+<p>As expected, a client will need the OS installed (again, we&rsquo;re working on the assumption of RedHat Enterprise Linux, but CentOS, SecurityLinux, etc. should do fine.</p>
+
+<p>Once your operating system is completely installed, just as before we&rsquo;ll need to follow the same steps of getting RedHat registered, the RHEL Yum repo enabled, the Puppet Labs repo configured, the correct support repos added, and finally, the client installed.</p>
+
+<p><em><strong>Enabling the RHEL Yum Repo</strong></em></p>
+
+<p>Just as we did before, we register our RedHat installation via &ldquo;subscription manager&rdquo; from RedHat.</p>
+
+<p><em><strong>sudo subscription-manager register</strong></em>
+<em><strong> sudo subscription-manager auto-attach</strong></em>
+<em><strong> sudo subscription-manager attach &ndash;auto</strong></em>
+<em><strong> sudo subscription-manager refresh</strong></em></p>
+
+<p>As I mentioned before, RedHat&rsquo;s tool isn&rsquo;t 100% effective 100% of the time, and some level of redundancy in the commands above ensures all the appropriate bits get twiddled.</p>
+
+<p><em><strong>Installing the Puppet Labs Software Repository</strong></em></p>
+
+<p>Again, as before, we simply use RPM to get the repository installed (the below command is all on one line):</p>
+
+<p>**_sudo rpm -ivh <a href="https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm_**">https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm_**</a></p>
+
+<p><em><strong>Enabling Additional Packages</strong></em></p>
+
+<p>Once again, the &ldquo;optional&rdquo; RedHat packages and the &ldquo;development&rdquo; PupeptLabs repositories have to be enabled.  You can either use the Yum Config Manager or edit the repo files directly, your choice.  Yum Configuration Manager commands are as follows:</p>
+
+<p><em><strong>sudo yum -y install yum-utils
+sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
+<em><strong> sudo yum-config-manager &ndash;enable puppetlabs-devel</strong></em></p>
+
+<p>You should note that the &ldquo;enable&rdquo; command above actually has two hyphens in front of it instead of one long one.  WordPress concatenates those.</p>
+
+<p><em><strong>Get Current!</strong></em></p>
+
+<p>Now is the time to get RHEL completely up to date through the usual means:</p>
+
+<p><em><strong>yum -y update</strong></em></p>
+
+<p><em><strong>Install the Client</strong></em></p>
+
+<p><strong><em>yum -y install puppet</em></strong></p>
+
+<p>If all goes well, this will complete the client config on your client host and you are now ready to configure the server, configure the client, and then connect them via SSL as provided by Puppet Labs.</p>
+
+<p>In our next edition, we&rsquo;ll be doing just that.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -693,52 +774,6 @@ Two slaves configured as replicants, up and running.. check.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/09/10/puh-lease/">Puh-lease</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2010-09-10T14:19:01-04:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2010</span></span> <span class='time'>2:19 pm</span></time>
-        
-           | <a href="/blog/2010/09/10/puh-lease/#disqus_thread"
-             data-disqus-identifier="http://questy.org/blog/2010/09/10/puh-lease/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I saw a p1mp of a new book on <a href="http://daringfireball.net">Gruber</a> called &ldquo;Being Geek&rdquo;.  It bills itself as &ldquo;<a href="http://www.amazon.com/gp/product/0596155409?ie=UTF8&amp;tag=beigee-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0596155409">The Software Developer&rsquo;s Career Handbook</a>&rdquo;.  That sort of set me off, honestly.</p>
-
-<p>You mean the people we geeks won&rsquo;t give access to because, if left to themselves, developers will patently destroy anything they come in contact with in the systems world?  You mean the people who think root is an account that should be used as a tool to cure ALL their ills and knock down all the &ldquo;obstacles&rdquo; they encounter?  The people who won&rsquo;t use &ldquo;sudo&rdquo; because it&rsquo;s too many characters to type and &ldquo;breaks their flow&rdquo; when coding?</p>
-
-<p>Oh, I get it, the people who haven&rsquo;t the slightest clue what it really means to be geek.  To give honor and deference to the system.  It&rsquo;s security, design, integrity.  They don&rsquo;t care that there are other people on the box, they just want to meet their date.  And they&rsquo;ll twist every systems admin in every possible contortion to break all the best practices in the world just to meet their date.  "Being Geek"  Phah!</p>
-
-<p>These guys like to be called geeks because it is an easy to earn, undeserved moniker for them bestowed by people who have no clue what it means.  All the while, they&rsquo;re breaking every rule and every guideline just to meet a date.  Further, when Systems people point out security concerns or elements of systems design these supposed geeks are transgressing, they run to upper management and complain that the systems teams are &ldquo;blocking their date&rdquo;, or &ldquo;They&rsquo;re blockers&rdquo;, or &ldquo;we can&rsquo;t get anything done.&rdquo;  Geeks.</p>
-
-<p>A real geek would NEVER do that.</p>
-
-<p>A real geek would write beautiful code that followed all the best practices rules for the honor of having written it.  A real geek would NEVER even begin to consider using the root account unless it was absolutely necessary.  A real geek would take the recommendations of a systems team (the real geeks, by the way) who spend all their time making sure the platform upon which these geek posers perform their witchcraft is ALWAYS up, ALWAYS stable, ALWAYS up to date, and ALWAYS secure.</p>
-
-<p>I&rsquo;ve been in this business for about 20 years now, and in that time I have met two developers who were tried and true, died-in-the-wool geeks.  TWO.</p>
-
-<p>Gimme a break&hellip; &ldquo;Geeks&rdquo;.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/4">&larr; Older</a>
@@ -756,6 +791,10 @@ Two slaves configured as replicants, up and running.. check.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/30/puppets-dot-puppets-everywhere/">Puppets.. Puppets Everywhererm 2017-04-17-puppets-dot-puppets-everywhere.markdown</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/">Some Coding Work of Late...</a>
       </li>
     
@@ -769,10 +808,6 @@ Two slaves configured as replicants, up and running.. check.</p>
     
       <li class="post">
         <a href="/blog/2015/01/15/vagrant-and-docker-love/">Vagrant and Docker Love</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/08/moving-my-tech-content-to-github/">Moving My Tech Content to GitHub</a>
       </li>
     
   </ul>
