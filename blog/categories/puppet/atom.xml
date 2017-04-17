@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Puppet | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/puppet/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-17T10:03:12-04:00</updated>
+  <updated>2017-04-17T10:04:50-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -40,7 +40,7 @@
 
 <p><img src="http://cvquesty.github.io/images/keynote_wide.jpg" alt="KeynoteWide" /></p>
 
-<p>Next up was the PuppetConf Keynotes for the first day that usually contains Luke Kanies' annual Puppet conversation. Where they’ve been, what they’re doing, and the roadmap forward was fodder for Luke’s talk, and you can find the complete Keynote [here:] (<a href="https://puppetlabs.com/presentations/puppetconf-2015-lukes-keynote-address">https://puppetlabs.com/presentations/puppetconf-2015-lukes-keynote-address</a>)</p>
+<p>Next up was the PuppetConf Keynotes for the first day that usually contains Luke Kanies' annual Puppet conversation. Where they’ve been, what they’re doing, and the roadmap forward was fodder for Luke’s talk, and you can find the complete Keynote <a href="https://puppetlabs.com/presentations/puppetconf-2015-lukes-keynote-address">here</a>:</p>
 
 <p>The big synopsis I can give is all about application automation. For you Puppeteers out there, just think of the relationships between the File|Package|Service component “types” and apply that to application components (db, web, container, Java App, etc.) and you get the gist. Very cool, very powerful, and very near. Be looking for Puppet Enterprise 2015.3 to drop in the very near future. I’ll certainly have soe blog things to say when that happens.</p>
 
