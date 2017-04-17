@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-17T09:04:41-04:00</updated>
+  <updated>2017-04-17T09:08:27-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -12,6 +12,35 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Vagrant and Docker Love]]></title>
+    <link href="http://questy.org/blog/2015/01/15/vagrant-and-docker-love/"/>
+    <updated>2015-01-15T20:31:15-05:00</updated>
+    <id>http://questy.org/blog/2015/01/15/vagrant-and-docker-love</id>
+    <content type="html"><![CDATA[<p>Not a full-on post, but more a note for myself to both investigate and test this… It would seem that Vagrant has now added provisioner support for Docker here. Be looking for a new post on this in the near future!</p>
+
+<p>I’m working steadily to start off the new year, so my posting may be somewhat sporadic, but I will continue to blog Puppet fundamentals, supporting tools, and related items as I have the chance.</p>
+
+<p>And in that vein, I encountered something this week I wanted to share with you.</p>
+
+<p>It would seem that the new feature whereby you can include facter facts in a module for pluginsync to distribute them, but using the new mechanism of:</p>
+
+<p>/modulename/facts.d/external_fact</p>
+
+<p>is not 100% reliable when distributing those facts. By this, I mean the following observed behavior.</p>
+
+<p>You create your fact and place it in the above directory. Say, a shell script that gives you a value.
+You make your fact executable, and running it natively at the shell works perfectly.
+You do a puppet agent run, and the fact syncs to the agent machine, but never becomes available in the facter table.
+You find the sync'ed location of the fact (in the losgs from the sync) and run it manually, and it works perfectly.
+I spoke with some folks at Puppet just in a conversation describing what I was seeing and they suggested the following workaround:</p>
+
+<p>Make the fact a file resource and place the fact in /etc/puppetlabs/facter/facts.d. This makes the fact available to the facter system, and displays correctly in the facter table and responds to the facter -p as expected.</p>
+
+<p>That’s it for now! Look for more to come on workflows and tools in the very near future.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Moving My Tech Content to GitHub]]></title>
@@ -1549,17 +1578,6 @@ sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
 <p>The &ldquo;Open Source&rdquo; Puppet has most of the same pieces, although named somewhat differently, and you can build a very solid, full-featured system of your own without the price tag.  All you need is time.  :)</p>
 
 <p>In the coming sections, I will take apart Puppet for those of you wishing to know more, and give a rudimentary survey of all the different things it can do.  Hope you come along!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[I Saw This Somewhere Else...]]></title>
-    <link href="http://questy.org/blog/2013/06/04/i-saw-this-somewhere-else/"/>
-    <updated>2013-06-04T15:40:06-04:00</updated>
-    <id>http://questy.org/blog/2013/06/04/i-saw-this-somewhere-else</id>
-    <content type="html"><![CDATA[<p>And just HAD to make my own.  Enjoy!</p>
-
-<p><a href="http://questy.org/wp-content/uploads/2013/06/3upvh5.jpg"><img src="http://questy.org/wp-content/uploads/2013/06/3upvh5.jpg" alt="3upvh5" /></a></p>
 ]]></content>
   </entry>
   
