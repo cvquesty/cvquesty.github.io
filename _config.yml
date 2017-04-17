@@ -99,4 +99,10 @@ disqus_show_comment_count: true
 google_analytics_tracking_id: UA-1135877-2
 
 # Facebook Like
-facebook_like: true
+facebook_like: false
+
+# Facebook likebox (for pages)
+facebook_pagename: Questy.org
+facebook_showfaces: true
+facebook_showstream: true
+facebook_width: 260
