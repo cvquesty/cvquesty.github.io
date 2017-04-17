@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-17T09:51:37-04:00</updated>
+  <updated>2017-04-17T09:55:52-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -12,6 +12,63 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Some Software Releases and Forge Stuffs]]></title>
+    <link href="http://questy.org/blog/2015/07/28/some-software-releases-and-forge-stuffs/"/>
+    <updated>2015-07-28T10:11:55-04:00</updated>
+    <id>http://questy.org/blog/2015/07/28/some-software-releases-and-forge-stuffs</id>
+    <content type="html"><![CDATA[<p><strong>Salutations</strong></p>
+
+<p>First of all, hello from sunny and hot New York. I’m on engagement for my company doing some Puppet goodness in the Northeast.</p>
+
+<p>In my downtime at night, Ive been wrapping up some work I’ve had on my plate for awhile (my Puppet module destined for the Puppet Forge) and generally studying for various topics if for no other reason than to get better.</p>
+
+<p>As I was preparing my new module, Puppet releases the Puppet4 Enterprise release that now follows new semantic versioning schemes, and follows the scheme:</p>
+
+<p>Puppet Enterprise YYYY.VV</p>
+
+<p>where “V” is version number.</p>
+
+<p><strong>Puppet Enterprise</strong></p>
+
+<p>As many of you know, I’ve been maintaining a project for Puppet prototyping and working with development and testing over a Vagrant instance for some time. I created what I have because I needed something I could share with customers to help facilitate coding and iteration without their touching the production instance unless absolutely necessary.</p>
+
+<p>Thus, my projects were born.</p>
+
+<p><strong>Vagrants. Vagrants Everywhere.</strong></p>
+
+<p>In a nutshell, I configure a Vagrant environment on a modern OS. I create 4 nodes. One is the Puppet Master itself and the remaining three are Puppet agents that check in with the master and are in three faux envirnments: “Production”, “Testing”, and “Development”. As a result, you can code for DEV and iterate the heck out of it. Once you like it, you can merge up the tree into testing and finally to production.</p>
+
+<p>These releases have been followng the format:</p>
+
+<p>[OSNAME]|[VERSION NUMBER]-[PUPPET][PUPPETVERSION]</p>
+
+<p>So, for instance, a release for CentOS5 running Puppet Open Source 4.0 would look something like this:</p>
+
+<p>centos5-po4</p>
+
+<p>Make sense?</p>
+
+<p>Well, as of today, my new release will be CentOS7 with Puppet Enterprise 2015.2. It can be found here.</p>
+
+<p><strong>Puppet Forge Module</strong></p>
+
+<p>I’ve also been working on two separate modules for the forge here recently. The other I’ve been working on longer, but this one was just ready first. I call it “PuppetDev”.</p>
+
+<p>The idea behind the PuppetDev module is that sometimes a company who needs to do Puppet Development has corporate policy against using a tool like the Vagrant instances (i.e. virtualization on the desktop) mentioned above. As a result, the company often will set up a centralized development host that people can login to for developing Puppet code.</p>
+
+<p>Often times, though, when starting out, a user can feel overwhelmed at the simple command line in front of them, and even if they get into an editor, they may not know where to start with syntax highlighting and the like.</p>
+
+<p>It was from this need PuppetDev was born. You simply apply the module to a node, and supply the user/group you want to apply the module to as parameters, and it whirls away and sets up their development environment.</p>
+
+<p>Among the toys they get with the release are syntax highlighting, an easier to read colorscheme, a Vim plugin infrastructure, and all manageable by the Puppet Administrator for the site.</p>
+
+<p>I know it’s a rather narrow use case, but there it is… feel free to check it out here, or if you’re so inclined, on your Puppet master you can simply run puppet module install cvquesty/puppetdev.</p>
+
+<p>That’s all I have for this update, but hope to be a little more active here shortly with my next Forge module.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Organizing Your Hierarchy Equals Pain]]></title>
@@ -1614,40 +1671,6 @@ sudo chkconfig puppetmaster on</strong></em></p>
 Conclusion</strong></em></p>
 
 <p>Now we&rsquo;re ready to do work with Puppet.  You can actually stop here and fully manage your site with Puppet, however there are several addons and feature-sets yet you can install to expand Puppet&rsquo;s functionality.  We will look at some of these tools in future installments.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[South East Puppet User Group]]></title>
-    <link href="http://questy.org/blog/2014/02/26/south-east-puppet-user-group/"/>
-    <updated>2014-02-26T17:10:05-05:00</updated>
-    <id>http://questy.org/blog/2014/02/26/south-east-puppet-user-group</id>
-    <content type="html"><![CDATA[<p>I&rsquo;ll be speaking Thursday evening at 7PM at the SE Puppet User Group meeting.  The topic will be &ldquo;Intro to Puppet&rdquo; and all are welcome.  Come early (6:30) and come hungry, as we&rsquo;ll be having pizza to get started.</p>
-
-<p>Current &ldquo;Working&rdquo; Agenda:</p>
-
-<p>Agenda:</p>
-
-<p>-630p - 700p Pizza/Networking
--700p - 800p - Introduction to Puppet w/ Jerald Sheets</p>
-
-<ol>
-<li>What is Puppet?</li>
-<li>How does it work?</li>
-<li>Puppet benefits?</li>
-<li>Major components of Puppet (Server / Client)</li>
-</ol>
-
-
-<p>-800p - 830p - Q/A</p>
-
-<p>Location:
-8302 Dunwoody Place, Suite 100
-Atlanta, GA 30350</p>
-
-<p>[wpgmza id=&ldquo;1&rdquo;]</p>
-
-<p>I hope to see you all there.</p>
 ]]></content>
   </entry>
   
