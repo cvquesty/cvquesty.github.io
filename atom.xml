@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-17T09:55:52-04:00</updated>
+  <updated>2017-04-17T10:03:12-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -12,6 +12,43 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[PuppetConf 2015]]></title>
+    <link href="http://questy.org/blog/2015/10/27/puppetconf-2015/"/>
+    <updated>2015-10-27T22:11:28-04:00</updated>
+    <id>http://questy.org/blog/2015/10/27/puppetconf-2015</id>
+    <content type="html"><![CDATA[<p><strong>PuppetConf Portland</strong></p>
+
+<p><img src="http://cvquesty.github.io/images/logo.jpg" alt="PuppetConf" /></p>
+
+<p>Ahh, Portland! What a great place to have PuppetConf this year. The home of Puppet Labs and all its varied food, drink, and other unnamed consumables give Portland a vibe like no other.</p>
+
+<p>From the hipster eateries to the burger dives around town, Portland offered something for everyone.</p>
+
+<p>My week began by arriving a tad early for the Puppet Certifed Consultant training day. On the way in, I passed this little beauty right here:</p>
+
+<p><img src="http://cvquesty.github.io/images/mountain.jpg" alt="Mountain" /></p>
+
+<p>I had forgotten just how beautiful the Pacific Northwest can be.</p>
+
+<p>In our meetings before the conference began in earnest, we talked about things announced and things as yet unannounced, and essentially just learned how to be better consultants and puppeteers. It was nice to be able to ask the questions that arise from time to time of the “big boys” (Gary Larizza, Zak Smith, etc.) and get first-hand accounts on how to do better.</p>
+
+<p>There were quite a number of really cool talks on various upcoming tech, that I had quite a bit of opportunity to take notes and build upon knowledge I’d already gained.</p>
+
+<p><strong>Keynotes!!</strong></p>
+
+<p><img src="http://cvquesty.github.io/images/keynote_wide.jpg" alt="KeynoteWide" /></p>
+
+<p>Next up was the PuppetConf Keynotes for the first day that usually contains Luke Kanies' annual Puppet conversation. Where they’ve been, what they’re doing, and the roadmap forward was fodder for Luke’s talk, and you can find the complete Keynote [here:] (<a href="https://puppetlabs.com/presentations/puppetconf-2015-lukes-keynote-address">https://puppetlabs.com/presentations/puppetconf-2015-lukes-keynote-address</a>)</p>
+
+<p>The big synopsis I can give is all about application automation. For you Puppeteers out there, just think of the relationships between the File|Package|Service component “types” and apply that to application components (db, web, container, Java App, etc.) and you get the gist. Very cool, very powerful, and very near. Be looking for Puppet Enterprise 2015.3 to drop in the very near future. I’ll certainly have soe blog things to say when that happens.</p>
+
+<p>I appreciate, once again, my employer <a href="http://shadow-soft.com">Shadow Soft</a> sending me out to PuppetConf to be the best engineer I can be, and learn all the new tricks and tools at my disposal while on the road.</p>
+
+<p>Look for me to pick up where I left off with basic tools, and a revamp of my early-on configuration tutorial for Puppet Community with the new tools and features in Puppet 4 soon.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Some Software Releases and Forge Stuffs]]></title>
@@ -1619,58 +1656,6 @@ _**reporturl = <a href="http://&lt;FQDN>:3000/reports/upload**_">http://&lt;FQDN
 <p>I know that&rsquo;s a lot for a single entry, but I wanted to make sure and get all the additional pieces installed and configured before starting to cover how each of the pieces work and interact.  I thought of making each piece its own article, but in every scenario I thought about, you ended up with a not-completey-configured (i.e., &ldquo;broken&rdquo;) system.  I opted instead to do the complete configuration.</p>
 
 <p>At this point, however, you should be all set and ready to go with Dashboard/Passenger configured and being run by Apache.  You should have MySQL and PuppetDB installed and configured, handling their own individual tasks, and you should have Puppet Master and Agent installed (with one agent node) all configured to perform their duties as a Puppet Infrastructure.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Puppet IV - Signing Certificates]]></title>
-    <link href="http://questy.org/blog/2014/02/27/puppet-iv-signing-certificates/"/>
-    <updated>2014-02-27T15:32:04-05:00</updated>
-    <id>http://questy.org/blog/2014/02/27/puppet-iv-signing-certificates</id>
-    <content type="html"><![CDATA[<p><em><strong>Introduction</strong></em></p>
-
-<p>We&rsquo;ve covered a lot of ground already in our tutorials thus far.  In <a href="http://questy.org/2014/01/puppet-i-installation/">Tutorial I</a> we installed our Puppet server.  In <a href="http://questy.org/2014/01/puppet-ii-client-installation/">Tutorial II</a>, the client, and in <a href="http://questy.org/2014/02/puppet-iii-initial-configuration/">Tutorial III</a> we configured the server and client to start communicating.</p>
-
-<p>In this 4th installment, we&rsquo;ll cover the signing of SSL certificates between your Puppet Master and Client, and running a simple test to ensure your setup is working and ready to function as a master=>slave pair.</p>
-
-<p>On your server, be sure to start up the Puppet Master, so it can receive connections from outside sources, like so:</p>
-
-<p><em><strong>sudo service puppetmaster start
-sudo chkconfig puppetmaster on</strong></em></p>
-
-<p>Next, on your Puppet client, run a test run so the client will start, create an SSL certificate for the client host, and make an initial callout to the server.  It will exit immediately, but the server will now know about the client, and we can sign the certificate over there.</p>
-
-<p><em><strong>puppet agent -t</strong></em></p>
-
-<p>When you run this command, the output should look something like this:</p>
-
-<p>[caption id=&ldquo;attachment_625&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;720&rdquo;]<a href="http://questy.org/wp-content/uploads/2014/02/agent_cert.png"><img src="http://questy.org/wp-content/uploads/2014/02/agent_cert.png" alt="Certificate Signing Request Example" /></a> Certificate Signing Request Example[/caption]</p>
-
-<p>Now, SSH to your Puppet Master, and run the following command:</p>
-
-<p><em><strong>puppet cert &ndash;list</strong></em></p>
-
-<p>If everything has gone well, your server will have now seen your client and will report as much like so:</p>
-
-<p>[caption id=&ldquo;attachment_627&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;719&rdquo;]<a href="http://questy.org/wp-content/uploads/2014/02/server_cert.png"><img src="http://questy.org/wp-content/uploads/2014/02/server_cert.png" alt="Server Cert Requests in Waiting" /></a> Server Cert Requests in Waiting[/caption]</p>
-
-<p>Finally, so <em>sign </em>the certificate so there is an SSL connection between the client and server, and all future Puppet actions between the two pass over that connection, simply sign the certificate request on the master as follows:</p>
-
-<p><em><strong>puppet cert sign puppetclient.example.com</strong></em>
-<em>(or whatever your hostname is)</em></p>
-
-<p> The server will sign the certificate and make a tabular listing of it in its database finalizing the connection.  You can see this output by using the &ldquo;list all&rdquo; options as follows:</p>
-
-<p><em><strong>puppet cert list &ndash;all</strong></em></p>
-
-<p>and see the output which should resemble the following:</p>
-
-<p>[caption id=&ldquo;attachment_635&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;718&rdquo;]<a href="http://questy.org/wp-content/uploads/2014/02/signed_cert.png"><img src="http://questy.org/wp-content/uploads/2014/02/signed_cert.png" alt="Signed Certificate" /></a> Signed Certificate[/caption]</p>
-
-<p><em><strong>
-Conclusion</strong></em></p>
-
-<p>Now we&rsquo;re ready to do work with Puppet.  You can actually stop here and fully manage your site with Puppet, however there are several addons and feature-sets yet you can install to expand Puppet&rsquo;s functionality.  We will look at some of these tools in future installments.</p>
 ]]></content>
   </entry>
   

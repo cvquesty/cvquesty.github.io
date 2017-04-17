@@ -9,7 +9,7 @@
   <meta name="author" content="Jerald Sheets">
 
   
-  <meta name="description" content="In my Internet and sysadmin travels, I find it necessary from time to time to seek out documentation on a particular subject in the Linux world.   &hellip;">
+  <meta name="description" content="Continuing our discussion of LDAP Administration, there&rsquo;s the matter of Replication. So far we&rsquo;ve created an LDAP store, turned up the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,118 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/02/18/ldap-administration-iv-replication/">LDAP Administration v - Replication</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-02-18T12:57:33-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>12:57 pm</span></time>
+        
+           | <a href="/blog/2011/02/18/ldap-administration-iv-replication/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2011/02/18/ldap-administration-iv-replication/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Continuing our discussion of LDAP Administration, there&rsquo;s the matter of Replication.</p>
+
+<p>So far we&rsquo;ve created an LDAP store, turned up the server, configured a client, and even connected Apache authentication to it.  However, if we&rsquo;re going to use our LDAP server for enterprise authentication, then there&rsquo;s the small matter of &ldquo;What happens when my authentication server wets the bed?&rdquo;.</p>
+
+<p>As with anything in the enterprise, you have backup systems.  Sometimes they&rsquo;re failover systems, sometimes clusters.  Sometimes they&rsquo;re tandem systems, and sometimes they&rsquo;re load-balanced.  No matter the configuration, you have redundancy, resiliency, and scalability.  I plan to talk about one of the many scenarios available to LDAP administrators today; the idea of a master server and many replicants.</p>
+
+<p><strong>Layout</strong></p>
+
+<p>In my configuration, I have a single administrative parent.  This system is where we do all administrative level work.  This includes adding users, adding groups, reporting, and the like.  It is also the &ldquo;provider&rdquo; store to all replicants in our environment.  We learned earlier how to turn up a server that is queried directly.  Now let&rsquo;s learn, instead, how to configure this system to replicate itself.</p>
+
+<p>Assume 3 systems total, ldap01.bob.com, ldap02.bob.com, and ldap03.bob.com.  ldap01.bob.com is our master server and our replicants are ldap02 &amp; ldap03.  To tell the system it will be replicating, you will need to configure it to do so.  Shut down LDAP on the primary like so:</p>
+
+<p><em><strong>/sbin/service ldap stop</strong></em></p>
+
+<p>This shuts down all daemons and associated processes.  Next, we need to edit our <strong>/etc/openldap/slapd.conf</strong> to include information regarding where our replicants will be.    You must add a few lines to the master to make this happen.  Like so:</p>
+
+<p>replogfile      /var/log/ldap/slapd.replog</p>
+
+<p>replica uri=ldap://ldap02.bob.com:389
+binddn=&ldquo;cn=admin,dc=bob,dc=com&rdquo;
+bindmethod=simple credentials=secret</p>
+
+<p>replica uri=ldap://ldap03.bob.com:389
+binddn=&ldquo;cn=admin,dc=bob,dc=com&rdquo;
+bindmethod=simple credentials=secret</p>
+
+<p>This can be added at the end of the file.</p>
+
+<p>Next, we take our fresh two servers, and turn up a similar system to what ldap01 was before adding the above lines.  In these systems, there are only two important lines to tell them they are replicants and not masters.  They are as follows:</p>
+
+<p>updatedn &ldquo;cn=admin,dc=bob,dc=com&rdquo;
+updateref ldap://ldap01.bob.com</p>
+
+<p>That is literally the entire configuration.</p>
+
+<p><strong>Populating the Replicants</strong></p>
+
+<p>To have your schema transferred over, and to be working from the same general starting point, I find it important to copy your whole database over to start with.  This is easily done utilizing standard LDAP tools.</p>
+
+<p>First, start back up your master server:</p>
+
+<p><em><strong>/sbin/service ldap start</strong></em></p>
+
+<p>Once you&rsquo;ve done this, the database is up and ready for queries.  We will essentially dump our database for import on each of the replicants.  To do this, we will use the <em>slapcat </em>utility, redirecting the output to a file we can use to move around to the replicants.  Run <em>slapcat</em> as follows:</p>
+
+<p><strong><em>slapcat >> master.ldif</em></strong></p>
+
+<p>this will output the contents of your LDAP store to a single LDIF-formatted file, suitable for import into other servers.  Simply copy this file to a generic location (such as your personal home directory) on each of the other servers, and we are set for import.</p>
+
+<p>Once your file is in the new location, you&rsquo;re ready to import.  First, start LDAP as outlined above.  Next, add the LDIF to your store:</p>
+
+<p><em><strong>slapadd -l master.ldif</strong></em></p>
+
+<p>Probably unnecessary, but I usually restart my ldap server after the import, and now I&rsquo;m ready to go.  Repeat the process on your third LDAP store, and your full environment is running.</p>
+
+<p><strong>Next Steps</strong></p>
+
+<p>So let&rsquo;s see where we are.</p>
+
+<p>Master server up and serving.. check.
+Two slaves configured as replicants, up and running.. check.</p>
+
+<p>Now that you have your stores up, you have to do some testing.  Primarily, that the master replicates to the slaves.  The way I usually do this is use the <a href="http://directory.apache.org">Apache Directory Studio</a> I covered in an earlier article.  I simply add a user on the master.  Then, I connect to each of the slaves in turn to see that the user has appeared there.  If so, then we&rsquo;re ready for the next steps:  High Availability.</p>
+
+<p>You have two query hosts that can equally provide query answers from remote clients.  There are several ways you can make these available.  Round-robin DNS, HA IP failover, and load-balancing via a hardware load balancer.  I prefer the latter.  However, to do so, you need a way to tell the load balancer that your LDAP store is up and responding.</p>
+
+<p>I prefer to use a small script on the system that can be served up via HTTP to the load balancer that does a simple operation.  First, it does an LDAP search, looks for information, and then prints out to the web page it creates a simple &ldquo;UP&rdquo; or &ldquo;DOWN&rdquo; message for the load balancer to key on.  The script looks like the following:</p>
+
+<p>[caption id=&ldquo;attachment_265&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;150&rdquo;]<a href="http://questy.org/wp-content/uploads/2011/02/healthcheck.png"><img src="http://questy.org/wp-content/uploads/2011/02/healthcheck-150x150.png" alt="" /></a> Healthcheck Sample[/caption]</p>
+
+<p>As you can see, all we do is simply do an <em>ldapsearch </em>against our bob.com domain, look for the home directory for the admin user to look like &ldquo;/home/admin&rdquo;.  If the answer returns, we say &ldquo;UP&rdquo;, if not, we say &ldquo;DOWN&rdquo;.</p>
+
+<p>Place this script into your &ldquo;cgi-bin&rdquo; directory, make it executable <em>(chmod 0755 <filename>)</em> and simply call it in your browser via the URL:  <a href="http://yoursite.com/cgi-bin/">http://yoursite.com/cgi-bin/</a><filename>.  If you have Apache properly configured (outside the scope of this document) to serve CGI Executables, you should get the status of the individual system.  Do this for both your replicants.</p>
+
+<p>Finally, ask your network team to configure these two systems in a load-balanced configuration behind a VIP (virtual IP).  Have a sensible DNS name pointed at this IP (ldap.bob.com, for instance) and you&rsquo;re in business.  Now, when you configure your clients to authenticate against LDAP (Article #1 in this series), you just point them at the ldap.bob.com name.  If either of the systems go out, the load balancer will point you to the machine that is up to serve your requests.</p>
+
+<p><strong>Conclusion</strong></p>
+
+<p>I hope this gives you a basic direction to go in getting high-availability setup for your system through a combination of replication and load balancing.  There are other methods for HA in the replicants.  Perhaps we will cover that soon.</p>
+
+<p>Next up:  Securing your LDAP installation.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -603,38 +715,6 @@ TLS_CACERTDIR /etc/openldap/cacerts</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/01/24/ive-been-waiting-all-42-years/">I've Been Waiting All 42 Years...</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2010-01-24T22:24:46-05:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2010</span></span> <span class='time'>10:24 pm</span></time>
-        
-           | <a href="/blog/2010/01/24/ive-been-waiting-all-42-years/#disqus_thread"
-             data-disqus-identifier="http://questy.org/blog/2010/01/24/ive-been-waiting-all-42-years/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&rsquo;ve been waiting all 42 years of my life to see this. Founded the year I was born, going to the bowl. #<a href="http://search.twitter.com/search?q=%23saints">saints</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/5">&larr; Older</a>
@@ -652,6 +732,10 @@ TLS_CACERTDIR /etc/openldap/cacerts</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/10/27/puppetconf-2015/">PuppetConf 2015</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/07/28/some-software-releases-and-forge-stuffs/">Some Software Releases and Forge Stuffs</a>
       </li>
     
@@ -665,10 +749,6 @@ TLS_CACERTDIR /etc/openldap/cacerts</p>
     
       <li class="post">
         <a href="/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/">Some Coding Work of Late...</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/26/building-your-toolbox/">Building Your Toolbox</a>
       </li>
     
   </ul>

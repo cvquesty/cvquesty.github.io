@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>New Tools and Old Schools - Questy.org</title>
+  <title>PuppetConf 2015 - Questy.org</title>
   <meta name="author" content="Jerald Sheets">
 
   
-  <meta name="description" content="New Tools Once you&rsquo;re treading water in this whole DEVOPS thing, a lot of terms get thrown around and a lot of &ldquo;newest bestest&rdquo; &hellip;">
+  <meta name="description" content="PuppetConf Portland Ahh, Portland! What a great place to have PuppetConf this year. The home of Puppet Labs and all its varied food, drink, and other &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://questy.org/blog/2014/05/02/new-tools-old-schools/">
+  <link rel="canonical" href="http://questy.org/blog/2015/10/27/puppetconf-2015/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Questy.org" type="application/atom+xml">
@@ -80,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">New Tools and Old Schools</h1>
+      <h1 class="entry-title">PuppetConf 2015</h1>
     
     
       <p class="meta">
@@ -89,7 +89,7 @@
 
 
 
-<time class='entry-date' datetime='2014-05-02T14:24:37-04:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>2:24 pm</span></time>
+<time class='entry-date' datetime='2015-10-27T22:11:28-04:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:11 pm</span></time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://questy.org">Comments</a>
@@ -99,45 +99,35 @@
   </header>
 
 
-<div class="entry-content"><p><strong>New Tools</strong></p>
+<div class="entry-content"><p><strong>PuppetConf Portland</strong></p>
 
-<p>Once you&rsquo;re treading water in this whole DEVOPS thing, a lot of terms get thrown around and a lot of &ldquo;newest bestest&rdquo; gets offered up as the cure for everything including the kitchen sink&hellip; oh, and cancer.  However, I think when the hubbub is the loudest, that&rsquo;s when I really take a step back and ask myself what we&rsquo;re trying to do, and what&rsquo;s the simplest, most repeatable and safest way to make it happen.</p>
+<p><img src="http://cvquesty.github.io/images/logo.jpg" alt="PuppetConf" /></p>
 
-<p>As with any sufficiently new technology, there&rsquo;s a learning curve that accompanies such a shift, and new tools start to be speckle your horizon such that you wonder where to start, what is imperative and what is optional for you to occupy your time with.</p>
+<p>Ahh, Portland! What a great place to have PuppetConf this year. The home of Puppet Labs and all its varied food, drink, and other unnamed consumables give Portland a vibe like no other.</p>
 
-<p>Thus it is with Puppet-y stuff.</p>
+<p>From the hipster eateries to the burger dives around town, Portland offered something for everyone.</p>
 
-<p>Given that the whole DEVOPS thing includes within it a heavy lean toward DEV, the regular rank-and-file sysadmin may find himself thrust into a world of development terms he may have only heard in passing in some random meeting or other.  The tools of the developer are as varied and arrayed as those for the operations guru and every bit as arcane (in some cases) as the esoteric shell command only installable from some guy in Russia&rsquo;s repo, with 30 or more command line switches to get a single piece of data upon which to work your evil schemes.</p>
+<p>My week began by arriving a tad early for the Puppet Certifed Consultant training day. On the way in, I passed this little beauty right here:</p>
 
-<p>Well&hellip; that&rsquo;s why this blog.</p>
+<p><img src="http://cvquesty.github.io/images/mountain.jpg" alt="Mountain" /></p>
 
-<p>I&rsquo;m about to embark upon a coverage of a set of tools.  However, this set of tools I will not observe in a vacuum, but in light of a powerful workflow engine with which to empower you to become considerably more efficient in writing Puppet code.  The tools in particular I&rsquo;d like to go over and, much in the same way I covered Puppet Open Source, instruct you step-by-step on how to install, configure, and use said tools are as follows:</p>
+<p>I had forgotten just how beautiful the Pacific Northwest can be.</p>
 
-<p>Vagrant
-r10k
-GitHub
-Vim (yes, Vim)
-puppet-lint
-Gepetto</p>
+<p>In our meetings before the conference began in earnest, we talked about things announced and things as yet unannounced, and essentially just learned how to be better consultants and puppeteers. It was nice to be able to ask the questions that arise from time to time of the “big boys” (Gary Larizza, Zak Smith, etc.) and get first-hand accounts on how to do better.</p>
 
-<p>This is by no means and exhaustive list, but what it does is collect together the best tools to assemble a workflow that will speed your work and not leave you spending all your time working on tools, but working on <em>Puppet Code, </em>which is our main focus and goal.</p>
+<p>There were quite a number of really cool talks on various upcoming tech, that I had quite a bit of opportunity to take notes and build upon knowledge I’d already gained.</p>
 
-<p><strong>Old Schools</strong></p>
+<p><strong>Keynotes!!</strong></p>
 
-<p>At the end of the day, the really important things are conceptual.  Whether you use a new whizbang tool to do the heavy lifting, several tools working together to achieve this goal, or you heavy lift all on your own, the process and the rules remain the same.</p>
+<p><img src="http://cvquesty.github.io/images/keynote_wide.jpg" alt="KeynoteWide" /></p>
 
-<p>DO keep all your code in revision control.
-DO syntax highlight and check your code validity
-DO build repeatable, consistent environments in a timely fashion
-DO have a method to share your work environments with others
-DO document heavily both in and out of code segments
-DO have a solid end-to-end workflow that enables rapid iteration</p>
+<p>Next up was the PuppetConf Keynotes for the first day that usually contains Luke Kanies' annual Puppet conversation. Where they’ve been, what they’re doing, and the roadmap forward was fodder for Luke’s talk, and you can find the complete Keynote [here:] (<a href="https://puppetlabs.com/presentations/puppetconf-2015-lukes-keynote-address">https://puppetlabs.com/presentations/puppetconf-2015-lukes-keynote-address</a>)</p>
 
-<p>What of this is new?  Whether we&rsquo;re talking about keeping all your shell scripts in CVS, deploying your script repo with SVN, or deploying versioned code caches with ${PACKAGE_MANAGEMENT_SYSTEM}, we&rsquo;re talking about the same general good practices.  All Puppet and supporting tools does is make it something that is tightly integrated with management consoles.  To organize and institutionalize your <em>workflow </em>gives the steady underpinning to the cool DEVOPS tool to make everything repeatable, sharable, and collaborative.  This is where the power comes from.  THIS is where DEVOPS makes sense.</p>
+<p>The big synopsis I can give is all about application automation. For you Puppeteers out there, just think of the relationships between the File|Package|Service component “types” and apply that to application components (db, web, container, Java App, etc.) and you get the gist. Very cool, very powerful, and very near. Be looking for Puppet Enterprise 2015.3 to drop in the very near future. I’ll certainly have soe blog things to say when that happens.</p>
 
-<p>When your workflow is solid, your DEVOPS tools are strong, and your culture has bought in to both, mundane work becomes an afterthought and you get to work on the really interesting things that you&rsquo;ve been letting slide while putting out fires that could&rsquo;ve been best managed via configuration management anyhow.</p>
+<p>I appreciate, once again, my employer <a href="http://shadow-soft.com">Shadow Soft</a> sending me out to PuppetConf to be the best engineer I can be, and learn all the new tricks and tools at my disposal while on the road.</p>
 
-<p>My hope is to build the concept and context from the ground up to show you one tight, functional way this can be accomplished.  Let&rsquo;s start next time with Vim.</p>
+<p>Look for me to pick up where I left off with basic tools, and a revamp of my early-on configuration tutorial for Puppet Community with the new tools and features in Puppet 4 soon.</p>
 </div>
 
 
@@ -146,19 +136,19 @@ DO have a solid end-to-end workflow that enables rapid iteration</p>
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">admin</span></span>
+<span class="byline author vcard">Posted by <span class="fn">Jerald Sheets</span></span>
 
       
 
 
 
 
-<time class='entry-date' datetime='2014-05-02T14:24:37-04:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>2:24 pm</span></time>
+<time class='entry-date' datetime='2015-10-27T22:11:28-04:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:11 pm</span></time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/puppet/'>puppet</a>, <a class='category' href='/blog/categories/systems-administration/'>systems administration</a>
+    <a class='category' href='/blog/categories/puppet/'>puppet</a>
   
 </span>
 
@@ -167,7 +157,7 @@ DO have a solid end-to-end workflow that enables rapid iteration</p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://questy.org/blog/2014/05/02/new-tools-old-schools/" data-via="CVQuesty" data-counturl="http://questy.org/blog/2014/05/02/new-tools-old-schools/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://questy.org/blog/2015/10/27/puppetconf-2015/" data-via="CVQuesty" data-counturl="http://questy.org/blog/2015/10/27/puppetconf-2015/" >Tweet</a>
   
   
   
@@ -178,10 +168,8 @@ DO have a solid end-to-end workflow that enables rapid iteration</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/04/23/workflows-tools-myriad-gobbledygook/" title="Previous Post: Workflows, Tools, and a Myriad of Gobbledygook...">&laquo; Workflows, Tools, and a Myriad of Gobbledygook...</a>
+        <a class="basic-alignment left" href="/blog/2015/07/28/some-software-releases-and-forge-stuffs/" title="Previous Post: Some Software Releases and Forge Stuffs">&laquo; Some Software Releases and Forge Stuffs</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/05/02/vim/" title="Next Post: Vim">Vim &raquo;</a>
       
     </p>
   </footer>
@@ -276,8 +264,8 @@ DO have a solid end-to-end workflow that enables rapid iteration</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://questy.org/blog/2014/05/02/new-tools-old-schools/';
-        var disqus_url = 'http://questy.org/blog/2014/05/02/new-tools-old-schools/';
+        var disqus_identifier = 'http://questy.org/blog/2015/10/27/puppetconf-2015/';
+        var disqus_url = 'http://questy.org/blog/2015/10/27/puppetconf-2015/';
         var disqus_script = 'embed.js';
       
     (function () {

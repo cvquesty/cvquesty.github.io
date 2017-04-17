@@ -9,7 +9,7 @@
   <meta name="author" content="Jerald Sheets">
 
   
-  <meta name="description" content="So far we&rsquo;ve gotten our heads around some important things.  First and foremost, vim.  Our editor and companion for creating great code and &hellip;">
+  <meta name="description" content="John Ray is bringing the Puppet + Docker goodness in his talk tonight: &ldquo;Deploying Docker Containers with Puppet&rdquo;.  Join us each month at &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,40 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/11/southeast-puppet-users-group-september/">Southeast Puppet User's Group September</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-11T19:33:01-04:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>7:33 pm</span></time>
+        
+           | <a href="/blog/2014/09/11/southeast-puppet-users-group-september/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2014/09/11/southeast-puppet-users-group-september/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://questy.org/images/puppet_docker.jpg"><img src="http://questy.org/images/puppet_docker.jpg" alt="puppet_docker" /></a></p>
+
+<p>John Ray is bringing the Puppet + Docker goodness in his talk tonight: &ldquo;Deploying Docker Containers with Puppet&rdquo;.  Join us each month at the Shadow Soft offices for the latest in DEVOPS topics and information.  Always fun, lots of discussion and information surrounding Puppet topics and associated technologies.  There&rsquo;s always pizza and beverages of all kinds, and we&rsquo;ve finally moved into our new meeting/class rooms, so come on out.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1409,81 +1443,6 @@ _**reporturl = <a href="http://&lt;FQDN>:3000/reports/upload**_">http://&lt;FQDN
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/02/27/puppet-iv-signing-certificates/">Puppet IV - Signing Certificates</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-02-27T15:32:04-05:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>3:32 pm</span></time>
-        
-           | <a href="/blog/2014/02/27/puppet-iv-signing-certificates/#disqus_thread"
-             data-disqus-identifier="http://questy.org/blog/2014/02/27/puppet-iv-signing-certificates/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><em><strong>Introduction</strong></em></p>
-
-<p>We&rsquo;ve covered a lot of ground already in our tutorials thus far.  In <a href="http://questy.org/2014/01/puppet-i-installation/">Tutorial I</a> we installed our Puppet server.  In <a href="http://questy.org/2014/01/puppet-ii-client-installation/">Tutorial II</a>, the client, and in <a href="http://questy.org/2014/02/puppet-iii-initial-configuration/">Tutorial III</a> we configured the server and client to start communicating.</p>
-
-<p>In this 4th installment, we&rsquo;ll cover the signing of SSL certificates between your Puppet Master and Client, and running a simple test to ensure your setup is working and ready to function as a master=>slave pair.</p>
-
-<p>On your server, be sure to start up the Puppet Master, so it can receive connections from outside sources, like so:</p>
-
-<p><em><strong>sudo service puppetmaster start
-sudo chkconfig puppetmaster on</strong></em></p>
-
-<p>Next, on your Puppet client, run a test run so the client will start, create an SSL certificate for the client host, and make an initial callout to the server.  It will exit immediately, but the server will now know about the client, and we can sign the certificate over there.</p>
-
-<p><em><strong>puppet agent -t</strong></em></p>
-
-<p>When you run this command, the output should look something like this:</p>
-
-<p>[caption id=&ldquo;attachment_625&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;720&rdquo;]<a href="http://questy.org/wp-content/uploads/2014/02/agent_cert.png"><img src="http://questy.org/wp-content/uploads/2014/02/agent_cert.png" alt="Certificate Signing Request Example" /></a> Certificate Signing Request Example[/caption]</p>
-
-<p>Now, SSH to your Puppet Master, and run the following command:</p>
-
-<p><em><strong>puppet cert &ndash;list</strong></em></p>
-
-<p>If everything has gone well, your server will have now seen your client and will report as much like so:</p>
-
-<p>[caption id=&ldquo;attachment_627&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;719&rdquo;]<a href="http://questy.org/wp-content/uploads/2014/02/server_cert.png"><img src="http://questy.org/wp-content/uploads/2014/02/server_cert.png" alt="Server Cert Requests in Waiting" /></a> Server Cert Requests in Waiting[/caption]</p>
-
-<p>Finally, so <em>sign </em>the certificate so there is an SSL connection between the client and server, and all future Puppet actions between the two pass over that connection, simply sign the certificate request on the master as follows:</p>
-
-<p><em><strong>puppet cert sign puppetclient.example.com</strong></em>
-<em>(or whatever your hostname is)</em></p>
-
-<p> The server will sign the certificate and make a tabular listing of it in its database finalizing the connection.  You can see this output by using the &ldquo;list all&rdquo; options as follows:</p>
-
-<p><em><strong>puppet cert list &ndash;all</strong></em></p>
-
-<p>and see the output which should resemble the following:</p>
-
-<p>[caption id=&ldquo;attachment_635&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;718&rdquo;]<a href="http://questy.org/wp-content/uploads/2014/02/signed_cert.png"><img src="http://questy.org/wp-content/uploads/2014/02/signed_cert.png" alt="Signed Certificate" /></a> Signed Certificate[/caption]</p>
-
-<p><em><strong>
-Conclusion</strong></em></p>
-
-<p>Now we&rsquo;re ready to do work with Puppet.  You can actually stop here and fully manage your site with Puppet, however there are several addons and feature-sets yet you can install to expand Puppet&rsquo;s functionality.  We will look at some of these tools in future installments.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/3">&larr; Older</a>
@@ -1501,6 +1460,10 @@ Conclusion</strong></em></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/10/27/puppetconf-2015/">PuppetConf 2015</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/07/28/some-software-releases-and-forge-stuffs/">Some Software Releases and Forge Stuffs</a>
       </li>
     
@@ -1514,10 +1477,6 @@ Conclusion</strong></em></p>
     
       <li class="post">
         <a href="/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/">Some Coding Work of Late...</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/26/building-your-toolbox/">Building Your Toolbox</a>
       </li>
     
   </ul>
