@@ -1,0 +1,36 @@
+---
+layout: post
+title: "PuppetConf 2015"
+date: 2015-10-27 22:11:28 -0400
+comments: true
+categories: puppet
+---
+**PuppetConf Portland**
+
+![PuppetConf](http://cvquesty.github.io/images/logo.jpg)
+
+Ahh, Portland! What a great place to have PuppetConf this year. The home of Puppet Labs and all its varied food, drink, and other unnamed consumables give Portland a vibe like no other.
+
+From the hipster eateries to the burger dives around town, Portland offered something for everyone.
+
+My week began by arriving a tad early for the Puppet Certifed Consultant training day. On the way in, I passed this little beauty right here:
+
+![Mountain](http://cvquesty.github.io/images/mountain.jpg)
+
+I had forgotten just how beautiful the Pacific Northwest can be.
+
+In our meetings before the conference began in earnest, we talked about things announced and things as yet unannounced, and essentially just learned how to be better consultants and puppeteers. It was nice to be able to ask the questions that arise from time to time of the “big boys” (Gary Larizza, Zak Smith, etc.) and get first-hand accounts on how to do better.
+
+There were quite a number of really cool talks on various upcoming tech, that I had quite a bit of opportunity to take notes and build upon knowledge I’d already gained.
+
+**Keynotes!!**
+
+![KeynoteWide](http://cvquesty.github.io/images/keynote_wide.jpg)
+
+Next up was the PuppetConf Keynotes for the first day that usually contains Luke Kanies' annual Puppet conversation. Where they’ve been, what they’re doing, and the roadmap forward was fodder for Luke’s talk, and you can find the complete Keynote [here](https://puppetlabs.com/presentations/puppetconf-2015-lukes-keynote-address):
+
+The big synopsis I can give is all about application automation. For you Puppeteers out there, just think of the relationships between the File|Package|Service component “types” and apply that to application components (db, web, container, Java App, etc.) and you get the gist. Very cool, very powerful, and very near. Be looking for Puppet Enterprise 2015.3 to drop in the very near future. I’ll certainly have soe blog things to say when that happens.
+
+I appreciate, once again, my employer [Shadow Soft](http://shadow-soft.com) sending me out to PuppetConf to be the best engineer I can be, and learn all the new tricks and tools at my disposal while on the road.
+
+Look for me to pick up where I left off with basic tools, and a revamp of my early-on configuration tutorial for Puppet Community with the new tools and features in Puppet 4 soon.

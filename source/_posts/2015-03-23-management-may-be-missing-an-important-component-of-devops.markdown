@@ -1,0 +1,66 @@
+---
+layout: post
+title: "Management May Be Missing an Important Component of DEVOPS"
+date: 2015-03-23 10:01:01 -0400
+comments: true
+categories: devops,geekstuff,linux,puppet
+---
+As I travel around the country installing and training people in Puppet Enterprise, I’m noticing some characteristics of management perspective on the DEVOPS movement that has a disjoint with implementation and reality. In short: Managers are now hiring personnel in the field of DEVOPS for positions they may be highly qualified for, but have no institutional ability to execute on the tasks that will be assigned them in a modern infrastructure especially one that has to meet governance criteria such as ITIL, PCI, SOX, HIPAA, and various STIG requirements we see in governmental circles.
+
+First a story, then an observation…
+
+Early Rumblings of DEVOPS
+
+A number of years ago I was a senior engineer in a large TV/Web property. The team was probably one of the best I’d ever worked with from an operational perspective. What I mean by that, is they not only knew how to do what they knew, but when confronted with requirements on something that did not exist, or had not been built yet, they just built it themselves. (handy to have in the days before ubiquitous workflow engines, automation tools, and deployment mechanisms!)
+
+At the same time, the devlopment team was mostly tiered… Entry level personnel were basic coders, seniors were considerably more integrated into the nuts & bolts of the site and the leads & managers could actually commit. Quite a well organized protectionist strategy to keep the codebase clean and mostly devoid of errors. It was a great setup for a 2000-2002 era development shop. Problem was, it was 2005.
+
+As business goes, eventually newer and more well rounded developers with experience in a new subset of tools and techniques began to be hired, and from their background they might have had elevated privileges in their past environments, the ability to commit at will (or continuously integrate?) and felt as though this somewhat “experienced” development model was archaic and slow. And it was.
+
+Inevitably, one of these nice folks would make their way over to the operations side of the house, usually in despair, looking for ways to make their lives easier, which usually ended up in some sort of altercation over “root” level access to systems throughout the environment they had to touch. One could assume how that conversation would go, ultimately operations could not find a business justification for such a level of access, and the request was denied. This would engender a certain amount of tension between teams, and life would roll on in much the same way.
+
+Finally, one day, one of the best developers I personally have ever had the privilege of working with came on as a contractor. (he would ultimately come on board full time and then become the Sr. Architect for the team) Everything he did would turn to gold. his development models and abilities were changing the way developers would think about what they could do, and methods and procedures were changing, deployment techologies were being tried, workflow engines were making the development side of the house quite modern by all measures.
+
+However, the existing operational model continued along at the early-century norms, and would not/could not budge. Now, this wasn’t due to the fact that there were jerks in the department, no quite the contrary. In scearios where a team is so competent in what they do, they look for ways to script and automate away mundanity. The better the team, the stronger this backbone. The stronger the backbone, the more tendrils get attached the the core until automation and development reaches each and every part of the infrastructure. When the team builds to that level, each part hands off to the other. Centralized data stores provide the API for the site, and to touch any particular part of the infrastructure at the design level affects the entire system. So goes Infrastructure architecture.
+
+Before there was a “DEVOPS”
+
+As you can see, in very real terms, this was a “pre-incarnate” DEVOPS infrastructure. A little more OPS than DEV, but nonetheless automated as was possible.
+
+But these new upstart tools were going to ruin this! Yes, they had promise and could certainly replace large portions of the existing workflow, but it could take months or years to “undo” what had already been done to supplant existing mechanisms with newer, better tools.
+
+And therein lies the road to DEVOPS.
+
+The Climate Today
+
+I tell the above story to illustrate the tensions existent before the rise of DEVOPS and the subsequent automation revolution we’re currently experiencing.
+
+Many times one would love to implement their new tools, but the operational infrastructure would prevent it. Or, lesser-informed development teams would accept no less than the highes level of access into the environment, but modern compliance standards prevent that from happening as well.
+
+The manager that has to navigate this particular problem when hiring or resourcing a need in her infrastructure has quite the task ahead of them. Why? DEVOPS has integrated the two fields at a vector point to a degree whereby it is incredibly difficult to determine where the DEV ends and the OPS begins. Sure, there are considerably more well-defined responsibilities on the extremeties of the respective disciplines, but that joining point threatens to cause dischord in the world of the IT infrastructure and many sleepless nights for the IT manager in trying to nail down his talent needs.
+
+Take the requirements for the “DEVOPS Application Operations Engineer” found on one of the major online employment sites posted just a few days ago for a major metro in the U.S.:
+
+Minimum 4 years' experience in scripting and or any development languages like C#,.NET, Python, Java, Shell, Ruby or any other open source languages.
+
+Experience with HTML/XML and Java Script
+
+Familiarity with Microsoft SCOM, SolarWinds Orion, Keynote, Nagios, Puppet, Chef or other monitoring, SaaS management solutions is desired
+
+Proven experience debugging and troubleshooting software-related issues in a software development or advanced application support position
+
+As you can see, this is a development-heavy position (that, IMO, is all over the map from a requirements perspective), but so goes job descriptions today. Read between the lines, though…
+
+Someone needs a competent developer that isn’t completely freaked out when someone says “Puppet Environment”, “Monitoring”, or “SaaS”, that knows their way around deployment and automation and can get things done. That’s fine. Problem is, this assumes full lifecycle respnsibility when the actuality is that the future employee has a hard-line stopping point beyond which he or she will never be “allowed” to tread due to compliance alone, and that is the breakpoint between DEV and OPS in the DEVOPS world. Consider this:
+
+![DEVOPS](http://cvquesty.github.io/images/devops.png)
+
+There are three clearly defined worlds here, all converging on a singluar point known as DEVOPS. From the development skill and expertise of the developer to the testing and assurance retrospect of the QA Engineer, to the Security and Compliance purview of the Operational Architect, DEVOPS is not a “one trick pony” with a singularity view. It is a methodology that brings together the three worlds in a clear developmental workflow to speed safe and secure deployment with minimal errors into serving infrastructure. As often as people try and push DEVOPS into a development position or into an Operations or QA postion when hiring, success will be limited, and frustration will be the result.
+
+What, Then, Is the Manager Missing?
+
+As has been heavily implied thus far, the manager may be missing the fact that DEVOPS is not a position but a way of doing things. DEVOPS is a methodology, not a granting of rights or abilities. And, if we’re talking about lines of demarcation within groups, DEVOPS is a superstructure of tools built, implemented and designed by the Operational Architectural team to move, implement, and regression test code and associated objects provided by the Development Architectural team with tests, regressions, and automated mechanisms specified by the Quality Assurance Architectural team in a specific fashion and after a specific methodology that has commonly become referred to as DEVOPS.
+
+The manager has to realize that this is not a subset of bullet points on a resume, but a wholistic approach to all of their environmental considerations that requires all teams to cooperate through to the end result: QUality Software Products delivered in as short a cycle as possible in an automated fashion with as few errors and bugs as reasonably can be remediated before going “live”.
+
+The manager who is looking for this methodology in a single position has already lost the battle before ever posting the position.

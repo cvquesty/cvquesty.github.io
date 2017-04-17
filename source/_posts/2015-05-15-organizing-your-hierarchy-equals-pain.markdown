@@ -1,0 +1,78 @@
+---
+layout: post
+title: "Organizing Your Hierarchy Equals Pain"
+date: 2015-05-15 17:48:59 -0400
+comments: true
+categories: geekstuff,hiera,puppet
+---
+**The Pain Point**
+
+One would think after reading Gary Larizza’s blog that I wouldve come away with the idea that Hiera presents a few issues as it solves a ton… but no. I had to go and think it was easy, fly off half-cocked and try and tackle a big issue or two, unprepared mind you, and here I am… re-discovering what humility should be like.
+
+**The Problem**
+
+Hiera looks simple. Disarmingly simple. However, the pain doesn’t come in just looking at a nice, default hiera.yaml:
+
+```
+---
+:backends:
+- yaml
+:hierarchy:
+- “%{clientcert}”
+- “%{environment}”
+- common
+:yaml:
+:datadir: “/etc/puppetlabs/puppet/environments/%{environment}/hieradata”
+```
+
+We can simply look at this and see the wonderful simplicity of how the yaml file is laid out, the ease of adding more hierarchies from which to gain data, and even expand the model to include subdirectories and all sorts of interesting methods of organizing and abstracting our code into usable, organized chunks.
+
+Not so fast.
+
+The real issues begin when you’re dealing with a customer. All too often I find that even they aren’t entirely sure what’s going on in their very own environment, and pushed hard, will actually argue among themselves as to just how everything works. Scary.
+
+The main thing we find ourselves doing is figuring out that last mile… What precisely is the role of machine X in this environment? Ask two people separate from each other, and they’ll likely give different (sometimes remarkably so) answers. Get them together and they may quibble a bit, but generally get to consensus.
+
+This is REALLY, REALLY important. If the folks you’re trying to help aren’t 100% sure exactly:
+
+What a machine does
+How a machine is built
+What it’s role in the organization is
+You’ve got some real issues.
+
+**This Doesn’t Suck**
+
+Often, engineers look at the Hiera configuration file in a vacuum (so much for the suck joke). Not permanently but definitely independently at first. Then, as the engagement pushes on to defining Roles and Profiles for the site, you have this “oh crap” moment, and throw back to the hierarchy and then start modifying lookup layers, but then jump forward to the profiles where the lookups are (or should be, anyhow) and realize they assumed a different hierarchy. Then, jump back to the hiera.yaml, make changes, then back to the profiles and repeat the process and then finally to the component modules, and remediate any assumptions you made on everythin gyou just changed. Uh oh. Wasted time.
+
+I’ve started working through “all the things” and have come up with a mechanism that works well for me. Hopefully you can gain some mileage from it as well.
+
+**First Thing’s First**
+
+Some would argue you should do the Hierarchy first while others would argue you do the Profiles first. However, I’ve found that parsing out all the business logic with the team gains a remarkable amount of runway for you to start. Why?
+
+Systems engineers are techno-nerd types. The nuts & bolts, configs and the like are their prime concern and more often than not, they view the site atomically. They can tell you with great detail precisely what each and every machine has installed on it (often…not always), but generally know what the IT ROLE of a node or collection of nodes is for. Further, they can tell you who requested it, what kind of storage may be connected, what business group out there it satisfies the needs of, but with a startling amount of frequency, cannot tell you the BUSINES ROLE of the node.
+
+Q: What is it?<br>
+A: A web server.<br>
+Q: What’s it’s purpose?<br>
+A: To serve web documents, duh!<br>
+Q: No, no… what’s it’s business purpose?<br>
+A: To make money?<br>
+Q: No, no… If you were to give it one overarching purpose, one reason for existing, what would it be?<br>
+A: Oh… ummm… I never thought of that before.<br>
+
+You’d be surprised just how often you arrive there with pretty much everyone.
+
+As a result, if you wait until mid-engagement to reach this point, (or at least the middle of the writing phase), you’ve got a fair amount of backtracking, and even refactoring to do before you regain some sense of normalcy and can push forward.
+
+**Most Specific to Least**
+
+As has been said many times and in many ways, your MOST specific designation should always come first. For instance, what is the MOST atomic level of abstraction? Well, the node itself, of course, so the %{clientcert} designator suffices for that.
+
+Well, what’s next? That depends on you. You might have a location to think of (is this data center on the east or west coast, US or Asia). That’s highly broad… maybe not. It might be environment (such as DEV, TEST, PROD). Again, this is custom to you, and that might still be overly broad and you need to find a happy place between clientcert and environment. Only you can tell me that when I’m standing in front of you, so I generally refrain until I can get the layout of your site.
+
+For instance, one customer had clientcert, then location, then environment. That way, items unique to the data center the nodes were in would get handled first, and then things that were environment unique (regardless of location – more broad) could get handled next. See? Custom to them and the way they do business or are arranged technologically.
+
+I “borrowed” the name for this post from Bill Engvall to illustrate a point, that if you just run off to development with no prior knowledge of the things Hiera works with, you will encounter the pain of refactoring at what is most likely the component module level and then the profile level as well. If you’ve ever had to do it, and then do it on a time crunch, truly you have felt the pain.
+
+Avoid it. Think before you act.
