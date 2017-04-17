@@ -301,7 +301,7 @@ sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
     var coderwall = (function(){
       function render(options, badges){
         var fragment = '',
-            t = $(options.target)[0],
+            t = $(options.target),
             height = 65,
             width = 65,
             index;
@@ -312,13 +312,13 @@ sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
           fragment += '</a>';
         }
 
-        t.innerHTML = fragment;
+        t.html(fragment);
       }
       return {
         showBadges: function(options){
           $.ajax({
               url: 'http://coderwall.com/' + options.user + '.json?callback=?'
-            , type: 'jsonp'
+            , dataType: 'jsonp'
             , error: function (err) { $(options.target + ' li.loading').addClass('error').text("Error loading feed"); }
             , success: function(res) {
                 render(options, res.data.badges);
@@ -328,21 +328,7 @@ sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
       };
     })();
 
-    $.domReady(function(){
-      if (!window.jXHR){
-        var jxhr = document.createElement('script');
-        jxhr.type = 'text/javascript';
-        jxhr.src = '/javascripts/libs/jXHR.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(jxhr, s);
-      }
-      if (!window.$){
-        var b = document.createElement('script');
-        b.type = 'text/javascript';
-        b.src = '/javascripts/ender.js';
-        var sc = document.getElementsByTagName('script')[0];
-        sc.parentNode.insertBefore(jxhr, s);
-      }
+    $(document).ready(function(){
       coderwall.showBadges({
         user: 'cvquesty',
         target: '#cw_badges'

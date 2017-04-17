@@ -474,7 +474,7 @@ I feel sorry for these sometimes. They don’t really have any serious joy in th
 
 <p>So, I&rsquo;ve got a few things for sale.</p>
 
-<p>My house is a 3 Bedroom ranch home in suburban Atlanta, GA. You can see the pictures of my home from before I bought it in 4/04 here: <a href="http://picasaweb.google.com/questy/OurHouse">Our House</a> We&rsquo;re asking $159k. If you have any questions, contact me at <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#106;&#x65;&#x72;&#97;&#108;&#x64;&#46;&#x73;&#104;&#x65;&#101;&#x74;&#x73;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#x6d;&#46;">&#106;&#101;&#114;&#97;&#x6c;&#100;&#x2e;&#x73;&#x68;&#101;&#101;&#x74;&#115;&#64;&#x67;&#109;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;&#x2e;</a></p>
+<p>My house is a 3 Bedroom ranch home in suburban Atlanta, GA. You can see the pictures of my home from before I bought it in 4/04 here: <a href="http://picasaweb.google.com/questy/OurHouse">Our House</a> We&rsquo;re asking $159k. If you have any questions, contact me at <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#x6a;&#x65;&#114;&#x61;&#x6c;&#100;&#x2e;&#115;&#x68;&#x65;&#101;&#116;&#x73;&#64;&#103;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#x6d;&#46;">&#106;&#x65;&#x72;&#97;&#x6c;&#x64;&#x2e;&#115;&#104;&#x65;&#x65;&#116;&#x73;&#64;&#103;&#x6d;&#97;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;&#46;</a></p>
 
 <p>Also, I&rsquo;ve got some servers hanging around. Since I&rsquo;ve really gotten into the whole Dave Ramsey thing, I', selling them to apply toward my debt. My hope is to pay off nearly half of my remaining debt balance with the sale of my home and these servers.</p>
 
@@ -761,7 +761,7 @@ Come along for this ride with me&hellip;Add your two cents.  Let&rsquo;s all wo
     var coderwall = (function(){
       function render(options, badges){
         var fragment = '',
-            t = $(options.target)[0],
+            t = $(options.target),
             height = 65,
             width = 65,
             index;
@@ -772,13 +772,13 @@ Come along for this ride with me&hellip;Add your two cents.  Let&rsquo;s all wo
           fragment += '</a>';
         }
 
-        t.innerHTML = fragment;
+        t.html(fragment);
       }
       return {
         showBadges: function(options){
           $.ajax({
               url: 'http://coderwall.com/' + options.user + '.json?callback=?'
-            , type: 'jsonp'
+            , dataType: 'jsonp'
             , error: function (err) { $(options.target + ' li.loading').addClass('error').text("Error loading feed"); }
             , success: function(res) {
                 render(options, res.data.badges);
@@ -788,21 +788,7 @@ Come along for this ride with me&hellip;Add your two cents.  Let&rsquo;s all wo
       };
     })();
 
-    $.domReady(function(){
-      if (!window.jXHR){
-        var jxhr = document.createElement('script');
-        jxhr.type = 'text/javascript';
-        jxhr.src = '/javascripts/libs/jXHR.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(jxhr, s);
-      }
-      if (!window.$){
-        var b = document.createElement('script');
-        b.type = 'text/javascript';
-        b.src = '/javascripts/ender.js';
-        var sc = document.getElementsByTagName('script')[0];
-        sc.parentNode.insertBefore(jxhr, s);
-      }
+    $(document).ready(function(){
       coderwall.showBadges({
         user: 'cvquesty',
         target: '#cw_badges'
