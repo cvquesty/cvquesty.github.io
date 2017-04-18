@@ -52,9 +52,9 @@ The Puppet Enterprise Installer is a GUI web-browser based installer. Puppet has
 
 | Node | Image | IP Address |
 | ---- | ----- | ---------- |
-| master.example.com  | m3 or m4.xlarge  | 10.0.1.20 |
-| console.example.com  | m3 or m4.large  | 10.0.1.21 |
-| puppetdb.example.com  | m3.2xlarge  | 10.0.1.22 |
+|  master.example.com  |  m3 or m4.xlarge  |  10.0.1.20  |
+|  console.example.com  |  m3 or m4.large  |  10.0.1.21  |
+|  puppetdb.example.com  |  m3.2xlarge  |  10.0.1.22  |
 
 In my experience, I've found it much easier to exchange root keys between all three of the above nodes to allow the installer to do all it needs to do on each node. You can, however, decide to set the root password to something temporary to hand to the installer as well (and many people opt for this) and then return root's password to your site default.  In any event, all the machines should be able to resolve themselves and each other by name and root should be able to freely ssh between them either via shared keys (easiest) or password.
 
