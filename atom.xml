@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-18T16:00:06-04:00</updated>
+  <updated>2017-04-18T16:01:49-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -112,19 +112,19 @@
 </thead>
 <tbody>
 <tr>
-<td> master.example.com  </td>
-<td> m3 or m4.xlarge  </td>
-<td> 10.0.1.20 </td>
+<td>  master.example.com  </td>
+<td>  m3 or m4.xlarge  </td>
+<td>  10.0.1.20  </td>
 </tr>
 <tr>
-<td> console.example.com  </td>
-<td> m3 or m4.large  </td>
-<td> 10.0.1.21 </td>
+<td>  console.example.com  </td>
+<td>  m3 or m4.large  </td>
+<td>  10.0.1.21  </td>
 </tr>
 <tr>
-<td> puppetdb.example.com  </td>
-<td> m3.2xlarge  </td>
-<td> 10.0.1.22 </td>
+<td>  puppetdb.example.com  </td>
+<td>  m3.2xlarge  </td>
+<td>  10.0.1.22  </td>
 </tr>
 </tbody>
 </table>
