@@ -6,7 +6,7 @@ comments: true
 categories: puppet, geekstuff, linux
 ---
 
-In my former life as a consultant, I had to install all manner of configurations of Puppet for clients.  Some were small and some were large, but none were ***VERY*** large.  One of the big things I was finding back then was there just wasn't a lot of publicly available information regarding doing a full install and scaling it large.  
+In my former life as a consultant, I had to install all manner of configurations of Puppet for clients.  Some were small and some were large, but none were ***VERY*** large.  One of the big things I was finding back then was there just wasn't a lot of publicly available information regarding doing a full install and scaling it large.
 
 So, I took some "research time" on my own and started to build out the configurations according to Puppet Labs' (at the time... now just "Puppet") documentation. The problem I was having was that the docs wouldn't ever lead me to a successful install following a chronolgical set of steps. I had to click into subpages, jump over to sub-sub configurations, and then jump back to the main docs to follow yet another trail down until I reached the end...lather, rinse, repeat.
 
@@ -39,7 +39,7 @@ I know that's quite a number of nodes to get started with, but this after all a 
 
 To put together all the required components for a good large installation, I've settled on the below specs. You can change those as you see fit, but note that some of the disk space requirements and related were due to Puppet's documented requirements _at the time_.  YMMV, of course, but this is what I consider to be a base level installation if you intend on scaling into the multiple tens of thousands of nodes. Be sure that if you're going to size this down that you're still meeting Puppet's needs in regards to memory, cores, and disk.  _(for a current listing of Puppet's reuqirements, you can look [here](https://docs.puppet.com/pe/latest/sys_req_hw.html) for more information.)_
 
-![Puppet_Prerequisites](http://cvquesty.github.io/images/preresquisites.png)
+![Puppet_Prerequisites](http://cvquesty.github.io/images/prerequisites.png)
 
 In addition, you'll need to be aware of firewall requirements for such an installation.  Puppet has documentation regarding firewall configurations and needed ports at their website [here](https://docs.puppet.com/pe/latest/sys_req_sysconfig.html#for-large-environment-installations), but I'll insert the image and recount the requirements here.
 
