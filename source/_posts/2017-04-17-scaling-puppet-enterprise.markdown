@@ -47,16 +47,7 @@ In addition, you'll need to be aware of firewall requirements for such an instal
 
 In short:
 
-| Port | Use |
-| ---- | --- |
-| 8140 | communication between nodes and Puppet Master of Masters |
-| 8142 | Orchestration between nodes and Puppet Master of Masters |
-| 61613 | MCollective between nodes and Puppet Master of Masters and ActiveMQ Hub and Spokes |
-| 443 | HTTPS to Puppet Console |
-| 8081 | Connectivity to PuppetDB from Puppet Console, All Masters, and ActiveMQ Brokers |
-| 4433 | Node Classifier API Endpoint from Puppet Master of Masters and Compile Masters |
-| 5432 | PostgreSQL DB port From master of Masters and Console |
-| 61616 | AtiveMQ TCP Hub & Spoke comms channel |
+![Firewall_Ports](http://cvquesty.github.io/images/firewall_ports.png)
 
 This is a close approximation to what you need to know.  Detailed charts found in the above links, and a "point-by-point" port and use list is available to review.
 
