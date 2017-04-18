@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Geekstuff, | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/geekstuff/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-18T16:05:22-04:00</updated>
+  <updated>2017-04-18T16:08:17-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -59,49 +59,7 @@ Two Agent Nodes for testing<br></p>
 
 <p>In short:</p>
 
-<table>
-<thead>
-<tr>
-<th> Port </th>
-<th> Use </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> 8140 </td>
-<td> communication between nodes and Puppet Master of Masters </td>
-</tr>
-<tr>
-<td> 8142 </td>
-<td> Orchestration between nodes and Puppet Master of Masters </td>
-</tr>
-<tr>
-<td> 61613 </td>
-<td> MCollective between nodes and Puppet Master of Masters and ActiveMQ Hub and Spokes </td>
-</tr>
-<tr>
-<td> 443 </td>
-<td> HTTPS to Puppet Console </td>
-</tr>
-<tr>
-<td> 8081 </td>
-<td> Connectivity to PuppetDB from Puppet Console, All Masters, and ActiveMQ Brokers </td>
-</tr>
-<tr>
-<td> 4433 </td>
-<td> Node Classifier API Endpoint from Puppet Master of Masters and Compile Masters </td>
-</tr>
-<tr>
-<td> 5432 </td>
-<td> PostgreSQL DB port From master of Masters and Console </td>
-</tr>
-<tr>
-<td> 61616 </td>
-<td> AtiveMQ TCP Hub &amp; Spoke comms channel </td>
-</tr>
-</tbody>
-</table>
-
+<p><img src="http://cvquesty.github.io/images/firewall_ports.png" alt="Firewall_Ports" /></p>
 
 <p>This is a close approximation to what you need to know.  Detailed charts found in the above links, and a &ldquo;point-by-point&rdquo; port and use list is available to review.</p>
 
