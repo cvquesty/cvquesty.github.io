@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Geekstuff, | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/geekstuff/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-17T17:59:45-04:00</updated>
+  <updated>2017-04-18T15:57:40-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -51,76 +51,7 @@ Two Agent Nodes for testing<br></p>
 
 <p>To put together all the required components for a good large installation, I&rsquo;ve settled on the below specs. You can change those as you see fit, but note that some of the disk space requirements and related were due to Puppet&rsquo;s documented requirements <em>at the time</em>.  YMMV, of course, but this is what I consider to be a base level installation if you intend on scaling into the multiple tens of thousands of nodes. Be sure that if you&rsquo;re going to size this down that you&rsquo;re still meeting Puppet&rsquo;s needs in regards to memory, cores, and disk.  <em>(for a current listing of Puppet&rsquo;s reuqirements, you can look <a href="https://docs.puppet.com/pe/latest/sys_req_hw.html">here</a> for more information.)</em></p>
 
-<table>
-<thead>
-<tr>
-<th> Node </th>
-<th> Cores </th>
-<th> RAM </th>
-<th> /opt/ </th>
-<th> /var/ </th>
-<th> EC2 </th>
-<th> Digital Ocean </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> Puppet Master </td>
-<td> 4 </td>
-<td> 16G </td>
-<td> 10G </td>
-<td> 42G </td>
-<td> m3.xlarge or m4.xlarge </td>
-<td> 16G/8CPU/160G Disk ($160/mo Tier) </td>
-</tr>
-<tr>
-<td> PE Console </td>
-<td> 2 </td>
-<td> 6G </td>
-<td> 10G </td>
-<td> 22G </td>
-<td> m3.large or m4.large </td>
-<td> 8G/4CPU/80G Disk ($80/mo Tier) </td>
-</tr>
-<tr>
-<td> PuppetDB </td>
-<td> 8 </td>
-<td> 30G </td>
-<td> 200G </td>
-<td> 70G </td>
-<td> m3.2xlarge </td>
-<td> 48G/16CPU/480G Disk ($480/mo Tier) </td>
-</tr>
-<tr>
-<td> Compile Master </td>
-<td> 4 </td>
-<td> 16G </td>
-<td> 10G </td>
-<td> 42G </td>
-<td> m3.xlarge or m4.xlarge </td>
-<td> 16G/8CPU/160G Disk ($160/mo Tier)</td>
-</tr>
-<tr>
-<td> ActiveMQ Hub </td>
-<td> 2 </td>
-<td> 4G </td>
-<td> 10G </td>
-<td> 18G </td>
-<td> m3.large </td>
-<td> 4G/2CPU/60G Disk ($40/mo Tier) </td>
-</tr>
-<tr>
-<td> ActiveMQ Spokes </td>
-<td> 2 </td>
-<td> 4G </td>
-<td> 10G </td>
-<td> 18G </td>
-<td> m3.large </td>
-<td> 4G/2CPU/60G Disk ($40/mo Tier) </td>
-</tr>
-</tbody>
-</table>
-
+<p><img src="http://cvquesty.github.io/images/preresquisites.png" alt="Puppet_Prerequisites" /></p>
 
 <p>In addition, you&rsquo;ll need to be aware of firewall requirements for such an installation.  Puppet has documentation regarding firewall configurations and needed ports at their website <a href="https://docs.puppet.com/pe/latest/sys_req_sysconfig.html#for-large-environment-installations">here</a>, but I&rsquo;ll insert the image and recount the requirements here.</p>
 
