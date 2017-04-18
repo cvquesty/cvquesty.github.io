@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Geekstuff, | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/geekstuff/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-18T16:01:49-04:00</updated>
+  <updated>2017-04-18T16:05:22-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -51,7 +51,7 @@ Two Agent Nodes for testing<br></p>
 
 <p>To put together all the required components for a good large installation, I&rsquo;ve settled on the below specs. You can change those as you see fit, but note that some of the disk space requirements and related were due to Puppet&rsquo;s documented requirements <em>at the time</em>.  YMMV, of course, but this is what I consider to be a base level installation if you intend on scaling into the multiple tens of thousands of nodes. Be sure that if you&rsquo;re going to size this down that you&rsquo;re still meeting Puppet&rsquo;s needs in regards to memory, cores, and disk.  <em>(for a current listing of Puppet&rsquo;s reuqirements, you can look <a href="https://docs.puppet.com/pe/latest/sys_req_hw.html">here</a> for more information.)</em></p>
 
-<p><img src="http://cvquesty.github.io/images/preresquisites.png" alt="Puppet_Prerequisites" /></p>
+<p><img src="http://cvquesty.github.io/images/prerequisites.png" alt="Puppet_Prerequisites" /></p>
 
 <p>In addition, you&rsquo;ll need to be aware of firewall requirements for such an installation.  Puppet has documentation regarding firewall configurations and needed ports at their website <a href="https://docs.puppet.com/pe/latest/sys_req_sysconfig.html#for-large-environment-installations">here</a>, but I&rsquo;ll insert the image and recount the requirements here.</p>
 
