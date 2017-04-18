@@ -39,16 +39,7 @@ I know that's quite a number of nodes to get started with, but this after all a 
 
 To put together all the required components for a good large installation, I've settled on the below specs. You can change those as you see fit, but note that some of the disk space requirements and related were due to Puppet's documented requirements _at the time_.  YMMV, of course, but this is what I consider to be a base level installation if you intend on scaling into the multiple tens of thousands of nodes. Be sure that if you're going to size this down that you're still meeting Puppet's needs in regards to memory, cores, and disk.  _(for a current listing of Puppet's reuqirements, you can look [here](https://docs.puppet.com/pe/latest/sys_req_hw.html) for more information.)_
 
-
-| Node | Cores | RAM | /opt/ | /var/ | EC2 | Digital Ocean |
-| ---- | ----- | --- | ----- | ----- | --- | ------------- |
-| Puppet Master | 4 | 16G | 10G | 42G | m3.xlarge or m4.xlarge | 16G/8CPU/160G Disk ($160/mo Tier) |
-| PE Console | 2 | 6G | 10G | 22G | m3.large or m4.large | 8G/4CPU/80G Disk ($80/mo Tier) |
-| PuppetDB | 8 | 30G | 200G | 70G | m3.2xlarge | 48G/16CPU/480G Disk ($480/mo Tier) |
-| Compile Master | 4 | 16G | 10G | 42G | m3.xlarge or m4.xlarge | 16G/8CPU/160G Disk ($160/mo Tier) 
-| ActiveMQ Hub | 2 | 4G | 10G | 18G | m3.large | 4G/2CPU/60G Disk ($40/mo Tier) |
-| ActiveMQ Spokes | 2 | 4G | 10G | 18G | m3.large | 4G/2CPU/60G Disk ($40/mo Tier) |
-
+![Puppet_Prerequisites](http://cvquesty.github.io/images/preresquisites.png)
 
 In addition, you'll need to be aware of firewall requirements for such an installation.  Puppet has documentation regarding firewall configurations and needed ports at their website [here](https://docs.puppet.com/pe/latest/sys_req_sysconfig.html#for-large-environment-installations), but I'll insert the image and recount the requirements here.
 
