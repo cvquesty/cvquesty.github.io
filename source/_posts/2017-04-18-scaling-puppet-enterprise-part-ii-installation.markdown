@@ -9,7 +9,6 @@ Installing Puppet Enterprise has been made remarkably easier as time has gone on
 
 Many changes have occurred over time to include changing from answer files to a [HOCON](https://docs.puppet.com/pe/latest/config_hocon.html) formatted **pe.conf** file containing the various configuration elements you may need to stand up an instance. I somewhat preferred the simple nature of the original answer files, but I can see the sense in moving to HOCON moving forward.
 
-I will try and cover both GUI and text based installation and relate any "gotchas" or idosyncasies I may have encountered in the past.
 
 **Obtain puppet**
 
@@ -19,7 +18,7 @@ When you navigate to the Puppet Download page, you may be required to sign up fo
 
 You will be presented with a launch page that contains a "Download" button.  Click the button, and one of two things will happen.  Either you will be directed to a "Thank You" page or a page to sign up for an account. As you can see, the "Thank You" page means you already have an account and are signed in whereas the signup page is self-explanatory. Sign up for an account, and retry the download link.
 
-Once you've made it to the "Thank You" page, there are three tabs containing "Puppet Enterprise Masters", "Puppet Enterprise Agents", and "Puppet Enterprise Client Tools". As of this writing, the only supported Puppet Master platforms are RedHat 6 & 7, Ubuntu 12.04, 14.04, 1nd 16.04, as well as SLES 11 and 12.
+Once you've made it to the "Thank You" page, there are three tabs containing "Puppet Enterprise Masters", "Puppet Enterprise Agents", and "Puppet Enterprise Client Tools". As of this writing, the only supported Puppet Master platforms are RedHat 6 & 7, Ubuntu 12.04, 14.04, and 16.04, as well as SLES 11 and 12.
 
 If you had intentions of running the Puppet Master server on any other platform, here is where you realign your expectations.  :)  I have heard that people have hacked the server to run on other platforms, but since we're dealing with Puppet Enterprise, why would you break support and eliminate warranty?  Pick one of the three and download the tarball for your appropriate platform.
 
@@ -31,18 +30,8 @@ For the purposes of this scenario, we will be installing the Puppet Infrastructu
 
 My assumed setup will be:
 
-| Node Name | IP Address |
-| --------- | ---------- |
-| master.example.com  | 10.0.1.20 |
-| console.example.com  | 10.0.1.21 |
-| puppetdb.example.com  | 10.0.1.22 |
-| compiler.example.com (VIP)  | 10.0.1.23 |
-| compiler1.example.com  | 10.0.1.24 |
-| compiler2.example.com  | 10.0.1.25 |
-| amqhub.example.com  | 10.0.1.26 |
-| amqspoke.example.com  | 10.0.1.27 |
-| agent1.example.com  | 10.0.1.28 |
-| agent2.example.com  | 10.0.1.29 |
+![Example.com Node List](http://cvquesty.github.io/images/node_list_example_com.png)
+
 
 ***Automated***
 
@@ -50,11 +39,7 @@ The Puppet Enterprise Installer is a GUI web-browser based installer. Puppet has
 
 **Stand up 3 Nodes with the specifications from the first article in the series as follows:**
 
-| Node | Image | IP Address |
-| ---- | ----- | ---------- |
-|  master.example.com  |  m3 or m4.xlarge  |  10.0.1.20  |
-|  console.example.com  |  m3 or m4.large  |  10.0.1.21  |
-|  puppetdb.example.com  |  m3.2xlarge  |  10.0.1.22  |
+![Split Node List](http://cvquesty.github.io/images/split_node_list.png)
 
 In my experience, I've found it much easier to exchange root keys between all three of the above nodes to allow the installer to do all it needs to do on each node. You can, however, decide to set the root password to something temporary to hand to the installer as well (and many people opt for this) and then return root's password to your site default.  In any event, all the machines should be able to resolve themselves and each other by name and root should be able to freely ssh between them either via shared keys (easiest) or password.
 
