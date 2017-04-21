@@ -222,28 +222,28 @@
 </span><span class='line'>class profiles::loadbalancer {
 </span><span class='line'>
 </span><span class='line'>  class { 'haproxy': }
-</span><span class='line'>  
+</span><span class='line'>
 </span><span class='line'>  # Main Proxy Listener
-</span><span class='line'>  haproxy::listen { 'compile.example.com':
+</span><span class='line'>  haproxy::listen { 'compiler.example.com':
 </span><span class='line'>    collect_exported =&gt; false,
 </span><span class='line'>    ipaddress        =&gt; $::ipaddress,
 </span><span class='line'>    ports            =&gt; '8140',
 </span><span class='line'>  }
-</span><span class='line'>  
+</span><span class='line'>
 </span><span class='line'>  # First Load balanced Compile Master
-</span><span class='line'>  haproxy::balancermember { 'compile1.example.com':
-</span><span class='line'>    listening_service =&gt; 'compile.example.com',
-</span><span class='line'>    server_names      =&gt; 'compile1.example.com',
-</span><span class='line'>    ipaddress         =&gt; '10.0.0.10',
+</span><span class='line'>  haproxy::balancermember { 'compiler1.example.com':
+</span><span class='line'>    listening_service =&gt; 'compiler.example.com',
+</span><span class='line'>    server_names      =&gt; 'compiler1.example.com',
+</span><span class='line'>    ipaddress         =&gt; '10.0.1.24',
 </span><span class='line'>    ports             =&gt; '8140',
 </span><span class='line'>    options           =&gt; 'check',
 </span><span class='line'>  }
-</span><span class='line'>  
+</span><span class='line'>
 </span><span class='line'>  # Second Load Balanced Compile Master
-</span><span class='line'>  haproxy::balancermember { 'compile2.example.com':
-</span><span class='line'>    listening_service =&gt; 'compile.example.com',
-</span><span class='line'>    server_names      =&gt; 'compile2.example.com',
-</span><span class='line'>    ipaddress         =&gt; '10.0.0.11',
+</span><span class='line'>  haproxy::balancermember { 'compiler2.example.com':
+</span><span class='line'>    listening_service =&gt; 'compiler.example.com',
+</span><span class='line'>    server_names      =&gt; 'compiler2.example.com',
+</span><span class='line'>    ipaddress         =&gt; '10.0.1.25',
 </span><span class='line'>    ports             =&gt; '8140',
 </span><span class='line'>    options           =&gt; 'check',
 </span><span class='line'>  }
@@ -304,39 +304,39 @@
 </span><span class='line'>class profiles::loadbalancer {
 </span><span class='line'>
 </span><span class='line'>  class { 'haproxy': }
-</span><span class='line'>  
+</span><span class='line'>
 </span><span class='line'>  # Main Proxy Listener
-</span><span class='line'>  haproxy::listen { 'compile.example.com':
+</span><span class='line'>  haproxy::listen { 'compiler.example.com':
 </span><span class='line'>    collect_exported =&gt; false,
 </span><span class='line'>    ipaddress        =&gt; $::ipaddress,
 </span><span class='line'>    ports            =&gt; '8140',
 </span><span class='line'>  }
-</span><span class='line'>  
+</span><span class='line'>
 </span><span class='line'>  # First Load balanced Compile Master
-</span><span class='line'>  haproxy::balancermember { 'compile1.example.com':
-</span><span class='line'>    listening_service =&gt; 'compile.example.com',
-</span><span class='line'>    server_names      =&gt; 'compile1.example.com',
-</span><span class='line'>    ipaddress         =&gt; '159.203.76.239',
+</span><span class='line'>  haproxy::balancermember { 'compiler1.example.com':
+</span><span class='line'>    listening_service =&gt; 'compiler.example.com',
+</span><span class='line'>    server_names      =&gt; 'compiler1.example.com',
+</span><span class='line'>    ipaddress         =&gt; '10.0.1.24',
 </span><span class='line'>    ports             =&gt; '8140',
 </span><span class='line'>    options           =&gt; 'check',
 </span><span class='line'>  }
-</span><span class='line'>  
+</span><span class='line'>
 </span><span class='line'>  # Second Load Balanced Compile Master
-</span><span class='line'>  haproxy::balancermember { 'compile2.example.com':
-</span><span class='line'>    listening_service =&gt; 'compile.example.com',
-</span><span class='line'>    server_names      =&gt; 'compile2.example.com',
-</span><span class='line'>    ipaddress         =&gt; '159.203.76.100',
+</span><span class='line'>  haproxy::balancermember { 'compiler2.example.com':
+</span><span class='line'>    listening_service =&gt; 'compiler.example.com',
+</span><span class='line'>    server_names      =&gt; 'compiler2.example.com',
+</span><span class='line'>    ipaddress         =&gt; '10.0.1.25',
 </span><span class='line'>    ports             =&gt; '8140',
 </span><span class='line'>    options           =&gt; 'check',
 </span><span class='line'>  }
 </span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now, I may not be able to recall why I set the ipaddres fields as I did, but the documentation gives some hints:</p>
+<p>In my original implementation I set the ipaddres fields with some odd IP addresses. For info around how to fill those but ,the documentation gives some hints:</p>
 
 <blockquote><p>ipaddresses: Optional. Specifies the IP address used to contact the balancermember service. Valid options: a string or an array. If you pass an array, it must contain the same number of elements as the array you pass to the server_names parameter. For each pair of entries in the ipaddresses and server_names arrays, Puppet creates server entries in haproxy.cfg targeting each port specified in the ports parameter. Default: the value of the $::ipaddress fact.</p></blockquote>
 
-<p>Since I was originally setting these up in Digital Ocean, and the IP space 159.203.x.x <em>belongs</em> to Digital Ocean, I am guessing these were the hard IPs on the instances I stood up. Since the documentation above states these are optional, you have two options here.  Either leave those lines out of your config altogether, or manually set them to the IP Address of the instance you&rsquo;re using. Try each and do which works for you.</p>
+<p>Since I was originally setting these up in Digital Ocean, I used the IP space 159.203.x.x which belongs to Digital Ocean. I am guessing these were the hard IPs on the instances I stood up. Since the documentation above states these are optional, you have two options here.  Either leave those lines out of your config altogether, or manually set them to the IP Address of the instance you&rsquo;re using. Try each and do which works for you.</p>
 
 <h2>Conclusion</h2>
 
