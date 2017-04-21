@@ -86,28 +86,28 @@ cd profiles/manifests
 class profiles::loadbalancer {
 
   class { 'haproxy': }
-  
+
   # Main Proxy Listener
-  haproxy::listen { 'compile.example.com':
+  haproxy::listen { 'compiler.example.com':
     collect_exported => false,
     ipaddress        => $::ipaddress,
     ports            => '8140',
   }
-  
+
   # First Load balanced Compile Master
-  haproxy::balancermember { 'compile1.example.com':
-    listening_service => 'compile.example.com',
-    server_names      => 'compile1.example.com',
-    ipaddress         => '10.0.0.10',
+  haproxy::balancermember { 'compiler1.example.com':
+    listening_service => 'compiler.example.com',
+    server_names      => 'compiler1.example.com',
+    ipaddress         => '10.0.1.24',
     ports             => '8140',
     options           => 'check',
   }
-  
+
   # Second Load Balanced Compile Master
-  haproxy::balancermember { 'compile2.example.com':
-    listening_service => 'compile.example.com',
-    server_names      => 'compile2.example.com',
-    ipaddress         => '10.0.0.11',
+  haproxy::balancermember { 'compiler2.example.com':
+    listening_service => 'compiler.example.com',
+    server_names      => 'compiler2.example.com',
+    ipaddress         => '10.0.1.25',
     ports             => '8140',
     options           => 'check',
   }
@@ -134,27 +134,27 @@ I noted when putting together the loadbalancer.pp profile above that I had previ
 class profiles::loadbalancer {
 
   class { 'haproxy': }
-  
+
   # Main Proxy Listener
-  haproxy::listen { 'compile.example.com':
+  haproxy::listen { 'compiler.example.com':
     collect_exported => false,
     ipaddress        => $::ipaddress,
     ports            => '8140',
   }
-  
+
   # First Load balanced Compile Master
-  haproxy::balancermember { 'compile1.example.com':
-    listening_service => 'compile.example.com',
-    server_names      => 'compile1.example.com',
+  haproxy::balancermember { 'compiler1.example.com':
+    listening_service => 'compiler.example.com',
+    server_names      => 'compiler1.example.com',
     ipaddress         => '159.203.76.239',
     ports             => '8140',
     options           => 'check',
   }
-  
+
   # Second Load Balanced Compile Master
-  haproxy::balancermember { 'compile2.example.com':
-    listening_service => 'compile.example.com',
-    server_names      => 'compile2.example.com',
+  haproxy::balancermember { 'compiler2.example.com':
+    listening_service => 'compiler.example.com',
+    server_names      => 'compiler2.example.com',
     ipaddress         => '159.203.76.100',
     ports             => '8140',
     options           => 'check',
