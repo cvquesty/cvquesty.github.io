@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Puppet, | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/puppet/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-21T11:53:04-04:00</updated>
+  <updated>2017-04-21T12:26:08-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -73,7 +73,7 @@ puppet module install puppetlabs-haproxy
 <li><p>Retrieve the Enterprise Console in your browser</p></li>
 <li><p>Select <strong>Nodes</strong> | <strong>Classification</strong></p></li>
 <li><p>Create a New Classification Group called &ldquo;<strong>Load Balancer</strong>&rdquo;</p></li>
-<li><p>Select the new group from the list and pin the node &ldquo;<strong>compile.example.com</strong>&rdquo; into the new group.</p></li>
+<li><p>Select the new group from the list and pin the node &ldquo;<strong>compiler.example.com</strong>&rdquo; into the new group.</p></li>
 <li><p>In your open SSH session to master.example.com, create the profiles module to hold the configuration for HAProxy</p></li>
 </ol>
 
@@ -131,7 +131,7 @@ class profiles::loadbalancer {
 <li>Under the &ldquo;Add new Class&rdquo; heading, select <strong>profiles::loadbalancer</strong> from the list that drops down.</li>
 <li>Click &ldquo;Add Class&rdquo;.</li>
 <li>Select &ldquo;Commit 1 Change&rdquo; at the bottom right of the page.</li>
-<li>SSH back into <strong>compile.example.com</strong> and run <strong>puppet agent -t</strong> to configure the Load Balancer.</li>
+<li>SSH back into <strong>compiler.example.com</strong> and run <strong>puppet agent -t</strong> to configure the Load Balancer.</li>
 </ol>
 
 
