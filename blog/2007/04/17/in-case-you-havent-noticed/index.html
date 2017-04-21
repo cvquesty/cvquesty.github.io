@@ -108,7 +108,7 @@
 
 <p>So, I&rsquo;ve got a few things for sale.</p>
 
-<p>My house is a 3 Bedroom ranch home in suburban Atlanta, GA. You can see the pictures of my home from before I bought it in 4/04 here: <a href="http://picasaweb.google.com/questy/OurHouse">Our House</a> We&rsquo;re asking $159k. If you have any questions, contact me at <a href="&#109;&#97;&#105;&#x6c;&#116;&#111;&#58;&#106;&#x65;&#x72;&#97;&#108;&#x64;&#46;&#x73;&#x68;&#101;&#x65;&#116;&#x73;&#64;&#103;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;&#46;">&#x6a;&#101;&#114;&#97;&#x6c;&#x64;&#46;&#x73;&#104;&#101;&#x65;&#116;&#x73;&#64;&#x67;&#x6d;&#97;&#105;&#x6c;&#46;&#99;&#x6f;&#109;&#x2e;</a></p>
+<p>My house is a 3 Bedroom ranch home in suburban Atlanta, GA. You can see the pictures of my home from before I bought it in 4/04 here: <a href="http://picasaweb.google.com/questy/OurHouse">Our House</a> We&rsquo;re asking $159k. If you have any questions, contact me at <a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#58;&#106;&#x65;&#x72;&#x61;&#x6c;&#100;&#x2e;&#115;&#104;&#x65;&#101;&#x74;&#115;&#x40;&#x67;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#111;&#109;&#x2e;">&#106;&#x65;&#114;&#97;&#108;&#100;&#46;&#x73;&#x68;&#x65;&#101;&#116;&#x73;&#64;&#103;&#x6d;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#109;&#46;</a></p>
 
 <p>Also, I&rsquo;ve got some servers hanging around. Since I&rsquo;ve really gotten into the whole Dave Ramsey thing, I', selling them to apply toward my debt. My hope is to pay off nearly half of my remaining debt balance with the sale of my home and these servers.</p>
 
@@ -276,7 +276,45 @@ SMC 24 Port 10/100 EZ Hub 5616DS
 <div class="fb-like-box" data-href="http://www.facebook.com/jerald.sheets" data-width="260" data-show-faces="true" data-stream="true" data-header=""   ></div>
 </section>
 
-Included file 'custom/asides/aboutmetwitter.html' not found in _includes directory
+
+<section>
+  <h1>About Me</h1>
+  <div id="twitter-profile" style="margin-top:0.5em;">
+    <p>
+      <strong>Jerald Sheets</strong> 
+      (<a href="http://twitter.com/CVQuesty">@CVQuesty</a>)
+    </p>
+    <p>My personal Tech spot on the Internet</p>
+  </div>
+  <script type="text/javascript">
+    $(function(){
+        var container = $('#twitter-profile'),
+            user = "CVQuesty";
+        
+        function parseTwLinks(s) {
+          var twUrl = "http://www.twitter.com/"
+          s = s.replace(/ (@([\w]+))/g, function(match, p1, p2) {
+              return " <a href='"+twUrl+p2+"'>"+p1+"</a>"
+          }).replace(/ (#([\w]+))/g, function(match, p1, p2) {
+              return " <a href='"+twUrl+"#!/search?q=%23"+p2+"'>"+p1+"</a>"
+          })
+          return s
+        }
+
+        $.ajax({
+            url: "http://api.twitter.com/1/users/show.json?include_entities=false&screen_name="+user+"&callback=?"
+          , type: 'GET'
+          , dataType: 'jsonp'
+          , error: function (err) { $('#twitter-profile').addClass('error');  }
+          , success: function(data) {
+              container.html('<img class="left" src="http://api.twitter.com/1/users/profile_image/'+user+'.json?size=bigger" alt="@'+user+'"><p><strong>'+data.name+'</strong> (<a href="http://twitter.com/'+user+'">@'+user+'</a>)<br/>'+data.location+'</p><p>'+parseTwLinks(data.description)+'</p>');
+            }
+        })
+      });
+  </script>
+</section>
+
+
   
 </aside>
 
