@@ -161,13 +161,13 @@ class profiles::loadbalancer {
   }
 }
 ```
-Now, I may not be able to recall why I set the ipaddres fields as I did, but the documentation gives some hints:
+In my original implementation I set the ipaddres fields with some odd IP addresses. For info around how to fill those but ,the documentation gives some hints:
 
 
 > ipaddresses: Optional. Specifies the IP address used to contact the balancermember service. Valid options: a string or an array. If you pass an array, it must contain the same number of elements as the array you pass to the server_names parameter. For each pair of entries in the ipaddresses and server_names arrays, Puppet creates server entries in haproxy.cfg targeting each port specified in the ports parameter. Default: the value of the $::ipaddress fact.
 
 
-Since I was originally setting these up in Digital Ocean, and the IP space 159.203.x.x _belongs_ to Digital Ocean, I am guessing these were the hard IPs on the instances I stood up. Since the documentation above states these are optional, you have two options here.  Either leave those lines out of your config altogether, or manually set them to the IP Address of the instance you're using. Try each and do which works for you.
+Since I was originally setting these up in Digital Ocean, I used the IP space 159.203.x.x which belongs to Digital Ocean. I am guessing these were the hard IPs on the instances I stood up. Since the documentation above states these are optional, you have two options here.  Either leave those lines out of your config altogether, or manually set them to the IP Address of the instance you're using. Try each and do which works for you.
 
 ##Conclusion
 
