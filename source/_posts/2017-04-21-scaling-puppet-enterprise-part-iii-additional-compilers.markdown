@@ -50,7 +50,7 @@ When the client is fully installed, retrieve the Enterprise Console from your br
 
 At this point, the node is provisioned and you have a Puppet agent running on it, but you have as of yet not configured the HAProxy Load Balancer for use in the environment. The load balancer will be necessary to have in place prior to adding compile masters to your existing split installation. The following instructions guide you through setting up the HAProxy load balancer.
 
-1. SSH to the Puppet Master as root.  _(master.example.com in our list)_
+1. SSH to the Puppet Master as root.  _(**master.example.com** in our list)_
 
 2. Install the HAPRoxy Forge Module on the master
 ```
@@ -67,7 +67,7 @@ puppet module install puppetlabs-haproxy
 
 6. Select the new group from the list and pin the node "**compiler.example.com**" into the new group.
 
-7. In your open SSH session to master.example.com, create the profiles module to hold the configuration for HAProxy
+7. In your open SSH session to **master.example.com**, create the profiles module to hold the configuration for HAProxy
 
 ```
 cd /etc/puppetlabs/code/environments/production/modules
@@ -123,7 +123,7 @@ Once you have created this profile, retrieve the Puppet Enterprise Console in yo
 5. Select "Commit 1 Change" at the bottom right of the page.
 6. SSH back into **compiler.example.com** and run **puppet agent -t** to configure the Load Balancer.
 
-Your Load Balancer is now prepared to balance traffic to two catalog compilers (*catalog1.example.com and catalog2.example.com*) as listed in the above configuration.
+Your Load Balancer is now prepared to balance traffic to two catalog compilers (_**catalog1.example.com** and **catalog2.example.com**_) as listed in the above configuration.
 
 ###Notes
 ---
