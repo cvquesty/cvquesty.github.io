@@ -72,8 +72,8 @@ github_skip_forks: true
 
 # Twitter
 twitter_user: CVQuesty
-twitter_tweet_button: true
 twitter_widget_id: 813991
+twitter_tweet_button: true
 
 # Google +1
 google_plus_one: true
