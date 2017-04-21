@@ -146,7 +146,7 @@ class profiles::loadbalancer {
   haproxy::balancermember { 'compiler1.example.com':
     listening_service => 'compiler.example.com',
     server_names      => 'compiler1.example.com',
-    ipaddress         => '159.203.76.239',
+    ipaddress         => '10.0.1.24',
     ports             => '8140',
     options           => 'check',
   }
@@ -155,7 +155,7 @@ class profiles::loadbalancer {
   haproxy::balancermember { 'compiler2.example.com':
     listening_service => 'compiler.example.com',
     server_names      => 'compiler2.example.com',
-    ipaddress         => '159.203.76.100',
+    ipaddress         => '10.0.1.25',
     ports             => '8140',
     options           => 'check',
   }
