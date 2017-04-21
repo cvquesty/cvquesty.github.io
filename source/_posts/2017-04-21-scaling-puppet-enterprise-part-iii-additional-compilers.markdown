@@ -16,9 +16,9 @@ However, I've always written documentation to fit the "grandma rule". My grandmo
 
 This causes a problem, of course. There are technologists out there that would become annoyed at repetition, verbosity around "understood" things, and spelling out each and every step along the way... even painfully. However, I feel it is the only _proper_ way to document something. My rules are simple.
 
-	1. Leave nothing to question
-	2. Be as verbose and clear as possible
-	3. Make sure everything is in order, step-by-step
+* Leave nothing to question
+* Be as verbose and clear as possible
+* Make sure everything is in order, step-by-step
 
 By following this simple guideline, I feel I'm doing more of a service to the reader than if I presumed on their level of sophistication with Puppet, Linux/UNIX, Windows, research capability, Google-foo or whatever.
 
@@ -27,7 +27,7 @@ So let's dive in, shall we?
 
 ##HAProxy
 
-Seemingly counterintuitive, I want to next install the HAProxy we will use as a Load Balancer on the additional compilers.  By installing this first, we can utilize Puppet to install the HAProxy, and manage them automatically rather than doing a lot of ad-hoc work.
+Seemingly counterintuitive, now that we've done a split install, I want to next install the HAProxy we will use as a Load Balancer on the additional compilers.  By installing this first, we can utilize Puppet to install the HAProxy, and manage them automatically rather than doing a lot of ad-hoc work.
 
 Also, by doing the proxy first,  the prerequisites are satisfied in their proper order, the Load Balancer exists before configuring additional compilers (to be able to utilize the dns_alt_names for the load balancer along with the compilers) and to have the GitLab in place and hosting the control_repo before turning on and configuring Code Manager.
 
