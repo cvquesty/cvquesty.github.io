@@ -6,9 +6,13 @@ comments: true
 categories: puppet, geekstuff
 ---
 
+***You should have completed a split install before beginning this section. You can find the Split Installation documentation at Puppet's Website, or the first installment of this tutorial [here](http://questy.org/blog/2017/04/18/scaling-puppet-enterprise-part-ii-installation/).  If you try and begin here, you might find yourself lost.***
+
 ###First, Some Philosophy
 
-The Puppet Enterprise documentation circa PE 2015.3.2 had some "issues". Let me actually preface that, though. Puppet Labs' documentation is by far some of the most voluminous and in many respects most complete vendor documentation out there. I don't mean to disparage their work AT ALL. When it comes to the fact they even have documentation at this level, they're the "bees knees". However, I've always written documentation to fit the "grandma rule". If my grandma couldn't read the documentation and follow a step-by-step process to install Puppet successfully, then its just too complex and needs to be simplified.
+The Puppet Enterprise documentation circa PE 2015.3.2 had some "issues". Let me actually preface that, though. Puppet Labs' documentation is by far some of the most voluminous and in many respects most complete vendor documentation out there. I don't mean to disparage their work AT ALL. When it comes to the fact they even have documentation at this level, they're the "bees knees". 
+
+However, I've always written documentation to fit the "grandma rule". My grandmother was a little 4 foot nothing Cajun woman with English as her second language.  She never used the first computer, still had a rotary phone when she passed away, and remained suspicious of anything technical.  She *was*, however, a voracious reader, keenly intelligent, and understood considerably more than you'd expect on first glance. She also was a stickler for puncutation, grammar, and the like. In short, if my grandma couldn't read the documentation and follow a step-by-step process to install Puppet successfully, then its just either too complex, poorly formatted or unclear and needs to be simplified.
 
 This causes a problem, of course. There are technologists out there that would become annoyed at repetition, verbosity around "understood" things, and spelling out each and every step along the way... even painfully. However, I feel it is the only _proper_ way to document something. My rules are simple.
 
@@ -20,9 +24,6 @@ By following this simple guideline, I feel I'm doing more of a service to the re
 
 So let's dive in, shall we?
 
----
-
-***You should have completed a split install before beginning this section. You can find the Split Installation documentation at Puppet's Website, or the first installment of this tutorial [here](http://questy.org/blog/2017/04/18/scaling-puppet-enterprise-part-ii-installation/).***
 
 ##HAProxy
 
