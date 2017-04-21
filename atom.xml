@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-21T10:59:43-04:00</updated>
+  <updated>2017-04-21T11:08:31-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -24,12 +24,10 @@
 
 <p>This causes a problem, of course. There are technologists out there that would become annoyed at repetition, verbosity around &ldquo;understood&rdquo; things, and spelling out each and every step along the way&hellip; even painfully. However, I feel it is the only <em>proper</em> way to document something. My rules are simple.</p>
 
-<ol>
-<li>Leave nothing to question</li>
-<li>Be as verbose and clear as possible</li>
-<li>Make sure everything is in order, step-by-step</li>
-</ol>
-
+<pre><code>1. Leave nothing to question
+2. Be as verbose and clear as possible
+3. Make sure everything is in order, step-by-step
+</code></pre>
 
 <p>By following this simple guideline, I feel I&rsquo;m doing more of a service to the reader than if I presumed on their level of sophistication with Puppet, Linux/UNIX, Windows, research capability, Google-foo or whatever.</p>
 
@@ -75,8 +73,8 @@
 </pre></td><td class='code'><pre><code class=''><span class='line'>puppet module install puppetlabs-haproxy</span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>&lt;br&gt;_leave your root console open while performing steps 3-6_
-</code></pre>
+<p><br>
+    <em>leave your root console open while performing steps 3-6</em></p>
 
 <ol>
 <li><p>Retrieve the Enterprise Console in your browser</p></li>
@@ -251,9 +249,7 @@
 
 <p>Now, I may not be able to recall why I set the ipaddres fields as I did, but the documentation gives some hints:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ipaddresses: Optional. Specifies the IP address used to contact the balancermember service. Valid options: a string or an array. If you pass an array, it must contain the same number of elements as the array you pass to the server_names parameter. For each pair of entries in the ipaddresses and server_names arrays, Puppet creates server entries in haproxy.cfg targeting each port specified in the ports parameter. Default: the value of the $::ipaddress fact.</span></code></pre></td></tr></table></div></figure>
-
+<blockquote><p>ipaddresses: Optional. Specifies the IP address used to contact the balancermember service. Valid options: a string or an array. If you pass an array, it must contain the same number of elements as the array you pass to the server_names parameter. For each pair of entries in the ipaddresses and server_names arrays, Puppet creates server entries in haproxy.cfg targeting each port specified in the ports parameter. Default: the value of the $::ipaddress fact.</p></blockquote>
 
 <p>Since I was originally setting these up in Digital Ocean, and the IP space 159.203.x.x <em>belongs</em> to Digital Ocean, I am guessing these were the hard IPs on the instances I stood up. Since the documentation above states these are optional, you have two options here.  Either leave those lines out of your config altogether, or manually set them to the IP Address of the instance you&rsquo;re using. Try each and do which works for you.</p>
 
