@@ -12,9 +12,9 @@ The Puppet Enterprise documentation circa PE 2015.3.2 had some "issues". Let me 
 
 This causes a problem, of course. There are technologists out there that would become annoyed at repetition, verbosity around "understood" things, and spelling out each and every step along the way... even painfully. However, I feel it is the only _proper_ way to document something. My rules are simple.
 
-1. Leave nothing to question
-1. Be as verbose and clear as possible
-1. Make sure everything is in order, step-by-step
+	1. Leave nothing to question
+	2. Be as verbose and clear as possible
+	3. Make sure everything is in order, step-by-step
 
 By following this simple guideline, I feel I'm doing more of a service to the reader than if I presumed on their level of sophistication with Puppet, Linux/UNIX, Windows, research capability, Google-foo or whatever.
 
@@ -56,7 +56,8 @@ At this point, the node is provisioned and you have a Puppet agent running on it
 ```
 puppet module install puppetlabs-haproxy
 ```
-	<br>_leave your root console open while performing steps 3-6_
+<br>
+	_leave your root console open while performing steps 3-6_
 
 3. Retrieve the Enterprise Console in your browser
 
@@ -162,9 +163,9 @@ class profiles::loadbalancer {
 ```
 Now, I may not be able to recall why I set the ipaddres fields as I did, but the documentation gives some hints:
 
-```
-ipaddresses: Optional. Specifies the IP address used to contact the balancermember service. Valid options: a string or an array. If you pass an array, it must contain the same number of elements as the array you pass to the server_names parameter. For each pair of entries in the ipaddresses and server_names arrays, Puppet creates server entries in haproxy.cfg targeting each port specified in the ports parameter. Default: the value of the $::ipaddress fact.
-```
+
+> ipaddresses: Optional. Specifies the IP address used to contact the balancermember service. Valid options: a string or an array. If you pass an array, it must contain the same number of elements as the array you pass to the server_names parameter. For each pair of entries in the ipaddresses and server_names arrays, Puppet creates server entries in haproxy.cfg targeting each port specified in the ports parameter. Default: the value of the $::ipaddress fact.
+
 
 Since I was originally setting these up in Digital Ocean, and the IP space 159.203.x.x _belongs_ to Digital Ocean, I am guessing these were the hard IPs on the instances I stood up. Since the documentation above states these are optional, you have two options here.  Either leave those lines out of your config altogether, or manually set them to the IP Address of the instance you're using. Try each and do which works for you.
 
