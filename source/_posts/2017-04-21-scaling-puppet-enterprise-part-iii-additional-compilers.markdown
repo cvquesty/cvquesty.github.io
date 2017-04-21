@@ -65,7 +65,7 @@ puppet module install puppetlabs-haproxy
 
 5. Create a New Classification Group called "**Load Balancer**"
 
-6. Select the new group from the list and pin the node "**compile.example.com**" into the new group.
+6. Select the new group from the list and pin the node "**compiler.example.com**" into the new group.
 
 7. In your open SSH session to master.example.com, create the profiles module to hold the configuration for HAProxy
 
@@ -121,7 +121,7 @@ Once you have created this profile, retrieve the Puppet Enterprise Console in yo
 3. Under the "Add new Class" heading, select **profiles::loadbalancer** from the list that drops down.
 4. Click "Add Class".
 5. Select "Commit 1 Change" at the bottom right of the page.
-6. SSH back into **compile.example.com** and run **puppet agent -t** to configure the Load Balancer.
+6. SSH back into **compiler.example.com** and run **puppet agent -t** to configure the Load Balancer.
 
 Your Load Balancer is now prepared to balance traffic to two catalog compilers (*catalog1.example.com and catalog2.example.com*) as listed in the above configuration.
 
