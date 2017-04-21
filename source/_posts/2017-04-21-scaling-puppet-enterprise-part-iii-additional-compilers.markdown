@@ -26,7 +26,7 @@ So let's dive in, shall we?
 
 ##HAProxy
 
-Seemingly counterintuitive, I want to next install the HAProxy we will use as a Load Balancer on the additional compilers.  By installing this first, we can utilize Puppet to install the HAPRoxy, and manage them automatically rather than doing a lot of ad-hoc work.
+Seemingly counterintuitive, I want to next install the HAProxy we will use as a Load Balancer on the additional compilers.  By installing this first, we can utilize Puppet to install the HAProxy, and manage them automatically rather than doing a lot of ad-hoc work.
 
 Also, by doing the proxy first,  the prerequisites are satisfied in their proper order, the Load Balancer exists before configuring additional compilers (to be able to utilize the dns_alt_names for the load balancer along with the compilers) and to have the GitLab in place and hosting the control_repo before turning on and configuring Code Manager.
 
@@ -48,7 +48,7 @@ When the client is fully installed, retrieve the Enterprise Console from your br
 
 ##Configure the Load Balancer
 
-At this point, the node is provisioned and you have a Puppet agent running on it, but you have as of yet not configured the HAProxy Load Balancer for use in the environment. The load balancer will be necessary to have in place prior to adding compile masters to your existing split installation. The following instructions guide you through setting up the HAPROXY load balancer.
+At this point, the node is provisioned and you have a Puppet agent running on it, but you have as of yet not configured the HAProxy Load Balancer for use in the environment. The load balancer will be necessary to have in place prior to adding compile masters to your existing split installation. The following instructions guide you through setting up the HAProxy load balancer.
 
 1. SSH to the Puppet Master as root.  _(master.example.com in our list)_
 
@@ -78,7 +78,7 @@ cd profiles/manifests
 ```
 8. Once you have changed to the profiles/manifests directory, create the loadbalancer.pp manifest.
 
-9. Follow the documentation [here](https://forge.puppet.com/puppetlabs/haproxy/readme) to configure HAPROXY. When complete, the loadbalancer.pp manifest should resemble the following with IPs corrected for your particular instance:
+9. Follow the documentation [here](https://forge.puppet.com/puppetlabs/haproxy/readme) to configure HAProxy. When complete, the loadbalancer.pp manifest should resemble the following with IPs corrected for your particular instance:
 
 
 ```
