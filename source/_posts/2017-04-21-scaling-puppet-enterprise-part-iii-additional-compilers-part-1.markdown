@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Scaling Puppet Enterprise - Part III - Additional Compilers Part 1"
+title: "Scaling Puppet Enterprise - Part III - Additional Compilers - Part 1"
 date: 2017-04-21 09:32:47 -0400
 comments: true
 categories: puppet, geekstuff
