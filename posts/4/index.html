@@ -9,7 +9,7 @@
   <meta name="author" content="Jerald Sheets">
 
   
-  <meta name="description" content="I&rsquo;m speaking tonight at the Atlanta Perl Mongers meeting at the Central Cox building in Dunwoody at 7PM on Puppet Configuration management.   &hellip;">
+  <meta name="description" content="Ok, so you&rsquo;re interested in this whole Puppet thing, and you want to get a full install in your test environment, or on a set of VMs to work &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,116 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/20/puppet-i-installation/">Puppet I - Server Installation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-01-20T14:23:10-05:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>2:23 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Ok, so you&rsquo;re interested in this whole Puppet thing, and you want to get a full install in your test environment, or on a set of VMs to work and play with the product.  PuppetLabs has a ton of really cool documentation, and you should certainly avail yourself of it, but I wanted to give you a quick &ldquo;cookbook&rdquo; style set of instructions to get you rolling.</p>
+
+<p><strong>Puppet Master</strong></p>
+
+<p>There is a lot of documentation surrounding the Puppet Master installation at Puppet Labs, but I find a bit of obfuscation when trying to parse through the huge pile of meat that is there, when all we&rsquo;re looking for is the best of it&hellip; you know, the bacon.  :)</p>
+
+<p><strong><em>Puppet Code Repository &amp; Package Source</em></strong></p>
+
+<p>Puppet Labs provides a myriad of repositories and methods by which to install Puppet.  I tend to stick with the main PuppetLabs repository whenever possible.  I also tend to like RedHat derivatives, so I&rsquo;ll be talking about RHEL here, but the same applies to CentOS, Scientific Linux, and other RHEL &ldquo;children&rdquo; in the ecosystem.  In short, if you&rsquo;re using something else other than RHEL, you may find yourself hunting packages and repos that contain packages you&rsquo;ll need that the repositories I list here have by default.  As with any web-based documentation, YMMV.</p>
+
+<p><em><strong>Installing the Puppet Master</strong></em></p>
+
+<p>First, you&rsquo;ll need a functioning Installation of RHEL upon which to install and configure Puppet.  I like to include only the &ldquo;Base Install&rdquo; and take the &ldquo;Defaults&rdquo; when doing a &ldquo;special purpose&rdquo; server, as it doesn&rsquo;t muddy the waters and it gives you the cleanest slate possible upon which to build your Puppet platform.</p>
+
+<p><em><strong>Enabling the RHEL Yum Repo</strong></em></p>
+
+<p>As I&rsquo;m sure you&rsquo;re aware, to use RedHat&rsquo;s repositories, you have to register and have active a subscription with RedHat.  To do a simple connection/attachment to the RedHat repositories, I&rsquo;ve found a mixture of success with the Subscription Manager.  However, by performing the following commands (some are redundant), I&rsquo;ve been able to get the configuration working with 100% reliability:</p>
+
+<p><em><strong>sudo subscription-manager register</strong></em>
+<em><strong> sudo subscription-manager auto-attach</strong></em>
+<em><strong> sudo subscription-manager attach &ndash;auto</strong></em>
+<em><strong> sudo subscription-manager refresh</strong></em></p>
+
+<p>Obviously, this is a RedHat topic, and not a Puppet one, so if you&rsquo;re having issues with this process, contact Redhat for help.  The crux of this, however, is to just register your instance.</p>
+
+<p><em><strong>Installing the Puppet Labs Software Repository</strong></em></p>
+
+<p>Since I&rsquo;m working with the current 6.10 release of Puppet, the package you need to install can be added by running:</p>
+
+<p>_**sudo rpm -ivh <a href="https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm**_">https://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-10.noarch.rpm**_</a></p>
+
+<p>This will install the current 6.10 release of the Puppet repo from which we can continue with the Puppet Master installation.</p>
+
+<p><em><strong>Enabling Additional Packages</strong></em></p>
+
+<p>Next, we need to have the &ldquo;optional&rdquo; set of packages from RedHat and the development packages from Puppet Labs.  There are two ways to do this.  First, you can edit each repo file in /etc/yum.repos.d (red hat.repo and puppet labs.repo respectively) and change the &ldquo;enable&rdquo; flag on each repository from &ldquo;0&rdquo; to &ldquo;1&rdquo;, or you can simply run the provided RedHat Yum configuration manager tool to do it for you as follows.</p>
+
+<p><em><strong>sudo yum -y install yum-utils
+sudo yum-config-manager &ndash;enable rhel-6-server-optional-rpms</strong></em>
+<em><strong> sudo yum-config-manager &ndash;enable puppetlabs-devel</strong></em></p>
+
+<p><em><strong> Get Current!</strong></em></p>
+
+<p>Bring your current host completely up to date by querying the repositories and running the yum updater:</p>
+
+<p><strong><em>sudo yum -y update</em></strong></p>
+
+<p>As I&rsquo;m sure you&rsquo;re aware, depending on the updates released since the current major version of your repositories, the update time can vary from very short to quite some time.  Just be patient and get up to date before proceeding.</p>
+
+<p><em><strong>Install the Puppet Prerequisite Packages</strong></em></p>
+
+<p>This step name is a <em>bit</em> of a misnomer in that I am including a ton of packages that aren&rsquo;t necessary for a &ldquo;base&rdquo; install of Puppet Server, but they do support later installations you may wish to do (like PuppetDB, Dashboard, Passenger, etc.).  I just wanted to give a complete list so there&rsquo;s no after-installation required just to get moving with the next component.  Simply install the following via Yum:</p>
+
+<p><em><strong>sudo yum -y install gcc libcurl-devel gcc-c++ openssl openssl-devel ruby-devel httpd httpd-devel  mod_ssl policycoreutils-python apr-devel apr-utils-devel</strong></em></p>
+
+<p><em><strong>Prep Your Firewall</strong></em></p>
+
+<p>You may or may not be using the IPTables Firewall, but you&rsquo;ll want the following rule in place to support the Puppet Master port.  Simply insert the following line into your <em>/etc/sysconfig/iptables</em> file.</p>
+
+<p><em><strong>-A INPUT -m state &ndash;state NEW -m tcp -p tcp &ndash;dport 8140 -j ACCEPT</strong></em></p>
+
+<p>Note that if you intend to install the Puppet Dashboard as well, you can add that port here too.</p>
+
+<p><strong><em>-A INPUT -m state &ndash;state NEW -m tcp -p tcp &ndash;dport 3000 -j ACCEPT</em></strong></p>
+
+<p>Make sure you place your firewall rules in the appropriate place in the file.  While outside the scope of this article, IPTables has an order and a format you should follow.  You can find out more <a href="http://www.netfilter.org">here</a>.</p>
+
+<p>Lastly, restart your firewall to pick up the new rules:</p>
+
+<p><em><strong>sudo service iptables reload</strong></em></p>
+
+<p><em><strong>Install Puppet Server</strong></em></p>
+
+<p>After all the above work, if you&rsquo;ve had no repository or package errors, your system should be ready to install Puppet Server.  Simply run the following:</p>
+
+<p><em><strong>yum -y install puppet-server</strong></em></p>
+
+<p><em><strong>Conclusion</strong></em></p>
+
+<p>And that should be it.  All packages installed, base RedHat updated with all the latest Ruby &amp; RedHat goodness, and the bad Puppet Server installed and ready for action.</p>
+
+<p>Next time:  Installing the Puppet Client.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -630,40 +740,6 @@ Two slaves configured as replicants, up and running.. check.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/08/30/i-may-regret-this/">I May Regret This</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2010-08-30T09:41:24-04:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2010</span></span> <span class='time'>9:41 am</span></time>
-        
-           | <a href="/blog/2010/08/30/i-may-regret-this/#disqus_thread"
-             data-disqus-identifier="http://questy.org/blog/2010/08/30/i-may-regret-this/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&rsquo;ve been asked by the Digg auto-submission system to paste an invisible key into my page so Digg can curate my posts.</p>
-
-<p>Into my next story on my site.  Of course, if ANYthing on here catches on, my server is toast, but let&rsquo;s see what happens, shall we?  :)</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/5">&larr; Older</a>
@@ -679,6 +755,10 @@ Two slaves configured as replicants, up and running.. check.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/04/23/scaling-puppet-enterprise-part-iii-additional-compilers-part-2/">Scaling Puppet Enterprise - Part III - Additional Compilers - Part 2</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/04/21/scaling-puppet-enterprise-part-iii-additional-compilers-part-1/">Scaling Puppet Enterprise - Part III - Additional Compilers - Part 1</a>
@@ -714,10 +794,6 @@ Two slaves configured as replicants, up and running.. check.</p>
     
       <li class="post">
         <a href="/blog/2015/04/30/puppets-dot-puppets-everywhere/">Puppets.. Puppets Everywhere</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/">Some Coding Work of Late...</a>
       </li>
     
   </ul>

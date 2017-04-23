@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-23T18:18:00-04:00</updated>
+  <updated>2017-04-23T19:20:57-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -12,6 +12,150 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Scaling Puppet Enterprise - Part III - Additional Compilers - Part 2]]></title>
+    <link href="http://questy.org/blog/2017/04/23/scaling-puppet-enterprise-part-iii-additional-compilers-part-2/"/>
+    <updated>2017-04-23T18:19:42-04:00</updated>
+    <id>http://questy.org/blog/2017/04/23/scaling-puppet-enterprise-part-iii-additional-compilers-part-2</id>
+    <content type="html"><![CDATA[<p><strong><em>As in the previous installment, you need to have already completed a few steps before arriving at this post.  You should have already completed a &ldquo;split installation&rdquo; (Documented <a href="http://questy.org/blog/2017/04/18/scaling-puppet-enterprise-part-ii-installation/">here</a>). Also, your load balancer needs to be configured and running. The procedure for this portion can be found <a href="http://questy.org/blog/2017/04/21/scaling-puppet-enterprise-part-iii-additional-compilers-part-1/">here</a>.  If you&rsquo;ve completed all these portions, you are now ready to configure and install the compilers themselves. If this is you, read on!</em></strong></p>
+
+<hr />
+
+<p>Once your Load Balancer and split install are in place and functioning, we need to add more compilers to the serving infrastructure. For the purposes of this tutorial, we will install two additional catalog compilers, register them with the currently existing master. Then, we will direct them to look to the &ldquo;MoM&rdquo; or the &ldquo;Master of Masters&rdquo; as the CA certificate authority.  Further, we will install two agent nodes and connect them to the infrastructure.</p>
+
+<p>You will need to install two compiler nodes and two agent nodes according to the following specifications.</p>
+
+<p><img src="http://cvquesty.github.io/images/compiler_and_agent_specs.png" alt="Compilers and Agents" /></p>
+
+<p>Once these four nodes are in place, we can connect the compilers to the Master of Masters (MoM) and then the agents to the &ldquo;master&rdquo; as they see it.  Remember, that for our purposes, these nodes are named:</p>
+
+<ul>
+<li>compile1.example.com</li>
+<li>compile2.example.com</li>
+<li>compile3.example.com</li>
+<li>compile4.example.com</li>
+</ul>
+
+
+<h3>Installing the Compilers</h3>
+
+<p>SSH to the first compiler master (compile1.example.com for this post&rsquo;s purposes) and install the Puppet agent as follows:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>curl -k https://master.example.com:8140/packages/current/install.bash | bash -s main:dns_alt_names=compile1.example.com,compile.example.com,compile1,compile</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What this does is simple. When this compiler goes behind the load balancer (compile.example.com), traffic may get directed to this node. When the request is made, the agent node will be asking for &ldquo;compile.example.com&rdquo; but this node&rsquo;s name is &ldquo;compile1.example.com&rdquo;. The additional options at the end of the curl line are to tell the agent that when it installs, it should be aware of both names, and when speaking to the MoM the first time to request its cert, to represent all the comma delimited names listed at the end of the above command.</p>
+
+<p>Next, SSH to your master node and accept the agent cert request as follows to allow for these names on the MoM you just set up in the previous step.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssh master.example.com
+</span><span class='line'>puppet cert --allow-dns-alt-names sign compile1.example.com
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>NOTE THAT YOU CANNOT ACCEPT THIS CERT FROM THE CONSOLE. ALT_DNS IS NOT SUPPORTED FROM THE GUI</h4>
+
+<p>Finally, run the puppet agent on the first compiler <em>(compile1.example.com)</em> to configure the node:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>puppet agent -t</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once the agent run is complete, you need to classify the catlog compiler in the console to make it ready for service.</p>
+
+<h3>Classify the Compiler</h3>
+
+<p>In the Puppet Enterprise Console:</p>
+
+<p>Choose Nodes | Classification | PE Master</p>
+
+<p>Add compile1.example.com and pin the node to the classification group and commit the change.</p>
+
+<p><strong><strong><em>BE SURE TO COMPLETE THE NEXT STEPS IN ORDER AS FOLLOWS OR YOU WILL HAVE A BAD TIME</em></strong></strong></p>
+
+<p>First: SSH to compile1.example.com and run <strong><em>puppet agent -t</em></strong></p>
+
+<p>Second: SSH to puppetdb.example.com and run <strong><em>puppet agent -t</em></strong></p>
+
+<p>Third: SSH to console.example.com and run <strong><em>puppet agent -t</em></strong></p>
+
+<p>Fourth: SSH to master.example.com and run <strong><em>puppet agent -t</em></strong></p>
+
+<p><strong><strong><em>BE SURE TO ALLOW EACH RUN TO COMPLETE <em>FULLY</em> BEFORE MOVING ON TO THE NEXT ONE</em></strong></strong></p>
+
+<h3>For All Subsequent Compile Node Installations</h3>
+
+<p>Follow the above instructions completed for compile1.example.com for all subsequent compiler installations. This means that if you add compilers six months or a year from now, go back to the previous procedure and duplicate it with the new node name precisely as you did above.  To recap:</p>
+
+<ol>
+<li>Install the agent as above with the alt_dns switches</li>
+<li>Accept the cert on the master with the alt_dns switches</li>
+<li>Classify the compiler in the console</li>
+<li>Run the Puppet agent in the above specified order, allowing each one to complete fully before moving on.</li>
+</ol>
+
+
+<h3>Configure Future Agent Installations to Point to the Load Balancer by Default</h3>
+
+<p>In the Puppet Enterprise Console, you must configure the system to point all future agent installations to the load balancer by default so you do not have to continue to make modifications and customizations after each agent install. To do so, perform the following steps:</p>
+
+<ol>
+<li>In the Puppet Enterprise Console, choose: Nodes | Classification | PE Master</li>
+<li>Select the &ldquo;Classes&rdquo; tab.</li>
+<li>Choose the &ldquo;pe_repo&rdquo; class.</li>
+<li>Under the parameters drop-down, choose &ldquo;master&rdquo; and set the text box to the name of your load balancer or VIP <em>(in our case, &ldquo;compile.example.com&rdquo;)</em></li>
+<li>Commit the changes.</li>
+</ol>
+
+
+<h3>Point the New Compilers at the Master (MoM) for CA Authority</h3>
+
+<h4>Create a new classification group called &ldquo;PE CA pe_repo Override&rdquo;</h4>
+
+<ul>
+<li>Go to Nodes | Classification in the Puppet Enterprise Console</li>
+<li>Create a New Group</li>
+<li>Name the new group &ldquo;PE CA pe_repo Override&rdquo;</li>
+<li>From the &ldquo;Parent Name&rdquo; drop-down, choose the &ldquo;PE Master&rdquo; group.</li>
+<li><p>Click &ldquo;Add Group&rdquo;.</p></li>
+<li><p>Select your new group and pin master.example.com to the new group and click &ldquo;Commit One Change&rdquo;</p></li>
+<li>Select the &ldquo;Classes&rdquo; tab.</li>
+<li>Add &ldquo;pe_repo&rdquo; class.</li>
+<li>From the parameter drop-down, select &ldquo;Master&rdquo;.</li>
+<li>Enter the name of the MoM in the text box. <em>(in this example, master.example.com)</em></li>
+<li>Click &ldquo;Add Parameter&rdquo; and then &ldquo;Commit 2 Changes&rdquo;.</li>
+</ul>
+
+
+<h4>Test New Agents</h4>
+
+<p>The two agents you created at the beginning of the article are now able to be tested with this new group of compilers.</p>
+
+<ol>
+<li>Make sure agent1 and agent2.example.com have been installed according to the system requirements covered in this series.</li>
+<li>Install the Puppet agent on each of these nodes, but this time instead of pointing at the MoM, point to your Load balancer vip like so:</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>curl -k https://compile.example.com:8140/packages/current/install.bash | bash</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the PE Console, accept the new certificate request for Agent1.  SSH to agent1.example.com and run <em><strong>puppet agent -t</strong></em>.  Finally, repeat this process for agent2.example.com.</p>
+
+<p>If you have completed all the above steps properly, the agents will reach out to the compile.example.com VIP and be ferried off to one of the catalog compilers. Regardless of which one, since we accepted all the alternate DNS names when creating the connection between them and the MoM, they will respond for compile.example.com, and deliver back to the agent the required information, catalog, etc. as Puppet would do under normal circumstances.</p>
+
+<h3>Conclusion</h3>
+
+<p>As you can see, we needed the Load Balancer in place to install the catalog compilers. We also needed all the DNS alt-naming to be in place so the load balancer could send traffic to either catalog compiler as needed, and still have it answer for the VIP name. Finally, we needed to refer requests to their appropriate destinations and also classify the new compilers as such with the MoM, and set up appropriate referral of certificate requests from the compilers back to the CA Master, which is the MoM.</p>
+
+<p>The serving infrstructure is almost done, all we have left to do is to scale MCollective with an ActiveMQ Hub &amp; Spoke, and remove that responsibility from the MoM.  We will also install a GitLab server to hold our Control Repo and associated Roles &amp; Profiles, and we will configure the Code Manager.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise - Part III - Additional Compilers - Part 1]]></title>
@@ -1585,51 +1729,6 @@ vagrant up<br></p>
 
 
 <p>This documentation should be more than enough to get you moving and well underway with Git ins-and-outs for committing Puppet code and using r10k to interface with and distribute that code around your environment.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Why All the Vim?]]></title>
-    <link href="http://questy.org/blog/2014/05/09/vim-2/"/>
-    <updated>2014-05-09T11:07:57-04:00</updated>
-    <id>http://questy.org/blog/2014/05/09/vim-2</id>
-    <content type="html"><![CDATA[<p>As we move on through the last post on Vim, you may ask yourself why I&rsquo;m remediating all the way back to text editors.  Well, as you&rsquo;ll see over time, this is all about workflow; Building yourself a detailed workflow by which you can write code, syntax check, commit to revision control, deploy to your Puppet instances, and duplicate that workflow across all your environments.</p>
-
-<p>The text editor itself, while important, is just a tiny part of a much larger picture I hope to cobble together over time.  So, let&rsquo;s begin to push forward with our coverage of Vim.</p>
-
-<p><strong>Plugins and Syntax Highlighting</strong></p>
-
-<p>I went through the beginnings of Vim to give you a starting point and some basics in the event you have no experience in the Vim world.  One would assume that since you&rsquo;re on a Puppet/Dev-Ops-y sort of page, all this is old news, but we do have completely &ldquo;green&rdquo; readers from time to time, and I didn&rsquo;t want to leave them out.</p>
-
-<p>The main goal in getting Vim in the picture was to bring you to the point where we start looking at our code and knowing what we&rsquo;re dealing with at a glance.  As you begin to work in the field, whether coding in Perl, Python, Shell, or the Puppet DSL, there are some conventions out there all designed to help you and smooth your workflow.  Of these is syntax highlighting in code editors in general, but (for our purposes) in Vim <em>specifically.</em></p>
-
-<p>Take a look at this screen:</p>
-
-<p><a href="http://questy.org/images/nosyn.png"><img src="http://questy.org/images/nosyn.png" alt="nosyn" /></a></p>
-
-<p>While the code is well formatted and everything seems ok, were there any issues in this document, you&rsquo;d never know it.  From syntax issues to missing elements, none of this is automatically highlighted to you in any way.  Enter syntax highlighting&hellip;  Look again:</p>
-
-<p><a href="http://questy.org/images/syn.png"><img src="http://questy.org/images/syn.png" alt="syn" /></a></p>
-
-<p>Much nicer, no?  Were there any missing elements, you&rsquo;d see something amiss in the document.  The colors would not be organized according to element type, and odd things would be displayed in the page.  Let me &ldquo;break&rdquo; the file for you&hellip;</p>
-
-<p><a href="http://questy.org/images/broke.png"><img src="http://questy.org/images/broke.png" alt="broke" /></a></p>
-
-<p>You&rsquo;ll notice that on line 4 something is amiss.  If you compare the two colored instances, you&rsquo;ll see that your eye is drawn to where things begin to be different.  Best part for quick and easy glancing is that the entirety of the file after that one mistake now looks &ldquo;wrong&rdquo;.  Ease of view.</p>
-
-<p><strong>How Can This Help With Puppet?</strong></p>
-
-<p>As luck would have it, Vim has a plugin engine that allows you to have pre-built templates that syntax highlight code for you in a predetermined way.  It &ldquo;recognizes&rdquo; your code type, and highlights accordingly.  The basic plugin structure for vim lives in your home directory and in the &ldquo;hidden&rdquo; .vim directory.  Under this directory you can have a number of wide and varied add ons to vim.  We&rsquo;re just going to talk about plugins.</p>
-
-<p>By default, you don&rsquo;t have anything in this directory.  You usually have a .vimrc file and a .vim directory in your home directory location, but that&rsquo;s about it.  The &ldquo;magic&rdquo; happens, though, when you add a few pieces.  Those would include a &ldquo;.vimrc&rdquo; file which will turn on syntax highlighting, and then a Puppet vim plugin that sorts all the language elements and colorizes them for you.</p>
-
-<p>In your home directory, if it doesn&rsquo;t already exist, create a .vimrc file with a single entry:</p>
-
-<p><strong>syntax on</strong></p>
-
-<p>This will instruct vim to syntax highlight, and to be aware of any highlighting plugins that may live in the .vim plugin folder.  Next, place <a href="http://questy.org/stuff/puppet/puppet.vim">this file</a> into your .vim plugin directory.  If it does not yet exist, create it.  It lives in ~/.vim/plugin.  Once you load up new puppet manifests, it will recognize the type and begin to highlight the code according to the defined convention from the puppet.vim file you just downloaded.  If you have any issues, look at the vim plugin reference <a href="http://vimdoc.sourceforge.net/htmldoc/usr_05.html">here</a>.</p>
-
-<p>Now you&rsquo;re ready to work with Puppet files like a pro!</p>
 ]]></content>
   </entry>
   
