@@ -50,25 +50,25 @@ Finally, run the puppet agent on the first compiler _(compile1.example.com)_ to 
 puppet agent -t
 ```
 
-Once the agent run is complete, you need to classify the catlog compiler in the console to make it ready for service.
+Once the agent run is complete, you need to classify the catalog compiler in the console to make it ready for service.
 
 ###Classify the Compiler
 
 In the Puppet Enterprise Console:
 
-Choose Nodes | Classification | PE Master
+Choose **Nodes | Classification | PE Master**
 
-Add compile1.example.com and pin the node to the classification group and commit the change.
+Add **compile1.example.com** and pin the node to the classification group and commit the change.
 
 *****BE SURE TO COMPLETE THE NEXT STEPS IN ORDER AS FOLLOWS OR YOU WILL HAVE A BAD TIME*****
 
-First: SSH to compile1.example.com and run **_puppet agent -t_**
+First: SSH to **compile1.example.com** and run **_puppet agent -t_**
 
-Second: SSH to puppetdb.example.com and run **_puppet agent -t_**
+Second: SSH to **puppetdb.example.com** and run **_puppet agent -t_**
 
-Third: SSH to console.example.com and run **_puppet agent -t_**
+Third: SSH to **console.example.com** and run **_puppet agent -t_**
 
-Fourth: SSH to master.example.com and run **_puppet agent -t_**
+Fourth: SSH to **master.example.com** and run **_puppet agent -t_**
 
 *****BE SURE TO ALLOW EACH RUN TO COMPLETE _FULLY_ BEFORE MOVING ON TO THE NEXT ONE*****
 
@@ -85,43 +85,43 @@ Follow the above instructions completed for compile1.example.com for all subsequ
 
 In the Puppet Enterprise Console, you must configure the system to point all future agent installations to the load balancer by default so you do not have to continue to make modifications and customizations after each agent install. To do so, perform the following steps:
 
-1. In the Puppet Enterprise Console, choose: Nodes | Classification | PE Master
-2. Select the "Classes" tab.
-3. Choose the "pe_repo" class.
-4. Under the parameters drop-down, choose "master" and set the text box to the name of your load balancer or VIP _(in our case, "compile.example.com")_
+1. In the Puppet Enterprise Console, choose: **Nodes | Classification | PE Master**
+2. Select the "**Classes**" tab.
+3. Choose the "**pe_repo**" class.
+4. Under the parameters drop-down, choose "master" and set the text box to the name of your load balancer or VIP _(in our case, **"compile.example.com"**)_
 5. Commit the changes.
 
 ###Point the New Compilers at the Master (MoM) for CA Authority
 
 ####Create a new classification group called "PE CA pe_repo Override"
 
-* Go to Nodes | Classification in the Puppet Enterprise Console
+* Go to **Nodes | Classification** in the Puppet Enterprise Console
 * Create a New Group
-* Name the new group "PE CA pe_repo Override"
-* From the "Parent Name" drop-down, choose the "PE Master" group.
+* Name the new group "**PE CA pe_repo Override**"
+* From the "Parent Name" drop-down, choose the "**PE Master**" group.
 * Click "Add Group".
 
-1. Select your new group and pin master.example.com to the new group and click "Commit One Change"
-2. Select the "Classes" tab.
-3. Add "pe_repo" class.
-4. From the parameter drop-down, select "Master".
-5. Enter the name of the MoM in the text box. _(in this example, master.example.com)_
+1. Select your new group and pin **master.example.com** to the new group and click "**Commit One Change**"
+2. Select the "**Classes**" tab.
+3. Add "**pe_repo**" class.
+4. From the parameter drop-down, select "**Master**".
+5. Enter the name of the MoM in the text box. _(in this example, **master.example.com**)_
 6. Click "Add Parameter" and then "Commit 2 Changes".
 
 ####Test New Agents
 
 The two agents you created at the beginning of the article are now able to be tested with this new group of compilers.
 
-1. Make sure agent1 and agent2.example.com have been installed according to the system requirements covered in this series.
+1. Make sure **agent1.example.com** and **agent2.example.com** have been installed according to the system requirements covered in this series.
 2. Install the Puppet agent on each of these nodes, but this time instead of pointing at the MoM, point to your Load balancer vip like so:
 
 ```
 curl -k https://compile.example.com:8140/packages/current/install.bash | bash
 ```
 
-In the PE Console, accept the new certificate request for Agent1.  SSH to agent1.example.com and run _**puppet agent -t**_.  Finally, repeat this process for agent2.example.com.
+In the PE Console, accept the new certificate request for Agent1.  SSH to agent1.example.com and run _**puppet agent -t**_.  Finally, repeat this process for **agent2.example.com**.
 
-If you have completed all the above steps properly, the agents will reach out to the compile.example.com VIP and be ferried off to one of the catalog compilers. Regardless of which one, since we accepted all the alternate DNS names when creating the connection between them and the MoM, they will respond for compile.example.com, and deliver back to the agent the required information, catalog, etc. as Puppet would do under normal circumstances.
+If you have completed all the above steps properly, the agents will reach out to the **compile.example.com** VIP and be ferried off to one of the catalog compilers. Regardless of which one, since we accepted all the alternate DNS names when creating the connection between them and the MoM, they will respond for **compile.example.com**, and deliver back to the agent the required information, catalog, etc. as Puppet would do under normal circumstances.
 
 ###Conclusion
 
