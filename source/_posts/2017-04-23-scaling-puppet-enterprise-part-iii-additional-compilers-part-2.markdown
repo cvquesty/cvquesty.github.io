@@ -19,8 +19,8 @@ Once these four nodes are in place, we can connect the compilers to the Master o
 
 * compile1.example.com
 * compile2.example.com
-* compile3.example.com
-* compile4.example.com
+* agent1.example.com
+* agent2.example.com
 
 
 ###Installing the Compilers
