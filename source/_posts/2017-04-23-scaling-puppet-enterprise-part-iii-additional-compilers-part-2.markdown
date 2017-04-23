@@ -25,14 +25,14 @@ Once these four nodes are in place, we can connect the compilers to the Master o
 
 ###Installing the Compilers
 
-SSH to the first compiler master (compile1.example.com for this post's purposes) and install the Puppet agent as follows:
+SSH to the first compiler master (**compile1.example.com** for this post's purposes) and install the Puppet agent as follows:
 
 
 ```
 curl -k https://master.example.com:8140/packages/current/install.bash | bash -s main:dns_alt_names=compile1.example.com,compile.example.com,compile1,compile
 ```
 
-What this does is simple. When this compiler goes behind the load balancer (compile.example.com), traffic may get directed to this node. When the request is made, the agent node will be asking for "compile.example.com" but this node's name is "compile1.example.com". The additional options at the end of the curl line are to tell the agent that when it installs, it should be aware of both names, and when speaking to the MoM the first time to request its cert, to represent all the comma delimited names listed at the end of the above command.
+What this does is simple. When this compiler goes behind the load balancer (**compile.example.com**), traffic may get directed to this node. When the request is made, the agent node will be asking for "**compile.example.com**" but this node's name is "**compile1.example.com**". The additional options at the end of the curl line are to tell the agent that when it installs, it should be aware of both names, and when speaking to the MoM the first time to request its cert, to represent all the comma delimited names listed at the end of the above command.
 
 Next, SSH to your master node and accept the agent cert request as follows to allow for these names on the MoM you just set up in the previous step.
 
@@ -74,7 +74,7 @@ Fourth: SSH to **master.example.com** and run **_puppet agent -t_**
 
 ###For All Subsequent Compile Node Installations
 
-Follow the above instructions completed for compile1.example.com for all subsequent compiler installations. This means that if you add compilers six months or a year from now, go back to the previous procedure and duplicate it with the new node name precisely as you did above.  To recap:
+Follow the above instructions completed for **compile1.example.com** for all subsequent compiler installations. This means that if you add compilers six months or a year from now, go back to the previous procedure and duplicate it with the new node name precisely as you did above.  To recap:
 
 1. Install the agent as above with the alt_dns switches
 2. Accept the cert on the master with the alt_dns switches
@@ -119,7 +119,7 @@ The two agents you created at the beginning of the article are now able to be te
 curl -k https://compile.example.com:8140/packages/current/install.bash | bash
 ```
 
-In the PE Console, accept the new certificate request for Agent1.  SSH to agent1.example.com and run _**puppet agent -t**_.  Finally, repeat this process for **agent2.example.com**.
+In the PE Console, accept the new certificate request for Agent1.  SSH to **agent1.example.com** and run _**puppet agent -t**_.  Finally, repeat this process for **agent2.example.com**.
 
 If you have completed all the above steps properly, the agents will reach out to the **compile.example.com** VIP and be ferried off to one of the catalog compilers. Regardless of which one, since we accepted all the alternate DNS names when creating the connection between them and the MoM, they will respond for **compile.example.com**, and deliver back to the agent the required information, catalog, etc. as Puppet would do under normal circumstances.
 
