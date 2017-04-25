@@ -3,7 +3,7 @@ layout: post
 title: "Scaling Puppet Enterprise - Part V - GitLab"
 date: 2017-04-24 21:48:29 -0700
 comments: true
-categories: 
+categories: puppet,geekstuff
 ---
 
 If you've been following for the past 5 installments, we're nearing the end! Note that each of the prior articles required other things to have been completed before reading/performing the contained steps, but this article is a bit different. In all truth, you could do this process at any point, but I placed it here for one reason alone. _"Why do this manually when I could get Puppet to do it for me?"_
