@@ -73,6 +73,8 @@ github_skip_forks: true
 # Twitter
 twitter_user: CVQuesty
 twitter_tweet_button: true
+twitter:
+  username: CVQuesty
 
 # Google +1
 google_plus_one: true
@@ -106,3 +108,7 @@ facebook_pagename: jerald.sheets
 facebook_showfaces: true
 facebook_showstream: true
 facebook_width: 260
+
+# SEO
+gems:
+  - jekyll-seo-tag
