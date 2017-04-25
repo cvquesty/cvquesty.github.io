@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Puppet,geekstuff | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/puppet-geekstuff/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-25T10:51:42-07:00</updated>
+  <updated>2017-04-25T11:00:23-07:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -12,6 +12,89 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Scaling Puppet Enterprise - Part v - GitLab]]></title>
+    <link href="http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-v-gitlab/"/>
+    <updated>2017-04-24T21:48:29-07:00</updated>
+    <id>http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-v-gitlab</id>
+    <content type="html"><![CDATA[<p>If you&rsquo;ve been following for the past 5 installments, we&rsquo;re nearing the end! Note that each of the prior articles required other things to have been completed before reading/performing the contained steps, but this article is a bit different. In all truth, you could do this process at any point, but I placed it here for one reason alone. <em>&ldquo;Why do this manually when I could get Puppet to do it for me?&rdquo;</em></p>
+
+<p>The importance of this particular step is that we need a place to hold our &ldquo;control repo&rdquo; <em>(more on this later)</em> and if you don&rsquo;t already have Git installed in your environment, you&rsquo;ll need it. So, before finishing up the installation and configuration of Code Manager, utilizing Puppet to install GitLab is a good test that everything is installed and configured properly, and all the components are communicating as expected.</p>
+
+<p>Without further delay, let&rsquo;s continue.</p>
+
+<hr />
+
+<h3>Create a Machine to Serve as the GitLab Server</h3>
+
+<p>Provision a new node according to our earlier chart to serve as your GitLab server. While I list specifications, you may find more mileage by scaling the Git server larger. If you will be expanding your Puppet team and will have dozens to hundreds of people developing for Puppet, scaling will be a consideration. Also, while outside the scope of this article, you will want to configure offsite backup and/or replication to a geographically separte location for your GitLab server. This is of paramount importance. If you lose this server, all configuration for all systems managed in all environments across your organization would be lost. This isn&rsquo;t the end of the world in terms of business continuity, but trying to recreate all that code from the ground up would be prohibitive.</p>
+
+<p>Yes, people will have recent copies of the repo on their local machines. Yes, with some nonzero level of effort, you should be able to get the repos back.  No, it&rsquo;s not fun, and you&rsquo;ll have a bad time. Just back up your server, and if possible&hellip;replicate it elsewhere in your organization.</p>
+
+<p>My intial suggested specifications on this server are:</p>
+
+<p><img src="http://cvquesty.github.io/images/gitlab_specs.png" alt="GitLab Specs" /></p>
+
+<p>I don&rsquo;t specify disk for /opt and /var here, as each of these images carries ample disk with it. If you believe you will need additional storage for your Git instance, feel free to scale this as you see fit.</p>
+
+<p>Once the server is installed, go ahead and install the Puppet Agent on it, pointing to the compiler VIP like so:</p>
+
+<pre><code>curl -k https://compile.example.com:8140/packages/current/install.bash | bash
+</code></pre>
+
+<p>Once the agent installation is complete, in the Puppet Enterprise Console, navigate to <strong>Nodes | Unsigned Certificates</strong> and accept the new cert request for the GitLab server. Once that is complete, SSH to the GitLab server, and run <strong>puppet agent -t</strong> to complete the initial configuration of the node.</p>
+
+<h3>Create a Profile to Manage the GitLab Installation</h3>
+
+<p>On the Puppet Enterprise Master, install the <strong>vshn-gitlab</strong> module.</p>
+
+<pre><code>puppet module install vshn-gitlab
+</code></pre>
+
+<p><strong>NOTE: You will need to perform this on ALL catalog compilers in your infrastructure. If the GitLab serer checks in and doesn&rsquo;t find either the vshn-gitlab module or the profile you&rsquo;re creating below on the master the load balancer refers it to, the catalog run will fail.</strong></p>
+
+<p>On the Puppet Enterprise Master <em>(eg. master.example.com)</em> create a new profile in <strong>$codedir/environments/production/modules/profiles/manifests/gitlab.pp</strong>.</p>
+
+<p><em>(Puppet Enterprise has an internal variable for $codedir now. If you have made no modifications to this in the puppet.conf, the default location is /etc/puppetlabs/code.)</em></p>
+
+<p>The profile you create should look like the following:</p>
+
+<pre><code># Configure GitLab Server
+class profiles::gitlab {
+
+  class { 'gitlab':
+    external_url =&gt; 'http://git.example.com',
+  }
+
+}
+</code></pre>
+
+<p>Save this as gitlab.pp.</p>
+
+<p>In the Puppet Enterprise Console, create a new classification group.</p>
+
+<ul>
+<li>Navigate to <strong>Nodes | Classification</strong></li>
+<li>Create a group called &lsquo;<strong>GitLab</strong>&rsquo; with a parent of &lsquo;<strong>All Nodes</strong>&rsquo; in the Production Environment</li>
+<li>Pin the <strong>git.example.com</strong> node into the newly created <strong>GitLab</strong> group.</li>
+<li>Choose the &lsquo;<strong>Classes</strong>&rsquo; tab and click the &lsquo;<strong>Refresh</strong>&rsquo; icon to pick up your newly created profile.</li>
+<li>Add the <strong>profiles::gitlab</strong> class to the classification group.</li>
+<li>Commit the changes.</li>
+</ul>
+
+
+<h3>Caveats</h3>
+
+<p>Since we&rsquo;re mid-setup and have multiple compilers but do <strong>not</strong> have code sync enabled, we have to manually copy the new profile to all your compilers in the same location. This allows the agent on the GitLab server to pick up the profile regardless of where the load balancer sends the agent request.</p>
+
+<p>Once the profile is in place, run <strong>puppet agent -t</strong> on your GitLab server, and Puppet will then install the GitLab software onto the server. At this point, after a short delay, you should be able to retrieve your GitLab server in a browser <em>(e.g. <a href="http://git.example.com">http://git.example.com</a>)</em> and login with the default credentials.</p>
+
+<p>In our example, <strong>git.example.com</strong> is the server and the login would be automatically set to <strong>admin@example.com</strong> with a password of <strong>5iveL!fe</strong>.  These are defaults set by the GitLab installer.</p>
+
+<p>Your GitLab server should now be up, running, and ready for action in your Puppet Environment.  Look for the final installment to bring everything together and finish the installation.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Some Coding Work of Late...]]></title>
