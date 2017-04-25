@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Geekstuff,linux,puppet | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/geekstuff-linux-puppet/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-23T19:34:01-04:00</updated>
+  <updated>2017-04-24T21:06:08-07:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Building Your Toolbox]]></title>
     <link href="http://questy.org/blog/2015/03/26/building-your-toolbox/"/>
-    <updated>2015-03-26T09:15:18-04:00</updated>
+    <updated>2015-03-26T06:15:18-07:00</updated>
     <id>http://questy.org/blog/2015/03/26/building-your-toolbox</id>
     <content type="html"><![CDATA[<p>I know it’s been since June we’ve worked on the Puppet Development series, but as work goes, so go I, and as I go, so delays the blog. :)</p>
 
@@ -101,7 +101,7 @@
   <entry>
     <title type="html"><![CDATA[Vagrant and Docker Love]]></title>
     <link href="http://questy.org/blog/2015/01/15/vagrant-and-docker-love/"/>
-    <updated>2015-01-15T20:31:15-05:00</updated>
+    <updated>2015-01-15T17:31:15-08:00</updated>
     <id>http://questy.org/blog/2015/01/15/vagrant-and-docker-love</id>
     <content type="html"><![CDATA[<p>Not a full-on post, but more a note for myself to both investigate and test this… It would seem that Vagrant has now added provisioner support for Docker here. Be looking for a new post on this in the near future!</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-23T19:34:01-04:00</updated>
+  <updated>2017-04-24T21:06:08-07:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Scaling Puppet Enterprise - Part III - Additional Compilers - Part 2]]></title>
-    <link href="http://questy.org/blog/2017/04/23/scaling-puppet-enterprise-part-iii-additional-compilers-part-2/"/>
-    <updated>2017-04-23T18:19:42-04:00</updated>
-    <id>http://questy.org/blog/2017/04/23/scaling-puppet-enterprise-part-iii-additional-compilers-part-2</id>
+    <title type="html"><![CDATA[Scaling Puppet Enterprise - Part IIIb - Additional Compilers]]></title>
+    <link href="http://questy.org/blog/2017/04/23/scaling-puppet-enterprise-part-iiib-additional-compilers/"/>
+    <updated>2017-04-23T15:19:42-07:00</updated>
+    <id>http://questy.org/blog/2017/04/23/scaling-puppet-enterprise-part-iiib-additional-compilers</id>
     <content type="html"><![CDATA[<p><strong><em>As in the previous installment, you need to have already completed a few steps before arriving at this post.  You should have already completed a &ldquo;split installation&rdquo; (Documented <a href="http://questy.org/blog/2017/04/18/scaling-puppet-enterprise-part-ii-installation/">here</a>). Also, your load balancer needs to be configured and running. The procedure for this portion can be found <a href="http://questy.org/blog/2017/04/21/scaling-puppet-enterprise-part-iii-additional-compilers-part-1/">here</a>.  If you&rsquo;ve completed all these portions, you are now ready to configure and install the compilers themselves. If this is you, read on!</em></strong></p>
 
 <hr />
@@ -158,10 +158,10 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Scaling Puppet Enterprise - Part III - Additional Compilers - Part 1]]></title>
-    <link href="http://questy.org/blog/2017/04/21/scaling-puppet-enterprise-part-iii-additional-compilers-part-1/"/>
-    <updated>2017-04-21T09:32:47-04:00</updated>
-    <id>http://questy.org/blog/2017/04/21/scaling-puppet-enterprise-part-iii-additional-compilers-part-1</id>
+    <title type="html"><![CDATA[Scaling Puppet Enterprise - Part IIIa - Additional Compilers]]></title>
+    <link href="http://questy.org/blog/2017/04/21/scaling-puppet-enterprise-part-iiia-additional-compilers/"/>
+    <updated>2017-04-21T06:32:47-07:00</updated>
+    <id>http://questy.org/blog/2017/04/21/scaling-puppet-enterprise-part-iiia-additional-compilers</id>
     <content type="html"><![CDATA[<p><strong><em>You should have completed a split install before beginning this section. You can find the Split Installation documentation at Puppet&rsquo;s Website, or the first installment of this tutorial <a href="http://questy.org/blog/2017/04/18/scaling-puppet-enterprise-part-ii-installation/">here</a>.  If you try and begin here, you might find yourself lost.</em></strong></p>
 
 <p><strong><em>Note also that the &ldquo;Additional Compilers&rdquo; docs comes in two parts&ndash;One to install the Load Balancer and one to install the compilers.</em></strong></p>
@@ -410,7 +410,7 @@
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise - Part II - Installation]]></title>
     <link href="http://questy.org/blog/2017/04/18/scaling-puppet-enterprise-part-ii-installation/"/>
-    <updated>2017-04-18T13:03:21-04:00</updated>
+    <updated>2017-04-18T10:03:21-07:00</updated>
     <id>http://questy.org/blog/2017/04/18/scaling-puppet-enterprise-part-ii-installation</id>
     <content type="html"><![CDATA[<p>Installing Puppet Enterprise has been made remarkably easier as time has gone on. The efforts of Puppet Labs (I still can&rsquo;t get used to simply &lsquo;Puppet&rsquo;) to make the installation as seamless and powerful as possible with the simplest of interfaces has been highly successful.</p>
 
@@ -530,7 +530,7 @@
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise]]></title>
     <link href="http://questy.org/blog/2017/04/17/scaling-puppet-enterprise/"/>
-    <updated>2017-04-17T16:06:11-04:00</updated>
+    <updated>2017-04-17T13:06:11-07:00</updated>
     <id>http://questy.org/blog/2017/04/17/scaling-puppet-enterprise</id>
     <content type="html"><![CDATA[<p>In my former life as a consultant, I had to install all manner of configurations of Puppet for clients.  Some were small and some were large, but none were <strong><em>VERY</em></strong> large.  One of the big things I was finding back then was there just wasn&rsquo;t a lot of publicly available information regarding doing a full install and scaling it large.</p>
 
@@ -588,7 +588,7 @@ Two Agent Nodes for testing<br></p>
   <entry>
     <title type="html"><![CDATA[Changes Are Afoot]]></title>
     <link href="http://questy.org/blog/2016/08/31/changes-are-afoot/"/>
-    <updated>2016-08-31T10:33:00-04:00</updated>
+    <updated>2016-08-31T07:33:00-07:00</updated>
     <id>http://questy.org/blog/2016/08/31/changes-are-afoot</id>
     <content type="html"><![CDATA[<p>After much thought and consideration, I&rsquo;ve terminated my employ with ShadowSoft. I was travelling nearly every week all over the US, and not with my family as much as I&rsquo;d like. Unfortunately, this role was a 70% travel role, and our youngest needed Daddy home.</p>
 
@@ -601,7 +601,7 @@ Two Agent Nodes for testing<br></p>
   <entry>
     <title type="html"><![CDATA[Travel Hiatus]]></title>
     <link href="http://questy.org/blog/2016/06/13/travel-hiatus/"/>
-    <updated>2016-06-13T10:06:29-04:00</updated>
+    <updated>2016-06-13T07:06:29-07:00</updated>
     <id>http://questy.org/blog/2016/06/13/travel-hiatus</id>
     <content type="html"><![CDATA[<p><strong>Out</strong></p>
 
@@ -622,7 +622,7 @@ Two Agent Nodes for testing<br></p>
   <entry>
     <title type="html"><![CDATA[PuppetConf 2015]]></title>
     <link href="http://questy.org/blog/2015/10/27/puppetconf-2015/"/>
-    <updated>2015-10-27T22:11:28-04:00</updated>
+    <updated>2015-10-27T19:11:28-07:00</updated>
     <id>http://questy.org/blog/2015/10/27/puppetconf-2015</id>
     <content type="html"><![CDATA[<p><strong>PuppetConf Portland</strong></p>
 
@@ -659,7 +659,7 @@ Two Agent Nodes for testing<br></p>
   <entry>
     <title type="html"><![CDATA[Some Software Releases and Forge Stuffs]]></title>
     <link href="http://questy.org/blog/2015/07/28/some-software-releases-and-forge-stuffs/"/>
-    <updated>2015-07-28T10:11:55-04:00</updated>
+    <updated>2015-07-28T07:11:55-07:00</updated>
     <id>http://questy.org/blog/2015/07/28/some-software-releases-and-forge-stuffs</id>
     <content type="html"><![CDATA[<p><strong>Salutations</strong></p>
 
@@ -716,7 +716,7 @@ Two Agent Nodes for testing<br></p>
   <entry>
     <title type="html"><![CDATA[Organizing Your Hierarchy Equals Pain]]></title>
     <link href="http://questy.org/blog/2015/05/15/organizing-your-hierarchy-equals-pain/"/>
-    <updated>2015-05-15T17:48:59-04:00</updated>
+    <updated>2015-05-15T14:48:59-07:00</updated>
     <id>http://questy.org/blog/2015/05/15/organizing-your-hierarchy-equals-pain</id>
     <content type="html"><![CDATA[<p><strong>The Pain Point</strong></p>
 
@@ -803,7 +803,7 @@ A: Oh… ummm… I never thought of that before.<br></p>
   <entry>
     <title type="html"><![CDATA[Puppets.. Puppets Everywhere]]></title>
     <link href="http://questy.org/blog/2015/04/30/puppets-dot-puppets-everywhere/"/>
-    <updated>2015-04-30T12:52:27-04:00</updated>
+    <updated>2015-04-30T09:52:27-07:00</updated>
     <id>http://questy.org/blog/2015/04/30/puppets-dot-puppets-everywhere</id>
     <content type="html"><![CDATA[<p><strong>3.8 is Here!!!</strong></p>
 
@@ -875,7 +875,7 @@ ubuntu-1404-i386<br></p>
   <entry>
     <title type="html"><![CDATA[Some Coding Work of Late...]]></title>
     <link href="http://questy.org/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/"/>
-    <updated>2015-03-26T11:26:16-04:00</updated>
+    <updated>2015-03-26T08:26:16-07:00</updated>
     <id>http://questy.org/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot</id>
     <content type="html"><![CDATA[<p><strong><em>I AM NOT A CODER</em></strong></p>
 
@@ -922,7 +922,7 @@ ubuntu-1404-i386<br></p>
   <entry>
     <title type="html"><![CDATA[Building Your Toolbox]]></title>
     <link href="http://questy.org/blog/2015/03/26/building-your-toolbox/"/>
-    <updated>2015-03-26T09:15:18-04:00</updated>
+    <updated>2015-03-26T06:15:18-07:00</updated>
     <id>http://questy.org/blog/2015/03/26/building-your-toolbox</id>
     <content type="html"><![CDATA[<p>I know it’s been since June we’ve worked on the Puppet Development series, but as work goes, so go I, and as I go, so delays the blog. :)</p>
 
@@ -1007,7 +1007,7 @@ ubuntu-1404-i386<br></p>
   <entry>
     <title type="html"><![CDATA[Management May Be Missing an Important Component of DEVOPS]]></title>
     <link href="http://questy.org/blog/2015/03/23/management-may-be-missing-an-important-component-of-devops/"/>
-    <updated>2015-03-23T10:01:01-04:00</updated>
+    <updated>2015-03-23T07:01:01-07:00</updated>
     <id>http://questy.org/blog/2015/03/23/management-may-be-missing-an-important-component-of-devops</id>
     <content type="html"><![CDATA[<p>As I travel around the country installing and training people in Puppet Enterprise, I’m noticing some characteristics of management perspective on the DEVOPS movement that has a disjoint with implementation and reality. In short: Managers are now hiring personnel in the field of DEVOPS for positions they may be highly qualified for, but have no institutional ability to execute on the tasks that will be assigned them in a modern infrastructure especially one that has to meet governance criteria such as ITIL, PCI, SOX, HIPAA, and various STIG requirements we see in governmental circles.</p>
 
@@ -1074,7 +1074,7 @@ ubuntu-1404-i386<br></p>
   <entry>
     <title type="html"><![CDATA[Vagrant and Docker Love]]></title>
     <link href="http://questy.org/blog/2015/01/15/vagrant-and-docker-love/"/>
-    <updated>2015-01-15T20:31:15-05:00</updated>
+    <updated>2015-01-15T17:31:15-08:00</updated>
     <id>http://questy.org/blog/2015/01/15/vagrant-and-docker-love</id>
     <content type="html"><![CDATA[<p>Not a full-on post, but more a note for myself to both investigate and test this… It would seem that Vagrant has now added provisioner support for Docker here. Be looking for a new post on this in the near future!</p>
 
@@ -1103,7 +1103,7 @@ I spoke with some folks at Puppet just in a conversation describing what I was s
   <entry>
     <title type="html"><![CDATA[Moving My Tech Content to GitHub]]></title>
     <link href="http://questy.org/blog/2015/01/08/moving-my-tech-content-to-github/"/>
-    <updated>2015-01-08T13:39:12-05:00</updated>
+    <updated>2015-01-08T10:39:12-08:00</updated>
     <id>http://questy.org/blog/2015/01/08/moving-my-tech-content-to-github</id>
     <content type="html"><![CDATA[<p>Happy New Year, all!</p>
 
@@ -1122,7 +1122,7 @@ I spoke with some folks at Puppet just in a conversation describing what I was s
   <entry>
     <title type="html"><![CDATA[PuppetConf 2014]]></title>
     <link href="http://questy.org/blog/2014/09/23/puppetconf-2014/"/>
-    <updated>2014-09-23T14:19:37-04:00</updated>
+    <updated>2014-09-23T11:19:37-07:00</updated>
     <id>http://questy.org/blog/2014/09/23/puppetconf-2014</id>
     <content type="html"><![CDATA[<p>Glad to be at PuppetConf with #ShadowSoft exploring all the latest and greatest in PuppetLabs.</p>
 
@@ -1133,7 +1133,7 @@ I spoke with some folks at Puppet just in a conversation describing what I was s
   <entry>
     <title type="html"><![CDATA[Southeast Puppet User's Group September]]></title>
     <link href="http://questy.org/blog/2014/09/11/southeast-puppet-users-group-september/"/>
-    <updated>2014-09-11T19:33:01-04:00</updated>
+    <updated>2014-09-11T16:33:01-07:00</updated>
     <id>http://questy.org/blog/2014/09/11/southeast-puppet-users-group-september</id>
     <content type="html"><![CDATA[<p><a href="http://questy.org/images/puppet_docker.jpg"><img src="http://questy.org/images/puppet_docker.jpg" alt="puppet_docker" /></a></p>
 
@@ -1144,7 +1144,7 @@ I spoke with some folks at Puppet just in a conversation describing what I was s
   <entry>
     <title type="html"><![CDATA[The Toolbox Grows...]]></title>
     <link href="http://questy.org/blog/2014/06/11/toolbox-grows/"/>
-    <updated>2014-06-11T12:57:18-04:00</updated>
+    <updated>2014-06-11T09:57:18-07:00</updated>
     <id>http://questy.org/blog/2014/06/11/toolbox-grows</id>
     <content type="html"><![CDATA[<p>So far we&rsquo;ve gotten our heads around some important things.  First and foremost, vim.  Our editor and companion for creating great code and ways to see our code in action and be able to determine at a glance whether our syntax is correct.  Also, we&rsquo;ve looked at revision control.  The single largest &ldquo;CYA&rdquo; ohmygodimgladivegotanoldercopytorestoreto sort of paradigm where you can roll yourself back to previously &ldquo;known good&rdquo; revisions to save that day&hellip;besides that, it&rsquo;s just darned good practice to keep your code externally saved, revision controlled, and accessible.</p>
 
@@ -1363,7 +1363,7 @@ vagrant up<br></p>
   <entry>
     <title type="html"><![CDATA["Do's and Dont's" for Your Puppet Environment]]></title>
     <link href="http://questy.org/blog/2014/05/20/dos-donts-puppet-environment/"/>
-    <updated>2014-05-20T09:15:14-04:00</updated>
+    <updated>2014-05-20T06:15:14-07:00</updated>
     <id>http://questy.org/blog/2014/05/20/dos-donts-puppet-environment</id>
     <content type="html"><![CDATA[<p>IT Automation, like the features and functions offered by Puppet, is riddled with a number of pitfalls. Nothing dangerous or site-threatening in the near term, however evolving a <em>bad </em>plan can lead you down a painful path to re-trek when you ultimately need to demolish what you&rsquo;ve done and re-tool, re-work, or even re-start from scratch.  Some simple suggestions can help smooth your integration, and also provide tools and methodologies that make changes in philosophy easy to test and implement as well as make the long road back from a disaster easy(-ier?) to navigate.</p>
 
@@ -1428,7 +1428,7 @@ vagrant up<br></p>
   <entry>
     <title type="html"><![CDATA[GitHub, Git, and Just Plain Revision Control]]></title>
     <link href="http://questy.org/blog/2014/05/13/github-git-just-plain-revision-control/"/>
-    <updated>2014-05-13T17:06:09-04:00</updated>
+    <updated>2014-05-13T14:06:09-07:00</updated>
     <id>http://questy.org/blog/2014/05/13/github-git-just-plain-revision-control</id>
     <content type="html"><![CDATA[<p>One of the &ldquo;bugaboos&rdquo; in the sysadmin world for the longest time was the reluctance to use those &ldquo;stinky developer tools&rdquo; in our world for any reason.  I&rsquo;m not sure the impetus behind this, but my wager is on something akin to security or yet another open port or &ldquo;attack vector&rdquo; if you will.  But today&rsquo;s competent and conscientious systems admin (not to mention DEVOPS person) will use revision control as their go-to standard for collecting, versioning, backing up, and distributing all manner of things.</p>
 
