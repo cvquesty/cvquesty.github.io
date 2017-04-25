@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-iv-activemq-hub-and-spokes/</loc>
+<lastmod>2017-04-24T21:10:52-07:00</lastmod>
+</url>
+<url>
 <loc>http://questy.org/blog/2017/04/23/scaling-puppet-enterprise-part-iiib-additional-compilers/</loc>
 <lastmod>2017-04-23T15:19:42-07:00</lastmod>
 </url>
