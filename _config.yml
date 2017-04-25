@@ -108,7 +108,3 @@ facebook_pagename: jerald.sheets
 facebook_showfaces: true
 facebook_showstream: true
 facebook_width: 260
-
-# SEO
-gems:
-  - jekyll-seo-tag
