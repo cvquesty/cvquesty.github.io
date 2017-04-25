@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-24T21:46:16-07:00</updated>
+  <updated>2017-04-25T10:51:42-07:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -12,6 +12,99 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Scaling Puppet Enterprise - Part v - GitLab]]></title>
+    <link href="http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-v-gitlab/"/>
+    <updated>2017-04-24T21:48:29-07:00</updated>
+    <id>http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-v-gitlab</id>
+    <content type="html"><![CDATA[<p>If you&rsquo;ve been following for the past 5 installments, we&rsquo;re nearing the end! Note that each of the prior articles required other things to have been completed before reading/performing the contained steps, but this article is a bit different. In all truth, you could do this process at any point, but I placed it here for one reason alone. <em>&ldquo;Why do this manually when I could get Puppet to do it for me?&rdquo;</em></p>
+
+<p>The importance of this particular step is that we need a place to hold our &ldquo;control repo&rdquo; <em>(more on this later)</em> and if you don&rsquo;t already have Git installed in your environment, you&rsquo;ll need it. So, before finishing up the installation and configuration of Code Manager, utilizing Puppet to install GitLab is a good test that everything is installed and configured properly, and all the components are communicating as expected.</p>
+
+<p>Without further delay, let&rsquo;s continue.</p>
+
+<hr />
+
+<h3>Create a Machine to Serve as the GitLab Server</h3>
+
+<p>Provision a new node according to our earlier chart to serve as your GitLab server. While I list specifications, you may find more mileage by scaling the Git server larger. If you will be expanding your Puppet team and will have dozens to hundreds of people developing for Puppet, scaling will be a consideration. Also, while outside the scope of this article, you will want to configure offsite backup and/or replication to a geographically separte location for your GitLab server. This is of paramount importance. If you lose this server, all configuration for all systems managed in all environments across your organization would be lost. This isn&rsquo;t the end of the world in terms of business continuity, but trying to recreate all that code from the ground up would be prohibitive.</p>
+
+<p>Yes, people will have recent copies of the repo on their local machines. Yes, with some nonzero level of effort, you should be able to get the repos back.  No, it&rsquo;s not fun, and you&rsquo;ll have a bad time. Just back up your server, and if possible&hellip;replicate it elsewhere in your organization.</p>
+
+<p>My intial suggested specifications on this server are:</p>
+
+<p><img src="http://cvquesty.github.io/images/gitlab_specs.png" alt="GitLab Specs" /></p>
+
+<p>I don&rsquo;t specify disk for /opt and /var here, as each of these images carries ample disk with it. If you believe you will need additional storage for your Git instance, feel free to scale this as you see fit.</p>
+
+<p>Once the server is installed, go ahead and install the Puppet Agent on it, pointing to the compiler VIP like so:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>curl -k https://compile.example.com:8140/packages/current/install.bash | bash</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once the agent installation is complete, in the Puppet Enterprise Console, navigate to <strong>Nodes | Unsigned Certificates</strong> and accept the new cert request for the GitLab server. Once that is complete, SSH to the GitLab server, and run <strong>puppet agent -t</strong> to complete the initial configuration of the node.</p>
+
+<h3>Create a Profile to Manage the GitLab Installation</h3>
+
+<p>On the Puppet Enterprise Master, install the <strong>vshn-gitlab</strong> module.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>puppet module install vshn-gitlab</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>NOTE: You will need to perform this on ALL catalog compilers in your infrastructure. If the GitLab serer checks in and doesn&rsquo;t find either the vshn-gitlab module or the profile you&rsquo;re creating below on the master the load balancer refers it to, the catalog run will fail.</strong></p>
+
+<p>On the Puppet Enterprise Master <em>(eg. master.example.com)</em> create a new profile in <strong>$codedir/environments/production/modules/profiles/manifests/gitlab.pp</strong>.</p>
+
+<p><em>(Puppet Enterprise has an internal variable for $codedir now. If you have made no modifications to this in the puppet.conf, the default location is /etc/puppetlabs/code.)</em></p>
+
+<p>The profile you create should look like the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Configure GitLab Server
+</span><span class='line'>class profiles::gitlab {
+</span><span class='line'>
+</span><span class='line'>  class { 'gitlab':
+</span><span class='line'>    external_url =&gt; 'http://git.example.com',
+</span><span class='line'>  }
+</span><span class='line'>  
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Save this as gitlab.pp.</p>
+
+<p>In the Puppet Enterprise Console, create a new classification group.</p>
+
+<ul>
+<li>Navigate to <strong>Nodes | Classification</strong></li>
+<li>Create a group called &lsquo;<strong>GitLab</strong>&rsquo; with a parent of &lsquo;<strong>All Nodes</strong>&rsquo; in the Production Environment</li>
+<li>Pin the <strong>git.example.com</strong> node into the newly created <strong>GitLab</strong> group.</li>
+<li>Choose the &lsquo;<strong>Classes</strong>&rsquo; tab and click the &lsquo;<strong>Refresh</strong>&rsquo; icon to pick up your newly created profile.</li>
+<li>Add the <strong>profiles::gitlab</strong> class to the classification group.</li>
+<li>Commit the changes.</li>
+</ul>
+
+
+<h3>Caveats</h3>
+
+<p>Since we&rsquo;re mid-setup and have multiple compilers but do <strong>not</strong> have code sync enabled, we have to manually copy the new profile to all your compilers in the same location. This allows the agent on the GitLab server to pick up the profile regardless of where the load balancer sends the agent request.</p>
+
+<p>Once the profile is in place, run <strong>puppet agent -t</strong> on your GitLab server, and Puppet will then install the GitLab software onto the server. At this point, after a short delay, you should be able to retrieve your GitLab server in a browser <em>(e.g. <a href="http://git.example.com">http://git.example.com</a>)</em> and login with the default credentials.</p>
+
+<p>In our example, <strong>git.example.com</strong> is the server and the login would be automatically set to <strong>admin@example.com</strong> with a password of <strong>5iveL!fe</strong>.  These are defaults set by the GitLab installer.</p>
+
+<p>Your GitLab server should now be up, running, and ready for action in your Puppet Environment.  Look for the final installment to bring everything together and finish the installation.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise - Part IV - ActiveMQ Hub and Spokes]]></title>
@@ -1429,71 +1522,6 @@ vagrant up<br></p>
 <p>So, imagine a scenario where you can create a directory, copy a text file into it, run a single command, and it automatically provisions a 4-node Puppet Enterprise infrastructure, fully installed with a master and three agents, MCollective fully installed, PuppetDB installed and in use&hellip;  literally a full installation just like you would use for your infrastructure&hellip;  Now we get powerful.  NOW we have the ability to do some cool things.</p>
 
 <p>Next time, that&rsquo;s exactly what we&rsquo;re going to do.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA["Do's and Dont's" for Your Puppet Environment]]></title>
-    <link href="http://questy.org/blog/2014/05/20/dos-donts-puppet-environment/"/>
-    <updated>2014-05-20T06:15:14-07:00</updated>
-    <id>http://questy.org/blog/2014/05/20/dos-donts-puppet-environment</id>
-    <content type="html"><![CDATA[<p>IT Automation, like the features and functions offered by Puppet, is riddled with a number of pitfalls. Nothing dangerous or site-threatening in the near term, however evolving a <em>bad </em>plan can lead you down a painful path to re-trek when you ultimately need to demolish what you&rsquo;ve done and re-tool, re-work, or even re-start from scratch.  Some simple suggestions can help smooth your integration, and also provide tools and methodologies that make changes in philosophy easy to test and implement as well as make the long road back from a disaster easy(-ier?) to navigate.</p>
-
-<p>Here are some simple guidelines that can provide that foundation and framework:</p>
-
-<p><strong>DO <em>Always</em> Use Revision Control</strong></p>
-
-<p>It would seem this would be a foregone conclusion in this day and age, but you would be surprised just how many shops don&rsquo;t have revision control of any kind in place.  A series of manifests or configurations might be tarred up and sent to the backup system, but aside from dated backups, there&rsquo;s no real versioning&hellip;just monolithic archives to weed through in a time of disaster.</p>
-
-<p>Revision control puts you one command away from restoring those configurations and manifests (and even your data vis-a-vis &ldquo;Hiera&rdquo;) to their original locations in the most recent state.</p>
-
-<p><strong>DO Rethink Your Environments</strong></p>
-
-<p>If you automate a bad workflow, you still have a bad workflow.  (albeit an automated one!)</p>
-
-<p>Rethink how you do things and why.  Why do you promote code the way you do, and is there a better way to do it?  Why do you still have a manual portion to your procedure, and is it entirely necessary, or can this be remanded to Puppet to do for you as well.  What things are you doing well?  How can they improve?</p>
-
-<p>Try to think through all your procedures.  There are more than you think, and they&rsquo;re often less optimized than they can be.  If you&rsquo;re going to implement Puppet automation, it&rsquo;s time to retool.</p>
-
-<p><strong>DO Implement Slowly and Methodically</strong></p>
-
-<p>Another pitfall a lot of shops wander into is they try to do too much all at once, and do none of it well.  Either they implement too quickly and migrate a huge environment it took years to build (sometimes as much as a decade!) through a single professional services engagement or at an unrealistic pace.  Automation is complex, but if you take the time to implement correctly, piece-by-piece and hand-in-hand with your rethinking of your environment referred to above, you can revolutionize the way you work and make the environment considerably more powerful, considerably easier to work with, and ultimately release yourself to work on much more interesting problems in your environment.  Take your time to build the environment you want.</p>
-
-<p><strong>DO Engage the Community</strong></p>
-
-<p>By using Puppet, you are the beneficiary of the greatest software development paradigm in history &ndash; the Open Source movement.  People all over the world have taken part in crafting the powerful tool you have before you.  If you are able to help in like manner, by all means contribute your code to the community. (With your data in Hiera, this is easier than ever!)  Join a Puppet Users Group.  Share your clever solutions to unique problems with the community via GitHub, the Puppet Forge, your website&hellip; give back.  The more you pour in, the more you get out, and something you solve may end up baked into the final product one day in the future.</p>
-
-<p><strong>DON&rsquo;T Pit Teams Against Each Other</strong></p>
-
-<p>DON&rsquo;T make this a DEV vs OPS paradigm.  This is a marriage of the best tools of both worlds.  Depending on how your culture breaks down, this could be an OPS-aware way of doing development, or a DEV-informed way of doing operations.  You need to remember one thing in all of it.  The marriage of these worlds is a <em>teamwork</em> effort.</p>
-
-<p>I was averse to the term DEVOPS when it first started being used, as it was a tool of the development world I was engaged with to cede root level access to developers.  In a properly managed, secure environment, this is always a no-no.  Development personnel are not trained systems people and rarely are.  By the same token, never ask your systems people to delve into core development, or to troubleshoot your developers' code.  They are not tooled for that work.</p>
-
-<p>This does not say that one is better than the other, nor does it say they do not share a certain amount of core skills at the basest levels. Much like the differences between civil and mechanical engineers, each has a base level of knowledge that ties them together, but each is highly specialized.  You don&rsquo;t want your civil engineer building machine tools just as much as you don&rsquo;t want your mechanical engineer building bridges.  Each discipline is highly specialized and carries with it nuance and knowledge you only gain through experience&hellip;experience <em>on </em>the job.</p>
-
-<p>Instead, find a culture and a paradigm that joins the forces of these two disciplines to build something unique and special rather than wasting time with dissension and argument.</p>
-
-<p><strong>DON&rsquo;T Expect Automation to Solve <em>Everything</em></strong></p>
-
-<p>I know, that sounds like a sacrilege at this point, but its true.  No matter how automated your site becomes, how detailed your configuration elements are, or how much you&rsquo;ve detailed your entire workflow, you still can never replace the element of human consideration and decision-making.</p>
-
-<p>Automation, as I&rsquo;ve said before, automates away the mundane to make time for you, DEVOPS person, to work on really interesting and curious work.  You can now write that entire new whiz bang gadget you&rsquo;ve been conceptualizing for the last several years, but have never quite gotten there because you were too busy &ldquo;putting out fires&rdquo;.  Puppet automation is definitely a watershed in modern administration and development, but people are still needed.</p>
-
-<p>Another &ldquo;intangible&rdquo; you may not readily think about when considering a DEVOPS infrastructure is one of <em>culture.  </em>The best places to work are always the best cultures brought about by the right collection of people, ideas, personalities, and management styles.  When you find that right mix of people and ideas, the workplace becomes a, forgive me, <em>magical</em> place to be.  Automation can never make that happen.</p>
-
-<p><strong>DON&rsquo;T Starve Your Automation Environment</strong></p>
-
-<p>Automation solves a lot of things, but one thing it cannot do is feed itself.  This particular animal has a ton of needs over time.  From appropriate hardware to personnel, the environment needs time, attention, and consideration.  Remember that this is the &ldquo;machine tool&rdquo; of your whole company.  It is the thing that builds and maintains other things.  As such, its priority rises above that of the next web server or DNS system.</p>
-
-<p>Always allocate enough resources (read: money, personnel, and time) to your environment.  If that means engineer time to work on a specially project and to do the job <em>right</em>, that&rsquo;s what it means.  And, yes, it&rsquo;s more important than meeting an arbitrarily assigned &ldquo;live date&rdquo; to your new widget or site or application.  The environment comes first, and all else follows.  If you give the resources and time to your automation initiatives it deserves, a number of years down the road you will look back and be amazed at the sheer amount of work your team was able to accomplish just by keeping this simple precept.</p>
-
-<p><strong>DON&rsquo;T Stop Evolving</strong></p>
-
-<p>Never stop learning.  Never stop bettering yourself or your environment.  Always keep refactoring your code.  (i.e., if you wrote that Apache module 4 years ago, chances are good that what you&rsquo;ve learned in the interim can go back into making that module even better.)  Always keep your people trained and engaged on the latest developments in Puppet and all the associated tools.  Never stop striving to be better and never stop reaching.  I may sound lil your coach from high school in this, but those principles he was trying to impart hold true.  If you continue to drive forward and reinvent yourself as a regular part of your forward pursuits, the endpoint of that evolution will benefit you personally, your team both vocationally and culturally, your company&rsquo;s efficiency, and your environment&rsquo;s impact on your bottom line.</p>
-
-<p><strong>Conclusion</strong></p>
-
-<p>If we keep a stronger eye on our environment and tools that rises above the simple concept of &ldquo;that software I bought&rdquo; and &ldquo;fit it in between all the other things you have to do&rdquo; and give Puppet its proper place in our company, it can truly revolutionize your workflow.  However, when properly placed culturally and from a design, implementation, and workflow perspective, it can transform any shop on levels not readily observable when looking at the price tag or the resource requirements list.  DO let Puppet transform your environment and workflow and DON&rsquo;T be afraid to take the plunge.  It&rsquo;s exciting, challenging, and can easily take your company to the &ldquo;next level&rdquo;.</p>
 ]]></content>
   </entry>
   

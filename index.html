@@ -9,7 +9,7 @@
   <meta name="author" content="Jerald Sheets">
 
   
-  <meta name="description" content="As in the previous installment, you need to have already completed a few steps before arriving at this post. You should have already completed a & &hellip;">
+  <meta name="description" content="If you&rsquo;ve been following for the past 5 installments, we&rsquo;re nearing the end! Note that each of the prior articles required other things &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,122 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/04/24/scaling-puppet-enterprise-part-v-gitlab/">Scaling Puppet Enterprise - Part v - GitLab</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2017-04-24T21:48:29-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>9:48 pm</span></time>
+        
+           | <a href="/blog/2017/04/24/scaling-puppet-enterprise-part-v-gitlab/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-v-gitlab/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>If you&rsquo;ve been following for the past 5 installments, we&rsquo;re nearing the end! Note that each of the prior articles required other things to have been completed before reading/performing the contained steps, but this article is a bit different. In all truth, you could do this process at any point, but I placed it here for one reason alone. <em>&ldquo;Why do this manually when I could get Puppet to do it for me?&rdquo;</em></p>
+
+<p>The importance of this particular step is that we need a place to hold our &ldquo;control repo&rdquo; <em>(more on this later)</em> and if you don&rsquo;t already have Git installed in your environment, you&rsquo;ll need it. So, before finishing up the installation and configuration of Code Manager, utilizing Puppet to install GitLab is a good test that everything is installed and configured properly, and all the components are communicating as expected.</p>
+
+<p>Without further delay, let&rsquo;s continue.</p>
+
+<hr />
+
+<h3>Create a Machine to Serve as the GitLab Server</h3>
+
+<p>Provision a new node according to our earlier chart to serve as your GitLab server. While I list specifications, you may find more mileage by scaling the Git server larger. If you will be expanding your Puppet team and will have dozens to hundreds of people developing for Puppet, scaling will be a consideration. Also, while outside the scope of this article, you will want to configure offsite backup and/or replication to a geographically separte location for your GitLab server. This is of paramount importance. If you lose this server, all configuration for all systems managed in all environments across your organization would be lost. This isn&rsquo;t the end of the world in terms of business continuity, but trying to recreate all that code from the ground up would be prohibitive.</p>
+
+<p>Yes, people will have recent copies of the repo on their local machines. Yes, with some nonzero level of effort, you should be able to get the repos back.  No, it&rsquo;s not fun, and you&rsquo;ll have a bad time. Just back up your server, and if possible&hellip;replicate it elsewhere in your organization.</p>
+
+<p>My intial suggested specifications on this server are:</p>
+
+<p><img src="http://cvquesty.github.io/images/gitlab_specs.png" alt="GitLab Specs" /></p>
+
+<p>I don&rsquo;t specify disk for /opt and /var here, as each of these images carries ample disk with it. If you believe you will need additional storage for your Git instance, feel free to scale this as you see fit.</p>
+
+<p>Once the server is installed, go ahead and install the Puppet Agent on it, pointing to the compiler VIP like so:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>curl -k https://compile.example.com:8140/packages/current/install.bash | bash</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once the agent installation is complete, in the Puppet Enterprise Console, navigate to <strong>Nodes | Unsigned Certificates</strong> and accept the new cert request for the GitLab server. Once that is complete, SSH to the GitLab server, and run <strong>puppet agent -t</strong> to complete the initial configuration of the node.</p>
+
+<h3>Create a Profile to Manage the GitLab Installation</h3>
+
+<p>On the Puppet Enterprise Master, install the <strong>vshn-gitlab</strong> module.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>puppet module install vshn-gitlab</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>NOTE: You will need to perform this on ALL catalog compilers in your infrastructure. If the GitLab serer checks in and doesn&rsquo;t find either the vshn-gitlab module or the profile you&rsquo;re creating below on the master the load balancer refers it to, the catalog run will fail.</strong></p>
+
+<p>On the Puppet Enterprise Master <em>(eg. master.example.com)</em> create a new profile in <strong>$codedir/environments/production/modules/profiles/manifests/gitlab.pp</strong>.</p>
+
+<p><em>(Puppet Enterprise has an internal variable for $codedir now. If you have made no modifications to this in the puppet.conf, the default location is /etc/puppetlabs/code.)</em></p>
+
+<p>The profile you create should look like the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Configure GitLab Server
+</span><span class='line'>class profiles::gitlab {
+</span><span class='line'>
+</span><span class='line'>  class { 'gitlab':
+</span><span class='line'>    external_url =&gt; 'http://git.example.com',
+</span><span class='line'>  }
+</span><span class='line'>  
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Save this as gitlab.pp.</p>
+
+<p>In the Puppet Enterprise Console, create a new classification group.</p>
+
+<ul>
+<li>Navigate to <strong>Nodes | Classification</strong></li>
+<li>Create a group called &lsquo;<strong>GitLab</strong>&rsquo; with a parent of &lsquo;<strong>All Nodes</strong>&rsquo; in the Production Environment</li>
+<li>Pin the <strong>git.example.com</strong> node into the newly created <strong>GitLab</strong> group.</li>
+<li>Choose the &lsquo;<strong>Classes</strong>&rsquo; tab and click the &lsquo;<strong>Refresh</strong>&rsquo; icon to pick up your newly created profile.</li>
+<li>Add the <strong>profiles::gitlab</strong> class to the classification group.</li>
+<li>Commit the changes.</li>
+</ul>
+
+
+<h3>Caveats</h3>
+
+<p>Since we&rsquo;re mid-setup and have multiple compilers but do <strong>not</strong> have code sync enabled, we have to manually copy the new profile to all your compilers in the same location. This allows the agent on the GitLab server to pick up the profile regardless of where the load balancer sends the agent request.</p>
+
+<p>Once the profile is in place, run <strong>puppet agent -t</strong> on your GitLab server, and Puppet will then install the GitLab software onto the server. At this point, after a short delay, you should be able to retrieve your GitLab server in a browser <em>(e.g. <a href="http://git.example.com">http://git.example.com</a>)</em> and login with the default credentials.</p>
+
+<p>In our example, <strong>git.example.com</strong> is the server and the login would be automatically set to <strong>admin@example.com</strong> with a password of <strong>5iveL!fe</strong>.  These are defaults set by the GitLab installer.</p>
+
+<p>Your GitLab server should now be up, running, and ready for action in your Puppet Environment.  Look for the final installment to bring everything together and finish the installation.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1058,116 +1174,6 @@ Two Agent Nodes for testing<br></p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/05/15/organizing-your-hierarchy-equals-pain/">Organizing Your Hierarchy Equals Pain</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-05-15T14:48:59-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:48 pm</span></time>
-        
-           | <a href="/blog/2015/05/15/organizing-your-hierarchy-equals-pain/#disqus_thread"
-             data-disqus-identifier="http://questy.org/blog/2015/05/15/organizing-your-hierarchy-equals-pain/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong>The Pain Point</strong></p>
-
-<p>One would think after reading Gary Larizza’s blog that I wouldve come away with the idea that Hiera presents a few issues as it solves a ton… but no. I had to go and think it was easy, fly off half-cocked and try and tackle a big issue or two, unprepared mind you, and here I am… re-discovering what humility should be like.</p>
-
-<p><strong>The Problem</strong></p>
-
-<p>Hiera looks simple. Disarmingly simple. However, the pain doesn’t come in just looking at a nice, default hiera.yaml:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>---
-</span><span class='line'>:backends:
-</span><span class='line'>- yaml
-</span><span class='line'>:hierarchy:
-</span><span class='line'>- “%{clientcert}”
-</span><span class='line'>- “%{environment}”
-</span><span class='line'>- common
-</span><span class='line'>:yaml:
-</span><span class='line'>:datadir: “/etc/puppetlabs/puppet/environments/%{environment}/hieradata”</span></code></pre></td></tr></table></div></figure>
-
-
-<p>We can simply look at this and see the wonderful simplicity of how the yaml file is laid out, the ease of adding more hierarchies from which to gain data, and even expand the model to include subdirectories and all sorts of interesting methods of organizing and abstracting our code into usable, organized chunks.</p>
-
-<p>Not so fast.</p>
-
-<p>The real issues begin when you’re dealing with a customer. All too often I find that even they aren’t entirely sure what’s going on in their very own environment, and pushed hard, will actually argue among themselves as to just how everything works. Scary.</p>
-
-<p>The main thing we find ourselves doing is figuring out that last mile… What precisely is the role of machine X in this environment? Ask two people separate from each other, and they’ll likely give different (sometimes remarkably so) answers. Get them together and they may quibble a bit, but generally get to consensus.</p>
-
-<p>This is REALLY, REALLY important. If the folks you’re trying to help aren’t 100% sure exactly:</p>
-
-<p>What a machine does
-How a machine is built
-What it’s role in the organization is
-You’ve got some real issues.</p>
-
-<p><strong>This Doesn’t Suck</strong></p>
-
-<p>Often, engineers look at the Hiera configuration file in a vacuum (so much for the suck joke). Not permanently but definitely independently at first. Then, as the engagement pushes on to defining Roles and Profiles for the site, you have this “oh crap” moment, and throw back to the hierarchy and then start modifying lookup layers, but then jump forward to the profiles where the lookups are (or should be, anyhow) and realize they assumed a different hierarchy. Then, jump back to the hiera.yaml, make changes, then back to the profiles and repeat the process and then finally to the component modules, and remediate any assumptions you made on everythin gyou just changed. Uh oh. Wasted time.</p>
-
-<p>I’ve started working through “all the things” and have come up with a mechanism that works well for me. Hopefully you can gain some mileage from it as well.</p>
-
-<p><strong>First Thing’s First</strong></p>
-
-<p>Some would argue you should do the Hierarchy first while others would argue you do the Profiles first. However, I’ve found that parsing out all the business logic with the team gains a remarkable amount of runway for you to start. Why?</p>
-
-<p>Systems engineers are techno-nerd types. The nuts &amp; bolts, configs and the like are their prime concern and more often than not, they view the site atomically. They can tell you with great detail precisely what each and every machine has installed on it (often…not always), but generally know what the IT ROLE of a node or collection of nodes is for. Further, they can tell you who requested it, what kind of storage may be connected, what business group out there it satisfies the needs of, but with a startling amount of frequency, cannot tell you the BUSINES ROLE of the node.</p>
-
-<p>Q: What is it?<br>
-A: A web server.<br>
-Q: What’s it’s purpose?<br>
-A: To serve web documents, duh!<br>
-Q: No, no… what’s it’s business purpose?<br>
-A: To make money?<br>
-Q: No, no… If you were to give it one overarching purpose, one reason for existing, what would it be?<br>
-A: Oh… ummm… I never thought of that before.<br></p>
-
-<p>You’d be surprised just how often you arrive there with pretty much everyone.</p>
-
-<p>As a result, if you wait until mid-engagement to reach this point, (or at least the middle of the writing phase), you’ve got a fair amount of backtracking, and even refactoring to do before you regain some sense of normalcy and can push forward.</p>
-
-<p><strong>Most Specific to Least</strong></p>
-
-<p>As has been said many times and in many ways, your MOST specific designation should always come first. For instance, what is the MOST atomic level of abstraction? Well, the node itself, of course, so the %{clientcert} designator suffices for that.</p>
-
-<p>Well, what’s next? That depends on you. You might have a location to think of (is this data center on the east or west coast, US or Asia). That’s highly broad… maybe not. It might be environment (such as DEV, TEST, PROD). Again, this is custom to you, and that might still be overly broad and you need to find a happy place between clientcert and environment. Only you can tell me that when I’m standing in front of you, so I generally refrain until I can get the layout of your site.</p>
-
-<p>For instance, one customer had clientcert, then location, then environment. That way, items unique to the data center the nodes were in would get handled first, and then things that were environment unique (regardless of location – more broad) could get handled next. See? Custom to them and the way they do business or are arranged technologically.</p>
-
-<p>I “borrowed” the name for this post from Bill Engvall to illustrate a point, that if you just run off to development with no prior knowledge of the things Hiera works with, you will encounter the pain of refactoring at what is most likely the component module level and then the profile level as well. If you’ve ever had to do it, and then do it on a time crunch, truly you have felt the pain.</p>
-
-<p>Avoid it. Think before you act.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -1181,6 +1187,10 @@ A: Oh… ummm… I never thought of that before.<br></p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/04/24/scaling-puppet-enterprise-part-v-gitlab/">Scaling Puppet Enterprise - Part v - GitLab</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/04/24/scaling-puppet-enterprise-part-iv-activemq-hub-and-spokes/">Scaling Puppet Enterprise - Part IV - ActiveMQ Hub and Spokes</a>
@@ -1216,10 +1226,6 @@ A: Oh… ummm… I never thought of that before.<br></p>
     
       <li class="post">
         <a href="/blog/2015/07/28/some-software-releases-and-forge-stuffs/">Some Software Releases and Forge Stuffs</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/05/15/organizing-your-hierarchy-equals-pain/">Organizing Your Hierarchy Equals Pain</a>
       </li>
     
   </ul>
