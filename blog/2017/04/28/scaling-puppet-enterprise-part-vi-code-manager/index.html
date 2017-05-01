@@ -415,37 +415,31 @@ origin    <a href="https://github.com/cvquesty/control_repo.git">https://github.
 
 <p>Prior to PE 2016.x.x, you could only fire the tests with curl commands against the API. Those would be as follows:</p>
 
-<p><strong>Deploy a Single Environment</strong><code>``curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys? token=</code>cat ~/.puppetlabs/token`&ldquo; -d &lsquo;{"environments&rdquo;: [&ldquo;ENVIRONMENTNAME&rdquo;], &ldquo;wait&rdquo;: true}&rsquo;</p>
+<p><strong>Deploy a Single Environment</strong></p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>**Deploy All Code Manager Managed Environments**
-</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/usr/bin/curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys? token=\`cat ~/.puppetlabs/token\`" -d '{"environments": ["ENVIRONMENTNAME"], "wait": true}'</span></code></pre></td></tr></table></div></figure>
 
 
-<p>curl -k -X POST -H &lsquo;Content-Type: application/json&rsquo; &ldquo;<a href="https://localhost:8170/code-manager/v1/deploys?token=">https://localhost:8170/code-manager/v1/deploys?token=</a><code>cat ~/.puppetlabs/token</code>&rdquo; -d &lsquo;{&ldquo;deploy-all&rdquo;: true}&rsquo;</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>On PE Versions 2016.x.x and later, a new tool known as puppet-code was created to ease the testing and firing of the deploys.
-</span><span class='line'>
-</span><span class='line'>**Deploy a Single Environment**
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>/opt/puppetlabs/bin/puppet-code deploy {environmentname}</p>
+<p><strong>Deploy All Code Manager Managed Environments</strong></p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>**Deploy All Code Manager Managed Environments**
-</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/usr/bin/curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys?token=\`cat ~/.puppetlabs/token\`" -d '{"deploy-all": true}'</span></code></pre></td></tr></table></div></figure>
 
 
-<p>/opt/puppetlabs/bin/puppet-code deploy &ndash;all
-```</p>
+<p>On PE Versions 2016.x.x and later, a new tool known as puppet-code was created to ease the testing and firing of the deploys.</p>
+
+<p><strong>Deploy a Single Environment</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/opt/puppetlabs/bin/puppet-code deploy {environmentname}</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Deploy All Code Manager Managed Environments</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/opt/puppetlabs/bin/puppet-code deploy --all</span></code></pre></td></tr></table></div></figure>
+
 
 <h3>Conclusion</h3>
 
@@ -477,6 +471,12 @@ origin    <a href="https://github.com/cvquesty/control_repo.git">https://github.
 
 <time class='entry-date' datetime='2017-04-28T14:48:13-04:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>2:48 pm</span></time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/geekstuff/'>geekstuff</a>, <a class='category' href='/blog/categories/puppet/'>puppet,</a>
+  
+</span>
 
 
     </p>
