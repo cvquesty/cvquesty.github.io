@@ -256,9 +256,11 @@ Prior to PE 2016.x.x, you could only fire the tests with curl commands against t
 
 
 **Deploy a Single Environment**
+
 ```
 curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys? token=`cat ~/.puppetlabs/token`" -d '{"environments": ["ENVIRONMENTNAME"], "wait": true}'
 ```
+
 **Deploy All Code Manager Managed Environments**
 
 ```curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys?token=`cat ~/.puppetlabs/token`" -d '{"deploy-all": true}'
