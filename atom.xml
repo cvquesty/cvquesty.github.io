@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-05-01T13:20:00-04:00</updated>
+  <updated>2017-05-01T13:22:23-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -336,13 +336,13 @@ origin    <a href="https://github.com/cvquesty/control_repo.git">https://github.
 <p><strong>Deploy a Single Environment</strong></p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>/usr/bin/curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys? token=\`cat ~/.puppetlabs/token\`" -d '{"environments": ["ENVIRONMENTNAME"], "wait": true}'</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/usr/bin/curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys? token=`cat ~/.puppetlabs/token`" -d '{"environments": ["ENVIRONMENTNAME"], "wait": true}'</span></code></pre></td></tr></table></div></figure>
 
 
 <p><strong>Deploy All Code Manager Managed Environments</strong></p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>/usr/bin/curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys?token=\`cat ~/.puppetlabs/token\`" -d '{"deploy-all": true}'</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/usr/bin/curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys?token=`cat ~/.puppetlabs/token`" -d '{"deploy-all": true}'</span></code></pre></td></tr></table></div></figure>
 
 
 <p>On PE Versions 2016.x.x and later, a new tool known as puppet-code was created to ease the testing and firing of the deploys.</p>
