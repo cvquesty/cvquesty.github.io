@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-25T11:29:22-07:00</updated>
+  <updated>2017-05-01T13:10:26-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -14,10 +14,378 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Scaling Puppet Enterprise - Part VI - Code Manager]]></title>
+    <link href="http://questy.org/blog/2017/04/28/scaling-puppet-enterprise-part-vi-code-manager/"/>
+    <updated>2017-04-28T14:48:13-04:00</updated>
+    <id>http://questy.org/blog/2017/04/28/scaling-puppet-enterprise-part-vi-code-manager</id>
+    <content type="html"><![CDATA[<h3>Recap</h3>
+
+<p>Let&rsquo;s see where we are.</p>
+
+<ol>
+<li>We have a Puppet Enterprise Split Installation consisting of a Puppet Master, PuppetDB, and Puppet Enterprise Console.</li>
+<li>We have a Load Balancer with two compiler nodes behind it.</li>
+<li>We have an ActiveMQ Hub and an ActiveMQ Spoke and have removed ActiveMQ responsibilites from the Enterprise Master (MoM).</li>
+<li>We have built a GitLab instance to host our Control Repo and other items necessary to operation of our Puppet environment.</li>
+</ol>
+
+
+<hr />
+
+<p>The final remaining piece is like a &ldquo;glue&rdquo; step where we pull all the various pieces together, generate keys for SSH and deployment tokens. We also associate the ctalog compilers to the Enterprise master and coordinate the deployment of code across the masters.  Needless to say, you will need to have already performed all the preceding steps, and have made everything ready to go for the following procedure. Failure to have done so will have unpredictable results. So, if you&rsquo;re ready, let&rsquo;s proceed.</p>
+
+<h3>Setup A Control Repository</h3>
+
+<p>The first and foremost piece is to have a repo whose job is to &ldquo;control&rdquo; the processig of modules and custom code, and giving the &ldquo;map&rdquo; for deployment into your Enterprise master and catalog compilers. Puppet Labs has a suggested sample one <a href="https://github.com/puppetlabs/control-repo">here</a> which has quite a number of nice features. However, when I first wrote this tutorial, it was considerably overkill for what I was needing to do, so I opted to create my own <strong>very simple</strong> version of a control repository. Quite a few iterations have occurred since writing these instructions, so I will continue with my instructions.</p>
+
+<h3>The Control Repo</h3>
+
+<p>The control repo came about as a collaboration at Puppet Labs between employees, consultants, users, etc. It was originally named something else which escapes me at the moment, but eventually came to be named the &ldquo;control repo&rdquo; by virtue of the service it performs. In short, it contains the &ldquo;map&rdquo; between what you have in Git or at the Puppet Forge, and the deployment directories on your Puppet masters. The &ldquo;map&rdquo; itself is known as the &ldquo;Puppetfile&rdquo;. This file contains a listing of all the modules you want deployed to the server. The bonus is that for each Git branch you have within the repo, this specifies an &ldquo;environment&rdquo; to Puppet.</p>
+
+<p>I won&rsquo;t get into all the conversation around whether you should have 1:1 mapping between Git branches and Puppet Environments and then from Puppet Environments to application tiers&hellip; I&rsquo;ll leave that to the Puppet folks. I have always mapped everthing identically all the way through, and will cover that process here.</p>
+
+<p><em>NOTE: The understood way of doing this these days is that if you have a new &ldquo;thing&rdquo; you want to create, you fork a feature branch, apply it to a few nodes for testing, then merge back into your master or production branch and deploy everywhere. I&rsquo;d recommend learning this. In my own needs, I had a lot of governed environments (PCI, SOX, ITIL, etc) that needed absolute code separation, and the ability to demonstrate that no code in one environment had a chance of deploying to another.  (principle of environment separation)  As a result, I always opted for 1:1 correlation.</em></p>
+
+<p>I have created a sample control_repo you can clone from here:  <a href="https://github.com/cvquesty/control_repo.git">https://github.com/cvquesty/control_repo.git</a></p>
+
+<p>This is a bare repo with a collection of Forge modules populated into the Puppetfile with a &ldquo;development&rdquo; and a &ldquo;production&rdquo; branch. This will trigger Puppet to create directories called &ldquo;development&rdquo; and &ldquo;production&rdquo; in /etc/puppetlabs/code/environments, and will contain the items you instruct it to deploy there from the Puppetfile.</p>
+
+<p>First, clone the repo:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone https://github.com/cvquesty/control_repo.git</span></code></pre></td></tr></table></div></figure>
+
+
+<p>to a working directory of your choice on your local node.  Next, change to the directory and view the remote:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd control_repo
+</span><span class='line'>git remote -v</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This should present you with the GitHub location of my sample repo:</p>
+
+<blockquote><p>origin    <a href="https://github.com/cvquesty/control_repo.git">https://github.com/cvquesty/control_repo.git</a> (fetch)
+origin    <a href="https://github.com/cvquesty/control_repo.git">https://github.com/cvquesty/control_repo.git</a> (push)</p></blockquote>
+
+<p>This will present you an issue in that you can&rsquo;t push to my repo. What I always tell people to do is to move it to their own Git repo. This is well documented elsewhere, but I&rsquo;ll give you an example process.</p>
+
+<p>While in the control_repo directory, perform the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git checkout development
+</span><span class='line'>git remote rm origin </span></code></pre></td></tr></table></div></figure>
+
+
+<p>This now makes sure you&rsquo;re in the development branch, and that the repo is unattached to my GitHub account.  Next, you&rsquo;ll need to create a control_repo in <em>your</em> Git server, and set it as your own remote.  First login to your Git server and create an empty repo to hold the code. Next, in the repo you forked from mine, run the commands to switch repos like so:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git remote add origin https://&lt;YOUR_GIT_SERVER&gt;/&lt;YOUR_ID&gt;/control_repo.git
+</span><span class='line'>
+</span><span class='line'>git add .
+</span><span class='line'>
+</span><span class='line'>git commit -a -m 'Initial Commit'
+</span><span class='line'>
+</span><span class='line'>git push origin development
+</span><span class='line'>
+</span><span class='line'>git checkout production
+</span><span class='line'>
+</span><span class='line'>git add .
+</span><span class='line'>
+</span><span class='line'>git commit -a -m 'Initial Commit'
+</span><span class='line'>
+</span><span class='line'>git push origin production</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, you have the repo local to you and pointing to your own Git repository so you can edit and update the control_repo at will.  <em>(you might note extra steps there.  This is for those unfamiliar with Git.  They may not be necessary, but it gives a good pattern for how to work with repos, and I want to establish good habits early.)</em></p>
+
+<h3>Generate SSH Keys</h3>
+
+<p>On the Enterprise Master, you will need to create locations and/or set permissions on files and directories used by Code Manager:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>chown -R pe-puppet:pe-puppet /etc/puppetlabs/code
+</span><span class='line'>chown -R pe-puppet:pe-puppet /etc/puppetlabs/code-staging
+</span><span class='line'>mkdir -p /etc/puppetlabs/puppetserver/ssh</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next, you will need to generate a secret key to use with Code Manager setup.  To create the secret key, perform the following on the Enterprise Master:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssh-keygen -t rsa -b 4096 -C "SSH Deploy Keys"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When ssh-keygen asks you what to name the key, I usually give it a name I can remember, name it after the customer I am doing work for, or just name it for the Control Repo itself. In this case, let&rsquo;s answer with the latter:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, when configuring Code Manager in the Puppet Enterprise Console, you will use that key.</p>
+
+<p>next, ensure all associated files are owned by the PE user:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>chown -R pe-puppet:pe-puppet /etc/puppetlabs/puppetserver/ssh</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Create RBAC Code Manager User</h3>
+
+<p>Next, you&rsquo;ll need a Code Manager user in the Enterprise Console. use the following process for that:</p>
+
+<ol>
+<li>Create a new role named &ldquo;Deploy Environments&rdquo;</li>
+<li><p>Assign this role the following permissions:</p>
+
+<ul>
+<li>Add the &ldquo;<strong>Puppet Environment</strong>&rdquo; type.</li>
+<li>Set <strong>Permissions</strong> for this type to &ldquo;<strong>Deploy Code</strong>&rdquo;</li>
+<li>Set the <strong>Object</strong> for this type to <strong>All</strong>.</li>
+</ul>
+</li>
+<li><p>Add the <strong>Tokens</strong> Type</p>
+
+<ul>
+<li>Set <strong>Permissions</strong> for this type to <strong>Override Default Expiry.</strong></li>
+</ul>
+</li>
+<li>Create a local user to manage code deployments.
+
+<ul>
+<li>Click &ldquo;<strong>Access Control | users</strong>&rdquo;</li>
+<li>On the <strong>Users</strong> page, in the <strong>Full Name</strong> field, type the User&rsquo;s Full Name: (e.g. <strong>CM Admin</strong>)</li>
+<li>In the <strong>Login</strong> field, type the name <strong>cmadmin</strong>.</li>
+<li>Click <strong>Add Local User</strong>.</li>
+</ul>
+</li>
+<li>Set the User&rsquo;s password to &ldquo;puppetlabs&rdquo; (or whatever you&rsquo;d like to use)
+
+<ul>
+<li>Select the user from the list.</li>
+<li>Click &ldquo;<strong>Generate password reset</strong>&rdquo;</li>
+<li>Retrieve the link in a browser, and set the password to &ldquo;<strong>puppetlabs</strong>&rdquo;.</li>
+</ul>
+</li>
+<li>Finally, add the user to the &ldquo;<strong>Deploy Code</strong>&rdquo; role.
+
+<ul>
+<li>Click the &ldquo;<strong>Deploy Environments</strong>&rdquo; role.</li>
+<li>Click the &ldquo;<strong>Member Users</strong>&rdquo; tab.</li>
+<li>Fromt the dropdown list in the <strong>User Name</strong> field, select the <strong>CM Admin</strong> user and click <strong>Add User</strong>.</li>
+</ul>
+</li>
+</ol>
+
+
+<h3>Code Manager</h3>
+
+<p>Under the covers, Puppet Labs now uses r10k with the control repository to manage the deployment of code.nUnder this scenario, a few items are very important to remember:</p>
+
+<ul>
+<li>Under no circumstances should you be manually editing code in /etc/puppetlabs/code any more. Any attempt to do so will be overwritten by the code manager. ALL deployments to the system must come through your editing the control_repo and pointing to either Forge modules or custom modules you have written to be deployed to your Enterprise Master (and sync'ed to the catalog compilers).</li>
+<li>You <strong>must</strong> have a control repo branch for each environment you wish to represent in your Masters (production, testing, etc.)</li>
+<li>You cannot shorten or live without the fully named &ldquo;production&rdquo; environment. Puppet hard-coded this environment name in the product, and shortening the name to &ldquo;prd&rdquo;, &ldquo;prod&rdquo;, etc. will not work.</li>
+<li>Code Manager operates with a synchronization subdirectory that lives in /etc/puppetlabs/code-staging. When you&rsquo;re pushing coe via your control_repo, it goes here first, then Code Manager and Code Sync take over, and publish the code to all compile masters at once. Once all masters have the code in code-staging, it gets copied to /etc/puppetlabs/code.</li>
+</ul>
+
+
+<p>More information on this process can be found at <a href="https://docs.puppet.com/pe/2015.3/code_mgr.html">Puppet&rsquo;s Documentation site</a>.</p>
+
+<h3>Configuring the Git Server</h3>
+
+<p>You should have a custom deployment user explicitly for pushing code into your master. I have settled on using &ldquo;cmadmin&rdquo; as a deploy user on the Git Server. This allows you to have a generic user on the GitLab server you created earlier that you can work with, configure web hooks for, and then leave the credentials for that user with your customer or place it into IDM for your company.</p>
+
+<p>To setup the new user:</p>
+
+<ol>
+<li>Create a user in the admin area of the GitLab server named &ldquo;<strong>cmadmin</strong>&rdquo;.  Next, select &ldquo;<strong>Edit</strong>&rdquo; in the upper right hand corner of the screen and set the password as you see fit. <em>(I&rsquo;ll use &ldquo;<strong>puppetlabs</strong>&rdquo;)</em></li>
+<li>Select &ldquo;Impersonate&rdquo; from the upper right hand section of the page to assume the identity of the &ldquo;<strong>cmadmin</strong>&rdquo; user.</li>
+<li>Select &ldquo;<strong>New Project</strong>&rdquo;.</li>
+<li>On the resulting page, create a new repo called &ldquo;<strong>control_repo</strong>&rdquo; and make it a piblic project.</li>
+<li>Click &ldquo;<strong>Create Project</strong>&rdquo;.</li>
+<li>Push the control repo from the previous section to this repo in the <strong>cmadmin</strong> space.</li>
+<li>Seeing as we are using GitLab, you are unable to use a full authenticated deploy token because GitLab server&rsquo;s input buffer is too short to handle a full authentication token. <em>NOTE: This has changed in later versions of GitLab. You may find success in just creating the token.</em></li>
+<li><p>Configure the Webhook:</p></li>
+<li><p>Connect to your Git server <em>(e.g. <a href="http://git.example.com">http://git.example.com</a>)</em> and choose the &ldquo;<strong>settings gear</strong>&rdquo; from the bottom left hand side of the page.</p></li>
+<li>Once in the settings for the <strong>cmadmin</strong> user, there is a small icon on the left frame tht looks like two links of chain and is labelled &ldquo;<strong>Webhooks</strong>&rdquo;.</li>
+<li>Next, add the _<strong><a href="https://master.example.com:8170/code-manager/v1/webhook?type=gitlab**_">https://master.example.com:8170/code-manager/v1/webhook?type=gitlab**_</a> formatted webhook into the &ldquo;</strong>URL**&rdquo; box.</li>
+</ol>
+
+
+<p><em>The &ldquo;<strong>prefix</strong>&rdquo; section points to the name od the user based on the way GitLab uses namespaces in the URL.</em></p>
+
+<ul>
+<li>Also select items you need from the list of options. I recommend selecting all items <strong>except</strong> &ldquo;<strong>Build Events</strong>&rdquo; and <strong>DE</strong>-select &ldquo;<strong>Enable SSL Verification</strong>&rdquo;.</li>
+<li>Click &ldquo;<strong>Add Webhook</strong>&rdquo;.</li>
+</ul>
+
+
+<h3>Configuring the SSH Key</h3>
+
+<p>Finally, add the <strong>PUBLIC</strong> SSH key created on the Enterprise master located at /etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa.pub to the SSH keys section for the <strong>CM Admin</strong> user in the GitLab Server.</p>
+
+<ol>
+<li>While still impersonating the &ldquo;<strong>cmadmin</strong>&rdquo; user in the GitLab GUI Interface, choose the &ldquo;<strong>cmadmin</strong>&rdquo; icon in the lower left of the browser.  Next, choose &ldquo;<strong>Profile Settings</strong>&rdquo; in the left hand bar.</li>
+<li>Under the profile&rsquo;s Settings, choose &ldquo;<strong>SSH Keys</strong>&rdquo; from the left hand bar.</li>
+<li>Paste in the <strong>PUBLIC KEY</strong> to the &ldquo;<strong>Key</strong>&rdquo; text box. The <strong>Title</strong> text box should populate automatically. <em>(or, you can name it yourself.)</em></li>
+<li>Click &ldquo;<strong>Add Key</strong>&rdquo;.</li>
+</ol>
+
+
+<h3>Installing Code Manager</h3>
+
+<p>This process assumes you have follwed this entire series from start to here in order. The final steps are to install and configure the Code Manager itself. This is that process.</p>
+
+<ol>
+<li>At the <strong>Puppet Enterprise Console</strong>, navigate to <strong>Nodes | Classification | PE Master | Classes Tab | puppet_enterprise::profile::master</strong>.</li>
+<li><p>In the <strong>puppet_enterprise::profile::master</strong> class, you need to set the following parameters:</p></li>
+<li><p><strong>r10k_remote</strong> => &lsquo;the <em>git</em> FQDN and path to the namespace/control_repo of this node.&rsquo;</p></li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>e.g. **git@git.example.com:cmadmin/control_repo.git**</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><strong>r10k_private_key</strong> => &lsquo;the full path to your deploy key on your Puppet enterprise master&rsquo;</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>e.g. **/etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa**</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><strong>file_sync_enabled</strong> => true</li>
+<li><strong>code_manager_auto_configure</strong> => true</li>
+</ul>
+
+
+<p>At this point, you also want to make sure your control_repo has a hieradata value set. If you cloned your repo from mine, you already have that value set in the common.yaml in the hieradata directory. That setting would be:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>puppet_enterprise::master::code_manager::authenticate_webhook: false</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>NOTE: Recall that GitLab has change dramatically since the original writing of this tutorial. Later versions allow you to authenticate the webhook. WHen I wrote this, I was working around technological limitations that are now gone. Feel free to complete this as needed, but I just wanted to disclaim the reasoning for these previous configuration steps.</em></p>
+
+<p>Next, ensure the hiera.yaml lives in $confdir as needed for Code manager:</p>
+
+<ul>
+<li>Edit the /etc/puppetlabs/puppet/puppet.conf file to ensure there is a line in the &ldquo;<strong>[Main]</strong>&rdquo; section: <strong>hiera_config = $confdir/hiera.yaml</strong>.</li>
+</ul>
+
+
+<p>Finally, run the puppet agent to apply all the above configuration changes:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>puppet agent -t</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Test the hiera value on the command line to ensure Hiera has picked up your value:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>hiera -c /etc/puppetlabs/puppet/hiera.yaml puppet_enterprise::master::code_manager::authenticate_webhook environment=production</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should get a return of &ldquo;false&rdquo;.</p>
+
+<p><em>NOTE: Later versions of Hiera respond to the &ldquo;lookup&rdquo; command. The older &ldquo;hiera&rdquo; command line utility has intermittent proper functioning at this time, and it has been recommended on the Puppet Community Slack that &ldquo;Lookup&rdquo; is the way to go at this time.</em></p>
+
+<h3>Generate Authentication Token</h3>
+
+<p>On the Puppet Enterprise Master, you must now generate an authentication token for the CM Admin deployment user to be authorized to push code.  First, request the token:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/opt/puppetlabs/bin/puppet-access login --service-url https://console.example.com:4433/rbac-api --lifetime 180d</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It will request a username and password. Use the credentials you created in the RBAC console <em>(In my example, <strong>cmadmin::puppetlabs</strong>)</em> and the system will write the token to <strong>/root/.puppetlabs/token</strong>.</p>
+
+<h3>Time to restart!!</h3>
+
+<p>Run the puppet agent on all compile masters in no particular order:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>**puppet agent -t**</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Now, lets' Test!!</h3>
+
+<p>Prior to PE 2016.x.x, you could only fire the tests with curl commands against the API. Those would be as follows:</p>
+
+<p><strong>Deploy a Single Environment</strong><code>``curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys? token=</code>cat ~/.puppetlabs/token`&ldquo; -d &lsquo;{"environments&rdquo;: [&ldquo;ENVIRONMENTNAME&rdquo;], &ldquo;wait&rdquo;: true}&rsquo;</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>**Deploy All Code Manager Managed Environments**
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>curl -k -X POST -H &lsquo;Content-Type: application/json&rsquo; &ldquo;<a href="https://localhost:8170/code-manager/v1/deploys?token=">https://localhost:8170/code-manager/v1/deploys?token=</a><code>cat ~/.puppetlabs/token</code>&rdquo; -d &lsquo;{&ldquo;deploy-all&rdquo;: true}&rsquo;</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>On PE Versions 2016.x.x and later, a new tool known as puppet-code was created to ease the testing and firing of the deploys.
+</span><span class='line'>
+</span><span class='line'>**Deploy a Single Environment**
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>/opt/puppetlabs/bin/puppet-code deploy {environmentname}</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>**Deploy All Code Manager Managed Environments**
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>/opt/puppetlabs/bin/puppet-code deploy &ndash;all
+```</p>
+
+<h3>Conclusion</h3>
+
+<p>At this point, you should see your code beginning to populate the <strong>/etc/puppetlabs/code-staging</strong> directory and then eventually the <strong>/etc/puppetlabs/code</strong> directory.  Your final tests will include pushing code to the control_repo to test that the hook is working properly.</p>
+
+<p>If all goes well, you should have code automatically deploy to the $codedir after a few seconds to a minute depending on a variety of factors.</p>
+
+<h4>Other Stuff</h4>
+
+<p>I wrote these as tutorials as I mentioned in the first article to help coworkers complete the same process I was doing. I had to sanitize out a lot of internal info, and I had to change hostnames on the fly to make sure &ldquo;all the things&rdquo; were secret that needed to be, so the names in question have not been specifically tested end-to-end, but the principles are the same.</p>
+
+<p>I worked on both 2015.x.x and 2016.x.x with this process, but newer versions of PE may have different features or setup options not covered here.  As with any &ldquo;Open&rdquo; documentation, &ldquo;Your mileage may vary&rdquo; and &ldquo;Use at your own risk.&rdquo;</p>
+
+<p>I hope this helps someone out there get Code Manager setup and fuctioning in a Large Environment Installation scenario, and you scale as large as you need to as a result of the footwork I&rsquo;ve done here. Feel free to email me for errors you find, and I&rsquo;ll fix &lsquo;em up right away!</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise - Part v - GitLab]]></title>
-    <link href="http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-v-gitlab/"/>
-    <updated>2017-04-24T21:48:29-07:00</updated>
-    <id>http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-v-gitlab</id>
+    <link href="http://questy.org/blog/2017/04/25/scaling-puppet-enterprise-part-v-gitlab/"/>
+    <updated>2017-04-25T00:48:29-04:00</updated>
+    <id>http://questy.org/blog/2017/04/25/scaling-puppet-enterprise-part-v-gitlab</id>
     <content type="html"><![CDATA[<p>If you&rsquo;ve been following for the past 5 installments, we&rsquo;re nearing the end! Note that each of the prior articles required other things to have been completed before reading/performing the contained steps, but this article is a bit different. In all truth, you could do this process at any point, but I placed it here for one reason alone. <em>&ldquo;Why do this manually when I could get Puppet to do it for me?&rdquo;</em></p>
 
 <p>The importance of this particular step is that we need a place to hold our &ldquo;control repo&rdquo; <em>(more on this later)</em> and if you don&rsquo;t already have Git installed in your environment, you&rsquo;ll need it. So, before finishing up the installation and configuration of Code Manager, utilizing Puppet to install GitLab is a good test that everything is installed and configured properly, and all the components are communicating as expected.</p>
@@ -108,9 +476,9 @@
   
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise - Part IV - ActiveMQ Hub and Spokes]]></title>
-    <link href="http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-iv-activemq-hub-and-spokes/"/>
-    <updated>2017-04-24T21:10:52-07:00</updated>
-    <id>http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-iv-activemq-hub-and-spokes</id>
+    <link href="http://questy.org/blog/2017/04/25/scaling-puppet-enterprise-part-iv-activemq-hub-and-spokes/"/>
+    <updated>2017-04-25T00:10:52-04:00</updated>
+    <id>http://questy.org/blog/2017/04/25/scaling-puppet-enterprise-part-iv-activemq-hub-and-spokes</id>
     <content type="html"><![CDATA[<p><strong><em>As in the previous installment, you need to have already completed a few steps before arriving at this post.  You should have already completed a &ldquo;split installation&rdquo; (Documented <a href="http://questy.org/blog/2017/04/18/scaling-puppet-enterprise-part-ii-installation/">here</a>). Also, your load balancer needs to be configured and running. The procedure for this portion can be found <a href="http://questy.org/blog/2017/04/21/scaling-puppet-enterprise-part-iii-additional-compilers-part-1/">here</a>.  Finally, you should have the additional compilers installed and configured along with two example agent nodes as covered <a href="http://questy.org/blog/2017/04/21/scaling-puppet-enterprise-part-iiia-additional-compilers/">here</a> and <a href="http://questy.org/blog/2017/04/21/scaling-puppet-enterprise-part-iiib-additional-compilers/">here</a>.. If you&rsquo;ve completed all these portions, you are now ready to configure ActiveMQ for scaling MCollective.</em></strong></p>
 
 <p>Once the preceding items are performed, you may find it necessary to add ActiveMQ hubs and spokes to increase capacity for MCollective and/or the Code Sync and Code Manager functions of Puppet Enterprise. This installment documents how to install these additional components and tie them into the existing infrastructure.</p>
@@ -181,7 +549,7 @@ and let the agent install complete in its entirety.</p>
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise - Part IIIb - Additional Compilers]]></title>
     <link href="http://questy.org/blog/2017/04/23/scaling-puppet-enterprise-part-iiib-additional-compilers/"/>
-    <updated>2017-04-23T15:19:42-07:00</updated>
+    <updated>2017-04-23T18:19:42-04:00</updated>
     <id>http://questy.org/blog/2017/04/23/scaling-puppet-enterprise-part-iiib-additional-compilers</id>
     <content type="html"><![CDATA[<p><strong><em>As in the previous installment, you need to have already completed a few steps before arriving at this post.  You should have already completed a &ldquo;split installation&rdquo; (Documented <a href="http://questy.org/blog/2017/04/18/scaling-puppet-enterprise-part-ii-installation/">here</a>). Also, your load balancer needs to be configured and running. The procedure for this portion can be found <a href="http://questy.org/blog/2017/04/21/scaling-puppet-enterprise-part-iii-additional-compilers-part-1/">here</a>.  If you&rsquo;ve completed all these portions, you are now ready to configure and install the compilers themselves. If this is you, read on!</em></strong></p>
 
@@ -325,7 +693,7 @@ and let the agent install complete in its entirety.</p>
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise - Part IIIa - Additional Compilers]]></title>
     <link href="http://questy.org/blog/2017/04/21/scaling-puppet-enterprise-part-iiia-additional-compilers/"/>
-    <updated>2017-04-21T06:32:47-07:00</updated>
+    <updated>2017-04-21T09:32:47-04:00</updated>
     <id>http://questy.org/blog/2017/04/21/scaling-puppet-enterprise-part-iiia-additional-compilers</id>
     <content type="html"><![CDATA[<p><strong><em>You should have completed a split install before beginning this section. You can find the Split Installation documentation at Puppet&rsquo;s Website, or the first installment of this tutorial <a href="http://questy.org/blog/2017/04/18/scaling-puppet-enterprise-part-ii-installation/">here</a>.  If you try and begin here, you might find yourself lost.</em></strong></p>
 
@@ -575,7 +943,7 @@ and let the agent install complete in its entirety.</p>
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise - Part II - Installation]]></title>
     <link href="http://questy.org/blog/2017/04/18/scaling-puppet-enterprise-part-ii-installation/"/>
-    <updated>2017-04-18T10:03:21-07:00</updated>
+    <updated>2017-04-18T13:03:21-04:00</updated>
     <id>http://questy.org/blog/2017/04/18/scaling-puppet-enterprise-part-ii-installation</id>
     <content type="html"><![CDATA[<p>Installing Puppet Enterprise has been made remarkably easier as time has gone on. The efforts of Puppet Labs (I still can&rsquo;t get used to simply &lsquo;Puppet&rsquo;) to make the installation as seamless and powerful as possible with the simplest of interfaces has been highly successful.</p>
 
@@ -695,7 +1063,7 @@ and let the agent install complete in its entirety.</p>
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise]]></title>
     <link href="http://questy.org/blog/2017/04/17/scaling-puppet-enterprise/"/>
-    <updated>2017-04-17T13:06:11-07:00</updated>
+    <updated>2017-04-17T16:06:11-04:00</updated>
     <id>http://questy.org/blog/2017/04/17/scaling-puppet-enterprise</id>
     <content type="html"><![CDATA[<p>In my former life as a consultant, I had to install all manner of configurations of Puppet for clients.  Some were small and some were large, but none were <strong><em>VERY</em></strong> large.  One of the big things I was finding back then was there just wasn&rsquo;t a lot of publicly available information regarding doing a full install and scaling it large.</p>
 
@@ -753,7 +1121,7 @@ Two Agent Nodes for testing<br></p>
   <entry>
     <title type="html"><![CDATA[Changes Are Afoot]]></title>
     <link href="http://questy.org/blog/2016/08/31/changes-are-afoot/"/>
-    <updated>2016-08-31T07:33:00-07:00</updated>
+    <updated>2016-08-31T10:33:00-04:00</updated>
     <id>http://questy.org/blog/2016/08/31/changes-are-afoot</id>
     <content type="html"><![CDATA[<p>After much thought and consideration, I&rsquo;ve terminated my employ with ShadowSoft. I was travelling nearly every week all over the US, and not with my family as much as I&rsquo;d like. Unfortunately, this role was a 70% travel role, and our youngest needed Daddy home.</p>
 
@@ -766,7 +1134,7 @@ Two Agent Nodes for testing<br></p>
   <entry>
     <title type="html"><![CDATA[Travel Hiatus]]></title>
     <link href="http://questy.org/blog/2016/06/13/travel-hiatus/"/>
-    <updated>2016-06-13T07:06:29-07:00</updated>
+    <updated>2016-06-13T10:06:29-04:00</updated>
     <id>http://questy.org/blog/2016/06/13/travel-hiatus</id>
     <content type="html"><![CDATA[<p><strong>Out</strong></p>
 
@@ -787,7 +1155,7 @@ Two Agent Nodes for testing<br></p>
   <entry>
     <title type="html"><![CDATA[PuppetConf 2015]]></title>
     <link href="http://questy.org/blog/2015/10/27/puppetconf-2015/"/>
-    <updated>2015-10-27T19:11:28-07:00</updated>
+    <updated>2015-10-27T22:11:28-04:00</updated>
     <id>http://questy.org/blog/2015/10/27/puppetconf-2015</id>
     <content type="html"><![CDATA[<p><strong>PuppetConf Portland</strong></p>
 
@@ -824,7 +1192,7 @@ Two Agent Nodes for testing<br></p>
   <entry>
     <title type="html"><![CDATA[Some Software Releases and Forge Stuffs]]></title>
     <link href="http://questy.org/blog/2015/07/28/some-software-releases-and-forge-stuffs/"/>
-    <updated>2015-07-28T07:11:55-07:00</updated>
+    <updated>2015-07-28T10:11:55-04:00</updated>
     <id>http://questy.org/blog/2015/07/28/some-software-releases-and-forge-stuffs</id>
     <content type="html"><![CDATA[<p><strong>Salutations</strong></p>
 
@@ -881,7 +1249,7 @@ Two Agent Nodes for testing<br></p>
   <entry>
     <title type="html"><![CDATA[Organizing Your Hierarchy Equals Pain]]></title>
     <link href="http://questy.org/blog/2015/05/15/organizing-your-hierarchy-equals-pain/"/>
-    <updated>2015-05-15T14:48:59-07:00</updated>
+    <updated>2015-05-15T17:48:59-04:00</updated>
     <id>http://questy.org/blog/2015/05/15/organizing-your-hierarchy-equals-pain</id>
     <content type="html"><![CDATA[<p><strong>The Pain Point</strong></p>
 
@@ -968,7 +1336,7 @@ A: Oh… ummm… I never thought of that before.<br></p>
   <entry>
     <title type="html"><![CDATA[Puppets.. Puppets Everywhere]]></title>
     <link href="http://questy.org/blog/2015/04/30/puppets-dot-puppets-everywhere/"/>
-    <updated>2015-04-30T09:52:27-07:00</updated>
+    <updated>2015-04-30T12:52:27-04:00</updated>
     <id>http://questy.org/blog/2015/04/30/puppets-dot-puppets-everywhere</id>
     <content type="html"><![CDATA[<p><strong>3.8 is Here!!!</strong></p>
 
@@ -1040,7 +1408,7 @@ ubuntu-1404-i386<br></p>
   <entry>
     <title type="html"><![CDATA[Some Coding Work of Late...]]></title>
     <link href="http://questy.org/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/"/>
-    <updated>2015-03-26T08:26:16-07:00</updated>
+    <updated>2015-03-26T11:26:16-04:00</updated>
     <id>http://questy.org/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot</id>
     <content type="html"><![CDATA[<p><strong><em>I AM NOT A CODER</em></strong></p>
 
@@ -1087,7 +1455,7 @@ ubuntu-1404-i386<br></p>
   <entry>
     <title type="html"><![CDATA[Building Your Toolbox]]></title>
     <link href="http://questy.org/blog/2015/03/26/building-your-toolbox/"/>
-    <updated>2015-03-26T06:15:18-07:00</updated>
+    <updated>2015-03-26T09:15:18-04:00</updated>
     <id>http://questy.org/blog/2015/03/26/building-your-toolbox</id>
     <content type="html"><![CDATA[<p>I know it’s been since June we’ve worked on the Puppet Development series, but as work goes, so go I, and as I go, so delays the blog. :)</p>
 
@@ -1172,7 +1540,7 @@ ubuntu-1404-i386<br></p>
   <entry>
     <title type="html"><![CDATA[Management May Be Missing an Important Component of DEVOPS]]></title>
     <link href="http://questy.org/blog/2015/03/23/management-may-be-missing-an-important-component-of-devops/"/>
-    <updated>2015-03-23T07:01:01-07:00</updated>
+    <updated>2015-03-23T10:01:01-04:00</updated>
     <id>http://questy.org/blog/2015/03/23/management-may-be-missing-an-important-component-of-devops</id>
     <content type="html"><![CDATA[<p>As I travel around the country installing and training people in Puppet Enterprise, I’m noticing some characteristics of management perspective on the DEVOPS movement that has a disjoint with implementation and reality. In short: Managers are now hiring personnel in the field of DEVOPS for positions they may be highly qualified for, but have no institutional ability to execute on the tasks that will be assigned them in a modern infrastructure especially one that has to meet governance criteria such as ITIL, PCI, SOX, HIPAA, and various STIG requirements we see in governmental circles.</p>
 
@@ -1239,7 +1607,7 @@ ubuntu-1404-i386<br></p>
   <entry>
     <title type="html"><![CDATA[Vagrant and Docker Love]]></title>
     <link href="http://questy.org/blog/2015/01/15/vagrant-and-docker-love/"/>
-    <updated>2015-01-15T17:31:15-08:00</updated>
+    <updated>2015-01-15T20:31:15-05:00</updated>
     <id>http://questy.org/blog/2015/01/15/vagrant-and-docker-love</id>
     <content type="html"><![CDATA[<p>Not a full-on post, but more a note for myself to both investigate and test this… It would seem that Vagrant has now added provisioner support for Docker here. Be looking for a new post on this in the near future!</p>
 
@@ -1268,7 +1636,7 @@ I spoke with some folks at Puppet just in a conversation describing what I was s
   <entry>
     <title type="html"><![CDATA[Moving My Tech Content to GitHub]]></title>
     <link href="http://questy.org/blog/2015/01/08/moving-my-tech-content-to-github/"/>
-    <updated>2015-01-08T10:39:12-08:00</updated>
+    <updated>2015-01-08T13:39:12-05:00</updated>
     <id>http://questy.org/blog/2015/01/08/moving-my-tech-content-to-github</id>
     <content type="html"><![CDATA[<p>Happy New Year, all!</p>
 
@@ -1287,7 +1655,7 @@ I spoke with some folks at Puppet just in a conversation describing what I was s
   <entry>
     <title type="html"><![CDATA[PuppetConf 2014]]></title>
     <link href="http://questy.org/blog/2014/09/23/puppetconf-2014/"/>
-    <updated>2014-09-23T11:19:37-07:00</updated>
+    <updated>2014-09-23T14:19:37-04:00</updated>
     <id>http://questy.org/blog/2014/09/23/puppetconf-2014</id>
     <content type="html"><![CDATA[<p>Glad to be at PuppetConf with #ShadowSoft exploring all the latest and greatest in PuppetLabs.</p>
 
@@ -1298,230 +1666,11 @@ I spoke with some folks at Puppet just in a conversation describing what I was s
   <entry>
     <title type="html"><![CDATA[Southeast Puppet User's Group September]]></title>
     <link href="http://questy.org/blog/2014/09/11/southeast-puppet-users-group-september/"/>
-    <updated>2014-09-11T16:33:01-07:00</updated>
+    <updated>2014-09-11T19:33:01-04:00</updated>
     <id>http://questy.org/blog/2014/09/11/southeast-puppet-users-group-september</id>
     <content type="html"><![CDATA[<p><a href="http://questy.org/images/puppet_docker.jpg"><img src="http://questy.org/images/puppet_docker.jpg" alt="puppet_docker" /></a></p>
 
 <p>John Ray is bringing the Puppet + Docker goodness in his talk tonight: &ldquo;Deploying Docker Containers with Puppet&rdquo;.  Join us each month at the Shadow Soft offices for the latest in DEVOPS topics and information.  Always fun, lots of discussion and information surrounding Puppet topics and associated technologies.  There&rsquo;s always pizza and beverages of all kinds, and we&rsquo;ve finally moved into our new meeting/class rooms, so come on out.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[The Toolbox Grows...]]></title>
-    <link href="http://questy.org/blog/2014/06/11/toolbox-grows/"/>
-    <updated>2014-06-11T09:57:18-07:00</updated>
-    <id>http://questy.org/blog/2014/06/11/toolbox-grows</id>
-    <content type="html"><![CDATA[<p>So far we&rsquo;ve gotten our heads around some important things.  First and foremost, vim.  Our editor and companion for creating great code and ways to see our code in action and be able to determine at a glance whether our syntax is correct.  Also, we&rsquo;ve looked at revision control.  The single largest &ldquo;CYA&rdquo; ohmygodimgladivegotanoldercopytorestoreto sort of paradigm where you can roll yourself back to previously &ldquo;known good&rdquo; revisions to save that day&hellip;besides that, it&rsquo;s just darned good practice to keep your code externally saved, revision controlled, and accessible.</p>
-
-<p>I&rsquo;ve also talked about importance of workflow clarity and quality.  If you implement a poor workflow, you just have an automated <em>poor </em>workflow. Key word here is &ldquo;poor&rdquo;.</p>
-
-<p>Next up on our browse through the &ldquo;toolbox&rdquo; is &ldquo;Vagrant&rdquo;.  What is this Vagrant, you ask?</p>
-
-<p>Virtualization is paramount in today&rsquo;s world in a number of ways and for a number of reasons.  For extending your server farms to handle even more application expression, to expand your own desktop machines to test/try different operating systems, and even just rolling up an ad-hoc VM so you can try something without touching a &ldquo;real&rdquo; machine in your environment.</p>
-
-<p>Some may disagree, but I&rsquo;ve found virtualization to be one of the most powerful tools added to the toolbox in years.  Not only can you prototype systems or applications, but you can prototype entire environments.  This is where Vagrant shines, and especially in the context of Puppet (master + clients), allows you to create a fully functioning Puppet environment upon which to develop, prototype, and test without ever jeopardizing even the least important system of your infrastructure.  I count that as a &ldquo;win&rdquo;.  Let&rsquo;s see what this tool can do.</p>
-
-<p><em><strong>What <em>is</em> Vagrant?</strong></em></p>
-
-<p>According to its website:</p>
-
-<p>Vagrant provides easy to configure, reproducible, and portable work environments built on top of industry-standard technology and controlled by a single consistent workflow to help maximize the productivity and flexibility of you and your team.</p>
-
-<p>To achieve its magic, Vagrant stands on the shoulders of giants. Machines are provisioned on top of VirtualBox, VMware, AWS, or any other provider. Then, industry-standard provisioning tools such as shell scripts, Chef, or Puppet, can be used to automatically install and configure software on the machine.</p>
-
-<p>There&rsquo;s a lot there, but it&rsquo;s just a fancy way of saying exactly what I said before.  Vagrant is essentially a framework system that wraps your virtualization engine to manage <em>environments </em>of VMs.  Here is where Vagrant will hold the power for us.</p>
-
-<p><em><strong>Virtualization</strong></em></p>
-
-<p>If Vagrant is the framework, then Virtualization is the foundation.  Now, I&rsquo;ve chosen to use &ldquo;Virtualbox&rdquo; for my virtualization technology, but VMWare works every bit as well.  I am doing all my testing over Virtualbox, however, so YMMV.  Virtualbox is freely available from oracle, and you can download the appropriate version from Virtualbox at <a href="https://www.virtualbox.org.">https://www.virtualbox.org.</a>  I am running the latest version at 4.3.12 (as of this writing) and it serves the Vagrant system extremely well.</p>
-
-<p><em><strong>Vagrant</strong></em></p>
-
-<p>Next, you&rsquo;ll need to install Vagrant on your system.  You can find all the right packages at <a href="http://www.vagrantup.com.">http://www.vagrantup.com.</a>  I am currently running version 1.6.3 without errors.</p>
-
-<p>[warning]I want to make a disclaimer here since I&rsquo;ve had an issue or two with Vagrant on a platform I don&rsquo;t use-Windows.  I am a Mac &amp; Linux user, and have had no issues using the Vagrant/Virtualbox combo on either of these.  However, literally every time I&rsquo;ve used Vagrant over Windows, it&rsquo;s just been a mess.  I&rsquo;ve known one person (ONE!) who has gotten Vagrant to work over Windows, and it required his getting into the product, editing code, etc.  As such, I wouldn&rsquo;t recommend it for those new to the platform.[/warning]</p>
-
-<p>On the Mac platform, you get a .dmg file and can extract it run the installer.  Linux versions are available as RPM installs and Debian Packages.  Once you&rsquo;re installed, let&rsquo;s mess around a bit with Vagrant to see what we can do.</p>
-
-<p><em><strong>Getting Started</strong></em></p>
-
-<p>Vagrant is a unique tool in that it allows you to manage all these varied VMs, but adds a twist.  The big twist is that you don&rsquo;t have to have the <em>source </em>materials for the VMs you&rsquo;re installing.  In fact, the simplicity of turning up a new VM is astounding.  Take the following series of commands:</p>
-
-<p>cd <your favorite directory><br>
-mkdir precise32<br>
-cd precise32<br>
-vagrant init hashicorp/precise32<br>
-vagrant up<br></p>
-
-<p>If your Vagrant is installed correctly, a number of things start to happen.  First, Vagrant places a file in your cwd called &ldquo;Vagrantfile&rdquo;.  Your vagrant file (indie) looks like this:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># -*- mode: ruby -*-
-</span><span class='line'># vi: set ft=ruby :
-</span><span class='line'>
-</span><span class='line'># All Vagrant configuration is done below. The "2" in Vagrant.configure
-</span><span class='line'># configures the configuration version (we support older styles for
-</span><span class='line'># backwards compatibility). Please don't change it unless you know what
-</span><span class='line'># you're doing.
-</span><span class='line'>Vagrant.configure("2") do |config|
-</span><span class='line'>  # The most common configuration options are documented and commented below.
-</span><span class='line'>  # For a complete reference, please see the online documentation at
-</span><span class='line'>  # https://docs.vagrantup.com.
-</span><span class='line'>
-</span><span class='line'>  # Every Vagrant development environment requires a box. You can search for
-</span><span class='line'>  # boxes at https://atlas.hashicorp.com/search.
-</span><span class='line'>  config.vm.box = "hashicorp/precise32"
-</span><span class='line'>
-</span><span class='line'>  # Disable automatic box update checking. If you disable this, then
-</span><span class='line'>  # boxes will only be checked for updates when the user runs
-</span><span class='line'>  # `vagrant box outdated`. This is not recommended.
-</span><span class='line'>  # config.vm.box_check_update = false
-</span><span class='line'>
-</span><span class='line'>  # Create a forwarded port mapping which allows access to a specific port
-</span><span class='line'>  # within the machine from a port on the host machine. In the example below,
-</span><span class='line'>  # accessing "localhost:8080" will access port 80 on the guest machine.
-</span><span class='line'>  # config.vm.network "forwarded_port", guest: 80, host: 8080
-</span><span class='line'>
-</span><span class='line'>  # Create a private network, which allows host-only access to the machine
-</span><span class='line'>  # using a specific IP.
-</span><span class='line'>  # config.vm.network "private_network", ip: "192.168.33.10"
-</span><span class='line'>
-</span><span class='line'>  # Create a public network, which generally matched to bridged network.
-</span><span class='line'>  # Bridged networks make the machine appear as another physical device on
-</span><span class='line'>  # your network.
-</span><span class='line'>  # config.vm.network "public_network"
-</span><span class='line'>
-</span><span class='line'>  # Share an additional folder to the guest VM. The first argument is
-</span><span class='line'>  # the path on the host to the actual folder. The second argument is
-</span><span class='line'>  # the path on the guest to mount the folder. And the optional third
-</span><span class='line'>  # argument is a set of non-required options.
-</span><span class='line'>  # config.vm.synced_folder "../data", "/vagrant_data"
-</span><span class='line'>
-</span><span class='line'>  # Provider-specific configuration so you can fine-tune various
-</span><span class='line'>  # backing providers for Vagrant. These expose provider-specific options.
-</span><span class='line'>  # Example for VirtualBox:
-</span><span class='line'>  #
-</span><span class='line'>  # config.vm.provider "virtualbox" do |vb|
-</span><span class='line'>  #   # Display the VirtualBox GUI when booting the machine
-</span><span class='line'>  #   vb.gui = true
-</span><span class='line'>  #
-</span><span class='line'>  #   # Customize the amount of memory on the VM:
-</span><span class='line'>  #   vb.memory = "1024"
-</span><span class='line'>  # end
-</span><span class='line'>  #
-</span><span class='line'>  # View the documentation for the provider you are using for more
-</span><span class='line'>  # information on available options.
-</span><span class='line'>
-</span><span class='line'>  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
-</span><span class='line'>  # such as FTP and Heroku are also available. See the documentation at
-</span><span class='line'>  # https://docs.vagrantup.com/v2/push/atlas.html for more information.
-</span><span class='line'>  # config.push.define "atlas" do |push|
-</span><span class='line'>  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
-</span><span class='line'>  # end
-</span><span class='line'>
-</span><span class='line'>  # Enable provisioning with a shell script. Additional provisioners such as
-</span><span class='line'>  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-</span><span class='line'>  # documentation for more information about their specific syntax and use.
-</span><span class='line'>  # config.vm.provision "shell", inline: &lt;&lt;-SHELL
-</span><span class='line'>  #   apt-get update
-</span><span class='line'>  #   apt-get install -y apache2
-</span><span class='line'>  # SHELL
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note that this is a long file with a lot of explanatory documentation.  In actuality, the most important part of your Vagrantfile can be summed up here:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># -*- mode: ruby -*-
-</span><span class='line'># vi: set ft=ruby :
-</span><span class='line'>Vagrant.configure("2") do |config|
-</span><span class='line'>  config.vm.box = "hashicorp/precise32"
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>These are the lines that are uncommented plus the top two declaratives that tell Vagrant what to do.  It&rsquo;s a very simple file that does some very powerful things.  First, it checks your home directory in the ~/.vagrant.d location to see if you already have the &ldquo;precise32&rdquo; Vagrant source &ldquo;box&rdquo;.  (more on boxes later).  Next, if you do have this, it will simply start up a VM in your virtualization of choice with a randomized name.  For instance, mine is called &ldquo;precise32_default_1402504453444_30545&rdquo;.  Vagrant takes away the selection of an .iso image, connecting it to the virtual CD/DVD Rom, starting an installer, etc.  It simply sends you a pre-rolled image, places it in your .vagrant.d directory, and provisions the VM to respond to Vagrant commands, and starts it up within Virtualbox.  Precise32 is simply a test scenario, as Vagrant&rsquo;s site has quite a number of varied and specially configured &ldquo;box&rdquo; files that you can use to prototype on at their &ldquo;ready-made&rdquo; box discovery site: <a href="https://vagrantcloud.com/discover/featured.">https://vagrantcloud.com/discover/featured.</a>  You can install boxes with too many variations and differentiations to enumerate here, and that&rsquo;s not really the point for our purposes&hellip; you may find these of great assistance in your own workplace, but let&rsquo;s continue.</p>
-
-<p>When you run your &ldquo;vagrant init&rdquo; command listed above, it places a Vagrantfile, and when you do a &ldquo;vagrant up&rdquo;, it automatically retrieves your box file, provisions, and starts the VM.  Now, by simply running &ldquo;vagrant ssh default&rdquo;, you are now logged into this virtual machine!  You also have full sudo to become root and do any sort of damage you may wish to do.  If you logout (&ldquo;exit&rdquo; or CTRL-D), and type &ldquo;vagrant destroy&rdquo;, the VM goes away and you have nothing in Virtualbox.</p>
-
-<p>Were we to just stop here, the power inherent in being able to just have these &ldquo;Vagrantfiles&rdquo; (sort of like a &ldquo;Makefile&rdquo; for boxes) to spin up and down test scenarios at will is incredible.  But, let&rsquo;s look at this in light of the Vagrantfile, what it can do and how you can customize it.  There is an entire descriptive language surrounding Vagrant PLUS Vagrant has a plugin infrastructure whereby developers can extend Vagrant&rsquo;s capabilities.  We will capitalize on these later.</p>
-
-<p>So, imagine a scenario where you can create a directory, copy a text file into it, run a single command, and it automatically provisions a 4-node Puppet Enterprise infrastructure, fully installed with a master and three agents, MCollective fully installed, PuppetDB installed and in use&hellip;  literally a full installation just like you would use for your infrastructure&hellip;  Now we get powerful.  NOW we have the ability to do some cool things.</p>
-
-<p>Next time, that&rsquo;s exactly what we&rsquo;re going to do.</p>
 ]]></content>
   </entry>
   

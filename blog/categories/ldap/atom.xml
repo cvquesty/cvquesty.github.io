@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ldap | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/ldap/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-25T11:29:22-07:00</updated>
+  <updated>2017-05-01T13:10:26-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[A Few Notes...]]></title>
     <link href="http://questy.org/blog/2011/02/22/a-few-notes/"/>
-    <updated>2011-02-22T07:26:06-08:00</updated>
+    <updated>2011-02-22T10:26:06-05:00</updated>
     <id>http://questy.org/blog/2011/02/22/a-few-notes</id>
     <content type="html"><![CDATA[<p>I think it is important to make a note about all of the people and places that have helped me ferret out a lot of this configuration.  I don&rsquo;t find this stuff in a vacuum (like anything in the Open Source world), and find it quite important to give a nod where a nod is due.</p>
 
@@ -37,7 +37,7 @@
   <entry>
     <title type="html"><![CDATA[LDAP Administration VI - TLS/SSL]]></title>
     <link href="http://questy.org/blog/2011/02/21/ldap-administration-v-tls/"/>
-    <updated>2011-02-21T12:35:34-08:00</updated>
+    <updated>2011-02-21T15:35:34-05:00</updated>
     <id>http://questy.org/blog/2011/02/21/ldap-administration-v-tls</id>
     <content type="html"><![CDATA[<h6>_This article goes hand in hand with &ldquo;LDAP Administration - Part I&rdquo; in regards to configuring the client. _</h6>
 
@@ -125,7 +125,7 @@ uid=123(bob) gid=123(users) groups=123(users),456(bob)</strong></p>
   <entry>
     <title type="html"><![CDATA[LDAP Administration v - Replication]]></title>
     <link href="http://questy.org/blog/2011/02/18/ldap-administration-iv-replication/"/>
-    <updated>2011-02-18T09:57:33-08:00</updated>
+    <updated>2011-02-18T12:57:33-05:00</updated>
     <id>http://questy.org/blog/2011/02/18/ldap-administration-iv-replication</id>
     <content type="html"><![CDATA[<p>Continuing our discussion of LDAP Administration, there&rsquo;s the matter of Replication.</p>
 
@@ -214,7 +214,7 @@ Two slaves configured as replicants, up and running.. check.</p>
   <entry>
     <title type="html"><![CDATA[LDAP Authentication IV - Apache]]></title>
     <link href="http://questy.org/blog/2010/08/05/ldap-authentication-for-apache/"/>
-    <updated>2010-08-05T14:03:09-07:00</updated>
+    <updated>2010-08-05T17:03:09-04:00</updated>
     <id>http://questy.org/blog/2010/08/05/ldap-authentication-for-apache</id>
     <content type="html"><![CDATA[<p>Once you&rsquo;ve got your handy LDAP server authenticating users for login throughout your environment, inevitably you find yourself getting around to the question of authentication for all your backend tools/services machines.  Can you authenticate from Apache to that same auth store to reduce administration burden across the environment?</p>
 
@@ -364,7 +364,7 @@ TLS_CACERTDIR /etc/openldap/cacerts</p>
   <entry>
     <title type="html"><![CDATA[LDAP Administration III – ‘Odds ‘n Ends’]]></title>
     <link href="http://questy.org/blog/2009/12/29/ldap-administration-iii-odds-n-ends/"/>
-    <updated>2009-12-29T03:17:46-08:00</updated>
+    <updated>2009-12-29T06:17:46-05:00</updated>
     <id>http://questy.org/blog/2009/12/29/ldap-administration-iii-odds-n-ends</id>
     <content type="html"><![CDATA[<p>By now you should have a functional LDAP server, a properly configured client, and the ability to authenticate against your server.  However, the last couple &ldquo;cogs in the wheel&rdquo; are left to manage.</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Geekstuff, | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/geekstuff/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-25T11:29:22-07:00</updated>
+  <updated>2017-05-01T13:10:26-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise]]></title>
     <link href="http://questy.org/blog/2017/04/17/scaling-puppet-enterprise/"/>
-    <updated>2017-04-17T13:06:11-07:00</updated>
+    <updated>2017-04-17T16:06:11-04:00</updated>
     <id>http://questy.org/blog/2017/04/17/scaling-puppet-enterprise</id>
     <content type="html"><![CDATA[<p>In my former life as a consultant, I had to install all manner of configurations of Puppet for clients.  Some were small and some were large, but none were <strong><em>VERY</em></strong> large.  One of the big things I was finding back then was there just wasn&rsquo;t a lot of publicly available information regarding doing a full install and scaling it large.</p>
 

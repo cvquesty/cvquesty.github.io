@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Systems Administration | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/systems-administration/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-04-25T11:29:22-07:00</updated>
+  <updated>2017-05-01T13:10:26-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[PuppetConf 2014]]></title>
     <link href="http://questy.org/blog/2014/09/23/puppetconf-2014/"/>
-    <updated>2014-09-23T11:19:37-07:00</updated>
+    <updated>2014-09-23T14:19:37-04:00</updated>
     <id>http://questy.org/blog/2014/09/23/puppetconf-2014</id>
     <content type="html"><![CDATA[<p>Glad to be at PuppetConf with #ShadowSoft exploring all the latest and greatest in PuppetLabs.</p>
 
@@ -27,7 +27,7 @@
   <entry>
     <title type="html"><![CDATA["Do's and Dont's" for Your Puppet Environment]]></title>
     <link href="http://questy.org/blog/2014/05/20/dos-donts-puppet-environment/"/>
-    <updated>2014-05-20T06:15:14-07:00</updated>
+    <updated>2014-05-20T09:15:14-04:00</updated>
     <id>http://questy.org/blog/2014/05/20/dos-donts-puppet-environment</id>
     <content type="html"><![CDATA[<p>IT Automation, like the features and functions offered by Puppet, is riddled with a number of pitfalls. Nothing dangerous or site-threatening in the near term, however evolving a <em>bad </em>plan can lead you down a painful path to re-trek when you ultimately need to demolish what you&rsquo;ve done and re-tool, re-work, or even re-start from scratch.  Some simple suggestions can help smooth your integration, and also provide tools and methodologies that make changes in philosophy easy to test and implement as well as make the long road back from a disaster easy(-ier?) to navigate.</p>
 
@@ -92,7 +92,7 @@
   <entry>
     <title type="html"><![CDATA[GitHub, Git, and Just Plain Revision Control]]></title>
     <link href="http://questy.org/blog/2014/05/13/github-git-just-plain-revision-control/"/>
-    <updated>2014-05-13T14:06:09-07:00</updated>
+    <updated>2014-05-13T17:06:09-04:00</updated>
     <id>http://questy.org/blog/2014/05/13/github-git-just-plain-revision-control</id>
     <content type="html"><![CDATA[<p>One of the &ldquo;bugaboos&rdquo; in the sysadmin world for the longest time was the reluctance to use those &ldquo;stinky developer tools&rdquo; in our world for any reason.  I&rsquo;m not sure the impetus behind this, but my wager is on something akin to security or yet another open port or &ldquo;attack vector&rdquo; if you will.  But today&rsquo;s competent and conscientious systems admin (not to mention DEVOPS person) will use revision control as their go-to standard for collecting, versioning, backing up, and distributing all manner of things.</p>
 
@@ -321,7 +321,7 @@ GitHub Help](https://help.github.com)
   <entry>
     <title type="html"><![CDATA[Why All the Vim?]]></title>
     <link href="http://questy.org/blog/2014/05/09/vim-2/"/>
-    <updated>2014-05-09T08:07:57-07:00</updated>
+    <updated>2014-05-09T11:07:57-04:00</updated>
     <id>http://questy.org/blog/2014/05/09/vim-2</id>
     <content type="html"><![CDATA[<p>As we move on through the last post on Vim, you may ask yourself why I&rsquo;m remediating all the way back to text editors.  Well, as you&rsquo;ll see over time, this is all about workflow; Building yourself a detailed workflow by which you can write code, syntax check, commit to revision control, deploy to your Puppet instances, and duplicate that workflow across all your environments.</p>
 
@@ -366,7 +366,7 @@ GitHub Help](https://help.github.com)
   <entry>
     <title type="html"><![CDATA[Vim]]></title>
     <link href="http://questy.org/blog/2014/05/02/vim/"/>
-    <updated>2014-05-02T12:56:54-07:00</updated>
+    <updated>2014-05-02T15:56:54-04:00</updated>
     <id>http://questy.org/blog/2014/05/02/vim</id>
     <content type="html"><![CDATA[<p><strong>Old School</strong></p>
 

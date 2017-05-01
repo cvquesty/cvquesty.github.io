@@ -9,7 +9,7 @@
   <meta name="author" content="Jerald Sheets">
 
   
-  <meta name="description" content="The Pain Point One would think after reading Gary Larizza’s blog that I wouldve come away with the idea that Hiera presents a few issues as it solves &hellip;">
+  <meta name="description" content="Salutations First of all, hello from sunny and hot New York. I’m on engagement for my company doing some Puppet goodness in the Northeast. In my &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,6 +84,86 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2015/07/28/some-software-releases-and-forge-stuffs/">Some Software Releases and Forge Stuffs</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-07-28T10:11:55-04:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:11 am</span></time>
+        
+           | <a href="/blog/2015/07/28/some-software-releases-and-forge-stuffs/#disqus_thread"
+             data-disqus-identifier="http://questy.org/blog/2015/07/28/some-software-releases-and-forge-stuffs/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>Salutations</strong></p>
+
+<p>First of all, hello from sunny and hot New York. I’m on engagement for my company doing some Puppet goodness in the Northeast.</p>
+
+<p>In my downtime at night, Ive been wrapping up some work I’ve had on my plate for awhile (my Puppet module destined for the Puppet Forge) and generally studying for various topics if for no other reason than to get better.</p>
+
+<p>As I was preparing my new module, Puppet releases the Puppet4 Enterprise release that now follows new semantic versioning schemes, and follows the scheme:</p>
+
+<p>Puppet Enterprise YYYY.VV</p>
+
+<p>where “V” is version number.</p>
+
+<p><strong>Puppet Enterprise</strong></p>
+
+<p>As many of you know, I’ve been maintaining a project for Puppet prototyping and working with development and testing over a Vagrant instance for some time. I created what I have because I needed something I could share with customers to help facilitate coding and iteration without their touching the production instance unless absolutely necessary.</p>
+
+<p>Thus, my projects were born.</p>
+
+<p><strong>Vagrants. Vagrants Everywhere.</strong></p>
+
+<p>In a nutshell, I configure a Vagrant environment on a modern OS. I create 4 nodes. One is the Puppet Master itself and the remaining three are Puppet agents that check in with the master and are in three faux envirnments: “Production”, “Testing”, and “Development”. As a result, you can code for DEV and iterate the heck out of it. Once you like it, you can merge up the tree into testing and finally to production.</p>
+
+<p>These releases have been followng the format:</p>
+
+<p>[OSNAME]|[VERSION NUMBER]-[PUPPET][PUPPETVERSION]</p>
+
+<p>So, for instance, a release for CentOS5 running Puppet Open Source 4.0 would look something like this:</p>
+
+<p>centos5-po4</p>
+
+<p>Make sense?</p>
+
+<p>Well, as of today, my new release will be CentOS7 with Puppet Enterprise 2015.2. It can be found here.</p>
+
+<p><strong>Puppet Forge Module</strong></p>
+
+<p>I’ve also been working on two separate modules for the forge here recently. The other I’ve been working on longer, but this one was just ready first. I call it “PuppetDev”.</p>
+
+<p>The idea behind the PuppetDev module is that sometimes a company who needs to do Puppet Development has corporate policy against using a tool like the Vagrant instances (i.e. virtualization on the desktop) mentioned above. As a result, the company often will set up a centralized development host that people can login to for developing Puppet code.</p>
+
+<p>Often times, though, when starting out, a user can feel overwhelmed at the simple command line in front of them, and even if they get into an editor, they may not know where to start with syntax highlighting and the like.</p>
+
+<p>It was from this need PuppetDev was born. You simply apply the module to a node, and supply the user/group you want to apply the module to as parameters, and it whirls away and sets up their development environment.</p>
+
+<p>Among the toys they get with the release are syntax highlighting, an easier to read colorscheme, a Vim plugin infrastructure, and all manageable by the Puppet Administrator for the site.</p>
+
+<p>I know it’s a rather narrow use case, but there it is… feel free to check it out here, or if you’re so inclined, on your Puppet master you can simply run puppet module install cvquesty/puppetdev.</p>
+
+<p>That’s all I have for this update, but hope to be a little more active here shortly with my next Forge module.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2015/05/15/organizing-your-hierarchy-equals-pain/">Organizing Your Hierarchy Equals Pain</a></h1>
     
     
@@ -93,7 +173,7 @@
 
 
 
-<time class='entry-date' datetime='2015-05-15T14:48:59-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:48 pm</span></time>
+<time class='entry-date' datetime='2015-05-15T17:48:59-04:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>5:48 pm</span></time>
         
            | <a href="/blog/2015/05/15/organizing-your-hierarchy-equals-pain/#disqus_thread"
              data-disqus-identifier="http://questy.org/blog/2015/05/15/organizing-your-hierarchy-equals-pain/">Comments</a>
@@ -203,7 +283,7 @@ A: Oh… ummm… I never thought of that before.<br></p>
 
 
 
-<time class='entry-date' datetime='2015-04-30T09:52:27-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:52 am</span></time>
+<time class='entry-date' datetime='2015-04-30T12:52:27-04:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:52 pm</span></time>
         
            | <a href="/blog/2015/04/30/puppets-dot-puppets-everywhere/#disqus_thread"
              data-disqus-identifier="http://questy.org/blog/2015/04/30/puppets-dot-puppets-everywhere/">Comments</a>
@@ -298,7 +378,7 @@ ubuntu-1404-i386<br></p>
 
 
 
-<time class='entry-date' datetime='2015-03-26T08:26:16-07:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>8:26 am</span></time>
+<time class='entry-date' datetime='2015-03-26T11:26:16-04:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:26 am</span></time>
         
            | <a href="/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/#disqus_thread"
              data-disqus-identifier="http://questy.org/blog/2015/03/26/some-coding-work-of-late-dot-dot-dot/">Comments</a>
@@ -368,7 +448,7 @@ ubuntu-1404-i386<br></p>
 
 
 
-<time class='entry-date' datetime='2015-03-26T06:15:18-07:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>6:15 am</span></time>
+<time class='entry-date' datetime='2015-03-26T09:15:18-04:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:15 am</span></time>
         
            | <a href="/blog/2015/03/26/building-your-toolbox/#disqus_thread"
              data-disqus-identifier="http://questy.org/blog/2015/03/26/building-your-toolbox/">Comments</a>
@@ -476,7 +556,7 @@ ubuntu-1404-i386<br></p>
 
 
 
-<time class='entry-date' datetime='2015-03-23T07:01:01-07:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>7:01 am</span></time>
+<time class='entry-date' datetime='2015-03-23T10:01:01-04:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>10:01 am</span></time>
         
            | <a href="/blog/2015/03/23/management-may-be-missing-an-important-component-of-devops/#disqus_thread"
              data-disqus-identifier="http://questy.org/blog/2015/03/23/management-may-be-missing-an-important-component-of-devops/">Comments</a>
@@ -566,7 +646,7 @@ ubuntu-1404-i386<br></p>
 
 
 
-<time class='entry-date' datetime='2015-01-15T17:31:15-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>5:31 pm</span></time>
+<time class='entry-date' datetime='2015-01-15T20:31:15-05:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>8:31 pm</span></time>
         
            | <a href="/blog/2015/01/15/vagrant-and-docker-love/#disqus_thread"
              data-disqus-identifier="http://questy.org/blog/2015/01/15/vagrant-and-docker-love/">Comments</a>
@@ -618,7 +698,7 @@ I spoke with some folks at Puppet just in a conversation describing what I was s
 
 
 
-<time class='entry-date' datetime='2015-01-08T10:39:12-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:39 am</span></time>
+<time class='entry-date' datetime='2015-01-08T13:39:12-05:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:39 pm</span></time>
         
            | <a href="/blog/2015/01/08/moving-my-tech-content-to-github/#disqus_thread"
              data-disqus-identifier="http://questy.org/blog/2015/01/08/moving-my-tech-content-to-github/">Comments</a>
@@ -660,7 +740,7 @@ I spoke with some folks at Puppet just in a conversation describing what I was s
 
 
 
-<time class='entry-date' datetime='2014-09-23T11:19:37-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>11:19 am</span></time>
+<time class='entry-date' datetime='2014-09-23T14:19:37-04:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>2:19 pm</span></time>
         
            | <a href="/blog/2014/09/23/puppetconf-2014/#disqus_thread"
              data-disqus-identifier="http://questy.org/blog/2014/09/23/puppetconf-2014/">Comments</a>
@@ -694,7 +774,7 @@ I spoke with some folks at Puppet just in a conversation describing what I was s
 
 
 
-<time class='entry-date' datetime='2014-09-11T16:33:01-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>4:33 pm</span></time>
+<time class='entry-date' datetime='2014-09-11T19:33:01-04:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>7:33 pm</span></time>
         
            | <a href="/blog/2014/09/11/southeast-puppet-users-group-september/#disqus_thread"
              data-disqus-identifier="http://questy.org/blog/2014/09/11/southeast-puppet-users-group-september/">Comments</a>
@@ -707,248 +787,6 @@ I spoke with some folks at Puppet just in a conversation describing what I was s
   <div class="entry-content"><p><a href="http://questy.org/images/puppet_docker.jpg"><img src="http://questy.org/images/puppet_docker.jpg" alt="puppet_docker" /></a></p>
 
 <p>John Ray is bringing the Puppet + Docker goodness in his talk tonight: &ldquo;Deploying Docker Containers with Puppet&rdquo;.  Join us each month at the Shadow Soft offices for the latest in DEVOPS topics and information.  Always fun, lots of discussion and information surrounding Puppet topics and associated technologies.  There&rsquo;s always pizza and beverages of all kinds, and we&rsquo;ve finally moved into our new meeting/class rooms, so come on out.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/11/toolbox-grows/">The Toolbox Grows...</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-11T09:57:18-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>9:57 am</span></time>
-        
-           | <a href="/blog/2014/06/11/toolbox-grows/#disqus_thread"
-             data-disqus-identifier="http://questy.org/blog/2014/06/11/toolbox-grows/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>So far we&rsquo;ve gotten our heads around some important things.  First and foremost, vim.  Our editor and companion for creating great code and ways to see our code in action and be able to determine at a glance whether our syntax is correct.  Also, we&rsquo;ve looked at revision control.  The single largest &ldquo;CYA&rdquo; ohmygodimgladivegotanoldercopytorestoreto sort of paradigm where you can roll yourself back to previously &ldquo;known good&rdquo; revisions to save that day&hellip;besides that, it&rsquo;s just darned good practice to keep your code externally saved, revision controlled, and accessible.</p>
-
-<p>I&rsquo;ve also talked about importance of workflow clarity and quality.  If you implement a poor workflow, you just have an automated <em>poor </em>workflow. Key word here is &ldquo;poor&rdquo;.</p>
-
-<p>Next up on our browse through the &ldquo;toolbox&rdquo; is &ldquo;Vagrant&rdquo;.  What is this Vagrant, you ask?</p>
-
-<p>Virtualization is paramount in today&rsquo;s world in a number of ways and for a number of reasons.  For extending your server farms to handle even more application expression, to expand your own desktop machines to test/try different operating systems, and even just rolling up an ad-hoc VM so you can try something without touching a &ldquo;real&rdquo; machine in your environment.</p>
-
-<p>Some may disagree, but I&rsquo;ve found virtualization to be one of the most powerful tools added to the toolbox in years.  Not only can you prototype systems or applications, but you can prototype entire environments.  This is where Vagrant shines, and especially in the context of Puppet (master + clients), allows you to create a fully functioning Puppet environment upon which to develop, prototype, and test without ever jeopardizing even the least important system of your infrastructure.  I count that as a &ldquo;win&rdquo;.  Let&rsquo;s see what this tool can do.</p>
-
-<p><em><strong>What <em>is</em> Vagrant?</strong></em></p>
-
-<p>According to its website:</p>
-
-<p>Vagrant provides easy to configure, reproducible, and portable work environments built on top of industry-standard technology and controlled by a single consistent workflow to help maximize the productivity and flexibility of you and your team.</p>
-
-<p>To achieve its magic, Vagrant stands on the shoulders of giants. Machines are provisioned on top of VirtualBox, VMware, AWS, or any other provider. Then, industry-standard provisioning tools such as shell scripts, Chef, or Puppet, can be used to automatically install and configure software on the machine.</p>
-
-<p>There&rsquo;s a lot there, but it&rsquo;s just a fancy way of saying exactly what I said before.  Vagrant is essentially a framework system that wraps your virtualization engine to manage <em>environments </em>of VMs.  Here is where Vagrant will hold the power for us.</p>
-
-<p><em><strong>Virtualization</strong></em></p>
-
-<p>If Vagrant is the framework, then Virtualization is the foundation.  Now, I&rsquo;ve chosen to use &ldquo;Virtualbox&rdquo; for my virtualization technology, but VMWare works every bit as well.  I am doing all my testing over Virtualbox, however, so YMMV.  Virtualbox is freely available from oracle, and you can download the appropriate version from Virtualbox at <a href="https://www.virtualbox.org.">https://www.virtualbox.org.</a>  I am running the latest version at 4.3.12 (as of this writing) and it serves the Vagrant system extremely well.</p>
-
-<p><em><strong>Vagrant</strong></em></p>
-
-<p>Next, you&rsquo;ll need to install Vagrant on your system.  You can find all the right packages at <a href="http://www.vagrantup.com.">http://www.vagrantup.com.</a>  I am currently running version 1.6.3 without errors.</p>
-
-<p>[warning]I want to make a disclaimer here since I&rsquo;ve had an issue or two with Vagrant on a platform I don&rsquo;t use-Windows.  I am a Mac &amp; Linux user, and have had no issues using the Vagrant/Virtualbox combo on either of these.  However, literally every time I&rsquo;ve used Vagrant over Windows, it&rsquo;s just been a mess.  I&rsquo;ve known one person (ONE!) who has gotten Vagrant to work over Windows, and it required his getting into the product, editing code, etc.  As such, I wouldn&rsquo;t recommend it for those new to the platform.[/warning]</p>
-
-<p>On the Mac platform, you get a .dmg file and can extract it run the installer.  Linux versions are available as RPM installs and Debian Packages.  Once you&rsquo;re installed, let&rsquo;s mess around a bit with Vagrant to see what we can do.</p>
-
-<p><em><strong>Getting Started</strong></em></p>
-
-<p>Vagrant is a unique tool in that it allows you to manage all these varied VMs, but adds a twist.  The big twist is that you don&rsquo;t have to have the <em>source </em>materials for the VMs you&rsquo;re installing.  In fact, the simplicity of turning up a new VM is astounding.  Take the following series of commands:</p>
-
-<p>cd <your favorite directory><br>
-mkdir precise32<br>
-cd precise32<br>
-vagrant init hashicorp/precise32<br>
-vagrant up<br></p>
-
-<p>If your Vagrant is installed correctly, a number of things start to happen.  First, Vagrant places a file in your cwd called &ldquo;Vagrantfile&rdquo;.  Your vagrant file (indie) looks like this:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># -*- mode: ruby -*-
-</span><span class='line'># vi: set ft=ruby :
-</span><span class='line'>
-</span><span class='line'># All Vagrant configuration is done below. The "2" in Vagrant.configure
-</span><span class='line'># configures the configuration version (we support older styles for
-</span><span class='line'># backwards compatibility). Please don't change it unless you know what
-</span><span class='line'># you're doing.
-</span><span class='line'>Vagrant.configure("2") do |config|
-</span><span class='line'>  # The most common configuration options are documented and commented below.
-</span><span class='line'>  # For a complete reference, please see the online documentation at
-</span><span class='line'>  # https://docs.vagrantup.com.
-</span><span class='line'>
-</span><span class='line'>  # Every Vagrant development environment requires a box. You can search for
-</span><span class='line'>  # boxes at https://atlas.hashicorp.com/search.
-</span><span class='line'>  config.vm.box = "hashicorp/precise32"
-</span><span class='line'>
-</span><span class='line'>  # Disable automatic box update checking. If you disable this, then
-</span><span class='line'>  # boxes will only be checked for updates when the user runs
-</span><span class='line'>  # `vagrant box outdated`. This is not recommended.
-</span><span class='line'>  # config.vm.box_check_update = false
-</span><span class='line'>
-</span><span class='line'>  # Create a forwarded port mapping which allows access to a specific port
-</span><span class='line'>  # within the machine from a port on the host machine. In the example below,
-</span><span class='line'>  # accessing "localhost:8080" will access port 80 on the guest machine.
-</span><span class='line'>  # config.vm.network "forwarded_port", guest: 80, host: 8080
-</span><span class='line'>
-</span><span class='line'>  # Create a private network, which allows host-only access to the machine
-</span><span class='line'>  # using a specific IP.
-</span><span class='line'>  # config.vm.network "private_network", ip: "192.168.33.10"
-</span><span class='line'>
-</span><span class='line'>  # Create a public network, which generally matched to bridged network.
-</span><span class='line'>  # Bridged networks make the machine appear as another physical device on
-</span><span class='line'>  # your network.
-</span><span class='line'>  # config.vm.network "public_network"
-</span><span class='line'>
-</span><span class='line'>  # Share an additional folder to the guest VM. The first argument is
-</span><span class='line'>  # the path on the host to the actual folder. The second argument is
-</span><span class='line'>  # the path on the guest to mount the folder. And the optional third
-</span><span class='line'>  # argument is a set of non-required options.
-</span><span class='line'>  # config.vm.synced_folder "../data", "/vagrant_data"
-</span><span class='line'>
-</span><span class='line'>  # Provider-specific configuration so you can fine-tune various
-</span><span class='line'>  # backing providers for Vagrant. These expose provider-specific options.
-</span><span class='line'>  # Example for VirtualBox:
-</span><span class='line'>  #
-</span><span class='line'>  # config.vm.provider "virtualbox" do |vb|
-</span><span class='line'>  #   # Display the VirtualBox GUI when booting the machine
-</span><span class='line'>  #   vb.gui = true
-</span><span class='line'>  #
-</span><span class='line'>  #   # Customize the amount of memory on the VM:
-</span><span class='line'>  #   vb.memory = "1024"
-</span><span class='line'>  # end
-</span><span class='line'>  #
-</span><span class='line'>  # View the documentation for the provider you are using for more
-</span><span class='line'>  # information on available options.
-</span><span class='line'>
-</span><span class='line'>  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
-</span><span class='line'>  # such as FTP and Heroku are also available. See the documentation at
-</span><span class='line'>  # https://docs.vagrantup.com/v2/push/atlas.html for more information.
-</span><span class='line'>  # config.push.define "atlas" do |push|
-</span><span class='line'>  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
-</span><span class='line'>  # end
-</span><span class='line'>
-</span><span class='line'>  # Enable provisioning with a shell script. Additional provisioners such as
-</span><span class='line'>  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-</span><span class='line'>  # documentation for more information about their specific syntax and use.
-</span><span class='line'>  # config.vm.provision "shell", inline: &lt;&lt;-SHELL
-</span><span class='line'>  #   apt-get update
-</span><span class='line'>  #   apt-get install -y apache2
-</span><span class='line'>  # SHELL
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note that this is a long file with a lot of explanatory documentation.  In actuality, the most important part of your Vagrantfile can be summed up here:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># -*- mode: ruby -*-
-</span><span class='line'># vi: set ft=ruby :
-</span><span class='line'>Vagrant.configure("2") do |config|
-</span><span class='line'>  config.vm.box = "hashicorp/precise32"
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>These are the lines that are uncommented plus the top two declaratives that tell Vagrant what to do.  It&rsquo;s a very simple file that does some very powerful things.  First, it checks your home directory in the ~/.vagrant.d location to see if you already have the &ldquo;precise32&rdquo; Vagrant source &ldquo;box&rdquo;.  (more on boxes later).  Next, if you do have this, it will simply start up a VM in your virtualization of choice with a randomized name.  For instance, mine is called &ldquo;precise32_default_1402504453444_30545&rdquo;.  Vagrant takes away the selection of an .iso image, connecting it to the virtual CD/DVD Rom, starting an installer, etc.  It simply sends you a pre-rolled image, places it in your .vagrant.d directory, and provisions the VM to respond to Vagrant commands, and starts it up within Virtualbox.  Precise32 is simply a test scenario, as Vagrant&rsquo;s site has quite a number of varied and specially configured &ldquo;box&rdquo; files that you can use to prototype on at their &ldquo;ready-made&rdquo; box discovery site: <a href="https://vagrantcloud.com/discover/featured.">https://vagrantcloud.com/discover/featured.</a>  You can install boxes with too many variations and differentiations to enumerate here, and that&rsquo;s not really the point for our purposes&hellip; you may find these of great assistance in your own workplace, but let&rsquo;s continue.</p>
-
-<p>When you run your &ldquo;vagrant init&rdquo; command listed above, it places a Vagrantfile, and when you do a &ldquo;vagrant up&rdquo;, it automatically retrieves your box file, provisions, and starts the VM.  Now, by simply running &ldquo;vagrant ssh default&rdquo;, you are now logged into this virtual machine!  You also have full sudo to become root and do any sort of damage you may wish to do.  If you logout (&ldquo;exit&rdquo; or CTRL-D), and type &ldquo;vagrant destroy&rdquo;, the VM goes away and you have nothing in Virtualbox.</p>
-
-<p>Were we to just stop here, the power inherent in being able to just have these &ldquo;Vagrantfiles&rdquo; (sort of like a &ldquo;Makefile&rdquo; for boxes) to spin up and down test scenarios at will is incredible.  But, let&rsquo;s look at this in light of the Vagrantfile, what it can do and how you can customize it.  There is an entire descriptive language surrounding Vagrant PLUS Vagrant has a plugin infrastructure whereby developers can extend Vagrant&rsquo;s capabilities.  We will capitalize on these later.</p>
-
-<p>So, imagine a scenario where you can create a directory, copy a text file into it, run a single command, and it automatically provisions a 4-node Puppet Enterprise infrastructure, fully installed with a master and three agents, MCollective fully installed, PuppetDB installed and in use&hellip;  literally a full installation just like you would use for your infrastructure&hellip;  Now we get powerful.  NOW we have the ability to do some cool things.</p>
-
-<p>Next time, that&rsquo;s exactly what we&rsquo;re going to do.</p>
 </div>
   
   
@@ -973,11 +811,15 @@ vagrant up<br></p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2017/04/24/scaling-puppet-enterprise-part-v-gitlab/">Scaling Puppet Enterprise - Part v - GitLab</a>
+        <a href="/blog/2017/04/28/scaling-puppet-enterprise-part-vi-code-manager/">Scaling Puppet Enterprise - Part VI - Code Manager</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2017/04/24/scaling-puppet-enterprise-part-iv-activemq-hub-and-spokes/">Scaling Puppet Enterprise - Part IV - ActiveMQ Hub and Spokes</a>
+        <a href="/blog/2017/04/25/scaling-puppet-enterprise-part-v-gitlab/">Scaling Puppet Enterprise - Part v - GitLab</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/04/25/scaling-puppet-enterprise-part-iv-activemq-hub-and-spokes/">Scaling Puppet Enterprise - Part IV - ActiveMQ Hub and Spokes</a>
       </li>
     
       <li class="post">
@@ -1006,10 +848,6 @@ vagrant up<br></p>
     
       <li class="post">
         <a href="/blog/2015/10/27/puppetconf-2015/">PuppetConf 2015</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/07/28/some-software-releases-and-forge-stuffs/">Some Software Releases and Forge Stuffs</a>
       </li>
     
   </ul>
