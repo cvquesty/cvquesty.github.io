@@ -3,7 +3,7 @@ layout: post
 title: "Scaling Puppet Enterprise - Part VI - Code Manager"
 date: 2017-04-28 11:48:13 -0700
 comments: true
-categories: 
+categories: puppet, geekstuff
 ---
 ###Recap
 
@@ -139,7 +139,6 @@ Next, you'll need a Code Manager user in the Enterprise Console. use the followi
 	* Click the "**Member Users**" tab.
 	* Fromt the dropdown list in the **User Name** field, select the **CM Admin** user and click **Add User**.
 
-	
 ###Code Manager
 
 Under the covers, Puppet Labs now uses r10k with the control repository to manage the deployment of code.nUnder this scenario, a few items are very important to remember:
@@ -153,7 +152,7 @@ More information on this process can be found at [Puppet's Documentation site](h
 
 ###Configuring the Git Server
 
-You should have a custom deployment user explicitly for pushing code into your master. I have settled on using "cmadmin" as a deploy user on the Git Server. This allows you to have a generic user on the GitLab server you created earlier that you can work with, configure web hooks for, and then leave the credentials for that user with your customer or place it into IDM for your company. 
+You should have a custom deployment user explicitly for pushing code into your master. I have settled on using "cmadmin" as a deploy user on the Git Server. This allows you to have a generic user on the GitLab server you created earlier that you can work with, configure web hooks for, and then leave the credentials for that user with your customer or place it into IDM for your company.
 
 To setup the new user:
 
@@ -256,11 +255,13 @@ Run the puppet agent on all compile masters in no particular order:
 Prior to PE 2016.x.x, you could only fire the tests with curl commands against the API. Those would be as follows:
 
 
-**Deploy a Single Environment**```curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys? token=`cat ~/.puppetlabs/token`" -d '{"environments": ["ENVIRONMENTNAME"], "wait": true}'
+**Deploy a Single Environment**
 ```
-**Deploy All Code Manager Managed Environments**
+curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys? token=`cat ~/.puppetlabs/token`" -d '{"environments": ["ENVIRONMENTNAME"], "wait": true}'
+```
+**Deploy All Code Manager Managed Environments**
 
-```curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys?token=`cat ~/.puppetlabs/token`" -d '{"deploy-all": true}'
+```curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys?token=`cat ~/.puppetlabs/token`" -d '{"deploy-all": true}'
 ```
 
 On PE Versions 2016.x.x and later, a new tool known as puppet-code was created to ease the testing and firing of the deploys.
