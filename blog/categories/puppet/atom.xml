@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Puppet, | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/puppet/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-05-01T13:10:26-04:00</updated>
+  <updated>2017-05-01T13:16:50-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -12,6 +12,331 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Scaling Puppet Enterprise - Part VI - Code Manager]]></title>
+    <link href="http://questy.org/blog/2017/04/28/scaling-puppet-enterprise-part-vi-code-manager/"/>
+    <updated>2017-04-28T14:48:13-04:00</updated>
+    <id>http://questy.org/blog/2017/04/28/scaling-puppet-enterprise-part-vi-code-manager</id>
+    <content type="html"><![CDATA[<h3>Recap</h3>
+
+<p>Let&rsquo;s see where we are.</p>
+
+<ol>
+<li>We have a Puppet Enterprise Split Installation consisting of a Puppet Master, PuppetDB, and Puppet Enterprise Console.</li>
+<li>We have a Load Balancer with two compiler nodes behind it.</li>
+<li>We have an ActiveMQ Hub and an ActiveMQ Spoke and have removed ActiveMQ responsibilites from the Enterprise Master (MoM).</li>
+<li>We have built a GitLab instance to host our Control Repo and other items necessary to operation of our Puppet environment.</li>
+</ol>
+
+
+<hr />
+
+<p>The final remaining piece is like a &ldquo;glue&rdquo; step where we pull all the various pieces together, generate keys for SSH and deployment tokens. We also associate the ctalog compilers to the Enterprise master and coordinate the deployment of code across the masters.  Needless to say, you will need to have already performed all the preceding steps, and have made everything ready to go for the following procedure. Failure to have done so will have unpredictable results. So, if you&rsquo;re ready, let&rsquo;s proceed.</p>
+
+<h3>Setup A Control Repository</h3>
+
+<p>The first and foremost piece is to have a repo whose job is to &ldquo;control&rdquo; the processig of modules and custom code, and giving the &ldquo;map&rdquo; for deployment into your Enterprise master and catalog compilers. Puppet Labs has a suggested sample one <a href="https://github.com/puppetlabs/control-repo">here</a> which has quite a number of nice features. However, when I first wrote this tutorial, it was considerably overkill for what I was needing to do, so I opted to create my own <strong>very simple</strong> version of a control repository. Quite a few iterations have occurred since writing these instructions, so I will continue with my instructions.</p>
+
+<h3>The Control Repo</h3>
+
+<p>The control repo came about as a collaboration at Puppet Labs between employees, consultants, users, etc. It was originally named something else which escapes me at the moment, but eventually came to be named the &ldquo;control repo&rdquo; by virtue of the service it performs. In short, it contains the &ldquo;map&rdquo; between what you have in Git or at the Puppet Forge, and the deployment directories on your Puppet masters. The &ldquo;map&rdquo; itself is known as the &ldquo;Puppetfile&rdquo;. This file contains a listing of all the modules you want deployed to the server. The bonus is that for each Git branch you have within the repo, this specifies an &ldquo;environment&rdquo; to Puppet.</p>
+
+<p>I won&rsquo;t get into all the conversation around whether you should have 1:1 mapping between Git branches and Puppet Environments and then from Puppet Environments to application tiers&hellip; I&rsquo;ll leave that to the Puppet folks. I have always mapped everthing identically all the way through, and will cover that process here.</p>
+
+<p><em>NOTE: The understood way of doing this these days is that if you have a new &ldquo;thing&rdquo; you want to create, you fork a feature branch, apply it to a few nodes for testing, then merge back into your master or production branch and deploy everywhere. I&rsquo;d recommend learning this. In my own needs, I had a lot of governed environments (PCI, SOX, ITIL, etc) that needed absolute code separation, and the ability to demonstrate that no code in one environment had a chance of deploying to another.  (principle of environment separation)  As a result, I always opted for 1:1 correlation.</em></p>
+
+<p>I have created a sample control_repo you can clone from here:  <a href="https://github.com/cvquesty/control_repo.git">https://github.com/cvquesty/control_repo.git</a></p>
+
+<p>This is a bare repo with a collection of Forge modules populated into the Puppetfile with a &ldquo;development&rdquo; and a &ldquo;production&rdquo; branch. This will trigger Puppet to create directories called &ldquo;development&rdquo; and &ldquo;production&rdquo; in /etc/puppetlabs/code/environments, and will contain the items you instruct it to deploy there from the Puppetfile.</p>
+
+<p>First, clone the repo:</p>
+
+<pre><code>git clone https://github.com/cvquesty/control_repo.git
+</code></pre>
+
+<p>to a working directory of your choice on your local node.  Next, change to the directory and view the remote:</p>
+
+<pre><code>cd control_repo
+git remote -v
+</code></pre>
+
+<p>This should present you with the GitHub location of my sample repo:</p>
+
+<blockquote><p>origin    <a href="https://github.com/cvquesty/control_repo.git">https://github.com/cvquesty/control_repo.git</a> (fetch)
+origin    <a href="https://github.com/cvquesty/control_repo.git">https://github.com/cvquesty/control_repo.git</a> (push)</p></blockquote>
+
+<p>This will present you an issue in that you can&rsquo;t push to my repo. What I always tell people to do is to move it to their own Git repo. This is well documented elsewhere, but I&rsquo;ll give you an example process.</p>
+
+<p>While in the control_repo directory, perform the following:</p>
+
+<pre><code>git checkout development
+git remote rm origin 
+</code></pre>
+
+<p>This now makes sure you&rsquo;re in the development branch, and that the repo is unattached to my GitHub account.  Next, you&rsquo;ll need to create a control_repo in <em>your</em> Git server, and set it as your own remote.  First login to your Git server and create an empty repo to hold the code. Next, in the repo you forked from mine, run the commands to switch repos like so:</p>
+
+<pre><code>git remote add origin https://&lt;YOUR_GIT_SERVER&gt;/&lt;YOUR_ID&gt;/control_repo.git
+
+git add .
+
+git commit -a -m 'Initial Commit'
+
+git push origin development
+
+git checkout production
+
+git add .
+
+git commit -a -m 'Initial Commit'
+
+git push origin production
+</code></pre>
+
+<p>Now, you have the repo local to you and pointing to your own Git repository so you can edit and update the control_repo at will.  <em>(you might note extra steps there.  This is for those unfamiliar with Git.  They may not be necessary, but it gives a good pattern for how to work with repos, and I want to establish good habits early.)</em></p>
+
+<h3>Generate SSH Keys</h3>
+
+<p>On the Enterprise Master, you will need to create locations and/or set permissions on files and directories used by Code Manager:</p>
+
+<pre><code>chown -R pe-puppet:pe-puppet /etc/puppetlabs/code
+chown -R pe-puppet:pe-puppet /etc/puppetlabs/code-staging
+mkdir -p /etc/puppetlabs/puppetserver/ssh
+</code></pre>
+
+<p>Next, you will need to generate a secret key to use with Code Manager setup.  To create the secret key, perform the following on the Enterprise Master:</p>
+
+<pre><code>ssh-keygen -t rsa -b 4096 -C "SSH Deploy Keys"
+</code></pre>
+
+<p>When ssh-keygen asks you what to name the key, I usually give it a name I can remember, name it after the customer I am doing work for, or just name it for the Control Repo itself. In this case, let&rsquo;s answer with the latter:</p>
+
+<pre><code>/etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa
+</code></pre>
+
+<p>Now, when configuring Code Manager in the Puppet Enterprise Console, you will use that key.</p>
+
+<p>next, ensure all associated files are owned by the PE user:</p>
+
+<pre><code>chown -R pe-puppet:pe-puppet /etc/puppetlabs/puppetserver/ssh
+</code></pre>
+
+<h3>Create RBAC Code Manager User</h3>
+
+<p>Next, you&rsquo;ll need a Code Manager user in the Enterprise Console. use the following process for that:</p>
+
+<ol>
+<li>Create a new role named &ldquo;Deploy Environments&rdquo;</li>
+<li><p>Assign this role the following permissions:</p>
+
+<ul>
+<li>Add the &ldquo;<strong>Puppet Environment</strong>&rdquo; type.</li>
+<li>Set <strong>Permissions</strong> for this type to &ldquo;<strong>Deploy Code</strong>&rdquo;</li>
+<li>Set the <strong>Object</strong> for this type to <strong>All</strong>.</li>
+</ul>
+</li>
+<li><p>Add the <strong>Tokens</strong> Type</p>
+
+<ul>
+<li>Set <strong>Permissions</strong> for this type to <strong>Override Default Expiry.</strong></li>
+</ul>
+</li>
+<li>Create a local user to manage code deployments.
+
+<ul>
+<li>Click &ldquo;<strong>Access Control | users</strong>&rdquo;</li>
+<li>On the <strong>Users</strong> page, in the <strong>Full Name</strong> field, type the User&rsquo;s Full Name: (e.g. <strong>CM Admin</strong>)</li>
+<li>In the <strong>Login</strong> field, type the name <strong>cmadmin</strong>.</li>
+<li>Click <strong>Add Local User</strong>.</li>
+</ul>
+</li>
+<li>Set the User&rsquo;s password to &ldquo;puppetlabs&rdquo; (or whatever you&rsquo;d like to use)
+
+<ul>
+<li>Select the user from the list.</li>
+<li>Click &ldquo;<strong>Generate password reset</strong>&rdquo;</li>
+<li>Retrieve the link in a browser, and set the password to &ldquo;<strong>puppetlabs</strong>&rdquo;.</li>
+</ul>
+</li>
+<li>Finally, add the user to the &ldquo;<strong>Deploy Code</strong>&rdquo; role.
+
+<ul>
+<li>Click the &ldquo;<strong>Deploy Environments</strong>&rdquo; role.</li>
+<li>Click the &ldquo;<strong>Member Users</strong>&rdquo; tab.</li>
+<li>Fromt the dropdown list in the <strong>User Name</strong> field, select the <strong>CM Admin</strong> user and click <strong>Add User</strong>.</li>
+</ul>
+</li>
+</ol>
+
+
+<h3>Code Manager</h3>
+
+<p>Under the covers, Puppet Labs now uses r10k with the control repository to manage the deployment of code.nUnder this scenario, a few items are very important to remember:</p>
+
+<ul>
+<li>Under no circumstances should you be manually editing code in /etc/puppetlabs/code any more. Any attempt to do so will be overwritten by the code manager. ALL deployments to the system must come through your editing the control_repo and pointing to either Forge modules or custom modules you have written to be deployed to your Enterprise Master (and sync'ed to the catalog compilers).</li>
+<li>You <strong>must</strong> have a control repo branch for each environment you wish to represent in your Masters (production, testing, etc.)</li>
+<li>You cannot shorten or live without the fully named &ldquo;production&rdquo; environment. Puppet hard-coded this environment name in the product, and shortening the name to &ldquo;prd&rdquo;, &ldquo;prod&rdquo;, etc. will not work.</li>
+<li>Code Manager operates with a synchronization subdirectory that lives in /etc/puppetlabs/code-staging. When you&rsquo;re pushing coe via your control_repo, it goes here first, then Code Manager and Code Sync take over, and publish the code to all compile masters at once. Once all masters have the code in code-staging, it gets copied to /etc/puppetlabs/code.</li>
+</ul>
+
+
+<p>More information on this process can be found at <a href="https://docs.puppet.com/pe/2015.3/code_mgr.html">Puppet&rsquo;s Documentation site</a>.</p>
+
+<h3>Configuring the Git Server</h3>
+
+<p>You should have a custom deployment user explicitly for pushing code into your master. I have settled on using &ldquo;cmadmin&rdquo; as a deploy user on the Git Server. This allows you to have a generic user on the GitLab server you created earlier that you can work with, configure web hooks for, and then leave the credentials for that user with your customer or place it into IDM for your company.</p>
+
+<p>To setup the new user:</p>
+
+<ol>
+<li>Create a user in the admin area of the GitLab server named &ldquo;<strong>cmadmin</strong>&rdquo;.  Next, select &ldquo;<strong>Edit</strong>&rdquo; in the upper right hand corner of the screen and set the password as you see fit. <em>(I&rsquo;ll use &ldquo;<strong>puppetlabs</strong>&rdquo;)</em></li>
+<li>Select &ldquo;Impersonate&rdquo; from the upper right hand section of the page to assume the identity of the &ldquo;<strong>cmadmin</strong>&rdquo; user.</li>
+<li>Select &ldquo;<strong>New Project</strong>&rdquo;.</li>
+<li>On the resulting page, create a new repo called &ldquo;<strong>control_repo</strong>&rdquo; and make it a piblic project.</li>
+<li>Click &ldquo;<strong>Create Project</strong>&rdquo;.</li>
+<li>Push the control repo from the previous section to this repo in the <strong>cmadmin</strong> space.</li>
+<li>Seeing as we are using GitLab, you are unable to use a full authenticated deploy token because GitLab server&rsquo;s input buffer is too short to handle a full authentication token. <em>NOTE: This has changed in later versions of GitLab. You may find success in just creating the token.</em></li>
+<li><p>Configure the Webhook:</p></li>
+<li><p>Connect to your Git server <em>(e.g. <a href="http://git.example.com">http://git.example.com</a>)</em> and choose the &ldquo;<strong>settings gear</strong>&rdquo; from the bottom left hand side of the page.</p></li>
+<li>Once in the settings for the <strong>cmadmin</strong> user, there is a small icon on the left frame tht looks like two links of chain and is labelled &ldquo;<strong>Webhooks</strong>&rdquo;.</li>
+<li>Next, add the _<strong><a href="https://master.example.com:8170/code-manager/v1/webhook?type=gitlab**_">https://master.example.com:8170/code-manager/v1/webhook?type=gitlab**_</a> formatted webhook into the &ldquo;</strong>URL**&rdquo; box.</li>
+</ol>
+
+
+<p><em>The &ldquo;<strong>prefix</strong>&rdquo; section points to the name od the user based on the way GitLab uses namespaces in the URL.</em></p>
+
+<ul>
+<li>Also select items you need from the list of options. I recommend selecting all items <strong>except</strong> &ldquo;<strong>Build Events</strong>&rdquo; and <strong>DE</strong>-select &ldquo;<strong>Enable SSL Verification</strong>&rdquo;.</li>
+<li>Click &ldquo;<strong>Add Webhook</strong>&rdquo;.</li>
+</ul>
+
+
+<h3>Configuring the SSH Key</h3>
+
+<p>Finally, add the <strong>PUBLIC</strong> SSH key created on the Enterprise master located at /etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa.pub to the SSH keys section for the <strong>CM Admin</strong> user in the GitLab Server.</p>
+
+<ol>
+<li>While still impersonating the &ldquo;<strong>cmadmin</strong>&rdquo; user in the GitLab GUI Interface, choose the &ldquo;<strong>cmadmin</strong>&rdquo; icon in the lower left of the browser.  Next, choose &ldquo;<strong>Profile Settings</strong>&rdquo; in the left hand bar.</li>
+<li>Under the profile&rsquo;s Settings, choose &ldquo;<strong>SSH Keys</strong>&rdquo; from the left hand bar.</li>
+<li>Paste in the <strong>PUBLIC KEY</strong> to the &ldquo;<strong>Key</strong>&rdquo; text box. The <strong>Title</strong> text box should populate automatically. <em>(or, you can name it yourself.)</em></li>
+<li>Click &ldquo;<strong>Add Key</strong>&rdquo;.</li>
+</ol>
+
+
+<h3>Installing Code Manager</h3>
+
+<p>This process assumes you have follwed this entire series from start to here in order. The final steps are to install and configure the Code Manager itself. This is that process.</p>
+
+<ol>
+<li>At the <strong>Puppet Enterprise Console</strong>, navigate to <strong>Nodes | Classification | PE Master | Classes Tab | puppet_enterprise::profile::master</strong>.</li>
+<li><p>In the <strong>puppet_enterprise::profile::master</strong> class, you need to set the following parameters:</p></li>
+<li><p><strong>r10k_remote</strong> => &lsquo;the <em>git</em> FQDN and path to the namespace/control_repo of this node.&rsquo;</p></li>
+</ol>
+
+
+<pre><code>e.g. **git@git.example.com:cmadmin/control_repo.git**
+</code></pre>
+
+<ul>
+<li><strong>r10k_private_key</strong> => &lsquo;the full path to your deploy key on your Puppet enterprise master&rsquo;</li>
+</ul>
+
+
+<pre><code>e.g. **/etc/puppetlabs/puppetserver/ssh/id-control_repo.rsa**
+</code></pre>
+
+<ul>
+<li><strong>file_sync_enabled</strong> => true</li>
+<li><strong>code_manager_auto_configure</strong> => true</li>
+</ul>
+
+
+<p>At this point, you also want to make sure your control_repo has a hieradata value set. If you cloned your repo from mine, you already have that value set in the common.yaml in the hieradata directory. That setting would be:</p>
+
+<pre><code>puppet_enterprise::master::code_manager::authenticate_webhook: false
+</code></pre>
+
+<p><em>NOTE: Recall that GitLab has change dramatically since the original writing of this tutorial. Later versions allow you to authenticate the webhook. WHen I wrote this, I was working around technological limitations that are now gone. Feel free to complete this as needed, but I just wanted to disclaim the reasoning for these previous configuration steps.</em></p>
+
+<p>Next, ensure the hiera.yaml lives in $confdir as needed for Code manager:</p>
+
+<ul>
+<li>Edit the /etc/puppetlabs/puppet/puppet.conf file to ensure there is a line in the &ldquo;<strong>[Main]</strong>&rdquo; section: <strong>hiera_config = $confdir/hiera.yaml</strong>.</li>
+</ul>
+
+
+<p>Finally, run the puppet agent to apply all the above configuration changes:</p>
+
+<pre><code>puppet agent -t
+</code></pre>
+
+<p>Test the hiera value on the command line to ensure Hiera has picked up your value:</p>
+
+<pre><code>hiera -c /etc/puppetlabs/puppet/hiera.yaml puppet_enterprise::master::code_manager::authenticate_webhook environment=production
+</code></pre>
+
+<p>You should get a return of &ldquo;false&rdquo;.</p>
+
+<p><em>NOTE: Later versions of Hiera respond to the &ldquo;lookup&rdquo; command. The older &ldquo;hiera&rdquo; command line utility has intermittent proper functioning at this time, and it has been recommended on the Puppet Community Slack that &ldquo;Lookup&rdquo; is the way to go at this time.</em></p>
+
+<h3>Generate Authentication Token</h3>
+
+<p>On the Puppet Enterprise Master, you must now generate an authentication token for the CM Admin deployment user to be authorized to push code.  First, request the token:</p>
+
+<pre><code>/opt/puppetlabs/bin/puppet-access login --service-url https://console.example.com:4433/rbac-api --lifetime 180d
+</code></pre>
+
+<p>It will request a username and password. Use the credentials you created in the RBAC console <em>(In my example, <strong>cmadmin::puppetlabs</strong>)</em> and the system will write the token to <strong>/root/.puppetlabs/token</strong>.</p>
+
+<h3>Time to restart!!</h3>
+
+<p>Run the puppet agent on all compile masters in no particular order:</p>
+
+<pre><code>**puppet agent -t**
+</code></pre>
+
+<h3>Now, lets' Test!!</h3>
+
+<p>Prior to PE 2016.x.x, you could only fire the tests with curl commands against the API. Those would be as follows:</p>
+
+<p><strong>Deploy a Single Environment</strong></p>
+
+<pre><code>curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys? token=`cat ~/.puppetlabs/token`" -d '{"environments": ["ENVIRONMENTNAME"], "wait": true}'
+</code></pre>
+
+<p><strong>Deploy All Code Manager Managed Environments</strong></p>
+
+<p><code>curl -k -X POST -H 'Content-Type: application/json' "https://localhost:8170/code-manager/v1/deploys?token=`cat ~/.puppetlabs/token`" -d '{"deploy-all": true}'
+</code></p>
+
+<p>On PE Versions 2016.x.x and later, a new tool known as puppet-code was created to ease the testing and firing of the deploys.</p>
+
+<p><strong>Deploy a Single Environment</strong></p>
+
+<pre><code>/opt/puppetlabs/bin/puppet-code deploy {environmentname}
+</code></pre>
+
+<p><strong>Deploy All Code Manager Managed Environments</strong></p>
+
+<pre><code>/opt/puppetlabs/bin/puppet-code deploy --all
+</code></pre>
+
+<h3>Conclusion</h3>
+
+<p>At this point, you should see your code beginning to populate the <strong>/etc/puppetlabs/code-staging</strong> directory and then eventually the <strong>/etc/puppetlabs/code</strong> directory.  Your final tests will include pushing code to the control_repo to test that the hook is working properly.</p>
+
+<p>If all goes well, you should have code automatically deploy to the $codedir after a few seconds to a minute depending on a variety of factors.</p>
+
+<h4>Other Stuff</h4>
+
+<p>I wrote these as tutorials as I mentioned in the first article to help coworkers complete the same process I was doing. I had to sanitize out a lot of internal info, and I had to change hostnames on the fly to make sure &ldquo;all the things&rdquo; were secret that needed to be, so the names in question have not been specifically tested end-to-end, but the principles are the same.</p>
+
+<p>I worked on both 2015.x.x and 2016.x.x with this process, but newer versions of PE may have different features or setup options not covered here.  As with any &ldquo;Open&rdquo; documentation, &ldquo;Your mileage may vary&rdquo; and &ldquo;Use at your own risk.&rdquo;</p>
+
+<p>I hope this helps someone out there get Code Manager setup and fuctioning in a Large Environment Installation scenario, and you scale as large as you need to as a result of the footwork I&rsquo;ve done here. Feel free to email me for errors you find, and I&rsquo;ll fix &lsquo;em up right away!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise - Part IIIa - Additional Compilers]]></title>
