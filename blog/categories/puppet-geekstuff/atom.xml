@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Puppet,geekstuff | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/puppet-geekstuff/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-09-28T21:15:41-04:00</updated>
+  <updated>2017-10-17T17:37:37-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise - Part v - GitLab]]></title>
-    <link href="http://questy.org/blog/2017/04/25/scaling-puppet-enterprise-part-v-gitlab/"/>
-    <updated>2017-04-25T00:48:29-04:00</updated>
-    <id>http://questy.org/blog/2017/04/25/scaling-puppet-enterprise-part-v-gitlab</id>
+    <link href="http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-v-gitlab/"/>
+    <updated>2017-04-24T21:48:29-07:00</updated>
+    <id>http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-v-gitlab</id>
     <content type="html"><![CDATA[<p>If you&rsquo;ve been following for the past 5 installments, we&rsquo;re nearing the end! Note that each of the prior articles required other things to have been completed before reading/performing the contained steps, but this article is a bit different. In all truth, you could do this process at any point, but I placed it here for one reason alone. <em>&ldquo;Why do this manually when I could get Puppet to do it for me?&rdquo;</em></p>
 
 <p>The importance of this particular step is that we need a place to hold our &ldquo;control repo&rdquo; <em>(more on this later)</em> and if you don&rsquo;t already have Git installed in your environment, you&rsquo;ll need it. So, before finishing up the installation and configuration of Code Manager, utilizing Puppet to install GitLab is a good test that everything is installed and configured properly, and all the components are communicating as expected.</p>

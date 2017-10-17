@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Geekstuff,linux,puppet | Questy.org]]></title>
   <link href="http://questy.org/blog/categories/geekstuff-linux-puppet/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-09-28T21:15:41-04:00</updated>
+  <updated>2017-10-17T17:37:37-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -101,7 +101,7 @@
   <entry>
     <title type="html"><![CDATA[Vagrant and Docker Love]]></title>
     <link href="http://questy.org/blog/2015/01/15/vagrant-and-docker-love/"/>
-    <updated>2015-01-15T20:31:15-05:00</updated>
+    <updated>2015-01-15T21:31:15-04:00</updated>
     <id>http://questy.org/blog/2015/01/15/vagrant-and-docker-love</id>
     <content type="html"><![CDATA[<p>Not a full-on post, but more a note for myself to both investigate and test this… It would seem that Vagrant has now added provisioner support for Docker here. Be looking for a new post on this in the near future!</p>
 

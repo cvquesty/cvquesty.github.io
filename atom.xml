@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-09-28T21:15:41-04:00</updated>
+  <updated>2017-10-17T17:37:37-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise - Part VI - Code Manager]]></title>
     <link href="http://questy.org/blog/2017/04/28/scaling-puppet-enterprise-part-vi-code-manager/"/>
-    <updated>2017-04-28T14:48:13-04:00</updated>
+    <updated>2017-04-28T11:48:13-07:00</updated>
     <id>http://questy.org/blog/2017/04/28/scaling-puppet-enterprise-part-vi-code-manager</id>
     <content type="html"><![CDATA[<h3>Recap</h3>
 
@@ -377,9 +377,9 @@ origin    <a href="https://github.com/cvquesty/control_repo.git">https://github.
   
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise - Part v - GitLab]]></title>
-    <link href="http://questy.org/blog/2017/04/25/scaling-puppet-enterprise-part-v-gitlab/"/>
-    <updated>2017-04-25T00:48:29-04:00</updated>
-    <id>http://questy.org/blog/2017/04/25/scaling-puppet-enterprise-part-v-gitlab</id>
+    <link href="http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-v-gitlab/"/>
+    <updated>2017-04-24T21:48:29-07:00</updated>
+    <id>http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-v-gitlab</id>
     <content type="html"><![CDATA[<p>If you&rsquo;ve been following for the past 5 installments, we&rsquo;re nearing the end! Note that each of the prior articles required other things to have been completed before reading/performing the contained steps, but this article is a bit different. In all truth, you could do this process at any point, but I placed it here for one reason alone. <em>&ldquo;Why do this manually when I could get Puppet to do it for me?&rdquo;</em></p>
 
 <p>The importance of this particular step is that we need a place to hold our &ldquo;control repo&rdquo; <em>(more on this later)</em> and if you don&rsquo;t already have Git installed in your environment, you&rsquo;ll need it. So, before finishing up the installation and configuration of Code Manager, utilizing Puppet to install GitLab is a good test that everything is installed and configured properly, and all the components are communicating as expected.</p>
@@ -470,9 +470,9 @@ origin    <a href="https://github.com/cvquesty/control_repo.git">https://github.
   
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise - Part IV - ActiveMQ Hub and Spokes]]></title>
-    <link href="http://questy.org/blog/2017/04/25/scaling-puppet-enterprise-part-iv-activemq-hub-and-spokes/"/>
-    <updated>2017-04-25T00:10:52-04:00</updated>
-    <id>http://questy.org/blog/2017/04/25/scaling-puppet-enterprise-part-iv-activemq-hub-and-spokes</id>
+    <link href="http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-iv-activemq-hub-and-spokes/"/>
+    <updated>2017-04-24T21:10:52-07:00</updated>
+    <id>http://questy.org/blog/2017/04/24/scaling-puppet-enterprise-part-iv-activemq-hub-and-spokes</id>
     <content type="html"><![CDATA[<p><strong><em>As in the previous installment, you need to have already completed a few steps before arriving at this post.  You should have already completed a &ldquo;split installation&rdquo; (Documented <a href="http://questy.org/blog/2017/04/18/scaling-puppet-enterprise-part-ii-installation/">here</a>). Also, your load balancer needs to be configured and running. The procedure for this portion can be found <a href="http://questy.org/blog/2017/04/21/scaling-puppet-enterprise-part-iii-additional-compilers-part-1/">here</a>.  Finally, you should have the additional compilers installed and configured along with two example agent nodes as covered <a href="http://questy.org/blog/2017/04/21/scaling-puppet-enterprise-part-iiia-additional-compilers/">here</a> and <a href="http://questy.org/blog/2017/04/21/scaling-puppet-enterprise-part-iiib-additional-compilers/">here</a>.. If you&rsquo;ve completed all these portions, you are now ready to configure ActiveMQ for scaling MCollective.</em></strong></p>
 
 <p>Once the preceding items are performed, you may find it necessary to add ActiveMQ hubs and spokes to increase capacity for MCollective and/or the Code Sync and Code Manager functions of Puppet Enterprise. This installment documents how to install these additional components and tie them into the existing infrastructure.</p>
@@ -1601,7 +1601,7 @@ ubuntu-1404-i386<br></p>
   <entry>
     <title type="html"><![CDATA[Vagrant and Docker Love]]></title>
     <link href="http://questy.org/blog/2015/01/15/vagrant-and-docker-love/"/>
-    <updated>2015-01-15T20:31:15-05:00</updated>
+    <updated>2015-01-15T21:31:15-04:00</updated>
     <id>http://questy.org/blog/2015/01/15/vagrant-and-docker-love</id>
     <content type="html"><![CDATA[<p>Not a full-on post, but more a note for myself to both investigate and test this… It would seem that Vagrant has now added provisioner support for Docker here. Be looking for a new post on this in the near future!</p>
 
@@ -1630,7 +1630,7 @@ I spoke with some folks at Puppet just in a conversation describing what I was s
   <entry>
     <title type="html"><![CDATA[Moving My Tech Content to GitHub]]></title>
     <link href="http://questy.org/blog/2015/01/08/moving-my-tech-content-to-github/"/>
-    <updated>2015-01-08T13:39:12-05:00</updated>
+    <updated>2015-01-08T14:39:12-04:00</updated>
     <id>http://questy.org/blog/2015/01/08/moving-my-tech-content-to-github</id>
     <content type="html"><![CDATA[<p>Happy New Year, all!</p>
 
@@ -1649,7 +1649,7 @@ I spoke with some folks at Puppet just in a conversation describing what I was s
   <entry>
     <title type="html"><![CDATA[PuppetConf 2014]]></title>
     <link href="http://questy.org/blog/2014/09/23/puppetconf-2014/"/>
-    <updated>2014-09-23T14:19:37-04:00</updated>
+    <updated>2014-09-23T18:19:37+00:00</updated>
     <id>http://questy.org/blog/2014/09/23/puppetconf-2014</id>
     <content type="html"><![CDATA[<p>Glad to be at PuppetConf with #ShadowSoft exploring all the latest and greatest in PuppetLabs.</p>
 
@@ -1660,7 +1660,7 @@ I spoke with some folks at Puppet just in a conversation describing what I was s
   <entry>
     <title type="html"><![CDATA[Southeast Puppet User's Group September]]></title>
     <link href="http://questy.org/blog/2014/09/11/southeast-puppet-users-group-september/"/>
-    <updated>2014-09-11T19:33:01-04:00</updated>
+    <updated>2014-09-11T23:33:01+00:00</updated>
     <id>http://questy.org/blog/2014/09/11/southeast-puppet-users-group-september</id>
     <content type="html"><![CDATA[<p><a href="http://questy.org/images/puppet_docker.jpg"><img src="http://questy.org/images/puppet_docker.jpg" alt="puppet_docker" /></a></p>
 
