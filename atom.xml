@@ -4,7 +4,7 @@
   <title><![CDATA[Questy.org]]></title>
   <link href="http://questy.org/atom.xml" rel="self"/>
   <link href="http://questy.org/"/>
-  <updated>2017-11-06T19:41:53-05:00</updated>
+  <updated>2018-10-02T09:31:17-04:00</updated>
   <id>http://questy.org/</id>
   <author>
     <name><![CDATA[Jerald Sheets]]></name>
@@ -12,6 +12,21 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Some Housecleaning]]></title>
+    <link href="http://questy.org/blog/2018/10/02/some-housecleaning/"/>
+    <updated>2018-10-02T09:23:38-04:00</updated>
+    <id>http://questy.org/blog/2018/10/02/some-housecleaning</id>
+    <content type="html"><![CDATA[<p><strong>Picking Up Where I Left Off</strong></p>
+
+<p>Sometimes life starts to get in the way of things.  It happened to me. I&rsquo;m no longer consulting in the Puppet space, but am still very much so involved and active in the community. But, as happenstance dictates, we get busy in our daily and things like blogs (that don&rsquo;t generate revenue) and social media outlets start to take a &ldquo;second seat&rdquo; to the rest of work and life.</p>
+
+<p>So, I&rsquo;m going to reset, and will be cycling back through the previous instructional materials I&rsquo;ve worked on, and revamp for modern editions my tutorials on PE, Community, Vagrant, etc. I want to stay up with modern versions, and I want to get deeper into PE and the new pe.conf (HOCON format) as well as better orchestration methods within the Vagrant framework for standing up new PE instances for use as a local development workstation (regardless of your platform).</p>
+
+<p>Stick with me. We should have some fun changes here soon with all the new goodies Puppet has brought us over the last couple years.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Scaling Puppet Enterprise - Part VI - Code Manager]]></title>
@@ -1654,17 +1669,6 @@ I spoke with some folks at Puppet just in a conversation describing what I was s
     <content type="html"><![CDATA[<p>Glad to be at PuppetConf with #ShadowSoft exploring all the latest and greatest in PuppetLabs.</p>
 
 <p><a href="http://questy.org/images/puppetconf.jpg"><img src="http://questy.org/images/puppetconf.jpg" alt="puppetconf.jpg" /></a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Southeast Puppet User's Group September]]></title>
-    <link href="http://questy.org/blog/2014/09/11/southeast-puppet-users-group-september/"/>
-    <updated>2014-09-11T23:33:01+00:00</updated>
-    <id>http://questy.org/blog/2014/09/11/southeast-puppet-users-group-september</id>
-    <content type="html"><![CDATA[<p><a href="http://questy.org/images/puppet_docker.jpg"><img src="http://questy.org/images/puppet_docker.jpg" alt="puppet_docker" /></a></p>
-
-<p>John Ray is bringing the Puppet + Docker goodness in his talk tonight: &ldquo;Deploying Docker Containers with Puppet&rdquo;.  Join us each month at the Shadow Soft offices for the latest in DEVOPS topics and information.  Always fun, lots of discussion and information surrounding Puppet topics and associated technologies.  There&rsquo;s always pizza and beverages of all kinds, and we&rsquo;ve finally moved into our new meeting/class rooms, so come on out.</p>
 ]]></content>
   </entry>
   

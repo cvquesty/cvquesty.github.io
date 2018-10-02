@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://questy.org/blog/2018/10/02/some-housecleaning/</loc>
+<lastmod>2018-10-02T09:23:38-04:00</lastmod>
+</url>
+<url>
 <loc>http://questy.org/blog/2017/04/28/scaling-puppet-enterprise-part-vi-code-manager/</loc>
 <lastmod>2017-04-28T11:48:13-07:00</lastmod>
 </url>
@@ -305,10 +309,10 @@
 <lastmod>2004-12-08T20:20:37+00:00</lastmod>
 </url>
 <url>
-<loc>http://questy.org/blog/archives/</loc>
+<loc>http://questy.org/</loc>
 </url>
 <url>
-<loc>http://questy.org/</loc>
+<loc>http://questy.org/blog/archives/</loc>
 </url>
 <url>
 <loc>http://questy.org/blog/categories/general/</loc>
